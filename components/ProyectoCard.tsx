@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 import type { Proyecto } from "@/data/proyectos";
 
 interface ProyectoCardProps {
@@ -11,18 +11,18 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
   return (
     <Link
       href={`/proyecto/${proyecto.slug}`}
-      className={`reveal reveal-delay-${Math.min(index + 1, 4)} group block rounded-2xl overflow-hidden border border-white/5 hover:border-accent-gold/30 bg-bg-tertiary transition-all duration-500 hover:-translate-y-2 hover:shadow-card`}
+      className={`reveal reveal-delay-${Math.min(index + 1, 4)} group block rounded-2xl overflow-hidden border border-white/5 hover:border-accent-gold/40 bg-bg-tertiary transition-all duration-500 hover:-translate-y-3 hover:shadow-gold-lg`}
     >
       {/* Project preview */}
       <div className="relative h-52 sm:h-60 overflow-hidden">
         {/* Gradient preview */}
         <div
-          className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
+          className="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
           style={{ background: proyecto.color }}
         />
 
         {/* Mockup frame */}
-        <div className="absolute inset-4 rounded-lg bg-black/20 backdrop-blur-sm border border-white/10 flex flex-col overflow-hidden">
+        <div className="absolute inset-4 rounded-lg bg-black/20 backdrop-blur-sm border border-white/10 flex flex-col overflow-hidden transition-all duration-500 group-hover:inset-3">
           {/* Browser bar */}
           <div className="flex items-center gap-1.5 px-3 py-2 bg-black/30 border-b border-white/10 flex-shrink-0">
             <span className="w-2 h-2 rounded-full bg-red-400/60" />
@@ -49,22 +49,35 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
           </div>
         </div>
 
-        {/* Hover overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-bg-tertiary via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Hover overlay — full cover with CTA */}
+        <div className="absolute inset-0 bg-bg-primary/80 backdrop-blur-sm flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
+          <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent-gold text-bg-primary font-semibold text-sm shadow-gold translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+            <ExternalLink size={14} />
+            Ver proyecto completo
+          </div>
+          <div className="flex flex-wrap justify-center gap-1.5 max-w-[200px] translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">
+            {proyecto.tecnologias.slice(0, 3).map((tech) => (
+              <span
+                key={tech}
+                className="px-2 py-0.5 rounded text-xs text-white/70 bg-white/10 border border-white/10"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
 
-        {/* Arrow icon */}
-        <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-bg-primary/80 backdrop-blur-sm border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
+        {/* Top-right arrow — desaparece con el overlay */}
+        <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-bg-primary/80 backdrop-blur-sm border border-white/10 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-200">
           <ArrowUpRight size={14} className="text-accent-gold" />
         </div>
       </div>
 
       {/* Content */}
       <div className="p-5">
-        <div className="flex items-start justify-between gap-3 mb-2">
-          <h3 className="font-display font-semibold text-lg text-text-primary group-hover:text-accent-gold transition-colors duration-300 leading-tight">
-            {proyecto.nombre}
-          </h3>
-        </div>
+        <h3 className="font-display font-semibold text-lg text-text-primary group-hover:text-accent-gold transition-colors duration-300 leading-tight mb-2">
+          {proyecto.nombre}
+        </h3>
 
         <div className="flex items-center gap-2 mb-3">
           <span className="px-2 py-0.5 rounded-full bg-accent-gold/10 text-accent-gold text-xs font-medium border border-accent-gold/20">
@@ -82,7 +95,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
           {proyecto.tecnologias.map((tech) => (
             <span
               key={tech}
-              className="px-2 py-0.5 rounded text-xs text-text-muted bg-white/5 border border-white/5"
+              className="px-2 py-0.5 rounded text-xs text-text-muted bg-white/5 border border-white/5 group-hover:border-accent-gold/10 transition-colors duration-300"
             >
               {tech}
             </span>

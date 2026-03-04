@@ -6,21 +6,49 @@ import { Menu, X } from "lucide-react";
 import { SITE_CONFIG, WHATSAPP_URL } from "@/lib/config";
 
 const navLinks = [
-  { label: "Servicios", href: "#servicios" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Proceso", href: "#proceso" },
-  { label: "Precios", href: "#precios" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Servicios", href: "#servicios", id: "servicios" },
+  { label: "Portfolio", href: "#portfolio", id: "portfolio" },
+  { label: "Proceso", href: "#proceso", id: "proceso" },
+  { label: "Precios", href: "#precios", id: "precios" },
+  { label: "FAQ", href: "#faq", id: "faq" },
 ];
+
+// IDs de todas las secciones para el tracking
+const allSectionIds = ["inicio", "sobre-mi", "servicios", "portfolio", "proceso", "precios", "testimonios", "faq", "contacto"];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Track active section via IntersectionObserver
+  useEffect(() => {
+    const sectionEls = allSectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-30% 0px -60% 0px",
+        threshold: 0,
+      }
+    );
+
+    sectionEls.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   const handleNavClick = (href: string) => {
@@ -59,16 +87,25 @@ export default function Navbar() {
 
             {/* Desktop nav */}
             <div className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => handleNavClick(link.href)}
-                  className="text-text-secondary hover:text-accent-gold text-sm font-medium tracking-wide transition-colors duration-300 relative group cursor-pointer"
-                >
-                  {link.label}
-                  <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-accent-gold transition-all duration-300 group-hover:w-full" />
-                </button>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.id;
+                return (
+                  <button
+                    key={link.href}
+                    onClick={() => handleNavClick(link.href)}
+                    className={`relative text-sm font-medium tracking-wide transition-all duration-300 cursor-pointer group ${
+                      isActive ? "text-accent-gold" : "text-text-secondary hover:text-accent-gold"
+                    }`}
+                  >
+                    {link.label}
+                    <span
+                      className={`absolute -bottom-0.5 left-0 h-px bg-accent-gold transition-all duration-300 ${
+                        isActive ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
             </div>
 
             {/* CTA + hamburger */}
@@ -111,16 +148,21 @@ export default function Navbar() {
           }`}
         >
           <div className="flex flex-col h-full p-6 pt-20">
-            {navLinks.map((link, i) => (
-              <button
-                key={link.href}
-                onClick={() => handleNavClick(link.href)}
-                className="text-left py-4 text-lg font-medium text-text-secondary hover:text-accent-gold border-b border-white/5 transition-colors duration-200 cursor-pointer"
-                style={{ animationDelay: `${i * 0.05}s` }}
-              >
-                {link.label}
-              </button>
-            ))}
+            {navLinks.map((link, i) => {
+              const isActive = activeSection === link.id;
+              return (
+                <button
+                  key={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  className={`text-left py-4 text-lg font-medium border-b border-white/5 transition-colors duration-200 cursor-pointer ${
+                    isActive ? "text-accent-gold" : "text-text-secondary hover:text-accent-gold"
+                  }`}
+                  style={{ animationDelay: `${i * 0.05}s` }}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
             <a
               href={WHATSAPP_URL}
               target="_blank"

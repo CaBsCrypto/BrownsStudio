@@ -1,11 +1,51 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowDown, MessageCircle, Play } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/config";
 
+// Hook: anima un número desde 0 hasta target cuando se activa
+function useCountUp(target: number, duration: number, active: boolean) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    let start = 0;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, 16);
+    return () => clearInterval(timer);
+  }, [active, target, duration]);
+  return count;
+}
+
+const stats = [
+  { numeric: 15, suffix: "+", label: "Proyectos entregados", duration: 1200 },
+  { numeric: 48, suffix: "h", label: "Tiempo de respuesta", duration: 900 },
+  { numeric: 100, suffix: "%", label: "Clientes satisfechos", duration: 1400 },
+];
+
+function StatItem({ stat, active }: { stat: typeof stats[0]; active: boolean }) {
+  const count = useCountUp(stat.numeric, stat.duration, active);
+  return (
+    <div className="text-center">
+      <div className="text-2xl sm:text-3xl font-display font-bold text-gradient-gold">
+        {count}{stat.suffix}
+      </div>
+      <div className="text-text-muted text-xs sm:text-sm mt-1">{stat.label}</div>
+    </div>
+  );
+}
+
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
+  const [statsActive, setStatsActive] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -15,6 +55,8 @@ export default function Hero() {
             entry.target.querySelectorAll(".reveal").forEach((el, i) => {
               setTimeout(() => el.classList.add("visible"), i * 120);
             });
+            // Activar contadores con un pequeño delay
+            setTimeout(() => setStatsActive(true), 600);
           }
         });
       },
@@ -53,6 +95,10 @@ export default function Hero() {
       </div>
       <div className="absolute bottom-32 left-10 lg:left-20 opacity-15">
         <div className="w-12 h-12 border border-accent-gold/30 rotate-12 animate-float" style={{ animationDelay: "3s" }} />
+      </div>
+      {/* Extra decorative corner */}
+      <div className="absolute top-1/2 right-8 lg:right-16 opacity-10">
+        <div className="w-6 h-6 border border-accent-gold/60 rotate-45 animate-float" style={{ animationDelay: "1.5s" }} />
       </div>
 
       {/* Content */}
@@ -102,19 +148,10 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* Stats */}
+        {/* Stats — animated counters */}
         <div className="reveal reveal-delay-4 grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto mb-16">
-          {[
-            { value: "100%", label: "Mobile First" },
-            { value: "48h", label: "Respuesta rápida" },
-            { value: "∞", label: "Revisiones" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-2xl sm:text-3xl font-display font-bold text-gradient-gold">
-                {stat.value}
-              </div>
-              <div className="text-text-muted text-xs sm:text-sm mt-1">{stat.label}</div>
-            </div>
+          {stats.map((stat) => (
+            <StatItem key={stat.label} stat={stat} active={statsActive} />
           ))}
         </div>
 
