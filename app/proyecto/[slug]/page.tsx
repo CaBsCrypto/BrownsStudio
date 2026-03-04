@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowLeft, Check, ExternalLink, MessageCircle } from "lucide-react";
 import { proyectos, getProyectoBySlug } from "@/data/proyectos";
-import { SITE_CONFIG, WHATSAPP_URL } from "@/lib/config";
+import { SITE_CONFIG } from "@/lib/config";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";

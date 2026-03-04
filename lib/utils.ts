@@ -1,9 +1,8 @@
-import { type ClassValue, clsx } from "clsx";
+type ClassValue = string | undefined | null | false | 0 | ClassValue[];
 
-export function cn(...inputs: ClassValue[]) {
-  // Simple className merger without clsx dependency
+export function cn(...inputs: ClassValue[]): string {
   return inputs
-    .flat()
+    .flat(Infinity as 1)
     .filter(Boolean)
     .join(" ");
 }

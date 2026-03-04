@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { SITE_CONFIG, WHATSAPP_URL } from "@/lib/config";
 
@@ -40,7 +41,7 @@ export default function Navbar() {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <a
+            <Link
               href="/"
               className="flex items-center gap-2 group"
               aria-label={SITE_CONFIG.name}
@@ -54,7 +55,7 @@ export default function Navbar() {
                 BROWNS{" "}
                 <span className="text-gradient-gold">STUDIO</span>
               </span>
-            </a>
+            </Link>
 
             {/* Desktop nav */}
             <div className="hidden lg:flex items-center gap-8">
