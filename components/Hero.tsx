@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, MessageCircle, Play } from "lucide-react";
+import { ArrowDown, MessageCircle, Sparkles } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/config";
 
-// Hook: anima un número desde 0 hasta target cuando se activa
 function useCountUp(target: number, duration: number, active: boolean) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -13,12 +12,8 @@ function useCountUp(target: number, duration: number, active: boolean) {
     const step = target / (duration / 16);
     const timer = setInterval(() => {
       start += step;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
+      if (start >= target) { setCount(target); clearInterval(timer); }
+      else setCount(Math.floor(start));
     }, 16);
     return () => clearInterval(timer);
   }, [active, target, duration]);
@@ -26,13 +21,13 @@ function useCountUp(target: number, duration: number, active: boolean) {
 }
 
 const stats = [
-  { numeric: 15, suffix: "+", label: "Proyectos entregados", duration: 1200 },
-  { numeric: 48, suffix: "h", label: "Tiempo de respuesta", duration: 900 },
-  { numeric: 100, suffix: "%", label: "Clientes satisfechos", duration: 1400 },
+  { numeric: 15, suffix: "+", label: "Proyectos" },
+  { numeric: 7, suffix: "", label: "Certs. Google IA" },
+  { numeric: 100, suffix: "%", label: "Satisfacción" },
 ];
 
 function StatItem({ stat, active }: { stat: typeof stats[0]; active: boolean }) {
-  const count = useCountUp(stat.numeric, stat.duration, active);
+  const count = useCountUp(stat.numeric, 1200, active);
   return (
     <div className="text-center">
       <div className="text-2xl sm:text-3xl font-display font-bold text-gradient-gold">
@@ -55,25 +50,15 @@ export default function Hero() {
             entry.target.querySelectorAll(".reveal").forEach((el, i) => {
               setTimeout(() => el.classList.add("visible"), i * 120);
             });
-            // Activar contadores con un pequeño delay
             setTimeout(() => setStatsActive(true), 600);
           }
         });
       },
       { threshold: 0.1 }
     );
-
     if (heroRef.current) observer.observe(heroRef.current);
     return () => observer.disconnect();
   }, []);
-
-  const scrollToPortfolio = () => {
-    document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const scrollToServicios = () => {
-    document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section
@@ -81,83 +66,71 @@ export default function Hero() {
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background gradient mesh */}
       <div className="absolute inset-0 bg-gradient-warm" />
       <div className="absolute inset-0 bg-gradient-hero" />
 
-      {/* Decorative orbs */}
+      {/* Orbs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-accent-gold/5 blur-3xl animate-pulse-slow" />
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-accent-gold-light/4 blur-3xl animate-pulse-slow" style={{ animationDelay: "1.5s" }} />
 
-      {/* Geometric decoration */}
+      {/* Decorations */}
       <div className="absolute top-20 right-10 lg:right-20 opacity-20">
         <div className="w-20 h-20 border border-accent-gold/40 rotate-45 animate-float" />
       </div>
       <div className="absolute bottom-32 left-10 lg:left-20 opacity-15">
         <div className="w-12 h-12 border border-accent-gold/30 rotate-12 animate-float" style={{ animationDelay: "3s" }} />
       </div>
-      {/* Extra decorative corner */}
-      <div className="absolute top-1/2 right-8 lg:right-16 opacity-10">
-        <div className="w-6 h-6 border border-accent-gold/60 rotate-45 animate-float" style={{ animationDelay: "1.5s" }} />
-      </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
         {/* Badge */}
         <div className="reveal inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent-gold/30 bg-accent-gold/5 text-accent-gold text-sm font-medium mb-8 backdrop-blur-sm">
-          <span className="w-1.5 h-1.5 rounded-full bg-accent-gold animate-pulse" />
-          Desarrollo Web Profesional para Negocios Locales
+          <Sparkles size={13} className="animate-pulse" />
+          Web + Inteligencia Artificial para tu negocio
         </div>
 
         {/* Headline */}
         <h1 className="reveal reveal-delay-1 font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-text-primary mb-6 leading-tight tracking-tight">
-          La web que tu{" "}
-          <span className="text-gradient-gold">negocio necesita</span>
+          Más clientes.
           <br />
-          para crecer de verdad
+          <span className="text-gradient-gold">Más automatización.</span>
+          <br />
+          Menos trabajo manual.
         </h1>
 
-        {/* Subheadline */}
-        <p className="reveal reveal-delay-2 text-text-secondary text-lg sm:text-xl lg:text-2xl max-w-3xl mx-auto mb-4 leading-relaxed font-light">
-          Creamos páginas web elegantes y efectivas para{" "}
-          <span className="text-text-primary font-medium">clínicas, restaurantes, estudios</span>{" "}
-          y todo tipo de negocio local en Latinoamérica.
-        </p>
-
-        <p className="reveal reveal-delay-2 text-text-muted text-base sm:text-lg mb-10">
-          Tu cliente te encuentra online — asegúrate de causar la mejor impresión.
+        {/* Sub */}
+        <p className="reveal reveal-delay-2 text-text-secondary text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+          Creamos webs profesionales e integramos <span className="text-text-primary font-medium">soluciones de IA</span> para clínicas, restaurantes y negocios locales en Latinoamérica.
         </p>
 
         {/* CTAs */}
         <div className="reveal reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-          <button
-            onClick={scrollToPortfolio}
-            className="group flex items-center gap-2 px-8 py-4 rounded-full border border-accent-gold/40 text-text-primary font-semibold text-base hover:border-accent-gold hover:bg-accent-gold/10 transition-all duration-300"
-          >
-            <Play size={16} className="text-accent-gold group-hover:scale-110 transition-transform" />
-            Ver Portfolio
-          </button>
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-2 px-8 py-4 rounded-full bg-accent-gold text-bg-primary font-semibold text-base hover:bg-accent-gold-light transition-all duration-300 shadow-gold hover:shadow-gold-lg hover:scale-105"
+            className="group flex items-center gap-2 px-8 py-4 rounded-full bg-accent-gold text-bg-primary font-semibold text-base hover:bg-accent-gold-light transition-all duration-300 shadow-gold hover:shadow-gold-lg hover:scale-105 w-full sm:w-auto justify-center"
           >
             <MessageCircle size={16} className="group-hover:scale-110 transition-transform" />
-            Cotizar Gratis
+            Cotizar gratis
           </a>
+          <button
+            onClick={() => document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth" })}
+            className="group flex items-center gap-2 px-8 py-4 rounded-full border border-accent-gold/40 text-text-primary font-semibold text-base hover:border-accent-gold hover:bg-accent-gold/10 transition-all duration-300 w-full sm:w-auto justify-center"
+          >
+            Ver servicios
+          </button>
         </div>
 
-        {/* Stats — animated counters */}
-        <div className="reveal reveal-delay-4 grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto mb-16">
+        {/* Stats */}
+        <div className="reveal reveal-delay-4 grid grid-cols-3 gap-4 sm:gap-8 max-w-md mx-auto mb-16">
           {stats.map((stat) => (
             <StatItem key={stat.label} stat={stat} active={statsActive} />
           ))}
         </div>
 
-        {/* Scroll indicator */}
+        {/* Scroll */}
         <button
-          onClick={scrollToServicios}
+          onClick={() => document.getElementById("sobre-mi")?.scrollIntoView({ behavior: "smooth" })}
           className="reveal reveal-delay-4 flex flex-col items-center gap-2 text-text-muted hover:text-accent-gold transition-colors duration-300 mx-auto cursor-pointer"
           aria-label="Scroll hacia abajo"
         >
