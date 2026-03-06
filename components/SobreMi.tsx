@@ -1,15 +1,23 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { CheckCircle2, BadgeCheck } from "lucide-react";
+import { CheckCircle2, Brain, Code2, BarChart3, FileText, PenTool, Search, Lightbulb, type LucideIcon } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/config";
 
-// Las 4 más relevantes para clientes de negocios locales
-const certificaciones = [
-  { area: "AI Fundamentals", desc: "Base sólida en IA" },
-  { area: "AI for App Building", desc: "Apps con IA integrada" },
-  { area: "AI for Data Analysis", desc: "Decisiones basadas en datos" },
-  { area: "AI for Content Creation", desc: "Contenido automatizado" },
+interface Cert {
+  area: string;
+  desc: string;
+  icon: LucideIcon;
+}
+
+const certificaciones: Cert[] = [
+  { area: "AI Fundamentals",      desc: "Base sólida en IA",            icon: Brain },
+  { area: "AI for App Building",  desc: "Apps con IA integrada",         icon: Code2 },
+  { area: "AI for Data Analysis", desc: "Datos que toman decisiones",    icon: BarChart3 },
+  { area: "AI for Content",       desc: "Contenido automatizado",        icon: FileText },
+  { area: "AI for Writing",       desc: "Textos potenciados con IA",     icon: PenTool },
+  { area: "AI for Research",      desc: "Investigación asistida",        icon: Search },
+  { area: "AI for Brainstorming", desc: "Ideas y estrategia con IA",     icon: Lightbulb },
 ];
 
 export default function SobreMi() {
@@ -113,35 +121,41 @@ export default function SobreMi() {
 
             {/* Google certs */}
             <div className="reveal reveal-delay-3">
-              <div className="flex items-center gap-2 mb-4">
-                <BadgeCheck size={16} className="text-blue-400" />
-                <p className="text-text-primary text-sm font-semibold">
-                  Certificado por Google en IA
-                </p>
-                <span className="px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold">
-                  7 áreas
-                </span>
+              {/* Header + big stat */}
+              <div className="flex items-start gap-5 mb-5 p-4 rounded-2xl bg-blue-500/5 border border-blue-500/15">
+                <div className="text-center flex-shrink-0">
+                  <p className="font-display font-bold text-4xl text-blue-400 leading-none">7</p>
+                  <p className="text-blue-400/70 text-xs mt-0.5">certs.</p>
+                </div>
+                <div>
+                  <p className="text-text-primary text-sm font-semibold leading-tight mb-0.5">
+                    Certificado por Google en IA
+                  </p>
+                  <p className="text-text-muted text-xs leading-relaxed">
+                    Inteligencia Artificial con Gemini · Google Cloud
+                  </p>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
-                {certificaciones.map((cert) => (
-                  <div
-                    key={cert.area}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-bg-secondary border border-white/5 hover:border-blue-500/20 transition-colors duration-300"
-                  >
-                    <div className="w-7 h-7 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-blue-400 font-bold text-xs">G</span>
+              {/* 7 chips */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {certificaciones.map((cert) => {
+                  const Icon = cert.icon;
+                  return (
+                    <div
+                      key={cert.area}
+                      className="group flex items-center gap-2 px-3 py-2 rounded-xl bg-bg-secondary border border-blue-500/15 hover:border-blue-500/40 hover:bg-blue-500/5 transition-all duration-300 cursor-default"
+                      title={cert.desc}
+                    >
+                      <Icon size={13} className="text-blue-400 flex-shrink-0" />
+                      <span className="text-text-primary text-xs font-medium whitespace-nowrap">{cert.area}</span>
                     </div>
-                    <div>
-                      <p className="text-text-primary text-xs font-semibold leading-tight">{cert.area}</p>
-                      <p className="text-text-muted text-xs">{cert.desc}</p>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
-              <p className="text-text-muted text-xs mb-8 pl-1">
-                + AI for Writing · AI for Research · AI for Brainstorming
+              <p className="text-text-muted text-xs italic mb-8">
+                Cada certificación = una herramienta real aplicada a tu negocio.
               </p>
             </div>
 
