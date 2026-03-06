@@ -47,10 +47,10 @@ export default function CTA() {
         </div>
 
         <h2 className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-text-primary mb-6 leading-tight">
-          ¿Listo para tener la web
+          ¿Listo para crecer
           <br />
-          que tu negocio{" "}
-          <span className="text-gradient-gold">merece?</span>
+          con web{" "}
+          <span className="text-gradient-gold">+ IA?</span>
         </h2>
 
         <p className="reveal reveal-delay-2 text-text-secondary text-lg sm:text-xl mb-4 max-w-xl mx-auto leading-relaxed">

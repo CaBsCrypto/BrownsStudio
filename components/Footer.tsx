@@ -2,10 +2,9 @@ import { Instagram, Linkedin, Youtube, Mail, ArrowUpRight } from "lucide-react";
 import { SITE_CONFIG, WHATSAPP_URL } from "@/lib/config";
 
 const navLinks = [
-  { label: "Servicios", href: "#servicios" },
+  { label: "Servicios & Precios", href: "#precios" },
   { label: "Portfolio", href: "#portfolio" },
   { label: "Proceso", href: "#proceso" },
-  { label: "Precios", href: "#precios" },
   { label: "FAQ", href: "#faq" },
   { label: "Contacto", href: "#contacto" },
 ];

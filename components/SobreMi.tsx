@@ -12,12 +12,6 @@ const certificaciones = [
   { area: "AI for Content Creation", desc: "Contenido automatizado" },
 ];
 
-const logros = [
-  { valor: "3+", label: "Años de experiencia" },
-  { valor: "15+", label: "Proyectos" },
-  { valor: "7", label: "Certs. Google IA" },
-];
-
 export default function SobreMi() {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -97,15 +91,6 @@ export default function SobreMi() {
               </div>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-3 mt-10">
-              {logros.map((logro) => (
-                <div key={logro.label} className="p-4 rounded-2xl bg-bg-secondary border border-white/5 text-center">
-                  <p className="font-display font-bold text-2xl text-gradient-gold mb-1">{logro.valor}</p>
-                  <p className="text-text-muted text-xs leading-tight">{logro.label}</p>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Right — Bio + certs */}

@@ -7,32 +7,17 @@ const faqs = [
   {
     pregunta: "¿Cuánto tiempo toma crear mi web?",
     respuesta:
-      "Depende de la complejidad. Una landing page básica la entregamos en 5 días hábiles. Una web profesional multi-página toma entre 10 y 15 días. Proyectos con sistemas de citas o e-commerce pueden tomar de 3 a 5 semanas. Siempre te damos un plazo exacto en la propuesta.",
+      "Una landing page básica la entregamos en 5 días hábiles. Una web profesional multi-página toma entre 10 y 15 días. Un proyecto con sistema de citas o IA integrada puede tomar 3-4 semanas. Siempre te damos un plazo exacto en la propuesta.",
   },
   {
     pregunta: "¿Qué necesito para empezar?",
     respuesta:
-      "Solo necesitas contarnos sobre tu negocio: qué haces, quiénes son tus clientes y qué esperas de tu web. Si tienes un logo e imágenes del negocio, genial — pero si no, podemos ayudarte con eso también. La conversación inicial es completamente gratuita.",
-  },
-  {
-    pregunta: "¿Puedo actualizar mi web yo mismo?",
-    respuesta:
-      "Sí. En los paquetes que incluyen CMS (Profesional y Premium), puedes actualizar textos, imágenes, precios y más sin saber nada de código. Te enseñamos a usarlo. Para cambios de diseño o funcionalidades nuevas, estamos disponibles a través de nuestro servicio de mantenimiento.",
-  },
-  {
-    pregunta: "¿Incluyen hosting y dominio?",
-    respuesta:
-      "El hosting en Vercel (plan gratuito) está incluido para todos nuestros proyectos. El dominio (.com, .cl, etc.) no está incluido en el precio, pero te ayudamos a conseguirlo y configurarlo. El costo de un dominio es típicamente $12-15 USD por año.",
+      "Solo contarnos sobre tu negocio: qué haces, quiénes son tus clientes y qué esperas de tu web o solución IA. Si tienes logo e imágenes, perfecto — si no, podemos orientarte. La conversación inicial es completamente gratuita y sin compromiso.",
   },
   {
     pregunta: "¿Qué pasa si no me gusta el diseño?",
     respuesta:
-      "Antes de escribir código, te presentamos un mockup visual completo para tu aprobación. Solo avanzamos cuando estás conforme con el diseño. Una vez en desarrollo, ofrecemos revisiones ilimitadas hasta que el resultado te satisfaga al 100%.",
-  },
-  {
-    pregunta: "¿Ofrecen mantenimiento después del lanzamiento?",
-    respuesta:
-      "Sí. El paquete Premium incluye 1 mes de soporte. Para todos los clientes, ofrecemos planes de mantenimiento mensual desde $30 USD que incluyen actualizaciones, backups, cambios menores y soporte técnico. No te quedas solo después del lanzamiento.",
+      "Antes de escribir código te presentamos un mockup visual completo para tu aprobación. Solo avanzamos cuando estás conforme. Una vez en desarrollo, ofrecemos revisiones ilimitadas hasta que el resultado te satisfaga al 100%.",
   },
 ];
 

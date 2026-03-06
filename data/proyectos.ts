@@ -9,6 +9,8 @@ export interface Proyecto {
   colorAccent: string;  // Color de acento para la página individual
   caracteristicas: string[];
   resultado: string;
+  quote: string;
+  quoteAutor: string;
   linkDemo?: string;
   año: number;
 }
@@ -35,6 +37,8 @@ export const proyectos: Proyecto[] = [
     ],
     resultado:
       "Incremento del 65% en consultas online en el primer mes de operación.",
+    quote: "Las consultas por WhatsApp se triplicaron. El sistema de citas fue un game-changer.",
+    quoteAutor: "Dra. Carmen Salinas · Clínica Dental Sonríe",
     año: 2025,
   },
   {
@@ -58,6 +62,8 @@ export const proyectos: Proyecto[] = [
     ],
     resultado:
       "Aumento del 40% en reservas y reducción del 80% en llamadas telefónicas para consultas básicas.",
+    quote: "Nuestros clientes lo aman — elegante, rápido y exactamente lo que queríamos.",
+    quoteAutor: "Marco Tanaka · Sakura Sushi Bar",
     año: 2025,
   },
   {
@@ -81,6 +87,8 @@ export const proyectos: Proyecto[] = [
     ],
     resultado:
       "Posicionamiento en top 3 de Google para búsquedas de abogados en la ciudad en 2 meses.",
+    quote: "La profesionalidad es impecable. En dos meses ya estábamos en Google.",
+    quoteAutor: "Lic. Roberto Méndez · Estudio Legal Méndez",
     año: 2026,
   },
 ];

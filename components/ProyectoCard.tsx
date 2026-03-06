@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Quote } from "lucide-react";
 import type { Proyecto } from "@/data/proyectos";
 
 interface ProyectoCardProps {
@@ -91,7 +91,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
         </p>
 
         {/* Technologies */}
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1.5 mb-4">
           {proyecto.tecnologias.map((tech) => (
             <span
               key={tech}
@@ -100,6 +100,15 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
               {tech}
             </span>
           ))}
+        </div>
+
+        {/* Client quote */}
+        <div className="pt-4 border-t border-white/5">
+          <Quote size={12} className="text-accent-gold/40 mb-1" fill="currentColor" />
+          <p className="text-text-muted text-xs italic leading-relaxed mb-1">
+            {proyecto.quote}
+          </p>
+          <p className="text-accent-gold/60 text-xs font-medium">{proyecto.quoteAutor}</p>
         </div>
       </div>
     </Link>
