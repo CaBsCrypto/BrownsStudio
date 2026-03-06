@@ -137,18 +137,22 @@ export default function SobreMi() {
                 </div>
               </div>
 
-              {/* 7 chips */}
-              <div className="flex flex-wrap gap-2 mb-4">
+              {/* 7 cert cards — 2 columns */}
+              <div className="grid grid-cols-2 gap-2 mb-4">
                 {certificaciones.map((cert) => {
                   const Icon = cert.icon;
                   return (
                     <div
                       key={cert.area}
-                      className="group flex items-center gap-2 px-3 py-2 rounded-xl bg-bg-secondary border border-blue-500/15 hover:border-blue-500/40 hover:bg-blue-500/5 transition-all duration-300 cursor-default"
-                      title={cert.desc}
+                      className="flex items-start gap-3 p-3 rounded-xl bg-bg-secondary border border-blue-500/10 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all duration-300"
                     >
-                      <Icon size={13} className="text-blue-400 flex-shrink-0" />
-                      <span className="text-text-primary text-xs font-medium whitespace-nowrap">{cert.area}</span>
+                      <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Icon size={14} className="text-blue-400" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-text-primary text-xs font-semibold leading-tight">{cert.area}</p>
+                        <p className="text-text-muted text-xs leading-tight mt-0.5">{cert.desc}</p>
+                      </div>
                     </div>
                   );
                 })}
