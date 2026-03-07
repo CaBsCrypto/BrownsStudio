@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, Zap, Bot, BarChart3, Globe } from "lucide-react";
+import { Check, Zap, Globe, Bot, CalendarCheck, ShoppingBag, TrendingUp, PenLine } from "lucide-react";
 import { getWhatsAppWithPackage, WHATSAPP_URL } from "@/lib/config";
 
 const paquetesWeb = [
@@ -13,7 +13,7 @@ const paquetesWeb = [
       "Landing page (1 página)",
       "Diseño responsive + WhatsApp",
       "SEO básico + Google Analytics",
-      "Entrega en 5 días hábiles",
+      "2 revisiones de diseño incluidas",
     ],
     destacado: false,
   },
@@ -25,7 +25,7 @@ const paquetesWeb = [
       "Web multi-página (hasta 5)",
       "Diseño premium personalizado",
       "SEO local + Google Maps",
-      "Revisiones ilimitadas",
+      "3 revisiones de diseño incluidas",
     ],
     destacado: true,
   },
@@ -37,7 +37,7 @@ const paquetesWeb = [
       "Todo lo del Profesional",
       "Sistema de citas online + CMS",
       "Blog + panel de administración",
-      "1 mes de soporte incluido",
+      "5 revisiones + 1 mes de soporte",
     ],
     destacado: false,
   },
@@ -45,27 +45,52 @@ const paquetesWeb = [
 
 const serviciosIA = [
   {
-    icon: Bot,
-    nombre: "Chatbot / Asistente IA",
-    subtitulo: "Atiende clientes 24/7",
-    precio: "$300",
+    icon: CalendarCheck,
+    nombre: "Gestión de Citas IA",
+    subtitulo: "Agenda que trabaja sola",
+    precio: "$150",
     features: [
-      "Responde preguntas frecuentes automáticamente",
-      "Agenda citas y califica leads",
-      "Integración con WhatsApp o web",
-      "Configurado con info de tu negocio",
+      "Agenda y confirma citas por WhatsApp",
+      "Recordatorios automáticos — reduce no-shows 60%",
+      "Cancelaciones y reagendamiento sin intervención",
+      "Sincronización con Google Calendar",
     ],
   },
   {
-    icon: BarChart3,
-    nombre: "Automatización con IA",
-    subtitulo: "Flujos inteligentes",
+    icon: ShoppingBag,
+    nombre: "Gestión de Pedidos IA",
+    subtitulo: "Del pedido a la entrega, solo",
     precio: "$200",
     features: [
-      "Reportes automáticos con IA",
-      "Respuestas a emails y formularios",
-      "Análisis de datos del negocio",
-      "Integración con herramientas existentes",
+      "Toma pedidos por WhatsApp o web automáticamente",
+      "Notificaciones al equipo en tiempo real",
+      "Seguimiento de estado para el cliente",
+      "Integración con carta o catálogo digital",
+    ],
+  },
+  {
+    icon: TrendingUp,
+    nombre: "Automatización de Ventas",
+    subtitulo: "Cierra más sin más esfuerzo",
+    precio: "$350",
+    features: [
+      "Califica leads automáticamente",
+      "Seguimiento por WhatsApp/email sin intervención",
+      "Cotizaciones y propuestas automáticas",
+      "Reportes de conversión en tiempo real",
+    ],
+  },
+  {
+    icon: PenLine,
+    nombre: "Gestor de Contenido IA",
+    subtitulo: "Redes sociales en piloto automático",
+    precio: "$150",
+    precioSuffix: "/mes",
+    features: [
+      "Genera posts para Instagram y Facebook con IA",
+      "Programación automática de publicaciones",
+      "Textos optimizados para tu negocio y voz",
+      "Reporte mensual de rendimiento",
     ],
   },
 ];
@@ -198,7 +223,7 @@ export default function Pricing() {
 
         {/* IA services */}
         {activeTab === "ia" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {serviciosIA.map((servicio) => {
               const Icon = servicio.icon;
               return (
@@ -219,7 +244,9 @@ export default function Pricing() {
                       <span className="font-display font-bold text-4xl text-purple-400">
                         {servicio.precio}
                       </span>
-                      <span className="text-text-muted text-sm">USD</span>
+                      <span className="text-text-muted text-sm">
+                        {"precioSuffix" in servicio ? servicio.precioSuffix : "USD"}
+                      </span>
                     </div>
                   </div>
 

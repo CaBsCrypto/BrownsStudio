@@ -5,19 +5,29 @@ import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
-    pregunta: "¿Cuánto tiempo toma crear mi web?",
+    pregunta: "¿Cuánto tiempo toma crear mi proyecto?",
     respuesta:
-      "Una landing page básica la entregamos en 5 días hábiles. Una web profesional multi-página toma entre 10 y 15 días. Un proyecto con sistema de citas o IA integrada puede tomar 3-4 semanas. Siempre te damos un plazo exacto en la propuesta.",
+      "Depende del servicio: una landing page básica la entregamos en 5 días hábiles; una web profesional multi-página entre 10 y 15 días; un proyecto con sistema de citas, chatbot o IA integrada puede tomar 3–4 semanas. Siempre te entregamos un plazo exacto en la propuesta antes de empezar.",
   },
   {
     pregunta: "¿Qué necesito para empezar?",
     respuesta:
-      "Solo contarnos sobre tu negocio: qué haces, quiénes son tus clientes y qué esperas de tu web o solución IA. Si tienes logo e imágenes, perfecto — si no, podemos orientarte. La conversación inicial es completamente gratuita y sin compromiso.",
+      "Solo una conversación. Cuéntanos qué hace tu negocio, quiénes son tus clientes y qué resultado esperas — más consultas, más ventas, automatizar citas, etc. Si ya tenés logo e imágenes, perfecto; si no, te orientamos. No necesitás saber de tecnología ni tener nada preparado de antemano. La primera consulta es gratuita y sin compromiso.",
   },
   {
-    pregunta: "¿Qué pasa si no me gusta el diseño?",
+    pregunta: "¿Cuántas revisiones incluye mi proyecto?",
     respuesta:
-      "Antes de escribir código te presentamos un mockup visual completo para tu aprobación. Solo avanzamos cuando estás conforme. Una vez en desarrollo, ofrecemos revisiones ilimitadas hasta que el resultado te satisfaga al 100%.",
+      "Cada plan incluye un número definido de revisiones: Básico 2, Profesional 3, y Premium 5. Antes de escribir código te presentamos un mockup completo del diseño para tu aprobación, lo que minimiza los cambios en la etapa final. Si necesitás rondas adicionales, las cotizamos por separado sin problema.",
+  },
+  {
+    pregunta: "¿Ofrecen mantenimiento y cambios futuros?",
+    respuesta:
+      "Sí. Después del lanzamiento ofrecemos planes de mantenimiento mensual que incluyen actualizaciones de contenido, ajustes de diseño, respaldo del sitio y soporte técnico. También podés contratar cambios puntuales cuando los necesites. El plan Premium incluye 1 mes de soporte sin costo adicional.",
+  },
+  {
+    pregunta: "¿Los precios incluyen hosting y dominio?",
+    respuesta:
+      "Los precios son por desarrollo y configuración del sitio. El hosting y dominio se contratan por separado — te recomendamos opciones según tu presupuesto y te ayudamos con la configuración completa. El costo estimado de hosting + dominio es de USD 10–20 al mes dependiendo del plan elegido.",
   },
 ];
 
@@ -62,44 +72,47 @@ export default function FAQ() {
         {/* Accordion */}
         <div className="space-y-3">
           {faqs.map((faq, i) => (
-            <div
-              key={i}
-              className={`reveal reveal-delay-${Math.min(i + 1, 4)} rounded-xl border overflow-hidden transition-all duration-300 ${
-                openIndex === i
-                  ? "border-accent-gold/30 bg-bg-secondary"
-                  : "border-white/5 bg-bg-secondary/50 hover:border-white/10"
-              }`}
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left cursor-pointer"
-                aria-expanded={openIndex === i}
-              >
-                <span
-                  className={`font-medium text-sm sm:text-base transition-colors duration-200 ${
-                    openIndex === i ? "text-accent-gold" : "text-text-primary"
-                  }`}
-                >
-                  {faq.pregunta}
-                </span>
-                <ChevronDown
-                  size={18}
-                  className={`text-text-muted flex-shrink-0 transition-transform duration-300 ${
-                    openIndex === i ? "rotate-180 text-accent-gold" : ""
-                  }`}
-                />
-              </button>
-
+            // Outer div: solo reveal — React nunca lo toca, visible persiste
+            <div key={i} className={`reveal reveal-delay-${Math.min(i + 1, 4)}`}>
+              {/* Inner div: clases dinámicas de React (border/bg según estado) */}
               <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  openIndex === i ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                className={`rounded-xl border overflow-hidden transition-all duration-300 ${
+                  openIndex === i
+                    ? "border-accent-gold/30 bg-bg-secondary"
+                    : "border-white/5 bg-bg-secondary/50 hover:border-white/10"
                 }`}
               >
-                <div className="px-6 pb-5">
-                  <div className="h-px bg-white/5 mb-4" />
-                  <p className="text-text-secondary text-sm leading-relaxed">
-                    {faq.respuesta}
-                  </p>
+                <button
+                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left cursor-pointer"
+                  aria-expanded={openIndex === i}
+                >
+                  <span
+                    className={`font-medium text-sm sm:text-base transition-colors duration-200 ${
+                      openIndex === i ? "text-accent-gold" : "text-text-primary"
+                    }`}
+                  >
+                    {faq.pregunta}
+                  </span>
+                  <ChevronDown
+                    size={18}
+                    className={`text-text-muted flex-shrink-0 transition-transform duration-300 ${
+                      openIndex === i ? "rotate-180 text-accent-gold" : ""
+                    }`}
+                  />
+                </button>
+
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    openIndex === i ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="px-6 pb-5">
+                    <div className="h-px bg-white/5 mb-4" />
+                    <p className="text-text-secondary text-sm leading-relaxed">
+                      {faq.respuesta}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

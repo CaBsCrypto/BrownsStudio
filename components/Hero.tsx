@@ -90,16 +90,16 @@ export default function Hero() {
 
         {/* Headline */}
         <h1 className="reveal reveal-delay-1 font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-text-primary mb-6 leading-tight tracking-tight">
-          Más clientes.
+          Webs que venden.
           <br />
-          <span className="text-gradient-gold">Más automatización.</span>
+          <span className="text-gradient-gold">IA que atiende.</span>
           <br />
-          Menos trabajo manual.
+          Negocios que crecen.
         </h1>
 
         {/* Sub */}
         <p className="reveal reveal-delay-2 text-text-secondary text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-          Creamos webs profesionales e integramos <span className="text-text-primary font-medium">soluciones de IA</span> para clínicas, restaurantes y negocios locales en Latinoamérica.
+          Web + IA para negocios que quieren crecer de verdad. Webs profesionales, <span className="text-text-primary font-medium">chatbots y automatizaciones</span> para clínicas, restaurantes y negocios locales en LATAM.
         </p>
 
         {/* CTAs */}
@@ -114,7 +114,7 @@ export default function Hero() {
             Cotizar gratis
           </a>
           <button
-            onClick={() => document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() => document.getElementById("precios")?.scrollIntoView({ behavior: "smooth" })}
             className="group flex items-center gap-2 px-8 py-4 rounded-full border border-accent-gold/40 text-text-primary font-semibold text-base hover:border-accent-gold hover:bg-accent-gold/10 transition-all duration-300 w-full sm:w-auto justify-center"
           >
             Ver servicios

@@ -29,7 +29,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["var(--font-playfair)", "Georgia", "serif"],
+        display: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
         body: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
       },
       backgroundImage: {

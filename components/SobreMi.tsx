@@ -79,7 +79,7 @@ export default function SobreMi() {
                 <div className="p-5 border-t border-white/5">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-display font-bold text-xl text-text-primary">Cabs</p>
+                      <p className="font-display font-bold text-xl text-text-primary">Cristian</p>
                       <p className="text-text-muted text-sm">Fundador · Browns Studio</p>
                     </div>
                     <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20">
@@ -108,7 +108,7 @@ export default function SobreMi() {
             </div>
 
             <h2 className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary mb-5 leading-tight">
-              Hola, soy Cabs —
+              Hola, soy Cristian —
               <br />
               <span className="text-gradient-gold">web + IA</span> para
               <br />
