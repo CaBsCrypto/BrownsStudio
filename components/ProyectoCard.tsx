@@ -19,30 +19,33 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
       />
 
       {/* Mockup frame */}
-      <div className="absolute inset-4 rounded-lg bg-black/20 backdrop-blur-sm border border-white/10 flex flex-col overflow-hidden transition-all duration-500 group-hover:inset-3">
+      <div className="absolute inset-4 rounded-lg border border-white/10 flex flex-col overflow-hidden transition-all duration-500 group-hover:inset-3 bg-black/40">
         {/* Browser bar */}
-        <div className="flex items-center gap-1.5 px-3 py-2 bg-black/30 border-b border-white/10 flex-shrink-0">
-          <span className="w-2 h-2 rounded-full bg-red-400/60" />
-          <span className="w-2 h-2 rounded-full bg-yellow-400/60" />
-          <span className="w-2 h-2 rounded-full bg-green-400/60" />
-          <span className="ml-2 flex-1 h-3 rounded-sm bg-white/10 text-white/20 text-xs flex items-center px-2">
-            {proyecto.slug}.brownsstudio.dev
+        <div className="flex items-center gap-1.5 px-3 py-2 bg-black/50 border-b border-white/10 flex-shrink-0 z-10">
+          <span className="w-2 h-2 rounded-full bg-red-400/70" />
+          <span className="w-2 h-2 rounded-full bg-yellow-400/70" />
+          <span className="w-2 h-2 rounded-full bg-green-400/70" />
+          <span className="ml-2 flex-1 h-3.5 rounded-sm bg-white/10 text-white/40 text-[10px] flex items-center px-2 overflow-hidden whitespace-nowrap">
+            {proyecto.linkDemo?.replace("https://", "") ?? `${proyecto.slug}.vercel.app`}
           </span>
         </div>
-        {/* Content area */}
-        <div className="flex-1 p-4 flex flex-col gap-2.5">
-          <div className="h-3 w-3/4 rounded bg-white/20" />
-          <div className="h-2 w-full rounded bg-white/10" />
-          <div className="h-2 w-5/6 rounded bg-white/10" />
-          <div className="mt-2 flex gap-2">
-            <div className="h-7 w-20 rounded bg-white/20" />
-            <div className="h-7 w-20 rounded bg-white/10" />
-          </div>
-          <div className="mt-auto grid grid-cols-3 gap-2">
-            {[1, 2, 3].map((n) => (
-              <div key={n} className="h-14 rounded bg-white/10" />
-            ))}
-          </div>
+        {/* Screenshot real del sitio */}
+        <div className="flex-1 relative overflow-hidden">
+          {proyecto.linkDemo ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={`https://image.thum.io/get/width/1280/crop/800/${proyecto.linkDemo}`}
+              alt={`Preview de ${proyecto.nombre}`}
+              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
+          ) : (
+            <div className="flex-1 p-4 flex flex-col gap-2.5">
+              <div className="h-3 w-3/4 rounded bg-white/20" />
+              <div className="h-2 w-full rounded bg-white/10" />
+              <div className="h-2 w-5/6 rounded bg-white/10" />
+            </div>
+          )}
         </div>
       </div>
 
