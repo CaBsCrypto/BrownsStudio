@@ -18,16 +18,15 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
         style={{ background: proyecto.color }}
       />
 
-      {/* Screenshot full-bleed */}
-      {proyecto.linkDemo && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={`https://image.thum.io/get/width/1280/crop/800/${proyecto.linkDemo}`}
-          alt={`Preview de ${proyecto.nombre}`}
-          className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-          loading="lazy"
-        />
-      )}
+      {/* Screenshot estático local — carga instantánea */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={`/previews/${proyecto.slug}.jpg`}
+        alt={`Preview de ${proyecto.nombre}`}
+        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+        loading="lazy"
+        onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+      />
 
       {/* Gradient overlay — suaviza el corte inferior */}
       <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-bg-tertiary via-bg-tertiary/60 to-transparent" />
