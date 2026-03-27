@@ -21,7 +21,7 @@ function useCountUp(target: number, duration: number, active: boolean) {
 }
 
 const stats = [
-  { numeric: 15, suffix: "+", label: "Proyectos" },
+  { numeric: 5, suffix: "+", label: "Proyectos" },
   { numeric: 7, suffix: "", label: "Certs. Google IA" },
   { numeric: 100, suffix: "%", label: "Satisfacción" },
 ];

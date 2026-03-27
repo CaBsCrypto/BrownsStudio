@@ -14,6 +14,8 @@ const config: Config = {
           secondary: "#1A1614",
           tertiary: "#231F1C",
           card: "#2A2420",
+          light: "#F8F5EF",
+          "light-2": "#EDE7DC",
         },
         accent: {
           gold: "#C8956C",

@@ -53,18 +53,18 @@ export default function FAQ() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="faq" className="section-padding bg-bg-primary">
+    <section ref={sectionRef} id="faq" className="section-padding bg-bg-light">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent-gold/20 text-accent-gold text-xs font-medium tracking-widest uppercase mb-4">
+          <div className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent-gold/30 bg-accent-gold/8 text-accent-gold text-xs font-medium tracking-widest uppercase mb-4">
             Preguntas Frecuentes
           </div>
-          <h2 className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary mb-4">
+          <h2 className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
             Tus dudas,{" "}
             <span className="text-gradient-gold">resueltas</span>
           </h2>
-          <p className="reveal reveal-delay-2 text-text-secondary text-lg">
+          <p className="reveal reveal-delay-2 text-stone-600 text-lg">
             ¿Tienes una pregunta que no está aquí? Escríbenos por WhatsApp.
           </p>
         </div>
@@ -78,8 +78,8 @@ export default function FAQ() {
               <div
                 className={`rounded-xl border overflow-hidden transition-all duration-300 ${
                   openIndex === i
-                    ? "border-accent-gold/30 bg-bg-secondary"
-                    : "border-white/5 bg-bg-secondary/50 hover:border-white/10"
+                    ? "border-accent-gold/40 bg-white"
+                    : "border-stone-200 bg-white hover:border-stone-300"
                 }`}
               >
                 <button
@@ -89,14 +89,14 @@ export default function FAQ() {
                 >
                   <span
                     className={`font-medium text-sm sm:text-base transition-colors duration-200 ${
-                      openIndex === i ? "text-accent-gold" : "text-text-primary"
+                      openIndex === i ? "text-accent-gold" : "text-stone-800"
                     }`}
                   >
                     {faq.pregunta}
                   </span>
                   <ChevronDown
                     size={18}
-                    className={`text-text-muted flex-shrink-0 transition-transform duration-300 ${
+                    className={`text-stone-400 flex-shrink-0 transition-transform duration-300 ${
                       openIndex === i ? "rotate-180 text-accent-gold" : ""
                     }`}
                   />
@@ -108,8 +108,8 @@ export default function FAQ() {
                   }`}
                 >
                   <div className="px-6 pb-5">
-                    <div className="h-px bg-white/5 mb-4" />
-                    <p className="text-text-secondary text-sm leading-relaxed">
+                    <div className="h-px bg-stone-100 mb-4" />
+                    <p className="text-stone-600 text-sm leading-relaxed">
                       {faq.respuesta}
                     </p>
                   </div>
