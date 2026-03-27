@@ -11,42 +11,38 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
   const delayClass = `reveal-delay-${Math.min(index + 1, 4)}`;
 
   const preview = (
-    <div className="relative h-52 sm:h-60 overflow-hidden">
-      {/* Gradient preview */}
+    <div className="relative h-56 overflow-hidden">
+      {/* Gradient bg — siempre presente como base y fallback */}
       <div
-        className="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
+        className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
         style={{ background: proyecto.color }}
       />
 
-      {/* Mockup frame */}
-      <div className="absolute inset-4 rounded-lg border border-white/10 flex flex-col overflow-hidden transition-all duration-500 group-hover:inset-3 bg-black/40">
-        {/* Browser bar */}
-        <div className="flex items-center gap-1.5 px-3 py-2 bg-black/50 border-b border-white/10 flex-shrink-0 z-10">
-          <span className="w-2 h-2 rounded-full bg-red-400/70" />
-          <span className="w-2 h-2 rounded-full bg-yellow-400/70" />
-          <span className="w-2 h-2 rounded-full bg-green-400/70" />
-          <span className="ml-2 flex-1 h-3.5 rounded-sm bg-white/10 text-white/40 text-[10px] flex items-center px-2 overflow-hidden whitespace-nowrap">
-            {proyecto.linkDemo?.replace("https://", "") ?? `${proyecto.slug}.vercel.app`}
-          </span>
-        </div>
-        {/* Screenshot real del sitio */}
-        <div className="flex-1 relative overflow-hidden">
-          {proyecto.linkDemo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={`https://image.thum.io/get/width/1280/crop/800/${proyecto.linkDemo}`}
-              alt={`Preview de ${proyecto.nombre}`}
-              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-              loading="lazy"
-            />
-          ) : (
-            <div className="flex-1 p-4 flex flex-col gap-2.5">
-              <div className="h-3 w-3/4 rounded bg-white/20" />
-              <div className="h-2 w-full rounded bg-white/10" />
-              <div className="h-2 w-5/6 rounded bg-white/10" />
-            </div>
-          )}
-        </div>
+      {/* Screenshot full-bleed */}
+      {proyecto.linkDemo && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={`https://image.thum.io/get/width/1280/crop/800/${proyecto.linkDemo}`}
+          alt={`Preview de ${proyecto.nombre}`}
+          className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+          loading="lazy"
+        />
+      )}
+
+      {/* Gradient overlay — suaviza el corte inferior */}
+      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-bg-tertiary via-bg-tertiary/60 to-transparent" />
+
+      {/* URL pill flotante */}
+      <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/55 backdrop-blur-md border border-white/10">
+        <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
+        <span className="text-white/60 text-[10px] font-mono tracking-tight truncate max-w-[160px]">
+          {proyecto.linkDemo?.replace("https://", "").split("/")[0] ?? `${proyecto.slug}.vercel.app`}
+        </span>
+      </div>
+
+      {/* Botón top-right */}
+      <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-200">
+        <ArrowUpRight size={12} className="text-white/70" />
       </div>
 
       {/* Coming Soon overlay */}
@@ -87,10 +83,6 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
             </div>
           </div>
 
-          {/* Top-right arrow */}
-          <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-bg-primary/80 backdrop-blur-sm border border-white/10 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-200">
-            <ArrowUpRight size={14} className="text-accent-gold" />
-          </div>
         </>
       )}
     </div>
