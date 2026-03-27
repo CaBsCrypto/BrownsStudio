@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "screenshots": "node scripts/screenshots.mjs"
   },
   "dependencies": {
     "autoprefixer": "^10.4.27",
@@ -21,6 +22,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
+    "playwright": "^1.58.2",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
