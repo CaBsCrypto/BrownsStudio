@@ -53,70 +53,85 @@ export default function FAQ() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="faq" className="section-padding bg-bg-light">
+    <section
+      ref={sectionRef}
+      id="faq"
+      className="section-padding"
+      style={{ background: "#0e0e0e" }}
+    >
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent-gold/30 bg-accent-gold/8 text-accent-gold text-xs font-medium tracking-widest uppercase mb-4">
+          <div
+            className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4"
+            style={{ border: "1px solid rgba(71,196,255,0.2)", background: "rgba(71,196,255,0.05)", color: "#47c4ff" }}
+          >
             Preguntas Frecuentes
           </div>
-          <h2 className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
+          <h2
+            className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#e5e5e5] mb-4"
+            style={{ letterSpacing: "-0.03em" }}
+          >
             Tus dudas,{" "}
             <span className="text-gradient-gold">resueltas</span>
           </h2>
-          <p className="reveal reveal-delay-2 text-stone-600 text-lg">
+          <p className="reveal reveal-delay-2 text-[#9e9e9e] text-lg">
             ¿Tienes una pregunta que no está aquí? Escríbenos por WhatsApp.
           </p>
         </div>
 
-        {/* Accordion */}
-        <div className="space-y-3">
-          {faqs.map((faq, i) => (
-            // Outer div: solo reveal — React nunca lo toca, visible persiste
-            <div key={i} className={`reveal reveal-delay-${Math.min(i + 1, 4)}`}>
-              {/* Inner div: clases dinámicas de React (border/bg según estado) */}
-              <div
-                className={`rounded-xl border overflow-hidden transition-all duration-300 ${
-                  openIndex === i
-                    ? "border-accent-gold/40 bg-white"
-                    : "border-stone-200 bg-white hover:border-stone-300"
-                }`}
-              >
-                <button
-                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left cursor-pointer"
-                  aria-expanded={openIndex === i}
-                >
-                  <span
-                    className={`font-medium text-sm sm:text-base transition-colors duration-200 ${
-                      openIndex === i ? "text-accent-gold" : "text-stone-800"
-                    }`}
-                  >
-                    {faq.pregunta}
-                  </span>
-                  <ChevronDown
-                    size={18}
-                    className={`text-stone-400 flex-shrink-0 transition-transform duration-300 ${
-                      openIndex === i ? "rotate-180 text-accent-gold" : ""
-                    }`}
-                  />
-                </button>
-
+        {/* Accordion — no divider lines, tonal shift only */}
+        <div className="space-y-2">
+          {faqs.map((faq, i) => {
+            const isOpen = openIndex === i;
+            return (
+              <div key={i} className={`reveal reveal-delay-${Math.min(i + 1, 4)}`}>
                 <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    openIndex === i ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                  }`}
+                  className="rounded-xl overflow-hidden transition-all duration-300"
+                  style={{
+                    background: isOpen ? "#191919" : "#131313",
+                    border: isOpen
+                      ? "1px solid rgba(71,196,255,0.15)"
+                      : "1px solid rgba(72,72,72,0.12)",
+                  }}
                 >
-                  <div className="px-6 pb-5">
-                    <div className="h-px bg-stone-100 mb-4" />
-                    <p className="text-stone-600 text-sm leading-relaxed">
-                      {faq.respuesta}
-                    </p>
+                  <button
+                    onClick={() => setOpenIndex(isOpen ? null : i)}
+                    className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left cursor-pointer"
+                    aria-expanded={isOpen}
+                  >
+                    <span
+                      className="font-medium text-sm sm:text-base transition-colors duration-200"
+                      style={{ color: isOpen ? "#e5e5e5" : "#9e9e9e" }}
+                    >
+                      {faq.pregunta}
+                    </span>
+                    <ChevronDown
+                      size={18}
+                      className="flex-shrink-0 transition-transform duration-300"
+                      style={{
+                        color: isOpen ? "#47c4ff" : "#484848",
+                        transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                      }}
+                    />
+                  </button>
+
+                  <div
+                    className="overflow-hidden transition-all duration-300"
+                    style={{ maxHeight: isOpen ? "384px" : "0", opacity: isOpen ? 1 : 0 }}
+                  >
+                    <div className="px-6 pb-5">
+                      {/* Tonal divider — no border, just a subtle bg line */}
+                      <div className="h-px mb-4" style={{ background: "rgba(72,72,72,0.15)" }} />
+                      <p className="text-[#9e9e9e] text-sm leading-relaxed">
+                        {faq.respuesta}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -25,9 +25,11 @@ const pilares = [
         popular: true,
       },
     ],
-    accent: "text-accent-gold",
-    border: "border-accent-gold/20",
-    bg: "from-accent-gold/8 to-transparent",
+    // Metallic silver theme
+    accentColor: "#c6c6c7",
+    borderStyle: "rgba(198,198,199,0.12)",
+    bgGradient: "rgba(25,25,25,0.6)",
+    highlightBorder: "rgba(198,198,199,0.25)",
   },
   {
     categoria: "Soluciones de IA",
@@ -49,9 +51,11 @@ const pilares = [
         popular: false,
       },
     ],
-    accent: "text-purple-400",
-    border: "border-purple-500/20",
-    bg: "from-purple-900/15 to-transparent",
+    // Tertiary electric theme
+    accentColor: "#47c4ff",
+    borderStyle: "rgba(71,196,255,0.1)",
+    bgGradient: "rgba(10,15,30,0.6)",
+    highlightBorder: "rgba(71,196,255,0.25)",
   },
 ];
 
@@ -76,19 +80,30 @@ export default function Servicios() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="servicios" className="section-padding bg-bg-secondary">
+    <section
+      ref={sectionRef}
+      id="servicios"
+      className="section-padding"
+      style={{ background: "#0e0e0e" }}
+    >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent-gold/20 text-accent-gold text-xs font-medium tracking-widest uppercase mb-4">
+          <div
+            className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4"
+            style={{ border: "1px solid rgba(71,196,255,0.2)", background: "rgba(71,196,255,0.05)", color: "#47c4ff" }}
+          >
             Servicios
           </div>
-          <h2 className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary mb-4">
+          <h2
+            className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#e5e5e5] mb-4"
+            style={{ letterSpacing: "-0.03em" }}
+          >
             Web e IA —{" "}
             <span className="text-gradient-gold">dos herramientas,</span>
             <br className="hidden sm:block" /> un solo objetivo
           </h2>
-          <p className="reveal reveal-delay-2 text-text-secondary text-lg max-w-xl mx-auto">
+          <p className="reveal reveal-delay-2 text-[#9e9e9e] text-lg max-w-xl mx-auto">
             Conseguir más clientes para tu negocio.
           </p>
         </div>
@@ -98,16 +113,24 @@ export default function Servicios() {
           {pilares.map((pilar, pi) => (
             <div
               key={pilar.categoria}
-              className={`reveal reveal-delay-${pi + 1} rounded-2xl border ${pilar.border} bg-gradient-to-b ${pilar.bg} p-6 lg:p-8`}
+              className={`reveal reveal-delay-${pi + 1} rounded-2xl p-6 lg:p-8`}
+              style={{
+                background: pilar.bgGradient,
+                backdropFilter: "blur(20px)",
+                border: `1px solid ${pilar.borderStyle}`,
+              }}
             >
               {/* Pilar header */}
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-2xl">{pilar.emoji}</span>
                 <div>
-                  <h3 className={`font-display font-bold text-xl ${pilar.accent}`}>
+                  <h3
+                    className="font-display font-bold text-xl"
+                    style={{ color: pilar.accentColor, letterSpacing: "-0.02em" }}
+                  >
                     {pilar.categoria}
                   </h3>
-                  <p className="text-text-muted text-sm">{pilar.descripcion}</p>
+                  <p className="text-[#5a5a5a] text-sm">{pilar.descripcion}</p>
                 </div>
               </div>
 
@@ -118,27 +141,45 @@ export default function Servicios() {
                   return (
                     <div
                       key={servicio.titulo}
-                      className="relative p-5 rounded-xl bg-bg-primary/60 border border-white/5 hover:border-white/10 transition-all duration-300 hover:-translate-y-0.5 group"
+                      className="relative p-5 rounded-xl transition-all duration-300 hover:-translate-y-0.5 group"
+                      style={{
+                        background: "rgba(0,0,0,0.4)",
+                        border: "1px solid rgba(72,72,72,0.12)",
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = pilar.highlightBorder;
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(72,72,72,0.12)";
+                      }}
                     >
                       {servicio.popular && (
-                        <span className="absolute -top-2.5 left-4 px-3 py-0.5 rounded-full bg-accent-gold text-bg-primary text-xs font-bold">
+                        <span
+                          className="absolute -top-2.5 left-4 px-3 py-0.5 rounded-full text-xs font-bold text-black"
+                          style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)" }}
+                        >
                           Más solicitado
                         </span>
                       )}
 
                       <div className="flex items-start justify-between gap-4 mb-2">
                         <div className="flex items-center gap-3">
-                          <div className={`w-9 h-9 rounded-lg flex items-center justify-center bg-white/5 border border-white/5`}>
-                            <Icon size={17} className={pilar.accent} />
+                          <div
+                            className="w-9 h-9 rounded-lg flex items-center justify-center"
+                            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(72,72,72,0.15)" }}
+                          >
+                            <Icon size={17} style={{ color: pilar.accentColor }} />
                           </div>
                           <div>
-                            <p className="text-text-primary font-semibold text-sm">{servicio.titulo}</p>
-                            <p className={`text-xs font-medium ${pilar.accent}`}>Desde {servicio.desde} USD</p>
+                            <p className="text-[#e5e5e5] font-semibold text-sm">{servicio.titulo}</p>
+                            <p className="text-xs font-medium" style={{ color: pilar.accentColor }}>
+                              Desde {servicio.desde} USD
+                            </p>
                           </div>
                         </div>
                       </div>
 
-                      <p className="text-text-muted text-sm leading-relaxed mb-4 pl-12">
+                      <p className="text-[#5a5a5a] text-sm leading-relaxed mb-4 pl-12">
                         {servicio.descripcion}
                       </p>
 
@@ -146,7 +187,8 @@ export default function Servicios() {
                         href={`${WHATSAPP_URL}&text=${encodeURIComponent(`Hola, me interesa cotizar: ${servicio.titulo}`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`pl-12 flex items-center gap-1.5 text-xs font-semibold ${pilar.accent} opacity-60 hover:opacity-100 transition-opacity group-hover:opacity-100`}
+                        className="pl-12 flex items-center gap-1.5 text-xs font-semibold opacity-50 hover:opacity-100 transition-opacity group-hover:opacity-100"
+                        style={{ color: pilar.accentColor }}
                       >
                         Cotizar <ArrowRight size={11} />
                       </a>
@@ -159,9 +201,14 @@ export default function Servicios() {
         </div>
 
         {/* Bottom note */}
-        <p className="reveal text-center text-text-muted text-sm mt-8">
+        <p className="reveal text-center text-[#5a5a5a] text-sm mt-8">
           ¿Necesitas web + IA juntos?{" "}
-          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:underline">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#9e9e9e] hover:text-[#47c4ff] transition-colors duration-200"
+          >
             Armamos un paquete a tu medida.
           </a>
         </p>

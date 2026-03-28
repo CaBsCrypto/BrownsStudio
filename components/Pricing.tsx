@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, Zap, Globe, Bot, CalendarCheck, ShoppingBag, TrendingUp, PenLine } from "lucide-react";
+import { Check, Zap, Globe, Bot } from "lucide-react";
 import { getWhatsAppWithPackage, WHATSAPP_URL } from "@/lib/config";
 
 const paquetesWeb = [
@@ -45,7 +45,6 @@ const paquetesWeb = [
 
 const serviciosIA = [
   {
-    icon: CalendarCheck,
     nombre: "Gestión de Citas IA",
     subtitulo: "Agenda que trabaja sola",
     precio: "$150",
@@ -57,7 +56,6 @@ const serviciosIA = [
     ],
   },
   {
-    icon: ShoppingBag,
     nombre: "Gestión de Pedidos IA",
     subtitulo: "Del pedido a la entrega, solo",
     precio: "$200",
@@ -69,7 +67,6 @@ const serviciosIA = [
     ],
   },
   {
-    icon: TrendingUp,
     nombre: "Automatización de Ventas",
     subtitulo: "Cierra más sin más esfuerzo",
     precio: "$350",
@@ -81,7 +78,6 @@ const serviciosIA = [
     ],
   },
   {
-    icon: PenLine,
     nombre: "Gestor de Contenido IA",
     subtitulo: "Redes sociales en piloto automático",
     precio: "$150",
@@ -117,43 +113,65 @@ export default function Pricing() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="precios" className="section-padding bg-bg-primary">
-      <div className="max-w-6xl mx-auto">
+    <section
+      ref={sectionRef}
+      id="precios"
+      className="section-padding"
+      style={{ background: "#000000" }}
+    >
+      {/* Underlight */}
+      <div
+        className="absolute inset-x-0 top-0 h-96 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(5,169,227,0.04) 0%, transparent 70%)" }}
+      />
+
+      <div className="relative max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent-gold/20 text-accent-gold text-xs font-medium tracking-widest uppercase mb-4">
+          <div
+            className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4"
+            style={{ border: "1px solid rgba(71,196,255,0.2)", background: "rgba(71,196,255,0.05)", color: "#47c4ff" }}
+          >
             Servicios & Precios
           </div>
-          <h2 className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary mb-4">
+          <h2
+            className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#e5e5e5] mb-4"
+            style={{ letterSpacing: "-0.03em" }}
+          >
             Inversión que se{" "}
             <span className="text-gradient-gold">paga sola</span>
           </h2>
-          <p className="reveal reveal-delay-2 text-text-secondary text-lg max-w-xl mx-auto">
+          <p className="reveal reveal-delay-2 text-[#9e9e9e] text-lg max-w-xl mx-auto">
             Precios claros, sin costos ocultos. Todos en USD.
           </p>
         </div>
 
         {/* Tab switcher */}
         <div className="reveal reveal-delay-2 flex items-center justify-center mb-10">
-          <div className="flex p-1 rounded-xl bg-bg-secondary border border-white/10">
+          <div
+            className="flex p-1 rounded-xl"
+            style={{ background: "#0e0e0e", border: "1px solid rgba(72,72,72,0.2)" }}
+          >
             <button
               onClick={() => setActiveTab("web")}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
+              className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300"
+              style={
                 activeTab === "web"
-                  ? "bg-accent-gold text-bg-primary shadow-gold"
-                  : "text-text-muted hover:text-text-primary"
-              }`}
+                  ? { background: "linear-gradient(135deg, #c6c6c7, #939eb5)", color: "#000", boxShadow: "0 0 20px rgba(198,198,199,0.15)" }
+                  : { color: "#5a5a5a" }
+              }
             >
               <Globe size={15} />
               Desarrollo Web
             </button>
             <button
               onClick={() => setActiveTab("ia")}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
+              className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300"
+              style={
                 activeTab === "ia"
-                  ? "bg-purple-600 text-white shadow-[0_0_20px_rgba(147,51,234,0.3)]"
-                  : "text-text-muted hover:text-text-primary"
-              }`}
+                  ? { background: "rgba(71,196,255,0.15)", color: "#47c4ff", boxShadow: "0 0 20px rgba(71,196,255,0.1)", border: "1px solid rgba(71,196,255,0.2)" }
+                  : { color: "#5a5a5a" }
+              }
             >
               <Bot size={15} />
               Soluciones IA
@@ -167,38 +185,48 @@ export default function Pricing() {
             {paquetesWeb.map((paquete) => (
               <div
                 key={paquete.nombre}
-                className={`relative rounded-2xl border bg-bg-secondary p-7 transition-all duration-500 hover:-translate-y-1 ${
-                  paquete.destacado
-                    ? "border-accent-gold/50 shadow-gold lg:-mt-4 lg:mb-4"
-                    : "border-white/10"
-                }`}
+                className="relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1"
+                style={{
+                  background: paquete.destacado ? "rgba(25,25,25,0.8)" : "rgba(19,19,19,0.6)",
+                  backdropFilter: "blur(20px)",
+                  border: paquete.destacado
+                    ? "1px solid rgba(198,198,199,0.2)"
+                    : "1px solid rgba(72,72,72,0.12)",
+                  ...(paquete.destacado ? { marginTop: "-1rem", marginBottom: "1rem", boxShadow: "0 0 40px rgba(198,198,199,0.05)" } : {}),
+                }}
               >
                 {paquete.destacado && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1 rounded-full bg-accent-gold text-bg-primary text-xs font-bold">
+                  <div
+                    className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1 rounded-full text-xs font-bold text-black"
+                    style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)" }}
+                  >
                     <Zap size={11} fill="currentColor" />
                     Más Popular
                   </div>
                 )}
 
                 <div className="mb-6">
-                  <h3 className="font-display font-bold text-2xl text-text-primary mb-0.5">
+                  <h3
+                    className="font-display font-bold text-2xl text-[#e5e5e5] mb-0.5"
+                    style={{ letterSpacing: "-0.02em" }}
+                  >
                     {paquete.nombre}
                   </h3>
-                  <p className="text-text-muted text-sm mb-4">{paquete.subtitulo}</p>
+                  <p className="text-[#5a5a5a] text-sm mb-4">{paquete.subtitulo}</p>
                   <div className="flex items-baseline gap-1">
                     <span className="font-display font-bold text-4xl text-gradient-gold">
                       {paquete.precio}
                     </span>
-                    <span className="text-text-muted text-sm">USD</span>
+                    <span className="text-[#5a5a5a] text-sm">USD</span>
                   </div>
                 </div>
 
-                <div className="h-px bg-white/5 mb-5" />
+                <div className="h-px mb-5" style={{ background: "rgba(72,72,72,0.15)" }} />
 
                 <ul className="space-y-3 mb-6">
                   {paquete.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2.5 text-sm text-text-secondary">
-                      <Check size={15} className="text-accent-gold flex-shrink-0 mt-0.5" />
+                    <li key={feature} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
+                      <Check size={15} className="text-[#c6c6c7] flex-shrink-0 mt-0.5" />
                       {feature}
                     </li>
                   ))}
@@ -208,11 +236,24 @@ export default function Pricing() {
                   href={getWhatsAppWithPackage(paquete.nombre)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`block w-full text-center py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${
+                  className="block w-full text-center py-3 rounded-xl text-sm font-semibold transition-all duration-300"
+                  style={
                     paquete.destacado
-                      ? "bg-accent-gold text-bg-primary hover:bg-accent-gold-light"
-                      : "border border-accent-gold/40 text-accent-gold hover:bg-accent-gold hover:text-bg-primary"
-                  }`}
+                      ? { background: "linear-gradient(135deg, #c6c6c7, #939eb5)", color: "#000" }
+                      : { border: "1px solid rgba(198,198,199,0.2)", color: "#9e9e9e" }
+                  }
+                  onMouseEnter={(e) => {
+                    if (!paquete.destacado) {
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(198,198,199,0.4)";
+                      (e.currentTarget as HTMLElement).style.color = "#e5e5e5";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!paquete.destacado) {
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(198,198,199,0.2)";
+                      (e.currentTarget as HTMLElement).style.color = "#9e9e9e";
+                    }
+                  }}
                 >
                   Cotizar paquete {paquete.nombre}
                 </a>
@@ -224,65 +265,87 @@ export default function Pricing() {
         {/* IA services */}
         {activeTab === "ia" && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {serviciosIA.map((servicio) => {
-              const Icon = servicio.icon;
-              return (
+            {serviciosIA.map((servicio) => (
+              <div
+                key={servicio.nombre}
+                className="relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1"
+                style={{
+                  background: "rgba(10,15,30,0.7)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(71,196,255,0.1)",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(71,196,255,0.25)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(71,196,255,0.1)";
+                }}
+              >
+                {/* AI corner orb */}
                 <div
-                  key={servicio.nombre}
-                  className="relative rounded-2xl border border-purple-500/20 bg-gradient-to-b from-purple-900/15 to-transparent p-7 transition-all duration-500 hover:-translate-y-1 hover:border-purple-500/40"
-                >
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 bg-purple-500/10 border border-purple-500/20">
-                    <Icon size={20} className="text-purple-400" />
-                  </div>
+                  className="absolute top-0 right-0 w-24 h-24 rounded-bl-full pointer-events-none"
+                  style={{ background: "radial-gradient(circle at top right, rgba(71,196,255,0.06) 0%, transparent 70%)" }}
+                />
 
-                  <div className="mb-6">
-                    <h3 className="font-display font-bold text-2xl text-text-primary mb-0.5">
-                      {servicio.nombre}
-                    </h3>
-                    <p className="text-text-muted text-sm mb-4">{servicio.subtitulo}</p>
-                    <div className="flex items-baseline gap-1">
-                      <span className="font-display font-bold text-4xl text-purple-400">
-                        {servicio.precio}
-                      </span>
-                      <span className="text-text-muted text-sm">
-                        {"precioSuffix" in servicio ? servicio.precioSuffix : "USD"}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="h-px bg-white/5 mb-5" />
-
-                  <ul className="space-y-3 mb-6">
-                    {servicio.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2.5 text-sm text-text-secondary">
-                        <Check size={15} className="text-purple-400 flex-shrink-0 mt-0.5" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <a
-                    href={getWhatsAppWithPackage(servicio.nombre)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full text-center py-3 rounded-xl text-sm font-semibold border border-purple-500/40 text-purple-400 hover:bg-purple-600 hover:text-white hover:border-purple-600 transition-all duration-300"
+                <div className="mb-6">
+                  <h3
+                    className="font-display font-bold text-2xl text-[#e5e5e5] mb-0.5"
+                    style={{ letterSpacing: "-0.02em" }}
                   >
-                    Cotizar {servicio.nombre}
-                  </a>
+                    {servicio.nombre}
+                  </h3>
+                  <p className="text-[#5a5a5a] text-sm mb-4">{servicio.subtitulo}</p>
+                  <div className="flex items-baseline gap-1">
+                    <span className="font-display font-bold text-4xl text-gradient-tertiary">
+                      {servicio.precio}
+                    </span>
+                    <span className="text-[#5a5a5a] text-sm">
+                      {"precioSuffix" in servicio ? (servicio as typeof servicio & { precioSuffix: string }).precioSuffix : "USD"}
+                    </span>
+                  </div>
                 </div>
-              );
-            })}
+
+                <div className="h-px mb-5" style={{ background: "rgba(71,196,255,0.1)" }} />
+
+                <ul className="space-y-3 mb-6">
+                  {servicio.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
+                      <Check size={15} className="text-[#47c4ff] flex-shrink-0 mt-0.5" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href={getWhatsAppWithPackage(servicio.nombre)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-center py-3 rounded-xl text-sm font-semibold transition-all duration-300"
+                  style={{ border: "1px solid rgba(71,196,255,0.2)", color: "#47c4ff" }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = "rgba(71,196,255,0.1)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(71,196,255,0.4)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = "transparent";
+                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(71,196,255,0.2)";
+                  }}
+                >
+                  Cotizar {servicio.nombre}
+                </a>
+              </div>
+            ))}
           </div>
         )}
 
         {/* Bottom note */}
-        <p className="reveal text-center text-text-muted text-sm mt-8">
+        <p className="reveal text-center text-[#5a5a5a] text-sm mt-8">
           ¿Necesitas web + IA juntos?{" "}
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-accent-gold hover:underline"
+            className="text-[#9e9e9e] hover:text-[#47c4ff] transition-colors duration-200"
           >
             Armamos un paquete a tu medida.
           </a>
