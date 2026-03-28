@@ -1,18 +1,23 @@
 "use client";
 
 /**
- * HeroCubes — Interactive glass cube cluster
+ * HeroCubes — Individual cube grab & throw
  *
- * Physics: critically-damped spring (no oscillation) + mouse repulsion
- * Uses useFrame delta param (not clock.getDelta) to be frame-rate safe.
- * Rotation uses an accumulator in phys ref — no unbounded +=.
+ * Interaction model:
+ *  - Hover  → cursor becomes "grab"
+ *  - Click + drag on a SPECIFIC cube → that cube follows your mouse
+ *  - Release → cube gets thrown with mouse velocity, then springs back
+ *  - Other cubes are NOT affected while dragging
+ *
+ * Uses react-three-fiber's built-in mesh raycasting (onPointerDown/Up/Enter/Leave)
+ * so no manual ray intersection is needed for per-cube clicks.
  */
 
-import { useRef, useCallback, useState } from "react";
+import { useRef, useCallback } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-// ── Layout ────────────────────────────────────────────────────────────────
+// ── Cube positions ────────────────────────────────────────────────────────
 const CUBES: [number, number, number, number, number][] = [
   //  x      y      z    rotSeed  delay
   [ 0.0,  0.0,  0.0,  0.50, 0.00],
@@ -44,107 +49,132 @@ const MAT = new THREE.MeshPhysicalMaterial({
   depthWrite:  false,
 });
 
-// ── Global interaction state ──────────────────────────────────────────────
-const MOUSE = new THREE.Vector3(9999, 9999, 0);
-const INTERACT = { pressed: false, burstPending: false, burstTime: -999 };
+// ── Global state ──────────────────────────────────────────────────────────
+const MOUSE_WORLD = new THREE.Vector3(9999, 9999, 0); // 3D mouse position
+const MOUSE_VEL   = new THREE.Vector3();               // mouse velocity (for throw)
+const _PREV_MOUSE = new THREE.Vector3();
+const GRABBED     = { index: -1 };                     // which cube is being dragged
 
-// ── Mouse tracker (inside Canvas, has access to camera + clock) ───────────
+// ── Mouse tracker — runs inside Canvas ───────────────────────────────────
 const _ray   = new THREE.Raycaster();
-const _plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+const _plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0); // z=0 plane
 
 function MouseTracker() {
   const { camera } = useThree();
-  useFrame(({ pointer, clock }) => {
+
+  useFrame(({ pointer }, rawDt) => {
+    const dt = Math.max(rawDt, 0.001);
+    _PREV_MOUSE.copy(MOUSE_WORLD);
     _ray.setFromCamera(pointer, camera);
-    _ray.ray.intersectPlane(_plane, MOUSE);
-    if (INTERACT.burstPending) {
-      INTERACT.burstTime    = clock.elapsedTime;
-      INTERACT.burstPending = false;
-    }
+    _ray.ray.intersectPlane(_plane, MOUSE_WORLD);
+    // Mouse velocity for throw-on-release (world units / second)
+    MOUSE_VEL.copy(MOUSE_WORLD).sub(_PREV_MOUSE).divideScalar(dt);
   });
+
   return null;
 }
 
-// ── Single cube with spring-damper physics ────────────────────────────────
+// ── Single interactive cube ───────────────────────────────────────────────
 function GlassCube({
+  index,
   origin,
   rotSeed,
   floatDelay,
 }: {
-  origin: [number, number, number];
-  rotSeed: number;
+  index:      number;
+  origin:     [number, number, number];
+  rotSeed:    number;
   floatDelay: number;
 }) {
   const mesh = useRef<THREE.Mesh>(null!);
 
-  const phys = useRef({
-    pos:  new THREE.Vector3(...origin),
-    vel:  new THREE.Vector3(),
-    orig: new THREE.Vector3(...origin),
-    // rotation accumulator (degrees equivalent, but in radians)
-    rotX: rotSeed,
-    rotY: rotSeed * 0.8,
-    // base spin rate (radians/sec), will lerp up when disturbed
-    spinX: 0.18 + rotSeed * 0.05,
-    spinY: 0.14 + rotSeed * 0.04,
-    // pre-allocated temp vectors
-    _tgt: new THREE.Vector3(),
+  // Per-cube physics state — all pre-allocated (no GC)
+  const p = useRef({
+    pos:   new THREE.Vector3(...origin),
+    vel:   new THREE.Vector3(),
+    orig:  new THREE.Vector3(...origin),
+    rotX:  rotSeed,
+    rotY:  rotSeed * 0.8,
+    spinX: 0.2  + rotSeed * 0.05,   // radians/sec
+    spinY: 0.15 + rotSeed * 0.04,
+    _tgt:  new THREE.Vector3(),
     _disp: new THREE.Vector3(),
-    _rep:  new THREE.Vector3(),
-  });
+  }).current;
 
-  useFrame(({ clock }, rawDelta) => {
-    const p  = phys.current;
-    // Cap delta — prevents explosion after tab switch / focus loss
-    const dt = Math.min(rawDelta, 0.05);
+  useFrame(({ clock }, rawDt) => {
+    const dt = Math.min(rawDt, 0.05); // cap to prevent explosion on tab-switch
     const t  = clock.elapsedTime * 0.35 + floatDelay;
+    const isGrabbed = GRABBED.index === index;
 
-    // ── 1. Spring target = origin + float offset ─────────────────────────
-    p._tgt.copy(p.orig);
-    p._tgt.y += Math.sin(t) * 0.18;
+    if (isGrabbed) {
+      // ── GRABBED: smooth follow mouse ──────────────────────────────────
+      p.pos.lerp(MOUSE_WORLD, 0.22);
+      // Track mouse velocity so throw works on release
+      p.vel.lerp(MOUSE_VEL, 0.25);
 
-    // ── 2. Critically-damped spring  F = -k·x - c·v ──────────────────────
-    //   Critical damping: c = 2√(k·m), m=1  →  c = 2√k
-    //   k=4, c_crit=4  →  slightly overdamped = no oscillation
-    const k = 4.0, c = 5.0;
-    p._disp.copy(p.pos).sub(p._tgt);          // displacement from target
-    p.vel.addScaledVector(p._disp, -k * dt);  // spring
-    p.vel.addScaledVector(p.vel,   -c * dt);  // damping
+      // Scale up slightly — tactile grab feedback
+      mesh.current.scale.lerp({ x: 1.08, y: 1.08, z: 1.08 } as any, 0.15);
+    } else {
+      // ── FREE: critically-damped spring toward floating origin ─────────
+      p._tgt.copy(p.orig);
+      p._tgt.y += Math.sin(t) * 0.18; // gentle float
 
-    // ── 3. Mouse repulsion ────────────────────────────────────────────────
-    const sinceClick    = clock.elapsedTime - INTERACT.burstTime;
-    const inBurst       = sinceClick < 0.4;
-    const repelRadius   = inBurst ? 4.8 : (INTERACT.pressed ? 3.0 : 2.2);
-    const repelStrength = inBurst
-      ? 6.0 * (1 - sinceClick / 0.4)   // burst fades over 400ms
-      : (INTERACT.pressed ? 1.5 : 0.5);
+      p._disp.copy(p.pos).sub(p._tgt);
+      p.vel.addScaledVector(p._disp, -4.5 * dt); // spring force
+      p.vel.addScaledVector(p.vel,   -5.5 * dt); // damping  (overdamped → no oscillation)
+      p.pos.addScaledVector(p.vel, dt);
 
-    p._rep.copy(p.pos).sub(MOUSE);
-    const dist = p._rep.length();
-    if (dist < repelRadius && dist > 0.05) {
-      // Force proportional to 1/dist, capped for stability
-      const mag = repelStrength / Math.max(dist, 0.5);
-      p.vel.addScaledVector(p._rep.normalize(), mag * dt);
+      mesh.current.scale.lerp({ x: 1.0, y: 1.0, z: 1.0 } as any, 0.15);
     }
 
-    // ── 4. Integrate position ─────────────────────────────────────────────
-    p.pos.addScaledVector(p.vel, dt);
     mesh.current.position.copy(p.pos);
 
-    // ── 5. Rotation — accumulator, not unbounded += ───────────────────────
-    const speed = p.vel.length();
-    // Target spin rate rises with disturbance, returns to base slowly
-    const targetSpinX = 0.18 + rotSeed * 0.05 + speed * 2.5;
-    const targetSpinY = 0.14 + rotSeed * 0.04 + speed * 1.8;
-    p.spinX = THREE.MathUtils.lerp(p.spinX, targetSpinX, 0.08);
-    p.spinY = THREE.MathUtils.lerp(p.spinY, targetSpinY, 0.08);
+    // ── Rotation — accumulator (no unbounded +=) ──────────────────────
+    const speed  = p.vel.length();
+    const grabbed = isGrabbed ? 4.0 : 0.0;
+    p.spinX = THREE.MathUtils.lerp(p.spinX, 0.18 + rotSeed * 0.05 + speed * 2.5 + grabbed, 0.07);
+    p.spinY = THREE.MathUtils.lerp(p.spinY, 0.14 + rotSeed * 0.04 + speed * 1.8 + grabbed, 0.07);
     p.rotX += p.spinX * dt;
     p.rotY += p.spinY * dt;
     mesh.current.rotation.x = p.rotX;
     mesh.current.rotation.y = p.rotY;
   });
 
-  return <mesh ref={mesh} position={origin} geometry={GEO} material={MAT} />;
+  // ── Mesh events — r3f handles raycasting internally ───────────────────
+  const onDown = useCallback((e: { stopPropagation: () => void }) => {
+    e.stopPropagation();   // prevent canvas from firing its own onPointerDown
+    GRABBED.index = index;
+    document.body.style.cursor = "grabbing";
+  }, [index]);
+
+  const onUp = useCallback(() => {
+    if (GRABBED.index === index) {
+      GRABBED.index = -1;
+      // vel is already loaded with MOUSE_VEL from useFrame → throw works naturally
+      document.body.style.cursor = "grab";
+    }
+  }, [index]);
+
+  const onEnter = useCallback(() => {
+    if (GRABBED.index === -1) document.body.style.cursor = "grab";
+  }, []);
+
+  const onLeave = useCallback(() => {
+    if (GRABBED.index === -1) document.body.style.cursor = "default";
+  }, []);
+
+  return (
+    <mesh
+      ref={mesh}
+      position={origin}
+      geometry={GEO}
+      material={MAT}
+      onPointerDown={onDown}
+      onPointerUp={onUp}
+      onPointerEnter={onEnter}
+      onPointerLeave={onLeave}
+    />
+  );
 }
 
 // ── Scene ─────────────────────────────────────────────────────────────────
@@ -158,7 +188,13 @@ function Scene() {
       <pointLight      position={[ 0, 0, 7]}  intensity={2.0} color="#99ccff" />
       <MouseTracker />
       {CUBES.map(([x, y, z, rs, fd], i) => (
-        <GlassCube key={i} origin={[x, y, z]} rotSeed={rs} floatDelay={fd} />
+        <GlassCube
+          key={i}
+          index={i}
+          origin={[x, y, z]}
+          rotSeed={rs}
+          floatDelay={fd}
+        />
       ))}
     </>
   );
@@ -166,32 +202,28 @@ function Scene() {
 
 // ── Canvas ────────────────────────────────────────────────────────────────
 export default function HeroCubes() {
-  const [cursor, setCursor] = useState<"grab" | "grabbing">("grab");
-
-  const onDown = useCallback(() => {
-    INTERACT.pressed      = true;
-    INTERACT.burstPending = true;
-    setCursor("grabbing");
-  }, []);
-
+  // Global pointer-up fallback (fires if mouse releases outside the cube)
   const onUp = useCallback(() => {
-    INTERACT.pressed = false;
-    setCursor("grab");
+    GRABBED.index = -1;
+    document.body.style.cursor = "default";
   }, []);
 
   return (
     <Canvas
       camera={{ position: [0, 0, 11], fov: 48 }}
-      gl={{ alpha: true, antialias: true, powerPreference: "high-performance", stencil: false }}
+      gl={{
+        alpha:           true,
+        antialias:       true,
+        powerPreference: "high-performance",
+        stencil:         false,
+      }}
       dpr={1}
-      onPointerDown={onDown}
       onPointerUp={onUp}
       onPointerLeave={onUp}
       style={{
         background:  "transparent",
         width:       "100%",
         height:      "100%",
-        cursor,
         touchAction: "none",
       }}
     >
