@@ -5,15 +5,22 @@ import dynamic from "next/dynamic";
 import { ArrowDown, MessageCircle, Sparkles } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/config";
 
-// Load 3D scene only on client (no SSR)
-const HeroCubes = dynamic(() => import("./HeroCubes"), {
+// ── Eager preload trick ───────────────────────────────────────────────────
+// Import starts downloading THREE.js immediately when Hero.tsx loads
+// (not deferred until the component mounts)
+const cubesPromise = import("./HeroCubes");
+
+const HeroCubes = dynamic(() => cubesPromise, {
   ssr: false,
   loading: () => (
-    // Placeholder glow while Three.js loads
+    // Animated placeholder while bundle downloads
     <div className="w-full h-full flex items-center justify-center">
       <div
-        className="w-64 h-64 rounded-full animate-pulse-slow"
-        style={{ background: "radial-gradient(circle, rgba(71,196,255,0.12) 0%, transparent 70%)" }}
+        className="w-72 h-72 rounded-full animate-pulse-slow"
+        style={{
+          background: "radial-gradient(circle, rgba(71,196,255,0.1) 0%, rgba(71,196,255,0.03) 50%, transparent 70%)",
+          animationDuration: "2s",
+        }}
       />
     </div>
   ),
