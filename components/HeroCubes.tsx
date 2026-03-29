@@ -15,48 +15,57 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 // ── Grid spacing ──────────────────────────────────────────────────────────────
-const S  = 1.22;   // cell size — bigger gap so cubes don't overlap when rotating
-const BX = -2.1;   // B letter centre-x
-const SX =  2.1;   // S letter centre-x
+const S  = 1.22;   // cell size (cube 0.78 + gap 0.44 — cubes clearly separated)
+const BX = -2.2;   // B letter centre-x
+const SX =  2.2;   // S letter centre-x
 
-// ── BS formation positions (22 cubes, indices 0-21) ───────────────────────────
+// ── BS formation positions (24 cubes, indices 0-23) ───────────────────────────
 //
-//   B (11 cubes) — pixel-font 3×5 with FULL MIDBAR:
-//     ██·   row 0  ← top bar (open right)
-//     █·█   row 1  ← upper bump right side
-//     ███   row 2  ← FULL MIDDLE BAR — the key feature that reads as B
-//     █·█   row 3  ← lower bump right side
-//     ██·   row 4  ← bottom bar (symmetric with row 0)
+//   B (13 cubes) — 3 FULL horizontal bars, same visual weight as S:
+//     ███   row 0  ← full top bar
+//     █·█   row 1  ← upper bump (spine + right tip)
+//     ███   row 2  ← full midbar  (divides the two bumps — essential for B)
+//     █·█   row 3  ← lower bump (spine + right tip)
+//     ███   row 4  ← full bottom bar
 //
-//   S (11 cubes) — pixel-font 3×5 (unchanged, already looks good)
+//   S (11 cubes):
+//     ███   row 0  ← full top
+//     █··   row 1  ← top-left curve
+//     ███   row 2  ← full mid
+//     ··█   row 3  ← bottom-right curve
+//     ███   row 4  ← full bottom
+//
+//   Both letters have 3 anchoring horizontal bars — consistent visual weight.
+//   B is distinguished by bilateral right-side bumps (rows 1+3 both have col2).
+//   S is distinguished by diagonal single cubes (row1=left, row3=right).
 //
 const BS_POSITIONS: [number, number, number][] = [
-  // ── B (indices 0-10) ───────────────────────────────────────────────────────
-  // row 0 : ██·
-  [BX - S,  2 * S, 0], [BX,       2 * S, 0],
-  // row 1 : █·█
-  [BX - S,      S, 0], [BX + S,       S, 0],
-  // row 2 : ███  ← FULL MIDBAR
-  [BX - S,      0, 0], [BX,           0, 0], [BX + S,      0, 0],
-  // row 3 : █·█
-  [BX - S,     -S, 0], [BX + S,      -S, 0],
-  // row 4 : ██·
-  [BX - S, -2 * S, 0], [BX,      -2 * S, 0],
+  // ── B (indices 0-12) ───────────────────────────────────────────────────────
+  // row 0 : ███  full top bar
+  [BX - S,  2 * S, 0], [BX,  2 * S, 0], [BX + S,  2 * S, 0],
+  // row 1 : █·█  spine + upper-bump tip
+  [BX - S,      S, 0],                   [BX + S,      S, 0],
+  // row 2 : ███  full midbar — divides upper and lower bumps
+  [BX - S,      0, 0], [BX,      0, 0], [BX + S,      0, 0],
+  // row 3 : █·█  spine + lower-bump tip
+  [BX - S,     -S, 0],                   [BX + S,     -S, 0],
+  // row 4 : ███  full bottom bar
+  [BX - S, -2 * S, 0], [BX, -2 * S, 0], [BX + S, -2 * S, 0],
 
-  // ── S (indices 11-21) ──────────────────────────────────────────────────────
+  // ── S (indices 13-23) ──────────────────────────────────────────────────────
   // row 0 : ███
-  [SX - S,  2 * S, 0], [SX,       2 * S, 0], [SX + S,  2 * S, 0],
+  [SX - S,  2 * S, 0], [SX,  2 * S, 0], [SX + S,  2 * S, 0],
   // row 1 : █··
   [SX - S,      S, 0],
   // row 2 : ███
-  [SX - S,      0, 0], [SX,           0, 0], [SX + S,      0, 0],
+  [SX - S,      0, 0], [SX,      0, 0], [SX + S,      0, 0],
   // row 3 : ··█
   [SX + S,     -S, 0],
   // row 4 : ███
-  [SX - S, -2 * S, 0], [SX,      -2 * S, 0], [SX + S, -2 * S, 0],
+  [SX - S, -2 * S, 0], [SX, -2 * S, 0], [SX + S, -2 * S, 0],
 ];
 
-// ── Float positions (22 cubes) ────────────────────────────────────────────────
+// ── Float positions (24 cubes) ────────────────────────────────────────────────
 //  x      y      z    rotSeed  delay
 const FLOAT_POS: [number, number, number, number, number][] = [
   [ 0.0,  0.0,  0.0,  0.50, 0.00],
@@ -80,7 +89,9 @@ const FLOAT_POS: [number, number, number, number, number][] = [
   [ 3.0, -0.5,  0.2,  1.20, 0.60],
   [-3.0,  0.5,  0.3,  0.70, 0.40],
   [ 1.1,  2.2, -0.2,  1.40, 1.00],
-  [-0.5, -3.0,  0.3,  0.95, 0.75],  // extra for cube #22
+  [-0.5, -3.0,  0.3,  0.95, 0.75],
+  [ 2.5,  2.5, -0.1,  0.85, 0.35],   // #23 — for B's 2 extra cubes
+  [-2.5, -2.5,  0.4,  1.15, 0.55],   // #24
 ];
 
 // ── Shared GPU resources ──────────────────────────────────────────────────────
@@ -161,9 +172,9 @@ function GlassCube({
 
     // ── Animate p.orig between float position and BS letter position ──────────
     if (forming) {
-      p.orig.lerp(p.bsOrig,    0.05);
+      p.orig.lerp(p.bsOrig,    0.08);  // faster assembly
     } else {
-      p.orig.lerp(p.floatOrig, 0.05);
+      p.orig.lerp(p.floatOrig, 0.06);
     }
 
     // ── Position update ───────────────────────────────────────────────────────
@@ -185,18 +196,21 @@ function GlassCube({
 
     mesh.current.position.copy(p.pos);
 
-    // ── Rotation — freezes to 0 when letters form (so the shape reads clearly)
+    // ── Rotation ──────────────────────────────────────────────────────────────
+    // In formation mode: exponential decay to 0 (reaches ~0 in ~0.4s)
+    // Free mode: lerp toward speed-driven target
     const speed   = p.vel.length();
     const grabbed = isGrabbed ? 4.0 : 0.0;
-    const targetSpinX = (forming && !isGrabbed)
-      ? 0.0
-      : 0.18 + rotSeed * 0.05 + speed * 2.5 + grabbed;
-    const targetSpinY = (forming && !isGrabbed)
-      ? 0.0
-      : 0.14 + rotSeed * 0.04 + speed * 1.8 + grabbed;
 
-    p.spinX = THREE.MathUtils.lerp(p.spinX, targetSpinX, 0.07);
-    p.spinY = THREE.MathUtils.lerp(p.spinY, targetSpinY, 0.07);
+    if (forming && !isGrabbed) {
+      p.spinX *= 0.82;  // fast decay — (0.82)^30 ≈ 0.004 at 60fps → stopped in 0.5s
+      p.spinY *= 0.82;
+    } else {
+      const targetSpinX = 0.18 + rotSeed * 0.05 + speed * 2.5 + grabbed;
+      const targetSpinY = 0.14 + rotSeed * 0.04 + speed * 1.8 + grabbed;
+      p.spinX = THREE.MathUtils.lerp(p.spinX, targetSpinX, 0.07);
+      p.spinY = THREE.MathUtils.lerp(p.spinY, targetSpinY, 0.07);
+    }
     p.rotX += p.spinX * dt;
     p.rotY += p.spinY * dt;
     mesh.current.rotation.x = p.rotX;
