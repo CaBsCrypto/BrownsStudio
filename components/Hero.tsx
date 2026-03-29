@@ -65,7 +65,7 @@ function StatItem({ stat, active }: { stat: typeof stats[0]; active: boolean }) 
 export default function Hero() {
   const heroRef  = useRef<HTMLElement>(null);
   const [statsActive, setStatsActive] = useState(false);
-  const [forming,     setForming]     = useState(false);
+  const [forming,     setForming]     = useState(true); // starts in BS formation
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -197,7 +197,7 @@ export default function Hero() {
               >
                 BS
               </span>
-              {forming ? "· dispersar" : "· formar"}
+              {forming ? "· dispersar" : "· reagrupar"}
             </button>
           </div>
         </div>

@@ -16,39 +16,47 @@ import * as THREE from "three";
 
 // ── Grid spacing ──────────────────────────────────────────────────────────────
 const S  = 1.05;   // cell size (cube 0.78 + gap 0.27)
-const BX = -1.85;  // B letter centre-x
-const SX =  1.85;  // S letter centre-x
+const BX = -2.0;   // B letter centre-x  (more separation from S)
+const SX =  2.0;   // S letter centre-x
 
-// ── BS formation positions (21 cubes, indices 0-20) ───────────────────────────
-//   B (10): pixel-font 3×5, col 0-2
-//   S (11): pixel-font 3×5, col 0-2, shifted right by SX
+// ── BS formation positions (22 cubes, indices 0-21) ───────────────────────────
+//
+//   B (11 cubes) — pixel-font 3×5:
+//     ██·   row 0  ← top bar (open right)
+//     █·█   row 1  ← upper bump
+//     ██·   row 2  ← middle bar (closes upper bump)
+//     █·█   row 3  ← lower bump
+//     ███   row 4  ← BOTTOM BAR FULLY CLOSED ← this is what makes it read as B
+//
+//   S (11 cubes) — pixel-font 3×5 (unchanged, already looks good)
+//
 const BS_POSITIONS: [number, number, number][] = [
-  // ── B ──────────────────────────────────────────────────────────────────────
+  // ── B (indices 0-10) ───────────────────────────────────────────────────────
   // row 0 : ██·
-  [BX - S,  2 * S, 0], [BX,  2 * S, 0],
+  [BX - S,  2 * S, 0], [BX,      2 * S, 0],
   // row 1 : █·█
-  [BX - S,      S, 0], [BX + S,  S, 0],
+  [BX - S,      S, 0], [BX + S,      S, 0],
   // row 2 : ██·
-  [BX - S,      0, 0], [BX,      0, 0],
+  [BX - S,      0, 0], [BX,          0, 0],
   // row 3 : █·█
-  [BX - S,     -S, 0], [BX + S, -S, 0],
-  // row 4 : ██·
-  [BX - S, -2 * S, 0], [BX, -2 * S, 0],
+  [BX - S,     -S, 0], [BX + S,     -S, 0],
+  // row 4 : ███  ← closed bottom — KEY CHANGE
+  [BX - S, -2 * S, 0], [BX,     -2 * S, 0], [BX + S, -2 * S, 0],
 
-  // ── S ──────────────────────────────────────────────────────────────────────
+  // ── S (indices 11-21) ──────────────────────────────────────────────────────
   // row 0 : ███
-  [SX - S,  2 * S, 0], [SX,  2 * S, 0], [SX + S,  2 * S, 0],
+  [SX - S,  2 * S, 0], [SX,      2 * S, 0], [SX + S,  2 * S, 0],
   // row 1 : █··
   [SX - S,      S, 0],
   // row 2 : ███
-  [SX - S,      0, 0], [SX,      0, 0], [SX + S,      0, 0],
+  [SX - S,      0, 0], [SX,          0, 0], [SX + S,      0, 0],
   // row 3 : ··█
   [SX + S,     -S, 0],
   // row 4 : ███
-  [SX - S, -2 * S, 0], [SX, -2 * S, 0], [SX + S, -2 * S, 0],
+  [SX - S, -2 * S, 0], [SX,     -2 * S, 0], [SX + S, -2 * S, 0],
 ];
 
-// ── Float positions (21 cubes) ────────────────────────────────────────────────
+// ── Float positions (22 cubes) ────────────────────────────────────────────────
 //  x      y      z    rotSeed  delay
 const FLOAT_POS: [number, number, number, number, number][] = [
   [ 0.0,  0.0,  0.0,  0.50, 0.00],
@@ -66,13 +74,13 @@ const FLOAT_POS: [number, number, number, number, number][] = [
   [ 2.2,  1.1,  0.5,  1.60, 0.70],
   [ 3.0,  0.5,  0.4,  0.90, 0.30],
   [-2.0,  1.8,  0.3,  0.60, 1.10],
-  // 6 extras (indices 15-20)
   [ 2.2, -1.1,  0.2,  0.80, 0.50],
   [-2.2, -1.1,  0.3,  1.10, 0.90],
   [ 0.0, -2.2,  0.1,  0.50, 1.30],
   [ 3.0, -0.5,  0.2,  1.20, 0.60],
   [-3.0,  0.5,  0.3,  0.70, 0.40],
   [ 1.1,  2.2, -0.2,  1.40, 1.00],
+  [-0.5, -3.0,  0.3,  0.95, 0.75],  // extra for cube #22
 ];
 
 // ── Shared GPU resources ──────────────────────────────────────────────────────
