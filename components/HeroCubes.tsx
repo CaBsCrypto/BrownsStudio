@@ -15,9 +15,14 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 // ── Grid spacing ──────────────────────────────────────────────────────────────
-const S  = 1.22;   // cell size (cube 0.78 + gap 0.44 — cubes clearly separated)
-const BX = -2.2;   // B letter centre-x
-const SX =  2.2;   // S letter centre-x
+const S  = 1.55;   // cell size — large gap so isometric cubes never overlap
+const BX = -2.55;  // B letter centre-x
+const SX =  2.55;  // S letter centre-x
+
+// Isometric target rotation (all cubes converge to this in formation mode)
+// rotX=30° rotY=45° = classic "show all 3 faces equally" cube view
+const ISO_X = Math.PI / 6;   // 30°
+const ISO_Y = Math.PI / 4;   // 45°
 
 // ── BS formation positions (24 cubes, indices 0-23) ───────────────────────────
 //
@@ -95,7 +100,7 @@ const FLOAT_POS: [number, number, number, number, number][] = [
 ];
 
 // ── Shared GPU resources ──────────────────────────────────────────────────────
-const GEO = new THREE.BoxGeometry(0.78, 0.78, 0.78);
+const GEO = new THREE.BoxGeometry(0.85, 0.85, 0.85);
 const MAT = new THREE.MeshPhysicalMaterial({
   color:       new THREE.Color(0x2299ff),
   metalness:   0.08,
@@ -197,22 +202,24 @@ function GlassCube({
     mesh.current.position.copy(p.pos);
 
     // ── Rotation ──────────────────────────────────────────────────────────────
-    // In formation mode: exponential decay to 0 (reaches ~0 in ~0.4s)
-    // Free mode: lerp toward speed-driven target
     const speed   = p.vel.length();
     const grabbed = isGrabbed ? 4.0 : 0.0;
 
     if (forming && !isGrabbed) {
-      p.spinX *= 0.82;  // fast decay — (0.82)^30 ≈ 0.004 at 60fps → stopped in 0.5s
-      p.spinY *= 0.82;
+      // Decay spin fast, then converge to isometric angle (30°/45°)
+      // so ALL cubes show the same 3 faces → clean pixel-art 3D look
+      p.spinX *= 0.78;
+      p.spinY *= 0.78;
+      p.rotX = THREE.MathUtils.lerp(p.rotX, ISO_X, 0.055);
+      p.rotY = THREE.MathUtils.lerp(p.rotY, ISO_Y, 0.055);
     } else {
       const targetSpinX = 0.18 + rotSeed * 0.05 + speed * 2.5 + grabbed;
       const targetSpinY = 0.14 + rotSeed * 0.04 + speed * 1.8 + grabbed;
       p.spinX = THREE.MathUtils.lerp(p.spinX, targetSpinX, 0.07);
       p.spinY = THREE.MathUtils.lerp(p.spinY, targetSpinY, 0.07);
+      p.rotX += p.spinX * dt;
+      p.rotY += p.spinY * dt;
     }
-    p.rotX += p.spinX * dt;
-    p.rotY += p.spinY * dt;
     mesh.current.rotation.x = p.rotX;
     mesh.current.rotation.y = p.rotY;
   });
