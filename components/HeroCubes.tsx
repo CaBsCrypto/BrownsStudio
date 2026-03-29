@@ -15,45 +15,45 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 // ── Grid spacing ──────────────────────────────────────────────────────────────
-const S  = 1.05;   // cell size (cube 0.78 + gap 0.27)
-const BX = -2.0;   // B letter centre-x  (more separation from S)
-const SX =  2.0;   // S letter centre-x
+const S  = 1.22;   // cell size — bigger gap so cubes don't overlap when rotating
+const BX = -2.1;   // B letter centre-x
+const SX =  2.1;   // S letter centre-x
 
 // ── BS formation positions (22 cubes, indices 0-21) ───────────────────────────
 //
-//   B (11 cubes) — pixel-font 3×5:
+//   B (11 cubes) — pixel-font 3×5 with FULL MIDBAR:
 //     ██·   row 0  ← top bar (open right)
-//     █·█   row 1  ← upper bump
-//     ██·   row 2  ← middle bar (closes upper bump)
-//     █·█   row 3  ← lower bump
-//     ███   row 4  ← BOTTOM BAR FULLY CLOSED ← this is what makes it read as B
+//     █·█   row 1  ← upper bump right side
+//     ███   row 2  ← FULL MIDDLE BAR — the key feature that reads as B
+//     █·█   row 3  ← lower bump right side
+//     ██·   row 4  ← bottom bar (symmetric with row 0)
 //
 //   S (11 cubes) — pixel-font 3×5 (unchanged, already looks good)
 //
 const BS_POSITIONS: [number, number, number][] = [
   // ── B (indices 0-10) ───────────────────────────────────────────────────────
   // row 0 : ██·
-  [BX - S,  2 * S, 0], [BX,      2 * S, 0],
+  [BX - S,  2 * S, 0], [BX,       2 * S, 0],
   // row 1 : █·█
-  [BX - S,      S, 0], [BX + S,      S, 0],
-  // row 2 : ██·
-  [BX - S,      0, 0], [BX,          0, 0],
+  [BX - S,      S, 0], [BX + S,       S, 0],
+  // row 2 : ███  ← FULL MIDBAR
+  [BX - S,      0, 0], [BX,           0, 0], [BX + S,      0, 0],
   // row 3 : █·█
-  [BX - S,     -S, 0], [BX + S,     -S, 0],
-  // row 4 : ███  ← closed bottom — KEY CHANGE
-  [BX - S, -2 * S, 0], [BX,     -2 * S, 0], [BX + S, -2 * S, 0],
+  [BX - S,     -S, 0], [BX + S,      -S, 0],
+  // row 4 : ██·
+  [BX - S, -2 * S, 0], [BX,      -2 * S, 0],
 
   // ── S (indices 11-21) ──────────────────────────────────────────────────────
   // row 0 : ███
-  [SX - S,  2 * S, 0], [SX,      2 * S, 0], [SX + S,  2 * S, 0],
+  [SX - S,  2 * S, 0], [SX,       2 * S, 0], [SX + S,  2 * S, 0],
   // row 1 : █··
   [SX - S,      S, 0],
   // row 2 : ███
-  [SX - S,      0, 0], [SX,          0, 0], [SX + S,      0, 0],
+  [SX - S,      0, 0], [SX,           0, 0], [SX + S,      0, 0],
   // row 3 : ··█
   [SX + S,     -S, 0],
   // row 4 : ███
-  [SX - S, -2 * S, 0], [SX,     -2 * S, 0], [SX + S, -2 * S, 0],
+  [SX - S, -2 * S, 0], [SX,      -2 * S, 0], [SX + S, -2 * S, 0],
 ];
 
 // ── Float positions (22 cubes) ────────────────────────────────────────────────
@@ -185,14 +185,14 @@ function GlassCube({
 
     mesh.current.position.copy(p.pos);
 
-    // ── Rotation — slows when letters form ───────────────────────────────────
+    // ── Rotation — freezes to 0 when letters form (so the shape reads clearly)
     const speed   = p.vel.length();
     const grabbed = isGrabbed ? 4.0 : 0.0;
     const targetSpinX = (forming && !isGrabbed)
-      ? 0.018
+      ? 0.0
       : 0.18 + rotSeed * 0.05 + speed * 2.5 + grabbed;
     const targetSpinY = (forming && !isGrabbed)
-      ? 0.018
+      ? 0.0
       : 0.14 + rotSeed * 0.04 + speed * 1.8 + grabbed;
 
     p.spinX = THREE.MathUtils.lerp(p.spinX, targetSpinX, 0.07);
