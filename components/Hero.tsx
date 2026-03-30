@@ -77,7 +77,7 @@ export default function Hero() {
       <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, #000000 0%, #0a0f1e 50%, #000000 100%)" }} />
 
       {/* ── 3D cubes — fills the entire hero section ─────────────────────── */}
-      <div className="absolute inset-0 z-[1] pointer-events-none" aria-hidden="true">
+      <div className="absolute inset-0 z-[1]">
         <HeroCubes />
       </div>
 
