@@ -17,7 +17,7 @@ const ISO_X = Math.PI / 6;  // 30° — shows all 3 cube faces
 const ISO_Y = Math.PI / 4;  // 45°
 
 // ── Canvas text sampling ──────────────────────────────────────────────────────
-// Runs once on module load (guaranteed client-side via ssr:false dynamic import)
+// Called lazily inside Scene (guaranteed client-side — Canvas never SSR-renders)
 function computeFormationData() {
   const W = 280, H = 78;
   const canvas = document.createElement("canvas");
@@ -45,13 +45,13 @@ function computeFormationData() {
         // Map canvas coords → 3D world  (x: −4.8…+4.8, y: −2.2…+2.2)
         const wx = (px / W - 0.5) * 9.6;
         const wy = -(py / H - 0.5) * 4.4;
-        const wz = (Math.random() - 0.5) * 0.25;
+        const wz = (((bsPositions.length * 31) % 17) / 17 - 0.5) * 0.5; // deterministic Z
         bsPositions.push([wx, wy, wz]);
       }
     }
   }
 
-  // Float positions: deterministic spiral so they're always the same shape
+  // Float positions: deterministic spiral (no Math.random — stable across renders)
   const N = bsPositions.length;
   const floatPositions = bsPositions.map((_, i): [number, number, number, number, number] => {
     const angle = (i / N) * Math.PI * 4.5 + i * 0.55;
@@ -68,7 +68,12 @@ function computeFormationData() {
   return { bsPositions, floatPositions, count: N };
 }
 
-const DATA = computeFormationData();
+// Lazy singleton — only computed once, only on client
+let _data: ReturnType<typeof computeFormationData> | null = null;
+function getData() {
+  if (!_data) _data = computeFormationData();
+  return _data;
+}
 
 // ── Shared GPU resources ──────────────────────────────────────────────────────
 const GEO = new THREE.BoxGeometry(0.72, 0.72, 0.72);
@@ -114,6 +119,7 @@ function FormationController({ forming }: { forming: boolean }) {
 // ── Single interactive cube ───────────────────────────────────────────────────
 function GlassCube({ index }: { index: number }) {
   const mesh = useRef<THREE.Mesh>(null!);
+  const DATA = getData();
 
   const [ox, oy, oz]         = DATA.floatPositions[index];
   const [rotSeed, floatDelay] = [DATA.floatPositions[index][3], DATA.floatPositions[index][4]];
@@ -229,7 +235,7 @@ function Scene({ forming }: { forming: boolean }) {
       <pointLight      position={[ 0, 0, 7]}  intensity={2.0} color="#99ccff" />
       <MouseTracker />
       <FormationController forming={forming} />
-      {Array.from({ length: DATA.count }, (_, i) => (
+      {Array.from({ length: getData().count }, (_, i) => (
         <GlassCube key={i} index={i} />
       ))}
     </>
