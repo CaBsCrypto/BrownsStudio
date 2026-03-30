@@ -10,7 +10,7 @@ import { WHATSAPP_URL } from "@/lib/config";
 // (not deferred until the component mounts)
 const cubesPromise = import("./HeroCubes");
 
-const HeroCubes = dynamic<{ forming?: boolean }>(() => cubesPromise, {
+const HeroCubes = dynamic(() => cubesPromise, {
   ssr: false,
   loading: () => (
     // Animated placeholder while bundle downloads
@@ -65,7 +65,6 @@ function StatItem({ stat, active }: { stat: typeof stats[0]; active: boolean }) 
 export default function Hero() {
   const heroRef  = useRef<HTMLElement>(null);
   const [statsActive, setStatsActive] = useState(false);
-  const [forming,     setForming]     = useState(true); // starts in BS formation
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -177,28 +176,7 @@ export default function Hero() {
               className="absolute inset-0 rounded-full blur-3xl pointer-events-none"
               style={{ background: "radial-gradient(ellipse at 60% 50%, rgba(71,196,255,0.07) 0%, transparent 70%)" }}
             />
-            <HeroCubes forming={forming} />
-
-            {/* BS formation toggle */}
-            <button
-              onClick={() => setForming((f) => !f)}
-              className="absolute bottom-4 right-6 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-widest transition-all duration-300 select-none"
-              style={{
-                background:     forming ? "rgba(71,196,255,0.12)" : "rgba(25,25,25,0.55)",
-                border:         forming ? "1px solid rgba(71,196,255,0.35)" : "1px solid rgba(72,72,72,0.3)",
-                color:          forming ? "#47c4ff" : "#5a5a5a",
-                backdropFilter: "blur(12px)",
-              }}
-              aria-label={forming ? "Dispersar cubos" : "Formar BS"}
-            >
-              <span
-                className="font-display font-bold text-[13px] leading-none"
-                style={{ letterSpacing: "-0.02em" }}
-              >
-                BS
-              </span>
-              {forming ? "· dispersar" : "· reagrupar"}
-            </button>
+            <HeroCubes />
           </div>
         </div>
 
