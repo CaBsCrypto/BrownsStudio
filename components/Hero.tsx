@@ -88,11 +88,11 @@ export default function Hero() {
       />
 
       {/* ── Split layout ─────────────────────────────────────────────────── */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12 pointer-events-none">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[calc(100vh-6rem)]">
 
           {/* ── LEFT — text content ──────────────────────────────────────── */}
-          <div className="flex flex-col justify-center lg:pr-8">
+          <div className="flex flex-col justify-center lg:pr-8 pointer-events-auto">
 
             {/* Badge */}
             <div
@@ -159,7 +159,7 @@ export default function Hero() {
         </div>
 
         {/* Scroll indicator — centered below the grid */}
-        <div className="flex justify-center pb-8">
+        <div className="flex justify-center pb-8 pointer-events-auto">
           <button
             onClick={() => document.getElementById("sobre-mi")?.scrollIntoView({ behavior: "smooth" })}
             className="reveal reveal-delay-4 flex flex-col items-center gap-2 text-[#5a5a5a] hover:text-[#47c4ff] transition-colors duration-300 cursor-pointer"
