@@ -24,18 +24,26 @@ const ISO_Y = Math.PI / 4;  // 45°
 // where scaleX/scaleY map canvas pixels → world units via the letter bounding box.
 //
 function computeFormationData() {
-  const W = 420, H = 105;
+  const W = 320, H = 120;
   const canvas = document.createElement("canvas");
   canvas.width  = W;
   canvas.height = H;
   const ctx = canvas.getContext("2d")!;
 
-  ctx.font         = "bold 88px Impact, 'Arial Black', sans-serif";
+  // Draw B and S centred in the canvas with a gap between them
+  ctx.font         = "bold 96px Impact, 'Arial Black', sans-serif";
   ctx.fillStyle    = "#fff";
   ctx.textBaseline = "middle";
   ctx.textAlign    = "left";
-  ctx.fillText("B",  35, H / 2);
-  ctx.fillText("S", 240, H / 2);
+
+  const bW = ctx.measureText("B").width;
+  const sW = ctx.measureText("S").width;
+  const gap = 55;  // clear visual separation between B and S
+  const totalW = bW + gap + sW;
+  const startX = (W - totalW) / 2;
+
+  ctx.fillText("B", startX, H / 2);
+  ctx.fillText("S", startX + bW + gap, H / 2);
 
   const { data } = ctx.getImageData(0, 0, W, H);
   const STEP = 14; // px between samples
@@ -63,10 +71,9 @@ function computeFormationData() {
   const spanX = Math.max(maxPX - minPX, 1);
   const spanY = Math.max(maxPY - minPY, 1);
 
-  // ③ Scale: fit letters into ±3.0 (x) and ±1.6 (y) world units
-  // Frustum at z=10, fov=44 → half-width ≈ 4.04 → ±3.0 gives comfortable margin
-  const scaleX = 6.0 / spanX;
-  const scaleY = 3.2 / spanY;
+  // ③ Scale: fill ±3.6 (x) and ±2.6 (y) — centred so nothing clips
+  const scaleX = 7.2 / spanX;
+  const scaleY = 5.2 / spanY;
 
   // ④ cubeSize = grid step in world units × 0.82 (small gap between cubes)
   //    Uses the SMALLER scale so cubes never overflow their cell in any axis.
@@ -288,7 +295,7 @@ export default function HeroCubes({ forming = false }: { forming?: boolean }) {
 
   return (
     <Canvas
-      camera={{ position: [1.2, 0, 10], fov: 44 }}
+      camera={{ position: [0, 0, 9], fov: 50 }}
       gl={{
         alpha:           true,
         antialias:       true,
