@@ -18,65 +18,102 @@ const ISO_Y = Math.PI / 4;  // 45°
 
 // ── Canvas text sampling ──────────────────────────────────────────────────────
 // Called lazily inside Scene (guaranteed client-side — Canvas never SSR-renders)
+//
+// Key insight: cubeSize is DERIVED from the sampling grid so cubes never overlap.
+// Formula: cubeSize = STEP * min(scaleX, scaleY) * 0.82
+// where scaleX/scaleY map canvas pixels → world units via the letter bounding box.
+//
 function computeFormationData() {
-  const W = 280, H = 78;
+  const W = 420, H = 105;
   const canvas = document.createElement("canvas");
   canvas.width  = W;
   canvas.height = H;
   const ctx = canvas.getContext("2d")!;
 
-  // Impact: system font, ultra-bold, zero loading cost, thick strokes
-  ctx.font          = "bold 66px Impact, 'Arial Black', sans-serif";
-  ctx.fillStyle     = "#fff";
-  ctx.textBaseline  = "middle";
-  ctx.textAlign     = "left";
-  ctx.fillText("B",  28, H / 2);
-  ctx.fillText("S", 158, H / 2);
+  ctx.font         = "bold 88px Impact, 'Arial Black', sans-serif";
+  ctx.fillStyle    = "#fff";
+  ctx.textBaseline = "middle";
+  ctx.textAlign    = "left";
+  ctx.fillText("B",  35, H / 2);
+  ctx.fillText("S", 240, H / 2);
 
   const { data } = ctx.getImageData(0, 0, W, H);
-  const STEP = 15; // px between samples → typically 28-38 cubes total
+  const STEP = 14; // px between samples
 
-  const bsPositions: [number, number, number][] = [];
-
+  // ① Collect all lit pixel grid positions
+  const litPx: number[] = [];
+  const litPy: number[] = [];
   for (let py = Math.floor(STEP / 2); py < H; py += STEP) {
     for (let px = Math.floor(STEP / 2); px < W; px += STEP) {
-      const alpha = data[(py * W + px) * 4 + 3];
-      if (alpha > 120) {
-        // Map canvas coords → 3D world  (x: −4.8…+4.8, y: −2.2…+2.2)
-        const wx = (px / W - 0.5) * 9.6;
-        const wy = -(py / H - 0.5) * 4.4;
-        const wz = (((bsPositions.length * 31) % 17) / 17 - 0.5) * 0.5; // deterministic Z
-        bsPositions.push([wx, wy, wz]);
+      if (data[(py * W + px) * 4 + 3] > 120) {
+        litPx.push(px);
+        litPy.push(py);
       }
     }
   }
 
-  // Float positions: deterministic spiral (no Math.random — stable across renders)
-  const N = bsPositions.length;
+  const N = litPx.length;
+  if (N === 0) return { bsPositions: [] as [number,number,number][], floatPositions: [] as [number,number,number,number,number][], count: 0, cubeSize: 0.5 };
+
+  // ② Bounding box of lit pixels → centre and span
+  const minPX = Math.min(...litPx), maxPX = Math.max(...litPx);
+  const minPY = Math.min(...litPy), maxPY = Math.max(...litPy);
+  const cxPX  = (minPX + maxPX) / 2;
+  const cxPY  = (minPY + maxPY) / 2;
+  const spanX = Math.max(maxPX - minPX, 1);
+  const spanY = Math.max(maxPY - minPY, 1);
+
+  // ③ Scale: fit letters into ±3.0 (x) and ±1.6 (y) world units
+  // Frustum at z=10, fov=44 → half-width ≈ 4.04 → ±3.0 gives comfortable margin
+  const scaleX = 6.0 / spanX;
+  const scaleY = 3.2 / spanY;
+
+  // ④ cubeSize = grid step in world units × 0.82 (small gap between cubes)
+  //    Uses the SMALLER scale so cubes never overflow their cell in any axis.
+  const cellScale = Math.min(scaleX, scaleY);
+  const cubeSize  = STEP * cellScale * 0.82;
+
+  // ⑤ Build formation positions
+  const bsPositions: [number, number, number][] = litPx.map((px, i) => [
+    (px - cxPX) * scaleX,
+    -(litPy[i] - cxPY) * scaleY,
+    (((i * 31) % 17) / 17 - 0.5) * 0.3,
+  ]);
+
+  // ⑥ Float positions: deterministic spiral
   const floatPositions = bsPositions.map((_, i): [number, number, number, number, number] => {
     const angle = (i / N) * Math.PI * 4.5 + i * 0.55;
-    const r     = 1.2 + (i % 6) * 0.55;
+    const r     = 1.5 + (i % 6) * 0.5;
     return [
       r * Math.cos(angle),
       r * Math.sin(angle) * 0.75,
-      (((i * 127) % 17) / 17 - 0.5) * 2.0,  // deterministic Z
-      0.25 + (i % 8) * 0.16,                  // rotSeed
-      (i % 6) * 0.35,                          // floatDelay
+      (((i * 127) % 17) / 17 - 0.5) * 2.0,
+      0.25 + (i % 8) * 0.16,
+      (i % 6)  * 0.35,
     ];
   });
 
-  return { bsPositions, floatPositions, count: N };
+  return { bsPositions, floatPositions, count: N, cubeSize };
 }
 
-// Lazy singleton — only computed once, only on client
+// Lazy singletons — only computed once, only on client
 let _data: ReturnType<typeof computeFormationData> | null = null;
 function getData() {
   if (!_data) _data = computeFormationData();
   return _data;
 }
 
+// GEO is lazy because cubeSize comes from canvas sampling
+let _geo: THREE.BoxGeometry | null = null;
+function getGeo() {
+  if (!_geo) {
+    const s = getData().cubeSize;
+    _geo = new THREE.BoxGeometry(s, s, s);
+  }
+  return _geo;
+}
+
 // ── Shared GPU resources ──────────────────────────────────────────────────────
-const GEO = new THREE.BoxGeometry(0.72, 0.72, 0.72);
 const MAT = new THREE.MeshPhysicalMaterial({
   color:       new THREE.Color(0x2299ff),
   metalness:   0.08,
@@ -214,7 +251,7 @@ function GlassCube({ index }: { index: number }) {
     <mesh
       ref={mesh}
       position={[ox, oy, oz]}
-      geometry={GEO}
+      geometry={getGeo()}
       material={MAT}
       onPointerDown={onDown}
       onPointerUp={onUp}
@@ -251,7 +288,7 @@ export default function HeroCubes({ forming = false }: { forming?: boolean }) {
 
   return (
     <Canvas
-      camera={{ position: [0, 0, 11], fov: 48 }}
+      camera={{ position: [1.2, 0, 10], fov: 44 }}
       gl={{
         alpha:           true,
         antialias:       true,
