@@ -2,29 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+
+const cubesPromise = import("./HeroCubes");
+const HeroCubes = dynamic(() => cubesPromise, { ssr: false });
 import { ArrowDown, MessageCircle, Sparkles } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/config";
 
-// ── Eager preload trick ───────────────────────────────────────────────────
-// Import starts downloading THREE.js immediately when Hero.tsx loads
-// (not deferred until the component mounts)
-const cubesPromise = import("./HeroCubes");
-
-const HeroCubes = dynamic(() => cubesPromise, {
-  ssr: false,
-  loading: () => (
-    // Animated placeholder while bundle downloads
-    <div className="w-full h-full flex items-center justify-center">
-      <div
-        className="w-72 h-72 rounded-full animate-pulse-slow"
-        style={{
-          background: "radial-gradient(circle, rgba(71,196,255,0.1) 0%, rgba(71,196,255,0.03) 50%, transparent 70%)",
-          animationDuration: "2s",
-        }}
-      />
-    </div>
-  ),
-});
 
 function useCountUp(target: number, duration: number, active: boolean) {
   const [count, setCount] = useState(0);
@@ -92,6 +75,11 @@ export default function Hero() {
     >
       {/* ── Background void ──────────────────────────────────────────────── */}
       <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, #000000 0%, #0a0f1e 50%, #000000 100%)" }} />
+
+      {/* ── 3D cubes — fills the entire hero section ─────────────────────── */}
+      <div className="absolute inset-0 z-[1] pointer-events-none" aria-hidden="true">
+        <HeroCubes />
+      </div>
 
       {/* Left ambient orb — subtle blue */}
       <div
@@ -166,18 +154,8 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ── RIGHT — 3D glass cubes ───────────────────────────────────── */}
-          {/* Bleeds off the right edge — intentional asymmetry */}
-          <div
-            className="relative h-[480px] lg:h-[620px] lg:-mr-24 xl:-mr-40"
-          >
-            {/* Subtle glow behind the cubes */}
-            <div
-              className="absolute inset-0 rounded-full blur-3xl pointer-events-none"
-              style={{ background: "radial-gradient(ellipse at 60% 50%, rgba(71,196,255,0.07) 0%, transparent 70%)" }}
-            />
-            <HeroCubes />
-          </div>
+          {/* ── RIGHT — empty (cubes float in absolute layer behind) ──── */}
+          <div className="hidden lg:block" />
         </div>
 
         {/* Scroll indicator — centered below the grid */}
