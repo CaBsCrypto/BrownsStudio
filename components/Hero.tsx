@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 
 const cubesPromise = import("./HeroCubes");
 const HeroCubes = dynamic(() => cubesPromise, { ssr: false });
-import { ArrowDown, MessageCircle, Sparkles } from "lucide-react";
+import { MessageCircle, Sparkles } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/config";
 
 
@@ -76,7 +76,7 @@ export default function Hero() {
       {/* ── Background void ──────────────────────────────────────────────── */}
       <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, #000000 0%, #0a0f1e 50%, #000000 100%)" }} />
 
-      {/* ── 3D cubes — fills the entire hero section ─────────────────────── */}
+      {/* ── 3D cubes — desktop only (mobile: cubos tapan el texto) ──────── */}
       <div className="absolute inset-0 z-[1]">
         <HeroCubes />
       </div>
@@ -92,7 +92,7 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[calc(100vh-6rem)]">
 
           {/* ── LEFT — text content ──────────────────────────────────────── */}
-          <div className="flex flex-col justify-center lg:pr-8 pointer-events-auto">
+          <div className="flex flex-col justify-center w-[70%] lg:w-auto lg:pr-8 pointer-events-auto">
 
             {/* Badge */}
             <div
@@ -108,18 +108,18 @@ export default function Hero() {
               className="reveal reveal-delay-1 font-display font-bold text-[2.6rem] sm:text-5xl md:text-6xl text-[#e5e5e5] mb-6 leading-[1.04]"
               style={{ letterSpacing: "-0.03em" }}
             >
-              Webs que venden.
+              El futuro de tu negocio
               <br />
-              <span className="text-gradient-gold">IA que atiende.</span>
+              <span className="text-gradient-gold">empieza con</span>
               <br />
-              Negocios que crecen.
+              una decisión.
             </h1>
 
             {/* Body */}
             <p className="reveal reveal-delay-2 text-[#9e9e9e] text-lg leading-relaxed mb-10 max-w-lg">
-              Web + IA para negocios que quieren crecer de verdad. Webs profesionales,{" "}
-              <span className="text-[#e5e5e5] font-medium">chatbots y automatizaciones</span>{" "}
-              para clínicas, restaurantes y negocios locales en LATAM.
+              Diseño web premium e inteligencia artificial para negocios que quieren{" "}
+              <span className="text-[#e5e5e5] font-medium">liderar su mercado</span>.{" "}
+              Clínicas, restaurantes y negocios locales en LATAM.
             </p>
 
             {/* CTAs */}
@@ -158,17 +158,6 @@ export default function Hero() {
           <div className="hidden lg:block" />
         </div>
 
-        {/* Scroll indicator — centered below the grid */}
-        <div className="flex justify-center pb-8 pointer-events-auto">
-          <button
-            onClick={() => document.getElementById("sobre-mi")?.scrollIntoView({ behavior: "smooth" })}
-            className="reveal reveal-delay-4 flex flex-col items-center gap-2 text-[#5a5a5a] hover:text-[#47c4ff] transition-colors duration-300 cursor-pointer"
-            aria-label="Scroll hacia abajo"
-          >
-            <span className="text-[10px] tracking-[0.2em] uppercase">Descubrir</span>
-            <ArrowDown size={14} className="animate-bounce" />
-          </button>
-        </div>
       </div>
     </section>
   );

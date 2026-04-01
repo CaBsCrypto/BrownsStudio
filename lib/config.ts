@@ -1,8 +1,8 @@
 export const SITE_CONFIG = {
   name: "Browns Studio",
-  tagline: "Web + IA para Negocios que Quieren Crecer",
+  tagline: "Diseño Web Premium + IA para Negocios en LATAM",
   description:
-    "Desarrollo web profesional e integración de inteligencia artificial para negocios locales. Certificados por Google en 7 áreas de IA.",
+    "Browns Studio crea presencias digitales de alto impacto con diseño web profesional e inteligencia artificial. Chatbots, automatizaciones y webs que convierten para clínicas, restaurantes y negocios en LATAM.",
   whatsapp: "+56XXXXXXXXX", // PLACEHOLDER — reemplazar con número real
   whatsappMessage: "Hola, vi su web y me interesa cotizar un proyecto",
   email: "contacto@brownsstudio.dev",

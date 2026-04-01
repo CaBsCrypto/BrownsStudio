@@ -1,35 +1,47 @@
 "use client";
 
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-// ── 20 float positions  [x, y, z, rotSeed, floatDelay] ───────────────────────
-const FLOATS: [number, number, number, number, number][] = [
-  [ 0.0,  0.4,  0.0,  0.50, 0.00],
-  [ 1.4,  0.2,  0.5,  1.20, 0.55],
-  [-1.3,  0.1,  0.3,  0.80, 1.10],
-  [ 0.2,  1.5,  0.2,  0.30, 0.70],
-  [ 0.1, -1.4,  0.4,  1.50, 0.35],
-  [ 1.5,  1.4, -0.3,  0.90, 1.25],
-  [-1.4,  1.3,  0.5,  0.60, 0.85],
-  [ 1.5, -1.3,  0.2,  1.10, 0.40],
-  [-1.3, -1.4, -0.2,  0.40, 0.95],
-  [ 2.6,  0.2, -0.4,  1.30, 0.60],
-  [-2.5,  0.1,  0.3,  0.70, 1.15],
-  [ 0.1,  2.6,  0.2,  1.00, 0.25],
-  [ 2.5,  1.4,  0.6,  1.60, 0.75],
-  [ 2.8, -0.4,  0.5,  0.90, 0.30],
-  [-2.2,  2.0,  0.4,  0.60, 1.10],
-  [ 2.5, -1.5,  0.3,  0.80, 0.50],
-  [-2.5, -1.4,  0.4,  1.10, 0.90],
-  [ 0.1, -2.6,  0.2,  0.50, 1.35],
-  [-0.2,  0.5, -0.3,  1.25, 0.65],
-  [ 1.2,  2.5, -0.3,  1.40, 1.05],
+// ── Desktop: 20 cubos — zona derecha (x > 1.5) + 4 acentos borde izq lejano ──
+const FLOATS_DESKTOP: [number, number, number, number, number][] = [
+  [ 2.0,  0.2,  0.0,  0.50, 0.00],
+  [ 3.2,  1.0,  0.5,  1.20, 0.55],
+  [ 1.8,  1.8,  0.3,  0.80, 1.10],
+  [ 2.5, -0.8,  0.2,  0.30, 0.70],
+  [ 4.0,  0.5,  0.4,  1.50, 0.35],
+  [ 3.5,  2.2, -0.3,  0.90, 1.25],
+  [ 1.5, -2.0,  0.5,  0.60, 0.85],
+  [ 4.5,  1.2,  0.2,  1.10, 0.40],
+  [ 3.0, -1.5, -0.2,  0.40, 0.95],
+  [ 2.2,  2.8, -0.4,  1.30, 0.60],
+  [ 4.8, -0.8,  0.3,  0.70, 1.15],
+  [ 1.6,  0.8,  0.2,  1.00, 0.25],
+  [ 3.8, -2.5,  0.6,  1.60, 0.75],
+  [ 5.2,  0.2,  0.5,  0.90, 0.30],
+  [ 2.8,  1.5,  0.4,  0.60, 1.10],
+  [ 4.2, -1.8,  0.3,  0.80, 0.50],
+  [ 5.5,  2.5,  0.4,  1.10, 0.90],
+  [ 5.8, -1.0,  0.2,  0.50, 1.35],
+  [ 6.0,  0.8, -0.3,  1.25, 0.65],
+  [ 5.6, -2.8, -0.3,  1.40, 1.05],
+];
+
+// ── Móvil: 8 cubos en columna derecha (texto ocupa 70% → cubos en x ≈ 1.3–1.7)
+const FLOATS_MOBILE: [number, number, number, number, number][] = [
+  [ 1.4,  3.8,  0.5,  1.10, 0.40],
+  [ 1.5,  2.8,  0.0,  0.50, 0.00],
+  [ 1.3,  1.8,  0.3,  0.80, 1.10],
+  [ 1.6,  0.8,  0.2,  1.25, 0.65],
+  [ 1.4, -0.2, -0.2,  0.40, 0.95],
+  [ 1.6, -1.2,  0.4,  1.20, 0.55],
+  [ 1.5, -2.2,  0.3,  1.50, 0.35],
+  [ 1.7, -3.2,  0.2,  0.90, 1.25],
 ];
 
 // ── Shared GPU resources ──────────────────────────────────────────────────────
-const GEO = new THREE.BoxGeometry(0.82, 0.82, 0.82);
+const GEO = new THREE.BoxGeometry(0.48, 0.48, 0.48);
 const MAT = new THREE.MeshPhysicalMaterial({
   color:       new THREE.Color(0x2299ff),
   metalness:   0.08,
@@ -63,9 +75,11 @@ function MouseTracker() {
 }
 
 // ── Single cube ───────────────────────────────────────────────────────────────
-function FloatCube({ index }: { index: number }) {
+type FloatEntry = [number, number, number, number, number];
+
+function FloatCube({ index, entry }: { index: number; entry: FloatEntry }) {
   const mesh = useRef<THREE.Mesh>(null!);
-  const [ox, oy, oz, rotSeed, delay] = FLOATS[index];
+  const [ox, oy, oz, rotSeed, delay] = entry;
 
   const p = useRef({
     pos:  new THREE.Vector3(ox, oy, oz),
@@ -78,6 +92,11 @@ function FloatCube({ index }: { index: number }) {
     _tgt:  new THREE.Vector3(),
     _disp: new THREE.Vector3(),
   }).current;
+
+  // Reset origin when entry changes (responsive switch)
+  useEffect(() => {
+    p.orig.set(ox, oy, oz);
+  }, [ox, oy, oz, p]);
 
   useFrame(({ clock }, rawDt) => {
     const dt        = Math.min(rawDt, 0.05);
@@ -145,7 +164,7 @@ function FloatCube({ index }: { index: number }) {
 }
 
 // ── Scene ─────────────────────────────────────────────────────────────────────
-function Scene() {
+function Scene({ floats }: { floats: FloatEntry[] }) {
   return (
     <>
       <ambientLight intensity={1.6} />
@@ -154,13 +173,23 @@ function Scene() {
       <pointLight      position={[ 5, 4,-3]}  intensity={4.0} color="#4466ff" />
       <pointLight      position={[ 0, 0, 7]}  intensity={2.0} color="#99ccff" />
       <MouseTracker />
-      {FLOATS.map((_, i) => <FloatCube key={i} index={i} />)}
+      {floats.map((entry, i) => <FloatCube key={i} index={i} entry={entry} />)}
     </>
   );
 }
 
 // ── Export ────────────────────────────────────────────────────────────────────
 export default function HeroCubes() {
+  const [floats, setFloats] = useState<FloatEntry[]>(FLOATS_DESKTOP);
+
+  useEffect(() => {
+    const update = () =>
+      setFloats(window.innerWidth < 1024 ? FLOATS_MOBILE : FLOATS_DESKTOP);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   const onUp = useCallback(() => {
     GRABBED.index = -1;
     document.body.style.cursor = "default";
@@ -175,7 +204,7 @@ export default function HeroCubes() {
       onPointerLeave={onUp}
       style={{ background: "transparent", width: "100%", height: "100%", touchAction: "none" }}
     >
-      <Scene />
+      <Scene floats={floats} />
     </Canvas>
   );
 }
