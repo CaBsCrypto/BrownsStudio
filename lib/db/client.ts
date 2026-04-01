@@ -1,27 +1,30 @@
-// ── Supabase server-side client (uses service role key — never expose) ────────
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
+// ── Firebase Admin SDK — Firestore client ─────────────────────────────────────
+import { initializeApp, getApps, cert } from "firebase-admin/app";
+import { getFirestore, type Firestore } from "firebase-admin/firestore";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let _client: SupabaseClient<any> | null = null;
+let _db: Firestore | null = null;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getSupabaseClient(): SupabaseClient<any> {
-  if (_client) return _client;
+export function getFirestoreClient(): Firestore {
+  if (_db) return _db;
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const projectId   = process.env.FIREBASE_PROJECT_ID;
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+  const privateKey  = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
 
-  if (!url || !key) {
+  if (!projectId || !clientEmail || !privateKey) {
     throw new Error(
-      "Missing Supabase env vars: NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY"
+      "Missing Firebase env vars: FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY\n" +
+      "Obtené estas credenciales en Firebase Console → Project Settings → Service Accounts → Generate new private key"
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  _client = createClient<any>(url, key, {
-    auth: { persistSession: false },
-  });
+  if (!getApps().length) {
+    initializeApp({ credential: cert({ projectId, clientEmail, privateKey }) });
+  }
 
-  return _client;
+  _db = getFirestore();
+  return _db;
 }
+
+// Alias para no romper imports existentes en admin routes
+export const getSupabaseClient = getFirestoreClient;

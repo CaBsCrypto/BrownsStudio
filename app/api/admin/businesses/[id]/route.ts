@@ -1,21 +1,24 @@
-// ── Admin API — single business CRUD ─────────────────────────────────────────
+// ── Admin API — single business (Firestore) ───────────────────────────────────
 import { NextResponse } from "next/server";
-import { getSupabaseClient } from "@/lib/db/client";
+import { getFirestoreClient } from "@/lib/db/client";
+
+const COL = "businesses";
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const db = getSupabaseClient();
+    const db     = getFirestoreClient();
+    const snap   = await db.collection(COL).doc(id).get();
 
-    const { data: biz, error } = await db
-      .from("businesses")
-      .select("*, business_configs(*)")
-      .eq("id", id)
-      .single();
+    if (!snap.exists) return NextResponse.json({ error: "No encontrado" }, { status: 404 });
 
-    if (error || !biz) return NextResponse.json({ error: "No encontrado" }, { status: 404 });
-
-    return NextResponse.json(biz);
+    // Shape to match what the UI expects (business_configs array for compat)
+    const data = snap.data()!;
+    return NextResponse.json({
+      id:              snap.id,
+      ...data,
+      business_configs: [data.config ?? {}],
+    });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
@@ -24,26 +27,20 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const db = getSupabaseClient();
-    const body = await request.json();
+    const db     = getFirestoreClient();
+    const body   = await request.json();
 
     const { config, ...bizFields } = body;
+    const update: Record<string, any> = { ...bizFields };
 
-    // Update businesses table (only provided fields)
-    if (Object.keys(bizFields).length > 0) {
-      const { error } = await db.from("businesses").update(bizFields).eq("id", id);
-      if (error) throw error;
+    // Merge config fields under the nested "config" key
+    if (config) {
+      const snap = await db.collection(COL).doc(id).get();
+      const existing = snap.data()?.config ?? {};
+      update.config = { ...existing, ...config, updated_at: new Date().toISOString() };
     }
 
-    // Update business_configs table (only provided fields)
-    if (config && Object.keys(config).length > 0) {
-      const { error } = await db
-        .from("business_configs")
-        .update({ ...config, updated_at: new Date().toISOString() })
-        .eq("business_id", id);
-      if (error) throw error;
-    }
-
+    await db.collection(COL).doc(id).update(update);
     return NextResponse.json({ ok: true });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
@@ -53,9 +50,8 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 export async function DELETE(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const db = getSupabaseClient();
-    const { error } = await db.from("businesses").delete().eq("id", id);
-    if (error) throw error;
+    const db     = getFirestoreClient();
+    await db.collection(COL).doc(id).delete();
     return NextResponse.json({ ok: true });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

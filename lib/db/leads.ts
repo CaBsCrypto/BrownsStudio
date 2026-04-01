@@ -1,27 +1,20 @@
-// ── Lead CRUD ─────────────────────────────────────────────────────────────────
-import { getSupabaseClient } from "./client";
+// ── Leads CRUD — Firestore ────────────────────────────────────────────────────
+import { getFirestoreClient } from "./client";
 import type { ExtractedLeadData, Lead } from "@/types/bot";
 
-const TABLE = "leads";
+const COL = "leads";
 
-/**
- * Upsert lead data — creates if not exists, merges new fields if it does.
- * Only updates fields that are present in the patch (non-undefined).
- */
 export async function upsertLead(
   conversationId: string,
   waPhone: string,
   patch: ExtractedLeadData,
   businessId?: string
 ): Promise<void> {
-  const db = getSupabaseClient();
+  const db  = getFirestoreClient();
+  // Lead shares the same document ID as its conversation
+  const ref = db.collection(COL).doc(conversationId);
 
-  // Check if lead exists
-  const { data: existing } = await db
-    .from(TABLE)
-    .select("id")
-    .eq("conversation_id", conversationId)
-    .single();
+  const snap = await ref.get();
 
   // Build clean patch — only include fields that have a value
   const cleanPatch: Record<string, unknown> = {};
@@ -29,71 +22,45 @@ export async function upsertLead(
     if (v !== undefined && v !== null) cleanPatch[k] = v;
   }
 
-  if (existing) {
+  if (snap.exists) {
     // Merge service_interest arrays if both exist
-    if (patch.service_interest) {
-      const { data: lead } = await db
-        .from(TABLE)
-        .select("service_interest")
-        .eq("id", existing.id)
-        .single();
-
-      if (lead?.service_interest) {
-        const merged = Array.from(
-          new Set([...(lead.service_interest as string[]), ...patch.service_interest])
-        );
-        cleanPatch.service_interest = merged;
-      }
+    if (patch.service_interest && snap.data()?.service_interest) {
+      const merged = Array.from(
+        new Set([...(snap.data()!.service_interest as string[]), ...patch.service_interest])
+      );
+      cleanPatch.service_interest = merged;
     }
-
-    await db.from(TABLE).update(cleanPatch).eq("id", existing.id);
+    await ref.update({ ...cleanPatch, updated_at: new Date().toISOString() });
   } else {
-    await db.from(TABLE).insert({
+    await ref.set({
       conversation_id: conversationId,
-      wa_phone: waPhone,
-      ...(businessId ? { business_id: businessId } : {}),
+      wa_phone:        waPhone,
+      business_id:     businessId ?? "fallback",
+      status:          "new",
+      calendly_sent:   false,
+      created_at:      new Date().toISOString(),
+      updated_at:      new Date().toISOString(),
       ...cleanPatch,
     });
   }
 }
 
-/**
- * Mark that the Calendly link was sent to this lead.
- */
 export async function markCalendlySent(conversationId: string): Promise<void> {
-  const db = getSupabaseClient();
-  await db
-    .from(TABLE)
-    .update({ calendly_sent: true })
-    .eq("conversation_id", conversationId);
+  const db = getFirestoreClient();
+  await db.collection(COL).doc(conversationId).update({ calendly_sent: true });
 }
 
-/**
- * Update lead status.
- */
 export async function updateLeadStatus(
   conversationId: string,
   status: Lead["status"]
 ): Promise<void> {
-  const db = getSupabaseClient();
-  await db
-    .from(TABLE)
-    .update({ status })
-    .eq("conversation_id", conversationId);
+  const db = getFirestoreClient();
+  await db.collection(COL).doc(conversationId).update({ status, updated_at: new Date().toISOString() });
 }
 
-/**
- * Get a lead by conversation ID.
- */
-export async function getLeadByConversation(
-  conversationId: string
-): Promise<Lead | null> {
-  const db = getSupabaseClient();
-  const { data } = await db
-    .from(TABLE)
-    .select("*")
-    .eq("conversation_id", conversationId)
-    .single();
-
-  return (data as unknown as Lead) ?? null;
+export async function getLeadByConversation(conversationId: string): Promise<Lead | null> {
+  const db   = getFirestoreClient();
+  const snap = await db.collection(COL).doc(conversationId).get();
+  if (!snap.exists) return null;
+  return { id: snap.id, ...snap.data() } as Lead;
 }
