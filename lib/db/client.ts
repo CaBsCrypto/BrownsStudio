@@ -22,7 +22,8 @@ export function getFirestoreClient(): Firestore {
     initializeApp({ credential: cert({ projectId, clientEmail, privateKey }) });
   }
 
-  _db = getFirestore();
+  // Apuntar a la base de datos "browns-studio" (no la default)
+  _db = getFirestore("browns-studio");
   return _db;
 }
 
