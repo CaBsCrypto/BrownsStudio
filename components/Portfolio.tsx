@@ -56,6 +56,20 @@ export default function Portfolio() {
   const prev = () => scrollToCard(Math.max(0, activeIndex - 1));
   const next = () => scrollToCard(Math.min(total - 1, activeIndex + 1));
 
+  // Autoplay — avanza cada 3.5s, se pausa si el usuario interactúa
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused) return;
+    const timer = setInterval(() => {
+      setActiveIndex((current) => {
+        const next = current >= total - 1 ? 0 : current + 1;
+        scrollToCard(next);
+        return next;
+      });
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [paused, total, scrollToCard]);
+
   return (
     <section
       ref={sectionRef}
@@ -145,7 +159,12 @@ export default function Portfolio() {
         </div>
 
         {/* Carousel track */}
-        <div className="relative">
+        <div className="relative"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onTouchStart={() => setPaused(true)}
+          onTouchEnd={() => setTimeout(() => setPaused(false), 3000)}
+        >
           <div
             ref={trackRef}
             className="flex gap-5 overflow-x-auto no-scrollbar pb-4"
