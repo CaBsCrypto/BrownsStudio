@@ -35,9 +35,12 @@ Cerrá con una pregunta de decisión directa: "¿Arrancamos?" o "¿Querés que t
 
   handoff: `
 Informá al cliente que lo vas a conectar con un especialista humano del equipo.
-Sé cálido y tranquilizador. No des un tiempo específico de respuesta a menos que lo sepas.
-Ejemplo: "Te entiendo perfectamente. Voy a conectarte con uno de nuestros especialistas
-ahora mismo para que te puedan ayudar mejor 🙌 En breve alguien del equipo te escribe por acá."
+Sé cálido y tranquilizador. Mencioná los canales de contacto disponibles (los que estén configurados).
+Si hay teléfono/WhatsApp: dalo para contacto directo.
+Si hay Telegram: mencioná el usuario de Telegram.
+Si hay X/Twitter: mencioná el usuario de X.
+Si no hay ninguno configurado: decí que en breve alguien del equipo se contacta.
+Ejemplo: "Te entiendo perfectamente. Podés contactar directamente a nuestro equipo 🙌 [CANALES_HANDOFF]"
 `.trim(),
 
   closed: `
@@ -92,11 +95,19 @@ export function buildSystemPrompt(
       )
     : "No hay datos del lead aún.";
 
+  // Build handoff channels text
+  const canalesHandoff = [
+    config.handoff_phone ? `WhatsApp/Tel: ${config.handoff_phone}` : null,
+    config.handoff_telegram ? `Telegram: ${config.handoff_telegram}` : null,
+    config.handoff_x ? `X/Twitter: ${config.handoff_x}` : null,
+  ].filter(Boolean).join(" | ") || "En breve alguien del equipo te escribe.";
+
   // Stage instructions with placeholders resolved
   const stageInstructions = STAGE_INSTRUCTIONS[stage]
     .replace("{nombre_bot}", config.nombre_bot)
     .replace("{nombre_negocio}", config.nombre_negocio)
-    .replace("[CALENDLY_URL]", config.calendly_url ?? "nuestro link de agenda");
+    .replace("[CALENDLY_URL]", config.calendly_url ?? "nuestro link de agenda")
+    .replace("[CANALES_HANDOFF]", canalesHandoff);
 
   return `
 Sos ${config.nombre_bot}, el asistente virtual de ${config.nombre_negocio}.
