@@ -33,8 +33,6 @@ export default function NewBusinessPage() {
   const [horario, setHorario]       = useState("Lunes a Viernes 9am-6pm");
   const [calendly, setCalendly]     = useState("");
   const [handoffPhone, setHandoffPhone] = useState("");
-  const [handoffTelegram, setHandoffTelegram] = useState("");
-  const [handoffX, setHandoffX] = useState("");
   const [reglasExtra, setReglasExtra]   = useState("");
 
   // Step 3 — Servicios + FAQs
@@ -64,8 +62,6 @@ export default function NewBusinessPage() {
             nombre_bot: nombreBot, tono, horario,
             calendly_url: calendly || null,
             handoff_phone: handoffPhone || null,
-            handoff_telegram: handoffTelegram || null,
-            handoff_x: handoffX || null,
             servicios: servicios.filter(s => s.nombre.trim()),
             faqs: faqs.filter(f => f.pregunta.trim()),
             reglas_extra: reglasExtra || null,
@@ -174,22 +170,13 @@ export default function NewBusinessPage() {
             <Field label="Tono">
               <input value={tono} onChange={e => setTono(e.target.value)} placeholder="profesional y cercano" className={INPUT} />
             </Field>
-            <Field label="Calendly URL">
-              <input value={calendly} onChange={e => setCalendly(e.target.value)} placeholder="https://calendly.com/..." className={INPUT} />
-            </Field>
-            <div>
-              <p className="text-[#9e9e9e] text-[11px] font-medium mb-2 uppercase tracking-wider">Canales de contacto humano</p>
-              <div className="grid grid-cols-3 gap-3">
-                <Field label="📱 WhatsApp">
-                  <input value={handoffPhone} onChange={e => setHandoffPhone(e.target.value)} placeholder="+56912345678" className={INPUT} />
-                </Field>
-                <Field label="✈️ Telegram">
-                  <input value={handoffTelegram} onChange={e => setHandoffTelegram(e.target.value)} placeholder="@usuario" className={INPUT} />
-                </Field>
-                <Field label="𝕏 Twitter / X">
-                  <input value={handoffX} onChange={e => setHandoffX(e.target.value)} placeholder="@usuario" className={INPUT} />
-                </Field>
-              </div>
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Calendly URL">
+                <input value={calendly} onChange={e => setCalendly(e.target.value)} placeholder="https://calendly.com/..." className={INPUT} />
+              </Field>
+              <Field label="WhatsApp handoff" hint="Número al que Charlie deriva clientes">
+                <input value={handoffPhone} onChange={e => setHandoffPhone(e.target.value)} placeholder="+56912345678" className={INPUT} />
+              </Field>
             </div>
             <Field label="Reglas adicionales" hint="Instrucciones especiales para este negocio">
               <textarea value={reglasExtra} onChange={e => setReglasExtra(e.target.value)}

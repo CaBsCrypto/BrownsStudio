@@ -95,12 +95,10 @@ export function buildSystemPrompt(
       )
     : "No hay datos del lead aún.";
 
-  // Build handoff channels text
-  const canalesHandoff = [
-    config.handoff_phone ? `WhatsApp/Tel: ${config.handoff_phone}` : null,
-    config.handoff_telegram ? `Telegram: ${config.handoff_telegram}` : null,
-    config.handoff_x ? `X/Twitter: ${config.handoff_x}` : null,
-  ].filter(Boolean).join(" | ") || "En breve alguien del equipo te escribe.";
+  // Build handoff contact text
+  const canalesHandoff = config.handoff_phone
+    ? `WhatsApp: ${config.handoff_phone}`
+    : "En breve alguien del equipo te escribe.";
 
   // Stage instructions with placeholders resolved
   const stageInstructions = STAGE_INSTRUCTIONS[stage]

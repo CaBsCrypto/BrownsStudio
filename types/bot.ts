@@ -100,8 +100,6 @@ export interface BusinessConfig {
   horario: string;
   calendly_url: string | null;
   handoff_phone: string | null;
-  handoff_telegram: string | null;
-  handoff_x: string | null;
   servicios: ServiceItem[];
   faqs: FaqItem[];
   reglas_extra: string | null;
