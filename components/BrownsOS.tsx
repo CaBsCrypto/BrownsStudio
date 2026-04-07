@@ -71,7 +71,7 @@ function DataOcean({ scrollRef, isMobile }: { scrollRef: React.MutableRefObject<
   useFrame(({ clock }) => {
     // 30fps cap on mobile — skip every other frame
     if (isMobile) {
-      frameSkip.current = (frameSkip.current + 1) % 3;
+      frameSkip.current = (frameSkip.current + 1) % 4;
       if (frameSkip.current !== 0) return;
     }
 
@@ -160,7 +160,7 @@ function QuantumCore({
 
     // 30fps cap on mobile
     if (isMobile) {
-      frameSkip.current = (frameSkip.current + 1) % 3;
+      frameSkip.current = (frameSkip.current + 1) % 4;
       if (frameSkip.current !== 0) return;
     }
 
