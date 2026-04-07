@@ -21,7 +21,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
       {/* Static local screenshot — loads instantly */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={`/previews/${proyecto.slug}.jpg`}
+        src={`/previews/${proyecto.slug}.webp`}
         alt={`Preview de ${proyecto.nombre}`}
         className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
         loading="lazy"
