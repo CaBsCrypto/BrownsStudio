@@ -142,38 +142,21 @@ function QuantumCore({
     const t = clock.elapsedTime;
     const s = scrollRef.current;
 
-    // ── Scroll choreography ───────────────────────────────────────────────
-    if (isMobile) {
-      // Mobile: stays centered, only moves depth + slight Y drift
-      if (s < 0.05) {
-        tgt.current.set(0, 0, 0);
-      } else if (s < 0.5) {
-        const p = (s - 0.05) / 0.45;
-        tgt.current.set(0, -p * 1.5, -p * 1.0);
-      } else if (s < 0.85) {
-        const p = (s - 0.5) / 0.35;
-        tgt.current.set(0, -1.5 + p * 0.5, -1.0 + p * 2.0);
-      } else {
-        const p = (s - 0.85) / 0.15;
-        tgt.current.set(0, -1.0 + p * 1.0, 1.0 + p * 4);
-      }
+    // ── Scroll choreography — 4 chapters, starts moving at s=0.05 ────────
+    if (s < 0.05) {
+      tgt.current.set(0, 0, 0);
+    } else if (s < 0.25) {
+      const p = (s - 0.05) / 0.20;
+      tgt.current.set(p * 4, -p * 0.8, 0);
+    } else if (s < 0.55) {
+      const p = (s - 0.25) / 0.30;
+      tgt.current.set(4 + p * 2, -0.8 - p * 1.2, -p * 1.5);
+    } else if (s < 0.80) {
+      const p = (s - 0.55) / 0.25;
+      tgt.current.set(6 - p * 14, -2.0 + p * 1.0, -1.5 + p * 2.5);
     } else {
-      // Desktop: full 4-chapter choreography
-      if (s < 0.05) {
-        tgt.current.set(0, 0, 0);
-      } else if (s < 0.25) {
-        const p = (s - 0.05) / 0.20;
-        tgt.current.set(p * 4, -p * 0.8, 0);
-      } else if (s < 0.55) {
-        const p = (s - 0.25) / 0.30;
-        tgt.current.set(4 + p * 2, -0.8 - p * 1.2, -p * 1.5);
-      } else if (s < 0.80) {
-        const p = (s - 0.55) / 0.25;
-        tgt.current.set(6 - p * 14, -2.0 + p * 1.0, -1.5 + p * 2.5);
-      } else {
-        const p = (s - 0.80) / 0.20;
-        tgt.current.set(-8 + p * 8, -1.0 + p * 1.5, 1.0 + p * 5);
-      }
+      const p = (s - 0.80) / 0.20;
+      tgt.current.set(-8 + p * 8, -1.0 + p * 1.5, 1.0 + p * 5);
     }
     groupRef.current.position.lerp(tgt.current, 0.05);
 
