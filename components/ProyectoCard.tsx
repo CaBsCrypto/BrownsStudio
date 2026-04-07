@@ -53,34 +53,19 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
         <ArrowUpRight size={12} className="text-white/60" />
       </div>
 
-      {/* Coming Soon overlay */}
-      {proyecto.comingSoon ? (
+      {/* Coming Soon — small label top-left */}
+      {proyecto.comingSoon && (
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center gap-3"
-          style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)" }}
+          className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold"
+          style={{ background: "rgba(220,38,38,0.85)", color: "#fff", backdropFilter: "blur(8px)", border: "1px solid rgba(255,100,100,0.3)", boxShadow: "0 0 12px rgba(220,38,38,0.4)" }}
         >
-          <div
-            className="flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm text-[#9e9e9e]"
-            style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(72,72,72,0.3)" }}
-          >
-            <Wrench size={14} className="animate-pulse" />
-            En Desarrollo
-          </div>
-          <div className="flex flex-wrap justify-center gap-1.5 max-w-[200px]">
-            {proyecto.tecnologias.slice(0, 3).map((tech) => (
-              <span
-                key={tech}
-                className="px-2 py-0.5 rounded text-xs"
-                style={{ color: "#5a5a5a", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(72,72,72,0.2)" }}
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
+          <Wrench size={10} className="animate-pulse" />
+          En Desarrollo
         </div>
-      ) : (
-        /* Hover overlay — metallic CTA */
-        <div
+      )}
+
+      {/* Hover overlay — metallic CTA */}
+      <div
           className="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300"
           style={{ background: "rgba(0,0,0,0.8)", backdropFilter: "blur(8px)" }}
         >
@@ -103,7 +88,6 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
             ))}
           </div>
         </div>
-      )}
     </div>
   );
 
