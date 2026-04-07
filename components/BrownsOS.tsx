@@ -74,31 +74,41 @@ function DataOcean({ scrollRef, isMobile }: { scrollRef: React.MutableRefObject<
     const orig = origXY.current;
     const n   = arr.length / 3;
 
-    // Raycast mouse → ocean plane → local coords
-    raycaster.setFromCamera(mouseNDC.current as THREE.Vector2, camera);
-    raycaster.ray.intersectPlane(worldPlane, hitWorld);
-    hitLocal.copy(hitWorld).applyMatrix4(invOceanMatrix);
-    const mx = hitLocal.x;
-    const my = hitLocal.y;
+    if (isMobile) {
+      // Mobile: skip mouse raycast entirely — just wave
+      for (let i = 0; i < n; i++) {
+        const i3 = i * 3;
+        const x  = orig[i3], y = orig[i3 + 1];
+        arr[i3 + 2] = Math.sin(x * 0.12 + t * 0.5) * Math.cos(y * 0.09 + t * 0.3) * (0.7 + s * 2.8);
+      }
+    } else {
+      // Desktop: full mouse pull + wave
+      raycaster.setFromCamera(mouseNDC.current as THREE.Vector2, camera);
+      raycaster.ray.intersectPlane(worldPlane, hitWorld);
+      hitLocal.copy(hitWorld).applyMatrix4(invOceanMatrix);
+      const mx = hitLocal.x;
+      const my = hitLocal.y;
 
-    for (let i = 0; i < n; i++) {
-      const i3 = i * 3;
-      const x  = orig[i3], y = orig[i3 + 1];
-      const dx = x - mx,   dy = y - my;
-      const d2 = dx*dx + dy*dy;
-      const pull = d2 < 64 ? (1 - Math.sqrt(d2) / 8) * 3.2 : 0;
-      const wave = Math.sin(x * 0.12 + t * 0.5) * Math.cos(y * 0.09 + t * 0.3) * (0.7 + s * 2.8);
-      arr[i3 + 2] = wave + pull;
+      for (let i = 0; i < n; i++) {
+        const i3 = i * 3;
+        const x  = orig[i3], y = orig[i3 + 1];
+        const dx = x - mx,   dy = y - my;
+        const d2 = dx*dx + dy*dy;
+        const pull = d2 < 64 ? (1 - Math.sqrt(d2) / 8) * 3.2 : 0;
+        const wave = Math.sin(x * 0.12 + t * 0.5) * Math.cos(y * 0.09 + t * 0.3) * (0.7 + s * 2.8);
+        arr[i3 + 2] = wave + pull;
+      }
     }
     oceanGeo.attributes.position.needsUpdate = true;
     pointsMat.opacity = 0.12 + s * 0.28;
-    wireMat.opacity   = 0.018 + s * 0.042;
+    if (!isMobile) wireMat.opacity = 0.018 + s * 0.042;
   });
 
   return (
     <group rotation={[-1.22, 0, 0]} position={[0, -7, -8]}>
       <points geometry={oceanGeo} material={pointsMat} />
-      <mesh   geometry={oceanGeo} material={wireMat}   />
+      {/* Wireframe: desktop only — extra draw call not worth it on mobile */}
+      {!isMobile && <mesh geometry={oceanGeo} material={wireMat} />}
     </group>
   );
 }
@@ -204,9 +214,10 @@ function QuantumCore({
       <pointLight ref={lightRef} color={0x00f0ff} intensity={1.6} distance={28} decay={1.6} />
       <mesh ref={coreRef}  material={coreMat}>  <icosahedronGeometry args={[1, 1]} />     </mesh>
       <mesh ref={shellRef} material={shellMat}> <icosahedronGeometry args={[1.55, 2]} />  </mesh>
-      <mesh ref={r1Ref} rotation={[Math.PI / 3, 0.25, 0]}         material={ringMat}> <torusGeometry args={[2.5, 0.014, 3, 80]} /> </mesh>
-      <mesh ref={r2Ref} rotation={[0.1, Math.PI / 4, Math.PI / 5]} material={ringMat}> <torusGeometry args={[3.1, 0.011, 3, 80]} /> </mesh>
-      <mesh ref={r3Ref} rotation={[Math.PI / 6, Math.PI / 3, 0.55]} material={ringMat}> <torusGeometry args={[3.7, 0.009, 3, 80]} /> </mesh>
+      <mesh ref={r1Ref} rotation={[Math.PI / 3, 0.25, 0]}         material={ringMat}> <torusGeometry args={[2.5, 0.014, 3, isMobile ? 48 : 80]} /> </mesh>
+      <mesh ref={r2Ref} rotation={[0.1, Math.PI / 4, Math.PI / 5]} material={ringMat}> <torusGeometry args={[3.1, 0.011, 3, isMobile ? 48 : 80]} /> </mesh>
+      {/* Third ring: skip on mobile */}
+      {!isMobile && <mesh ref={r3Ref} rotation={[Math.PI / 6, Math.PI / 3, 0.55]} material={ringMat}> <torusGeometry args={[3.7, 0.009, 3, 80]} /> </mesh>}
     </group>
   );
 }
@@ -298,14 +309,14 @@ function AuroraBlobs({
         {/* Deep navy base */}
         <div aria-hidden style={{
           position: "fixed", pointerEvents: "none", borderRadius: "50%",
-          filter: "blur(70px)", zIndex: 0,
+          filter: "blur(40px)", zIndex: 0,
           width: "150vw", height: "80vh", top: "-25vh", left: "-25vw",
           background: "radial-gradient(ellipse, rgba(0,15,80,0.65) 0%, transparent 70%)",
         }} />
         {/* Cyan glow — pulsing */}
         <div aria-hidden style={{
           position: "fixed", pointerEvents: "none", borderRadius: "50%",
-          filter: "blur(55px)", zIndex: 0,
+          filter: "blur(35px)", zIndex: 0,
           width: "100vw", height: "60vh", top: "-5vh", left: "0vw",
           background: "radial-gradient(ellipse, rgba(0,240,255,0.14) 0%, transparent 65%)",
           animation: "aurora-pulse 7s ease-in-out infinite",
@@ -313,7 +324,7 @@ function AuroraBlobs({
         {/* Indigo bottom — slow pulse offset */}
         <div aria-hidden style={{
           position: "fixed", pointerEvents: "none", borderRadius: "50%",
-          filter: "blur(70px)", zIndex: 0,
+          filter: "blur(40px)", zIndex: 0,
           width: "120vw", height: "55vh", bottom: "-10vh", left: "-10vw",
           background: "radial-gradient(ellipse, rgba(45,0,120,0.22) 0%, transparent 70%)",
           animation: "aurora-pulse 11s ease-in-out infinite reverse",
