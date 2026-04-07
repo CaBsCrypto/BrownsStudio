@@ -89,29 +89,37 @@ export default function BrownsOSMobile() {
           background: "radial-gradient(circle, rgba(0,240,255,0.07) 0%, transparent 65%)",
           borderRadius: "50%",
         }} />
-        {/* Ring 3 */}
+        {/* Ring 3 — slow spin */}
         <div style={{
           position: "absolute", inset: "-12%",
           border: "1px solid rgba(0,240,255,0.11)",
           borderRadius: "50%",
+          animation: "ring-spin-z 12s linear infinite",
+          willChange: "transform",
         }} />
-        {/* Ring 2 */}
+        {/* Ring 2 — reverse */}
         <div style={{
           position: "absolute", inset: "0%",
           border: "1px solid rgba(0,240,255,0.18)",
           borderRadius: "50%",
+          animation: "ring-spin-y 8s linear infinite reverse",
+          willChange: "transform",
         }} />
         {/* Ring 1 */}
         <div style={{
           position: "absolute", inset: "11%",
           border: "1px solid rgba(0,240,255,0.28)",
           borderRadius: "50%",
+          animation: "ring-spin-x 5s linear infinite",
+          willChange: "transform",
         }} />
-        {/* Shell */}
+        {/* Shell — slow morph */}
         <div style={{
           position: "absolute", inset: "20%",
           border: "1px solid rgba(0,240,255,0.32)",
           borderRadius: "38% 62% 55% 45% / 45% 38% 62% 55%",
+          animation: "ring-spin-x 7s linear infinite reverse",
+          willChange: "transform",
         }} />
         {/* Core */}
         <div style={{
