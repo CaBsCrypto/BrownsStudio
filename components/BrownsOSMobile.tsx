@@ -42,102 +42,81 @@ export default function BrownsOSMobile() {
 
   return (
     <>
-      {/* Background — single div, no blur, GPU composited */}
+      {/* Static background — zero animations, zero repaints */}
       <div aria-hidden style={{
         position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
         background: `
           radial-gradient(ellipse 140% 65% at 50% -5%, rgba(0,10,60,0.92) 0%, transparent 65%),
-          radial-gradient(ellipse 80% 50% at 50% 15%, rgba(0,240,255,0.06) 0%, transparent 60%),
-          radial-gradient(ellipse 100% 45% at 50% 100%, rgba(40,0,100,0.16) 0%, transparent 65%)
+          radial-gradient(ellipse 80% 50% at 50% 15%, rgba(0,240,255,0.05) 0%, transparent 60%),
+          radial-gradient(ellipse 100% 45% at 50% 100%, rgba(40,0,100,0.14) 0%, transparent 65%)
         `,
         transform: "translateZ(0)",
       }} />
 
-      {/* Dot grid — static, no animation */}
+      {/* Dot grid — static */}
       <div aria-hidden style={{
         position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
-        backgroundImage: "radial-gradient(circle, rgba(0,240,255,0.11) 1px, transparent 1px)",
-        backgroundSize: "32px 32px",
-        opacity: 0.55,
+        backgroundImage: "radial-gradient(circle, rgba(0,240,255,0.10) 1px, transparent 1px)",
+        backgroundSize: "30px 30px",
+        opacity: 0.5,
         transform: "translateZ(0)",
       }} />
 
-      {/* Quantum Core */}
+      {/* Quantum Core — NO CSS animations, only scroll-driven transform */}
       <div
         ref={coreRef}
         aria-hidden
         style={{
-          position: "fixed",
-          top: "16%",
-          left: "50%",
+          position: "fixed", top: "16%", left: "50%",
           transform: "translateX(-50%)",
-          zIndex: 1,
-          pointerEvents: "none",
-          width: 200,
-          height: 200,
+          zIndex: 1, pointerEvents: "none",
+          width: 190, height: 190,
           willChange: "transform",
           transition: "transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         }}
       >
-        {/* Outer glow halo */}
+        {/* Outer glow — static */}
         <div style={{
-          position: "absolute", inset: "-40%",
-          background: "radial-gradient(circle, rgba(0,240,255,0.08) 0%, transparent 65%)",
+          position: "absolute", inset: "-35%",
+          background: "radial-gradient(circle, rgba(0,240,255,0.07) 0%, transparent 65%)",
           borderRadius: "50%",
-          animation: "aurora-pulse 4s ease-in-out infinite",
         }} />
-
-        {/* Ring 3 — outermost, slow */}
+        {/* Ring 3 */}
         <div style={{
-          position: "absolute", inset: "-14%",
-          border: "1px solid rgba(0,240,255,0.12)",
+          position: "absolute", inset: "-12%",
+          border: "1px solid rgba(0,240,255,0.11)",
           borderRadius: "50%",
-          animation: "ring-spin-z 11s linear infinite",
-          willChange: "transform",
         }} />
-
         {/* Ring 2 */}
         <div style={{
-          position: "absolute", inset: "-2%",
-          border: "1px solid rgba(0,240,255,0.20)",
+          position: "absolute", inset: "0%",
+          border: "1px solid rgba(0,240,255,0.18)",
           borderRadius: "50%",
-          animation: "ring-spin-y 7s linear infinite reverse",
-          willChange: "transform",
         }} />
-
-        {/* Ring 1 — inner */}
+        {/* Ring 1 */}
         <div style={{
-          position: "absolute", inset: "10%",
-          border: "1px solid rgba(0,240,255,0.32)",
+          position: "absolute", inset: "11%",
+          border: "1px solid rgba(0,240,255,0.28)",
           borderRadius: "50%",
-          animation: "ring-spin-x 4s linear infinite",
-          willChange: "transform",
         }} />
-
-        {/* Shell wireframe */}
+        {/* Shell */}
         <div style={{
           position: "absolute", inset: "20%",
-          border: "1px solid rgba(0,240,255,0.35)",
+          border: "1px solid rgba(0,240,255,0.32)",
           borderRadius: "38% 62% 55% 45% / 45% 38% 62% 55%",
-          animation: "ring-spin-x 6s linear infinite reverse",
-          willChange: "transform",
         }} />
-
-        {/* Core icosahedron-ish */}
+        {/* Core */}
         <div style={{
           position: "absolute", inset: "30%",
           background: "radial-gradient(circle at 38% 38%, rgba(180,255,255,0.9) 0%, rgba(0,240,255,0.85) 35%, rgba(0,120,180,0.6) 70%, transparent 100%)",
           borderRadius: "38% 62% 55% 45% / 45% 55% 62% 38%",
-          boxShadow: "0 0 20px rgba(0,240,255,0.7), 0 0 45px rgba(0,240,255,0.3), inset 0 0 15px rgba(0,240,255,0.2)",
-          animation: "core-morph 4s ease-in-out infinite",
+          boxShadow: "0 0 18px rgba(0,240,255,0.65), 0 0 40px rgba(0,240,255,0.25)",
         }} />
-
-        {/* Point light simulation */}
+        {/* Light reflection */}
         <div style={{
           position: "absolute", inset: "28%",
-          background: "radial-gradient(circle at 35% 30%, rgba(255,255,255,0.25) 0%, transparent 55%)",
+          background: "radial-gradient(circle at 35% 30%, rgba(255,255,255,0.22) 0%, transparent 55%)",
           borderRadius: "50%",
-          pointerEvents: "none",
         }} />
       </div>
     </>
