@@ -94,34 +94,56 @@ export default async function ProyectoPage({ params }: Props) {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               {/* Left — Main content */}
               <div className="lg:col-span-2 space-y-10">
-                {/* Preview mockup */}
-                <div className="rounded-2xl overflow-hidden border border-white/5 aspect-video relative" style={{ background: proyecto.color }}>
-                  <div className="absolute inset-6 rounded-lg bg-black/25 backdrop-blur-sm border border-white/15 flex flex-col overflow-hidden">
-                    {/* Browser bar */}
-                    <div className="flex items-center gap-1.5 px-4 py-3 bg-black/30 border-b border-white/10 flex-shrink-0">
-                      <span className="w-3 h-3 rounded-full bg-red-400/60" />
-                      <span className="w-3 h-3 rounded-full bg-yellow-400/60" />
-                      <span className="w-3 h-3 rounded-full bg-green-400/60" />
-                      <span className="ml-3 flex-1 h-4 rounded bg-white/10 text-white/25 text-xs flex items-center px-3">
-                        www.{proyecto.slug}.com
-                      </span>
-                    </div>
-                    {/* Content mockup */}
-                    <div className="flex-1 p-6 flex flex-col gap-4">
-                      <div className="h-8 w-2/3 rounded bg-white/20" />
-                      <div className="h-3 w-full rounded bg-white/10" />
-                      <div className="h-3 w-4/5 rounded bg-white/10" />
-                      <div className="mt-2 flex gap-3">
-                        <div className="h-10 w-28 rounded-full bg-white/25" />
-                        <div className="h-10 w-28 rounded-full bg-white/10" />
-                      </div>
-                      <div className="mt-auto grid grid-cols-3 gap-3">
-                        {[1, 2, 3].map((n) => (
-                          <div key={n} className="h-24 rounded-lg bg-white/10" />
-                        ))}
-                      </div>
-                    </div>
+                {/* Preview screenshot + visit button */}
+                <div className="rounded-2xl overflow-hidden border border-white/8 relative group/preview" style={{ background: proyecto.color }}>
+                  {/* Browser chrome bar */}
+                  <div className="flex items-center gap-1.5 px-4 py-2.5 bg-black/40 border-b border-white/10">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-400/60" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
+                    <span className="ml-2 flex-1 h-5 rounded bg-white/10 text-white/30 text-[11px] flex items-center px-3 font-mono truncate">
+                      {proyecto.linkDemo?.replace("https://", "") ?? `${proyecto.slug}.vercel.app`}
+                    </span>
+                    {proyecto.linkDemo && (
+                      <a
+                        href={proyecto.linkDemo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-2 p-1 rounded hover:bg-white/10 transition-colors"
+                        title="Abrir sitio"
+                      >
+                        <ExternalLink size={12} className="text-white/40 hover:text-white/80" />
+                      </a>
+                    )}
                   </div>
+
+                  {/* Screenshot */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/previews/${proyecto.slug}.webp`}
+                    alt={`Preview de ${proyecto.nombre}`}
+                    className="w-full object-cover object-top"
+                    style={{ maxHeight: 420 }}
+                  />
+
+                  {/* Hover overlay — visit button */}
+                  {proyecto.linkDemo && (
+                    <a
+                      href={proyecto.linkDemo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/preview:opacity-100 transition-all duration-300"
+                      style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)" }}
+                    >
+                      <span
+                        className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm text-black translate-y-2 group-hover/preview:translate-y-0 transition-transform duration-300"
+                        style={{ background: "linear-gradient(135deg, #00f0ff, #0099bb)", boxShadow: "0 0 30px rgba(0,240,255,0.35)" }}
+                      >
+                        <ExternalLink size={15} />
+                        Visitar sitio en vivo
+                      </span>
+                    </a>
+                  )}
                 </div>
 
                 {/* Description */}
@@ -177,6 +199,19 @@ export default async function ProyectoPage({ params }: Props) {
                   <p className="text-text-muted text-sm mb-5">
                     Podemos crear algo similar para tu negocio. Cuéntanos tu idea.
                   </p>
+                  {/* Visit live site — primary CTA */}
+                  {proyecto.linkDemo && (
+                    <a
+                      href={proyecto.linkDemo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-semibold text-sm transition-all duration-300 mb-3"
+                      style={{ background: "linear-gradient(135deg, #00f0ff, #0099bb)", color: "#000", boxShadow: "0 0 20px rgba(0,240,255,0.2)" }}
+                    >
+                      <ExternalLink size={15} />
+                      Ver sitio en vivo
+                    </a>
+                  )}
                   <a
                     href={whatsappLink}
                     target="_blank"
@@ -190,7 +225,6 @@ export default async function ProyectoPage({ params }: Props) {
                     href="/#portfolio"
                     className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-white/10 text-text-secondary text-sm hover:text-text-primary hover:border-white/20 transition-all duration-300"
                   >
-                    <ExternalLink size={13} />
                     Ver más proyectos
                   </Link>
                 </div>
