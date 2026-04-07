@@ -10,15 +10,15 @@ import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
-const ScrollBackground3D = dynamic(
-  () => import("@/components/ScrollBackground3D"),
+const BrownsOS = dynamic(
+  () => import("@/components/BrownsOS"),
   { ssr: false }
 );
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <ScrollBackground3D />
+      <BrownsOS />
       <Navbar />
       <Hero />
       <Portfolio />

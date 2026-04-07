@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, DM_Sans } from "next/font/google";
+import { Space_Grotesk, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SITE_CONFIG } from "@/lib/config";
 
@@ -15,6 +15,13 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
   display: "swap",
   weight: ["300", "400", "500", "600", "700"],
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  variable: "--font-jet-brains-mono",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -187,7 +194,7 @@ export default function RootLayout({
         ))}
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${dmSans.variable} font-body antialiased bg-bg-primary text-text-primary`}
+        className={`${spaceGrotesk.variable} ${dmSans.variable} ${jetBrainsMono.variable} font-body antialiased bg-bg-primary text-text-primary`}
       >
         {children}
       </body>

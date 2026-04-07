@@ -21,8 +21,8 @@ const config: Config = {
         space:          "#0a0f1e",  // secondary_container — deep navy
         primary:        "#c6c6c7",  // silver metallic
         secondary:      "#939eb5",  // desaturated blue-silver
-        tertiary:       "#47c4ff",  // AI electric blue — active states
-        "tertiary-dim": "#05a9e3",  // subdued AI blue — orbs / underlights
+        tertiary:       "#00f0ff",  // BrownsOS cyan — active states
+        "tertiary-dim": "#00c8d8",  // subdued cyan — orbs / underlights
         on: {
           surface:         "#e5e5e5", // high-readability text (never pure white)
           "surface-variant": "#9e9e9e", // secondary text
