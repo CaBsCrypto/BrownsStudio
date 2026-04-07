@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useMemo, useState } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -13,13 +13,13 @@ const C_RED  = new THREE.Color(0xff003c);
 const OCEAN_POS = new THREE.Vector3(0, -7, -8);
 const OCEAN_ROT_X = -1.22;
 
-function DataOcean({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
+function DataOcean({ scrollRef, isMobile }: { scrollRef: React.MutableRefObject<number>; isMobile: boolean }) {
   const { camera } = useThree();
   const mouseNDC = useRef({ x: 0, y: 0 });
   const origXY   = useRef<Float32Array>(null!);
 
   const oceanGeo = useMemo(() => {
-    const SEGS = 90;
+    const SEGS = isMobile ? 45 : 90;  // half resolution on mobile
     const geo  = new THREE.PlaneGeometry(80, 80, SEGS, SEGS);
     const pos  = geo.attributes.position.array as Float32Array;
     origXY.current = new Float32Array(pos.length);
@@ -215,7 +215,7 @@ function QuantumCore({
 }
 
 // ── Scene ─────────────────────────────────────────────────────────────────────
-function Scene({ scrollRef, glitchRef }: { scrollRef: React.MutableRefObject<number>; glitchRef: React.MutableRefObject<boolean> }) {
+function Scene({ scrollRef, glitchRef, isMobile }: { scrollRef: React.MutableRefObject<number>; glitchRef: React.MutableRefObject<boolean>; isMobile: boolean }) {
   const { camera } = useThree();
   const camTgt     = useRef(new THREE.Vector3(0, 0, 14));
   useFrame(() => {
@@ -227,22 +227,11 @@ function Scene({ scrollRef, glitchRef }: { scrollRef: React.MutableRefObject<num
   return (
     <>
       <ambientLight intensity={0.06} color={0x001a2e} />
-      <DataOcean   scrollRef={scrollRef} />
+      <DataOcean   scrollRef={scrollRef} isMobile={isMobile} />
       <QuantumCore scrollRef={scrollRef} glitchRef={glitchRef} />
     </>
   );
 }
-
-// ── Boot sequence ─────────────────────────────────────────────────────────────
-const BOOT_LOGS = [
-  "INIT.SYS // BROWNS_STUDIO_2026",
-  "LOADING KERNEL MODULES...",
-  "MOUNT /dev/reality → /browns/core",
-  "QUANTUM_BRIDGE: ONLINE",
-  "NEURAL_NET: 10,000 NODES ACTIVE",
-  "ESTABILIZANDO CONEXIÓN...",
-  "SYS_READY ██████████ 100%",
-];
 
 // ── Aurora blobs ──────────────────────────────────────────────────────────────
 function AuroraBlobs({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
@@ -357,28 +346,9 @@ function AuroraBlobs({ scrollRef }: { scrollRef: React.MutableRefObject<number> 
 
 // ── Export ────────────────────────────────────────────────────────────────────
 export default function BrownsOS() {
-  const scrollRef   = useRef(0);
-  const glitchRef   = useRef(false);
-  const [bootLines, setBootLines]     = useState<string[]>([]);
-  const [bootDone, setBootDone]       = useState(false);
-  const [bootVisible, setBootVisible] = useState(true);
-
-  // Boot sequence
-  useEffect(() => {
-    let i = 0;
-    const iv = setInterval(() => {
-      setBootLines(prev => [...prev, BOOT_LOGS[i]]);
-      i++;
-      if (i >= BOOT_LOGS.length) {
-        clearInterval(iv);
-        setTimeout(() => {
-          setBootDone(true);
-          setTimeout(() => setBootVisible(false), 650);
-        }, 480);
-      }
-    }, 255);
-    return () => clearInterval(iv);
-  }, []);
+  const scrollRef = useRef(0);
+  const glitchRef = useRef(false);
+  const isMobile  = typeof window !== "undefined" && window.innerWidth < 768;
 
   // Scroll tracking
   useEffect(() => {
@@ -392,70 +362,44 @@ export default function BrownsOS() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Click → glitch
+  // Click → glitch (desktop only)
   useEffect(() => {
+    if (isMobile) return;
     const trigger = () => {
       glitchRef.current = true;
       setTimeout(() => { glitchRef.current = false; }, 320);
     };
     document.addEventListener("click", trigger);
     return () => document.removeEventListener("click", trigger);
-  }, []);
+  }, [isMobile]);
 
   return (
     <>
-      {/* ── Aurora background blobs ───────────────────────────────────────── */}
+      {/* ── Aurora blobs ──────────────────────────────────────────────────── */}
       <AuroraBlobs scrollRef={scrollRef} />
 
-      {/* ── Scanlines ─────────────────────────────────────────────────────── */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0"
-        style={{ zIndex: 1, background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.011) 2px, rgba(0,240,255,0.011) 4px)" }}
-      />
-
-      {/* ── Corner HUD ────────────────────────────────────────────────────── */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed bottom-5 right-5"
-        style={{
-          zIndex: 2, fontFamily: "var(--font-jet-brains-mono), 'Courier New', monospace",
-          fontSize: "9px", lineHeight: "1.7", letterSpacing: "0.1em",
-          color: "rgba(0,240,255,0.3)", textAlign: "right",
-        }}
-      >
-        <div>MEM: 10,000 NODES</div>
-        <div>V_2.0.26</div>
-      </div>
-
-      {/* ── Boot overlay ──────────────────────────────────────────────────── */}
-      {bootVisible && (
+      {/* ── Scanlines (desktop only — expensive on mobile) ────────────────── */}
+      {!isMobile && (
         <div
           aria-hidden
+          className="pointer-events-none fixed inset-0"
+          style={{ zIndex: 1, background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.011) 2px, rgba(0,240,255,0.011) 4px)" }}
+        />
+      )}
+
+      {/* ── Corner HUD (desktop only) ─────────────────────────────────────── */}
+      {!isMobile && (
+        <div
+          aria-hidden
+          className="pointer-events-none fixed bottom-5 right-5"
           style={{
-            position: "fixed", inset: 0, zIndex: 60,
-            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-            background: "#050505",
-            fontFamily: "var(--font-jet-brains-mono), 'Courier New', monospace",
-            opacity: bootDone ? 0 : 1, transition: "opacity 600ms ease",
-            pointerEvents: bootDone ? "none" : "all",
+            zIndex: 2, fontFamily: "var(--font-jet-brains-mono), 'Courier New', monospace",
+            fontSize: "9px", lineHeight: "1.7", letterSpacing: "0.1em",
+            color: "rgba(0,240,255,0.3)", textAlign: "right",
           }}
         >
-          <div style={{ color: "rgba(0,240,255,0.35)", fontSize: "10px", letterSpacing: "0.35em", marginBottom: "32px" }}>
-            BROWNS_STUDIO_OS
-          </div>
-          <div style={{ width: "100%", maxWidth: "420px", padding: "0 24px" }}>
-            {bootLines.map((line, idx) => {
-              const isLast = idx === bootLines.length - 1;
-              return (
-                <div key={idx} style={{ color: isLast ? "#00f0ff" : "rgba(0,240,255,0.45)", fontSize: "12px", marginBottom: "5px", transition: "color 0.3s" }}>
-                  <span style={{ color: "rgba(0,240,255,0.25)", marginRight: "8px" }}>{">"}</span>
-                  {line}
-                  {isLast && !bootDone && <span className="browns-os-blink" style={{ marginLeft: "2px" }}>▋</span>}
-                </div>
-              );
-            })}
-          </div>
+          <div>MEM: 10,000 NODES</div>
+          <div>V_2.0.26</div>
         </div>
       )}
 
@@ -463,10 +407,10 @@ export default function BrownsOS() {
       <Canvas
         camera={{ position: [0, 0, 14], fov: 55 }}
         gl={{ alpha: true, antialias: false, powerPreference: "high-performance", stencil: false }}
-        dpr={Math.min(typeof window !== "undefined" ? window.devicePixelRatio : 1, 1.5)}
+        dpr={isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5)}
         style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", background: "transparent" }}
       >
-        <Scene scrollRef={scrollRef} glitchRef={glitchRef} />
+        <Scene scrollRef={scrollRef} glitchRef={glitchRef} isMobile={isMobile} />
       </Canvas>
     </>
   );
