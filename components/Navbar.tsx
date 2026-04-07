@@ -92,7 +92,7 @@ export default function Navbar() {
                     {link.label}
                     <span
                       className={`absolute -bottom-0.5 left-0 h-px transition-all duration-300 ${
-                        isActive ? "w-full bg-[#47c4ff]" : "w-0 group-hover:w-full bg-[#484848]"
+                        isActive ? "w-full bg-[#00f0ff]" : "w-0 group-hover:w-full bg-[#484848]"
                       }`}
                     />
                   </button>
@@ -147,7 +147,7 @@ export default function Navbar() {
                   key={link.href}
                   onClick={() => handleNavClick(link.href)}
                   className={`text-left py-4 text-sm font-medium uppercase tracking-widest transition-colors duration-200 cursor-pointer ${
-                    isActive ? "text-[#47c4ff]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+                    isActive ? "text-[#00f0ff]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
                   }`}
                   style={{ borderBottom: "1px solid rgba(72,72,72,0.12)", animationDelay: `${i * 0.05}s` }}
                 >
