@@ -107,9 +107,11 @@ function DataOcean({ scrollRef, isMobile }: { scrollRef: React.MutableRefObject<
 function QuantumCore({
   scrollRef,
   glitchRef,
+  isMobile,
 }: {
   scrollRef: React.MutableRefObject<number>;
   glitchRef: React.MutableRefObject<boolean>;
+  isMobile: boolean;
 }) {
   const groupRef = useRef<THREE.Group>(null!);
   const coreRef  = useRef<THREE.Mesh>(null!);
@@ -140,26 +142,38 @@ function QuantumCore({
     const t = clock.elapsedTime;
     const s = scrollRef.current;
 
-    // ── Scroll choreography — 4 chapters, starts moving at s=0.05 ────────
-    if (s < 0.05) {
-      // Hero resting — centered
-      tgt.current.set(0, 0, 0);
-    } else if (s < 0.25) {
-      // Chapter 1 — drifts right quickly (Hero → Portfolio)
-      const p = (s - 0.05) / 0.20;
-      tgt.current.set(p * 4, -p * 0.8, 0);
-    } else if (s < 0.55) {
-      // Chapter 2 — travels right + slightly back (Portfolio → Pricing)
-      const p = (s - 0.25) / 0.30;
-      tgt.current.set(4 + p * 2, -0.8 - p * 1.2, -p * 1.5);
-    } else if (s < 0.80) {
-      // Chapter 3 — sweeps left across screen (Proceso → FAQ)
-      const p = (s - 0.55) / 0.25;
-      tgt.current.set(6 - p * 14, -2.0 + p * 1.0, -1.5 + p * 2.5);
+    // ── Scroll choreography ───────────────────────────────────────────────
+    if (isMobile) {
+      // Mobile: stays centered, only moves depth + slight Y drift
+      if (s < 0.05) {
+        tgt.current.set(0, 0, 0);
+      } else if (s < 0.5) {
+        const p = (s - 0.05) / 0.45;
+        tgt.current.set(0, -p * 1.5, -p * 1.0);
+      } else if (s < 0.85) {
+        const p = (s - 0.5) / 0.35;
+        tgt.current.set(0, -1.5 + p * 0.5, -1.0 + p * 2.0);
+      } else {
+        const p = (s - 0.85) / 0.15;
+        tgt.current.set(0, -1.0 + p * 1.0, 1.0 + p * 4);
+      }
     } else {
-      // Chapter 4 — CTA: rushes toward camera from center
-      const p = (s - 0.80) / 0.20;
-      tgt.current.set(-8 + p * 8, -1.0 + p * 1.5, 1.0 + p * 5);
+      // Desktop: full 4-chapter choreography
+      if (s < 0.05) {
+        tgt.current.set(0, 0, 0);
+      } else if (s < 0.25) {
+        const p = (s - 0.05) / 0.20;
+        tgt.current.set(p * 4, -p * 0.8, 0);
+      } else if (s < 0.55) {
+        const p = (s - 0.25) / 0.30;
+        tgt.current.set(4 + p * 2, -0.8 - p * 1.2, -p * 1.5);
+      } else if (s < 0.80) {
+        const p = (s - 0.55) / 0.25;
+        tgt.current.set(6 - p * 14, -2.0 + p * 1.0, -1.5 + p * 2.5);
+      } else {
+        const p = (s - 0.80) / 0.20;
+        tgt.current.set(-8 + p * 8, -1.0 + p * 1.5, 1.0 + p * 5);
+      }
     }
     groupRef.current.position.lerp(tgt.current, 0.05);
 
@@ -220,7 +234,12 @@ function Scene({ scrollRef, glitchRef, isMobile }: { scrollRef: React.MutableRef
   const camTgt     = useRef(new THREE.Vector3(0, 0, 14));
   useFrame(() => {
     const s = scrollRef.current;
-    camTgt.current.set(0, -s * 2.8, 14 - s * 2.2);
+    if (isMobile) {
+      // Mobile: no lateral drift, gentler zoom
+      camTgt.current.set(0, -s * 1.5, 14 - s * 1.2);
+    } else {
+      camTgt.current.set(0, -s * 2.8, 14 - s * 2.2);
+    }
     camera.position.lerp(camTgt.current, 0.028);
     (camera as THREE.PerspectiveCamera).lookAt(0, -s * 1.6, 0);
   });
@@ -228,7 +247,7 @@ function Scene({ scrollRef, glitchRef, isMobile }: { scrollRef: React.MutableRef
     <>
       <ambientLight intensity={0.06} color={0x001a2e} />
       <DataOcean   scrollRef={scrollRef} isMobile={isMobile} />
-      <QuantumCore scrollRef={scrollRef} glitchRef={glitchRef} />
+      <QuantumCore scrollRef={scrollRef} glitchRef={glitchRef} isMobile={isMobile} />
     </>
   );
 }
@@ -390,41 +409,40 @@ export default function BrownsOS() {
       {/* ── Aurora blobs (mobile: 2 static, desktop: 5 animated) ─────────── */}
       <AuroraBlobs scrollRef={scrollRef} isMobile={isMobile} />
 
-      {/* ── Everything below: desktop only ───────────────────────────────── */}
+      {/* Scanlines — desktop only */}
       {!isMobile && (
-        <>
-          {/* Scanlines */}
-          <div
-            aria-hidden
-            className="pointer-events-none fixed inset-0"
-            style={{ zIndex: 1, background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.011) 2px, rgba(0,240,255,0.011) 4px)" }}
-          />
-
-          {/* Corner HUD */}
-          <div
-            aria-hidden
-            className="pointer-events-none fixed bottom-5 right-5"
-            style={{
-              zIndex: 2, fontFamily: "var(--font-jet-brains-mono), 'Courier New', monospace",
-              fontSize: "9px", lineHeight: "1.7", letterSpacing: "0.1em",
-              color: "rgba(0,240,255,0.3)", textAlign: "right",
-            }}
-          >
-            <div>MEM: 10,000 NODES</div>
-            <div>V_2.0.26</div>
-          </div>
-
-          {/* Three.js canvas — NOT rendered on mobile */}
-          <Canvas
-            camera={{ position: [0, 0, 14], fov: 55 }}
-            gl={{ alpha: true, antialias: false, powerPreference: "high-performance", stencil: false }}
-            dpr={Math.min(window.devicePixelRatio, 1.5)}
-            style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", background: "transparent" }}
-          >
-            <Scene scrollRef={scrollRef} glitchRef={glitchRef} isMobile={false} />
-          </Canvas>
-        </>
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0"
+          style={{ zIndex: 1, background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.011) 2px, rgba(0,240,255,0.011) 4px)" }}
+        />
       )}
+
+      {/* Corner HUD — desktop only */}
+      {!isMobile && (
+        <div
+          aria-hidden
+          className="pointer-events-none fixed bottom-5 right-5"
+          style={{
+            zIndex: 2, fontFamily: "var(--font-jet-brains-mono), 'Courier New', monospace",
+            fontSize: "9px", lineHeight: "1.7", letterSpacing: "0.1em",
+            color: "rgba(0,240,255,0.3)", textAlign: "right",
+          }}
+        >
+          <div>MEM: 10,000 NODES</div>
+          <div>V_2.0.26</div>
+        </div>
+      )}
+
+      {/* Three.js canvas — desktop full quality, mobile reduced */}
+      <Canvas
+        camera={{ position: [0, 0, 14], fov: isMobile ? 65 : 55 }}
+        gl={{ alpha: true, antialias: false, powerPreference: "high-performance", stencil: false }}
+        dpr={isMobile ? Math.min(window.devicePixelRatio, 1) : Math.min(window.devicePixelRatio, 1.5)}
+        style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", background: "transparent" }}
+      >
+        <Scene scrollRef={scrollRef} glitchRef={glitchRef} isMobile={isMobile} />
+      </Canvas>
     </>
   );
 }
