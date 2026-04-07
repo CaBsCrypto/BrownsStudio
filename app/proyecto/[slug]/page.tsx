@@ -45,13 +45,13 @@ export default async function ProyectoPage({ params }: Props) {
       <Navbar />
       <main className="min-h-screen pt-16 lg:pt-20">
         {/* Hero del proyecto */}
-        <section className="relative overflow-hidden" style={{ minHeight: "60vh" }}>
+        <section className="relative overflow-hidden">
           {/* Background */}
           <div className="absolute inset-0" style={{ background: proyecto.color }} />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bg-primary/60 to-bg-primary" />
 
           {/* Contenido */}
-          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24">
+          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-10">
             {/* Breadcrumb */}
             <Link
               href="/#portfolio"
