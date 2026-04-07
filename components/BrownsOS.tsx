@@ -9,8 +9,13 @@ const C_CYAN = new THREE.Color(0x00f0ff);
 const C_RED  = new THREE.Color(0xff003c);
 
 // ── Data Ocean ────────────────────────────────────────────────────────────────
+// Ocean group constants — must match the JSX <group> below
+const OCEAN_POS = new THREE.Vector3(0, -7, -8);
+const OCEAN_ROT_X = -1.22;
+
 function DataOcean({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
-  const mouseRef = useRef({ x: 0, y: 0 });
+  const { camera } = useThree();
+  const mouseNDC = useRef({ x: 0, y: 0 });
   const origXY   = useRef<Float32Array>(null!);
 
   const oceanGeo = useMemo(() => {
@@ -32,10 +37,31 @@ function DataOcean({ scrollRef }: { scrollRef: React.MutableRefObject<number> })
     blending: THREE.AdditiveBlending, depthWrite: false,
   }), []);
 
+  // Plane in world space matching the ocean group transform
+  const worldPlane = useMemo(() => {
+    const normal = new THREE.Vector3(0, 0, 1)
+      .applyMatrix4(new THREE.Matrix4().makeRotationX(OCEAN_ROT_X));
+    return new THREE.Plane().setFromNormalAndCoplanarPoint(normal, OCEAN_POS);
+  }, []);
+
+  // Inverse of the ocean group world matrix — to convert hit → local coords
+  const invOceanMatrix = useMemo(() => {
+    const m = new THREE.Matrix4().compose(
+      OCEAN_POS,
+      new THREE.Quaternion().setFromEuler(new THREE.Euler(OCEAN_ROT_X, 0, 0)),
+      new THREE.Vector3(1, 1, 1)
+    );
+    return m.invert();
+  }, []);
+
+  const raycaster = useMemo(() => new THREE.Raycaster(), []);
+  const hitWorld  = useMemo(() => new THREE.Vector3(), []);
+  const hitLocal  = useMemo(() => new THREE.Vector3(), []);
+
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
-      mouseRef.current.x =  (e.clientX / window.innerWidth)  * 2 - 1;
-      mouseRef.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      mouseNDC.current.x =  (e.clientX / window.innerWidth)  * 2 - 1;
+      mouseNDC.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
@@ -47,8 +73,14 @@ function DataOcean({ scrollRef }: { scrollRef: React.MutableRefObject<number> })
     const arr = oceanGeo.attributes.position.array as Float32Array;
     const orig = origXY.current;
     const n   = arr.length / 3;
-    const mx  = mouseRef.current.x * 40;
-    const my  = mouseRef.current.y * 40;
+
+    // Raycast mouse → ocean plane → local coords
+    raycaster.setFromCamera(mouseNDC.current as THREE.Vector2, camera);
+    raycaster.ray.intersectPlane(worldPlane, hitWorld);
+    hitLocal.copy(hitWorld).applyMatrix4(invOceanMatrix);
+    const mx = hitLocal.x;
+    const my = hitLocal.y;
+
     for (let i = 0; i < n; i++) {
       const i3 = i * 3;
       const x  = orig[i3], y = orig[i3 + 1];
