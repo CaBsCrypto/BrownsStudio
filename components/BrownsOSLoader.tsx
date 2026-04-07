@@ -1,12 +1,10 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import BrownsOSMobile from "./BrownsOSMobile";
 
-// Three.js bundle only downloaded on desktop — never sent to mobile
+// Three.js only loaded on desktop — server already filtered mobile in page.tsx
 const BrownsOSDesktop = dynamic(() => import("./BrownsOS"), { ssr: false });
 
 export default function BrownsOSLoader() {
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-  return isMobile ? <BrownsOSMobile /> : <BrownsOSDesktop />;
+  return <BrownsOSDesktop />;
 }
