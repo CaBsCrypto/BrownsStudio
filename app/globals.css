@@ -94,6 +94,29 @@ body::before {
   50%      { opacity: 1.0;  transform: scale(1.12); }
 }
 
+/* ── Mobile CSS core animations ─────────────────────────────────────────── */
+@keyframes core-morph {
+  0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: scale(1); }
+  33%      { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; transform: scale(1.06); }
+  66%      { border-radius: 50% 50% 30% 70% / 40% 60% 60% 40%; transform: scale(0.96); }
+}
+@keyframes ring-spin-x {
+  from { transform: rotateX(0deg) rotateY(20deg); }
+  to   { transform: rotateX(360deg) rotateY(20deg); }
+}
+@keyframes ring-spin-y {
+  from { transform: rotateY(0deg) rotateX(15deg); }
+  to   { transform: rotateY(360deg) rotateX(15deg); }
+}
+@keyframes ring-spin-z {
+  from { transform: rotateZ(0deg) rotateX(40deg); }
+  to   { transform: rotateZ(360deg) rotateX(40deg); }
+}
+@keyframes mobile-grid-fade {
+  0%   { opacity: 0.4; }
+  100% { opacity: 0.9; }
+}
+
 /* ── Scroll reveal ───────────────────────────────────────────────────────── */
 .reveal {
   opacity: 0;
