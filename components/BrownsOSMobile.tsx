@@ -53,13 +53,21 @@ export default function BrownsOSMobile() {
         transform: "translateZ(0)",
       }} />
 
-      {/* Dot grid — static */}
+      {/* Data Ocean — isometric grid CSS, perspective transform like desktop */}
       <div aria-hidden style={{
-        position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
-        backgroundImage: "radial-gradient(circle, rgba(0,240,255,0.10) 1px, transparent 1px)",
-        backgroundSize: "30px 30px",
-        opacity: 0.5,
-        transform: "translateZ(0)",
+        position: "fixed", bottom: 0, left: "-20%",
+        width: "140%", height: "55%",
+        zIndex: 0, pointerEvents: "none",
+        transform: "perspective(400px) rotateX(55deg) translateZ(0)",
+        transformOrigin: "50% 100%",
+        backgroundImage: `
+          linear-gradient(rgba(0,240,255,0.13) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,240,255,0.13) 1px, transparent 1px)
+        `,
+        backgroundSize: "28px 28px",
+        maskImage: "radial-gradient(ellipse 85% 70% at 50% 100%, black 30%, transparent 80%)",
+        WebkitMaskImage: "radial-gradient(ellipse 85% 70% at 50% 100%, black 30%, transparent 80%)",
+        opacity: 0.7,
       }} />
 
       {/* Quantum Core — NO CSS animations, only scroll-driven transform */}
