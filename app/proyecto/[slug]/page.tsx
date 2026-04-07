@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowLeft, Check, ExternalLink, MessageCircle } from "lucide-react";
+import { ArrowLeft, Check, ExternalLink, MessageCircle, Wrench } from "lucide-react";
 import { proyectos, getProyectoBySlug } from "@/data/proyectos";
 import { SITE_CONFIG } from "@/lib/config";
 import Navbar from "@/components/Navbar";
@@ -61,9 +61,17 @@ export default async function ProyectoPage({ params }: Props) {
               Volver al portfolio
             </Link>
 
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/20 bg-white/10 text-white text-xs font-medium backdrop-blur-sm mb-4">
-              {proyecto.tipo} · {proyecto.año}
+            {/* Badges */}
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/20 bg-white/10 text-white text-xs font-medium backdrop-blur-sm">
+                {proyecto.tipo} · {proyecto.año}
+              </div>
+              {proyecto.comingSoon && (
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-yellow-400/30 bg-yellow-400/10 text-yellow-300 text-xs font-medium backdrop-blur-sm">
+                  <Wrench size={11} className="animate-pulse" />
+                  En Desarrollo
+                </div>
+              )}
             </div>
 
             {/* Title */}

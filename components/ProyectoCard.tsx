@@ -177,13 +177,24 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
 
   if (proyecto.comingSoon) {
     return (
-      <div
-        className={`reveal ${delayClass} group block cursor-default opacity-70`}
+      <Link
+        href={`/proyecto/${proyecto.slug}`}
+        className={`reveal ${delayClass} group block opacity-80 hover:opacity-100`}
         style={cardStyle}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLElement).style.border = "1px solid rgba(71,196,255,0.2)";
+          (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)";
+          (e.currentTarget as HTMLElement).style.boxShadow = "0 24px 48px rgba(0,0,0,0.5)";
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLElement).style.border = "1px solid rgba(72,72,72,0.15)";
+          (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+          (e.currentTarget as HTMLElement).style.boxShadow = "none";
+        }}
       >
         {preview}
         {content}
-      </div>
+      </Link>
     );
   }
 
