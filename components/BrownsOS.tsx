@@ -234,18 +234,24 @@ function Scene({ scrollRef, glitchRef, isMobile }: { scrollRef: React.MutableRef
 }
 
 // ── Aurora blobs ──────────────────────────────────────────────────────────────
-function AuroraBlobs({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
-  const blobARef = useRef<HTMLDivElement>(null);  // cyan — mouse follows
-  const blobCRef = useRef<HTMLDivElement>(null);  // indigo — mouse counter
-  const blobDRef = useRef<HTMLDivElement>(null);  // teal — scroll driven
-
-  // Mouse target (normalised)
+function AuroraBlobs({
+  scrollRef,
+  isMobile,
+}: {
+  scrollRef: React.MutableRefObject<number>;
+  isMobile: boolean;
+}) {
+  const blobARef = useRef<HTMLDivElement>(null);
+  const blobCRef = useRef<HTMLDivElement>(null);
+  const blobDRef = useRef<HTMLDivElement>(null);
   const mTgt = useRef({ x: 0.5, y: 0.5 });
-  // Lerped positions (in px offset from base)
   const aPos = useRef({ x: 0, y: 0 });
   const cPos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    // Mobile: no mouse tracking, no rAF loop — pure CSS, zero JS cost
+    if (isMobile) return;
+
     const onMove = (e: MouseEvent) => {
       mTgt.current.x = e.clientX / window.innerWidth;
       mTgt.current.y = e.clientY / window.innerHeight;
@@ -254,7 +260,6 @@ function AuroraBlobs({ scrollRef }: { scrollRef: React.MutableRefObject<number> 
 
     let rafId: number;
     const loop = () => {
-      // Blob A: follows mouse, range ±120px / ±90px
       const ax = (mTgt.current.x - 0.5) * 240;
       const ay = (mTgt.current.y - 0.5) * 180;
       aPos.current.x += (ax - aPos.current.x) * 0.032;
@@ -262,7 +267,6 @@ function AuroraBlobs({ scrollRef }: { scrollRef: React.MutableRefObject<number> 
       if (blobARef.current)
         blobARef.current.style.transform = `translate(${aPos.current.x}px, ${aPos.current.y}px)`;
 
-      // Blob C: counter-mouse, subtle
       const cx = (0.5 - mTgt.current.x) * 140;
       const cy = (0.5 - mTgt.current.y) * 100;
       cPos.current.x += (cx - cPos.current.x) * 0.016;
@@ -270,13 +274,11 @@ function AuroraBlobs({ scrollRef }: { scrollRef: React.MutableRefObject<number> 
       if (blobCRef.current)
         blobCRef.current.style.transform = `translate(${cPos.current.x}px, ${cPos.current.y}px)`;
 
-      // Blob D: rises as you scroll, fades at bottom of page
       const s = scrollRef.current;
       if (blobDRef.current) {
         blobDRef.current.style.transform = `translateY(${-s * 35}vh)`;
         blobDRef.current.style.opacity   = String(0.6 + s * 0.4);
       }
-
       rafId = requestAnimationFrame(loop);
     };
     loop();
@@ -285,58 +287,57 @@ function AuroraBlobs({ scrollRef }: { scrollRef: React.MutableRefObject<number> 
       window.removeEventListener("mousemove", onMove);
       cancelAnimationFrame(rafId);
     };
-  }, []); // scrollRef is stable (useRef)
+  }, [isMobile]);
 
+  // Mobile: only 2 static blobs, smaller blur (60px vs 100px)
+  if (isMobile) {
+    return (
+      <>
+        <div aria-hidden style={{
+          position: "fixed", pointerEvents: "none", borderRadius: "50%",
+          filter: "blur(60px)", zIndex: 0,
+          width: "120vw", height: "70vh", top: "-20vh", left: "-10vw",
+          background: "radial-gradient(ellipse, rgba(0,15,80,0.5) 0%, transparent 70%)",
+        }} />
+        <div aria-hidden style={{
+          position: "fixed", pointerEvents: "none", borderRadius: "50%",
+          filter: "blur(60px)", zIndex: 0,
+          width: "80vw", height: "50vh", top: "5vh", left: "10vw",
+          background: "radial-gradient(ellipse, rgba(0,240,255,0.055) 0%, transparent 65%)",
+        }} />
+      </>
+    );
+  }
+
+  // Desktop: all 5 blobs, full effects
   const BASE: React.CSSProperties = {
-    position:      "fixed",
-    pointerEvents: "none",
-    borderRadius:  "50%",
-    filter:        "blur(100px)",
-    zIndex:        0,
+    position: "fixed", pointerEvents: "none", borderRadius: "50%",
+    filter: "blur(100px)", zIndex: 0,
   };
 
   return (
     <>
-      {/* B — deep navy left (static, provides depth) */}
       <div aria-hidden style={{
-        ...BASE,
-        width: "110vw", height: "90vh",
-        top: "-30vh", left: "-20vw",
+        ...BASE, width: "110vw", height: "90vh", top: "-30vh", left: "-20vw",
         background: "radial-gradient(ellipse, rgba(0,15,80,0.55) 0%, transparent 70%)",
       }} />
-
-      {/* A — cyan horizon (mouse reactive) */}
       <div aria-hidden ref={blobARef} style={{
-        ...BASE,
-        width: "80vw", height: "70vh",
-        top: "-15vh", left: "10vw",
+        ...BASE, width: "80vw", height: "70vh", top: "-15vh", left: "10vw",
         background: "radial-gradient(ellipse, rgba(0,240,255,0.07) 0%, transparent 65%)",
         willChange: "transform",
       }} />
-
-      {/* C — indigo right (counter-mouse) */}
       <div aria-hidden ref={blobCRef} style={{
-        ...BASE,
-        width: "75vw", height: "75vh",
-        top: "-20vh", right: "-10vw",
+        ...BASE, width: "75vw", height: "75vh", top: "-20vh", right: "-10vw",
         background: "radial-gradient(ellipse, rgba(45,0,120,0.13) 0%, transparent 70%)",
         willChange: "transform",
       }} />
-
-      {/* D — teal ground (scroll-driven) */}
       <div aria-hidden ref={blobDRef} style={{
-        ...BASE,
-        width: "140vw", height: "55vh",
-        bottom: "5vh", left: "-20vw",
+        ...BASE, width: "140vw", height: "55vh", bottom: "5vh", left: "-20vw",
         background: "radial-gradient(ellipse, rgba(0,75,95,0.28) 0%, transparent 70%)",
         willChange: "transform, opacity",
       }} />
-
-      {/* E — center core pulse (CSS animation only) */}
       <div aria-hidden style={{
-        ...BASE,
-        width: "60vw", height: "60vh",
-        top: "20vh", left: "20vw",
+        ...BASE, width: "60vw", height: "60vh", top: "20vh", left: "20vw",
         background: "radial-gradient(ellipse, rgba(0,240,255,0.045) 0%, transparent 70%)",
         animation: "aurora-pulse 9s ease-in-out infinite",
       }} />
@@ -375,43 +376,44 @@ export default function BrownsOS() {
 
   return (
     <>
-      {/* ── Aurora blobs ──────────────────────────────────────────────────── */}
-      <AuroraBlobs scrollRef={scrollRef} />
+      {/* ── Aurora blobs (mobile: 2 static, desktop: 5 animated) ─────────── */}
+      <AuroraBlobs scrollRef={scrollRef} isMobile={isMobile} />
 
-      {/* ── Scanlines (desktop only — expensive on mobile) ────────────────── */}
+      {/* ── Everything below: desktop only ───────────────────────────────── */}
       {!isMobile && (
-        <div
-          aria-hidden
-          className="pointer-events-none fixed inset-0"
-          style={{ zIndex: 1, background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.011) 2px, rgba(0,240,255,0.011) 4px)" }}
-        />
-      )}
+        <>
+          {/* Scanlines */}
+          <div
+            aria-hidden
+            className="pointer-events-none fixed inset-0"
+            style={{ zIndex: 1, background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.011) 2px, rgba(0,240,255,0.011) 4px)" }}
+          />
 
-      {/* ── Corner HUD (desktop only) ─────────────────────────────────────── */}
-      {!isMobile && (
-        <div
-          aria-hidden
-          className="pointer-events-none fixed bottom-5 right-5"
-          style={{
-            zIndex: 2, fontFamily: "var(--font-jet-brains-mono), 'Courier New', monospace",
-            fontSize: "9px", lineHeight: "1.7", letterSpacing: "0.1em",
-            color: "rgba(0,240,255,0.3)", textAlign: "right",
-          }}
-        >
-          <div>MEM: 10,000 NODES</div>
-          <div>V_2.0.26</div>
-        </div>
-      )}
+          {/* Corner HUD */}
+          <div
+            aria-hidden
+            className="pointer-events-none fixed bottom-5 right-5"
+            style={{
+              zIndex: 2, fontFamily: "var(--font-jet-brains-mono), 'Courier New', monospace",
+              fontSize: "9px", lineHeight: "1.7", letterSpacing: "0.1em",
+              color: "rgba(0,240,255,0.3)", textAlign: "right",
+            }}
+          >
+            <div>MEM: 10,000 NODES</div>
+            <div>V_2.0.26</div>
+          </div>
 
-      {/* ── Three.js canvas ───────────────────────────────────────────────── */}
-      <Canvas
-        camera={{ position: [0, 0, 14], fov: 55 }}
-        gl={{ alpha: true, antialias: false, powerPreference: "high-performance", stencil: false }}
-        dpr={isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5)}
-        style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", background: "transparent" }}
-      >
-        <Scene scrollRef={scrollRef} glitchRef={glitchRef} isMobile={isMobile} />
-      </Canvas>
+          {/* Three.js canvas — NOT rendered on mobile */}
+          <Canvas
+            camera={{ position: [0, 0, 14], fov: 55 }}
+            gl={{ alpha: true, antialias: false, powerPreference: "high-performance", stencil: false }}
+            dpr={Math.min(window.devicePixelRatio, 1.5)}
+            style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", background: "transparent" }}
+          >
+            <Scene scrollRef={scrollRef} glitchRef={glitchRef} isMobile={false} />
+          </Canvas>
+        </>
+      )}
     </>
   );
 }
