@@ -9,20 +9,24 @@ const C_CYAN = new THREE.Color(0x00f0ff);
 const C_RED  = new THREE.Color(0xff003c);
 
 // ── Data Ocean ────────────────────────────────────────────────────────────────
-// Ocean group constants — must match the JSX <group> below
-const OCEAN_POS = new THREE.Vector3(0, -7, -8);
+const OCEAN_POS   = new THREE.Vector3(0, -7, -8);
 const OCEAN_ROT_X = -1.22;
 
-function DataOcean({ scrollRef, isMobile }: { scrollRef: React.MutableRefObject<number>; isMobile: boolean }) {
+function DataOcean({ scrollRef, isMobile, visibleRef }: {
+  scrollRef: React.MutableRefObject<number>;
+  isMobile: boolean;
+  visibleRef: React.MutableRefObject<boolean>;
+}) {
   const { camera } = useThree();
   const mouseNDC  = useRef({ x: 0, y: 0 });
   const origXY    = useRef<Float32Array>(null!);
   const frameSkip = useRef(0);
 
+  const SEGS = isMobile ? 25 : 90;  // mobile: 676 verts vs desktop: 8281
+
   const oceanGeo = useMemo(() => {
-    const SEGS = isMobile ? 45 : 90;  // half resolution on mobile
-    const geo  = new THREE.PlaneGeometry(80, 80, SEGS, SEGS);
-    const pos  = geo.attributes.position.array as Float32Array;
+    const geo = new THREE.PlaneGeometry(80, 80, SEGS, SEGS);
+    const pos = geo.attributes.position.array as Float32Array;
     origXY.current = new Float32Array(pos.length);
     for (let i = 0; i < pos.length; i++) origXY.current[i] = pos[i];
     return geo;
@@ -38,14 +42,12 @@ function DataOcean({ scrollRef, isMobile }: { scrollRef: React.MutableRefObject<
     blending: THREE.AdditiveBlending, depthWrite: false,
   }), []);
 
-  // Plane in world space matching the ocean group transform
   const worldPlane = useMemo(() => {
     const normal = new THREE.Vector3(0, 0, 1)
       .applyMatrix4(new THREE.Matrix4().makeRotationX(OCEAN_ROT_X));
     return new THREE.Plane().setFromNormalAndCoplanarPoint(normal, OCEAN_POS);
   }, []);
 
-  // Inverse of the ocean group world matrix — to convert hit → local coords
   const invOceanMatrix = useMemo(() => {
     const m = new THREE.Matrix4().compose(
       OCEAN_POS,
@@ -60,50 +62,49 @@ function DataOcean({ scrollRef, isMobile }: { scrollRef: React.MutableRefObject<
   const hitLocal  = useMemo(() => new THREE.Vector3(), []);
 
   useEffect(() => {
+    if (isMobile) return; // no mouse on mobile
     const onMove = (e: MouseEvent) => {
       mouseNDC.current.x =  (e.clientX / window.innerWidth)  * 2 - 1;
       mouseNDC.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
-  }, []);
+  }, [isMobile]);
 
   useFrame(({ clock }) => {
-    // 30fps cap on mobile — skip every other frame
+    // Pause when canvas is not visible (scrolled away)
+    if (!visibleRef.current) return;
+
+    // ~15fps cap on mobile
     if (isMobile) {
       frameSkip.current = (frameSkip.current + 1) % 4;
       if (frameSkip.current !== 0) return;
     }
 
-    const t   = clock.elapsedTime;
-    const s   = scrollRef.current;
-    const arr = oceanGeo.attributes.position.array as Float32Array;
+    const t    = clock.elapsedTime;
+    const s    = scrollRef.current;
+    const arr  = oceanGeo.attributes.position.array as Float32Array;
     const orig = origXY.current;
-    const n   = arr.length / 3;
+    const n    = arr.length / 3;
 
     if (isMobile) {
-      // Mobile: skip mouse raycast entirely — just wave
       for (let i = 0; i < n; i++) {
         const i3 = i * 3;
         const x  = orig[i3], y = orig[i3 + 1];
         arr[i3 + 2] = Math.sin(x * 0.12 + t * 0.5) * Math.cos(y * 0.09 + t * 0.3) * (0.7 + s * 2.8);
       }
     } else {
-      // Desktop: full mouse pull + wave
       raycaster.setFromCamera(mouseNDC.current as THREE.Vector2, camera);
       raycaster.ray.intersectPlane(worldPlane, hitWorld);
       hitLocal.copy(hitWorld).applyMatrix4(invOceanMatrix);
-      const mx = hitLocal.x;
-      const my = hitLocal.y;
-
+      const mx = hitLocal.x, my = hitLocal.y;
       for (let i = 0; i < n; i++) {
         const i3 = i * 3;
         const x  = orig[i3], y = orig[i3 + 1];
-        const dx = x - mx,   dy = y - my;
+        const dx = x - mx, dy = y - my;
         const d2 = dx*dx + dy*dy;
         const pull = d2 < 64 ? (1 - Math.sqrt(d2) / 8) * 3.2 : 0;
-        const wave = Math.sin(x * 0.12 + t * 0.5) * Math.cos(y * 0.09 + t * 0.3) * (0.7 + s * 2.8);
-        arr[i3 + 2] = wave + pull;
+        arr[i3 + 2] = Math.sin(x * 0.12 + t * 0.5) * Math.cos(y * 0.09 + t * 0.3) * (0.7 + s * 2.8) + pull;
       }
     }
     oceanGeo.attributes.position.needsUpdate = true;
@@ -114,36 +115,39 @@ function DataOcean({ scrollRef, isMobile }: { scrollRef: React.MutableRefObject<
   return (
     <group rotation={[-1.22, 0, 0]} position={[0, -7, -8]}>
       <points geometry={oceanGeo} material={pointsMat} />
-      {/* Wireframe: desktop only — extra draw call not worth it on mobile */}
       {!isMobile && <mesh geometry={oceanGeo} material={wireMat} />}
     </group>
   );
 }
 
 // ── Quantum Core ──────────────────────────────────────────────────────────────
-function QuantumCore({
-  scrollRef,
-  glitchRef,
-  isMobile,
-}: {
+function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
   scrollRef: React.MutableRefObject<number>;
   glitchRef: React.MutableRefObject<boolean>;
   isMobile: boolean;
+  visibleRef: React.MutableRefObject<boolean>;
 }) {
-  const groupRef = useRef<THREE.Group>(null!);
-  const coreRef  = useRef<THREE.Mesh>(null!);
-  const shellRef = useRef<THREE.Mesh>(null!);
-  const r1Ref    = useRef<THREE.Mesh>(null!);
-  const r2Ref    = useRef<THREE.Mesh>(null!);
-  const r3Ref    = useRef<THREE.Mesh>(null!);
-  const lightRef = useRef<THREE.PointLight>(null!);
+  const groupRef  = useRef<THREE.Group>(null!);
+  const coreRef   = useRef<THREE.Mesh>(null!);
+  const shellRef  = useRef<THREE.Mesh>(null!);
+  const r1Ref     = useRef<THREE.Mesh>(null!);
+  const r2Ref     = useRef<THREE.Mesh>(null!);
+  const r3Ref     = useRef<THREE.Mesh>(null!);
+  const lightRef  = useRef<THREE.PointLight>(null!);
   const tgt       = useRef(new THREE.Vector3());
   const frameSkip = useRef(0);
 
-  const coreMat = useMemo(() => new THREE.MeshStandardMaterial({
-    color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 0.55,
-    metalness: 0.85, roughness: 0.08, transparent: true, opacity: 0.92,
-  }), []);
+  // Mobile: MeshBasicMaterial — no lighting shader = much cheaper GPU
+  const coreMat = useMemo(() => isMobile
+    ? new THREE.MeshBasicMaterial({
+        color: 0x00f0ff, transparent: true, opacity: 0.92,
+        wireframe: false,
+      })
+    : new THREE.MeshStandardMaterial({
+        color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 0.55,
+        metalness: 0.85, roughness: 0.08, transparent: true, opacity: 0.92,
+      }),
+  [isMobile]);
 
   const shellMat = useMemo(() => new THREE.MeshBasicMaterial({
     color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.22,
@@ -158,7 +162,10 @@ function QuantumCore({
   useFrame(({ clock }, dt) => {
     if (!groupRef.current) return;
 
-    // 30fps cap on mobile
+    // Pause when not visible
+    if (!visibleRef.current) return;
+
+    // ~15fps cap on mobile
     if (isMobile) {
       frameSkip.current = (frameSkip.current + 1) % 4;
       if (frameSkip.current !== 0) return;
@@ -167,7 +174,7 @@ function QuantumCore({
     const t = clock.elapsedTime;
     const s = scrollRef.current;
 
-    // ── Scroll choreography — 4 chapters, starts moving at s=0.05 ────────
+    // ── Scroll choreography — 4 chapters ─────────────────────────────────
     if (s < 0.05) {
       tgt.current.set(0, 0, 0);
     } else if (s < 0.25) {
@@ -203,15 +210,16 @@ function QuantumCore({
       coreRef.current.scale.setScalar(pulse);
     }
 
-    if (lightRef.current) {
+    // Color / light animation — desktop only (mobile has no pointLight)
+    if (!isMobile && lightRef.current) {
       if (glitchRef.current) {
-        coreMat.emissive.copy(C_RED);
+        (coreMat as THREE.MeshStandardMaterial).emissive?.copy(C_RED);
         coreMat.color.copy(C_RED);
         shellMat.color.copy(C_RED);
         lightRef.current.color.copy(C_RED);
         lightRef.current.intensity = 5;
       } else {
-        coreMat.emissive.lerp(C_CYAN, 0.09);
+        (coreMat as THREE.MeshStandardMaterial).emissive?.lerp(C_CYAN, 0.09);
         coreMat.color.lerp(C_CYAN, 0.09);
         shellMat.color.lerp(C_CYAN, 0.09);
         lightRef.current.color.lerp(C_CYAN, 0.09);
@@ -226,46 +234,44 @@ function QuantumCore({
 
   return (
     <group ref={groupRef}>
-      <pointLight ref={lightRef} color={0x00f0ff} intensity={1.6} distance={28} decay={1.6} />
-      <mesh ref={coreRef}  material={coreMat}>  <icosahedronGeometry args={[1, 1]} />     </mesh>
-      <mesh ref={shellRef} material={shellMat}> <icosahedronGeometry args={[1.55, 2]} />  </mesh>
-      <mesh ref={r1Ref} rotation={[Math.PI / 3, 0.25, 0]}         material={ringMat}> <torusGeometry args={[2.5, 0.014, 3, isMobile ? 48 : 80]} /> </mesh>
-      <mesh ref={r2Ref} rotation={[0.1, Math.PI / 4, Math.PI / 5]} material={ringMat}> <torusGeometry args={[3.1, 0.011, 3, isMobile ? 48 : 80]} /> </mesh>
-      {/* Third ring: skip on mobile */}
+      {/* PointLight: desktop only — not needed with BasicMaterial */}
+      {!isMobile && <pointLight ref={lightRef} color={0x00f0ff} intensity={1.6} distance={28} decay={1.6} />}
+      <mesh ref={coreRef}  material={coreMat}>  <icosahedronGeometry args={[1, 1]} />    </mesh>
+      <mesh ref={shellRef} material={shellMat}> <icosahedronGeometry args={[1.55, 2]} /> </mesh>
+      <mesh ref={r1Ref} rotation={[Math.PI / 3, 0.25, 0]}          material={ringMat}> <torusGeometry args={[2.5, 0.014, 3, isMobile ? 40 : 80]} /> </mesh>
+      <mesh ref={r2Ref} rotation={[0.1, Math.PI / 4, Math.PI / 5]}  material={ringMat}> <torusGeometry args={[3.1, 0.011, 3, isMobile ? 40 : 80]} /> </mesh>
       {!isMobile && <mesh ref={r3Ref} rotation={[Math.PI / 6, Math.PI / 3, 0.55]} material={ringMat}> <torusGeometry args={[3.7, 0.009, 3, 80]} /> </mesh>}
     </group>
   );
 }
 
 // ── Scene ─────────────────────────────────────────────────────────────────────
-function Scene({ scrollRef, glitchRef, isMobile }: { scrollRef: React.MutableRefObject<number>; glitchRef: React.MutableRefObject<boolean>; isMobile: boolean }) {
+function Scene({ scrollRef, glitchRef, isMobile, visibleRef }: {
+  scrollRef: React.MutableRefObject<number>;
+  glitchRef: React.MutableRefObject<boolean>;
+  isMobile: boolean;
+  visibleRef: React.MutableRefObject<boolean>;
+}) {
   const { camera } = useThree();
-  const camTgt     = useRef(new THREE.Vector3(0, 0, 14));
+  const camTgt = useRef(new THREE.Vector3(0, 0, 14));
   useFrame(() => {
+    if (!visibleRef.current) return;
     const s = scrollRef.current;
-    if (isMobile) {
-      // Mobile: no lateral drift, gentler zoom
-      camTgt.current.set(0, -s * 1.5, 14 - s * 1.2);
-    } else {
-      camTgt.current.set(0, -s * 2.8, 14 - s * 2.2);
-    }
+    camTgt.current.set(0, -s * 2.8, 14 - s * 2.2);
     camera.position.lerp(camTgt.current, 0.028);
     (camera as THREE.PerspectiveCamera).lookAt(0, -s * 1.6, 0);
   });
   return (
     <>
-      <ambientLight intensity={0.06} color={0x001a2e} />
-      <DataOcean   scrollRef={scrollRef} isMobile={isMobile} />
-      <QuantumCore scrollRef={scrollRef} glitchRef={glitchRef} isMobile={isMobile} />
+      {!isMobile && <ambientLight intensity={0.06} color={0x001a2e} />}
+      <DataOcean   scrollRef={scrollRef} isMobile={isMobile} visibleRef={visibleRef} />
+      <QuantumCore scrollRef={scrollRef} glitchRef={glitchRef} isMobile={isMobile} visibleRef={visibleRef} />
     </>
   );
 }
 
 // ── Aurora blobs ──────────────────────────────────────────────────────────────
-function AuroraBlobs({
-  scrollRef,
-  isMobile,
-}: {
+function AuroraBlobs({ scrollRef, isMobile }: {
   scrollRef: React.MutableRefObject<number>;
   isMobile: boolean;
 }) {
@@ -277,15 +283,12 @@ function AuroraBlobs({
   const cPos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    // Mobile: no mouse tracking, no rAF loop — pure CSS, zero JS cost
     if (isMobile) return;
-
     const onMove = (e: MouseEvent) => {
       mTgt.current.x = e.clientX / window.innerWidth;
       mTgt.current.y = e.clientY / window.innerHeight;
     };
     window.addEventListener("mousemove", onMove);
-
     let rafId: number;
     const loop = () => {
       const ax = (mTgt.current.x - 0.5) * 240;
@@ -294,14 +297,12 @@ function AuroraBlobs({
       aPos.current.y += (ay - aPos.current.y) * 0.032;
       if (blobARef.current)
         blobARef.current.style.transform = `translate(${aPos.current.x}px, ${aPos.current.y}px)`;
-
       const cx = (0.5 - mTgt.current.x) * 140;
       const cy = (0.5 - mTgt.current.y) * 100;
       cPos.current.x += (cx - cPos.current.x) * 0.016;
       cPos.current.y += (cy - cPos.current.y) * 0.016;
       if (blobCRef.current)
         blobCRef.current.style.transform = `translate(${cPos.current.x}px, ${cPos.current.y}px)`;
-
       const s = scrollRef.current;
       if (blobDRef.current) {
         blobDRef.current.style.transform = `translateY(${-s * 35}vh)`;
@@ -310,85 +311,38 @@ function AuroraBlobs({
       rafId = requestAnimationFrame(loop);
     };
     loop();
-
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(rafId);
-    };
+    return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(rafId); };
   }, [isMobile]);
 
-  // Mobile: 3 blobs with CSS animation — no JS cost
   if (isMobile) {
     return (
       <>
-        {/* Deep navy base */}
-        <div aria-hidden style={{
-          position: "fixed", pointerEvents: "none", borderRadius: "50%",
-          filter: "blur(40px)", zIndex: 0,
-          width: "150vw", height: "80vh", top: "-25vh", left: "-25vw",
-          background: "radial-gradient(ellipse, rgba(0,15,80,0.65) 0%, transparent 70%)",
-        }} />
-        {/* Cyan glow — pulsing */}
-        <div aria-hidden style={{
-          position: "fixed", pointerEvents: "none", borderRadius: "50%",
-          filter: "blur(35px)", zIndex: 0,
-          width: "100vw", height: "60vh", top: "-5vh", left: "0vw",
-          background: "radial-gradient(ellipse, rgba(0,240,255,0.14) 0%, transparent 65%)",
-          animation: "aurora-pulse 7s ease-in-out infinite",
-        }} />
-        {/* Indigo bottom — slow pulse offset */}
-        <div aria-hidden style={{
-          position: "fixed", pointerEvents: "none", borderRadius: "50%",
-          filter: "blur(40px)", zIndex: 0,
-          width: "120vw", height: "55vh", bottom: "-10vh", left: "-10vw",
-          background: "radial-gradient(ellipse, rgba(45,0,120,0.22) 0%, transparent 70%)",
-          animation: "aurora-pulse 11s ease-in-out infinite reverse",
-        }} />
+        <div aria-hidden style={{ position:"fixed", pointerEvents:"none", borderRadius:"50%", filter:"blur(40px)", zIndex:0, width:"150vw", height:"80vh", top:"-25vh", left:"-25vw", background:"radial-gradient(ellipse, rgba(0,15,80,0.65) 0%, transparent 70%)" }} />
+        <div aria-hidden style={{ position:"fixed", pointerEvents:"none", borderRadius:"50%", filter:"blur(35px)", zIndex:0, width:"100vw", height:"60vh", top:"-5vh", left:"0vw", background:"radial-gradient(ellipse, rgba(0,240,255,0.14) 0%, transparent 65%)", animation:"aurora-pulse 7s ease-in-out infinite" }} />
+        <div aria-hidden style={{ position:"fixed", pointerEvents:"none", borderRadius:"50%", filter:"blur(40px)", zIndex:0, width:"120vw", height:"55vh", bottom:"-10vh", left:"-10vw", background:"radial-gradient(ellipse, rgba(45,0,120,0.22) 0%, transparent 70%)", animation:"aurora-pulse 11s ease-in-out infinite reverse" }} />
       </>
     );
   }
 
-  // Desktop: all 5 blobs, full effects
-  const BASE: React.CSSProperties = {
-    position: "fixed", pointerEvents: "none", borderRadius: "50%",
-    filter: "blur(100px)", zIndex: 0,
-  };
-
+  const BASE: React.CSSProperties = { position:"fixed", pointerEvents:"none", borderRadius:"50%", filter:"blur(100px)", zIndex:0 };
   return (
     <>
-      <div aria-hidden style={{
-        ...BASE, width: "110vw", height: "90vh", top: "-30vh", left: "-20vw",
-        background: "radial-gradient(ellipse, rgba(0,15,80,0.55) 0%, transparent 70%)",
-      }} />
-      <div aria-hidden ref={blobARef} style={{
-        ...BASE, width: "80vw", height: "70vh", top: "-15vh", left: "10vw",
-        background: "radial-gradient(ellipse, rgba(0,240,255,0.07) 0%, transparent 65%)",
-        willChange: "transform",
-      }} />
-      <div aria-hidden ref={blobCRef} style={{
-        ...BASE, width: "75vw", height: "75vh", top: "-20vh", right: "-10vw",
-        background: "radial-gradient(ellipse, rgba(45,0,120,0.13) 0%, transparent 70%)",
-        willChange: "transform",
-      }} />
-      <div aria-hidden ref={blobDRef} style={{
-        ...BASE, width: "140vw", height: "55vh", bottom: "5vh", left: "-20vw",
-        background: "radial-gradient(ellipse, rgba(0,75,95,0.28) 0%, transparent 70%)",
-        willChange: "transform, opacity",
-      }} />
-      <div aria-hidden style={{
-        ...BASE, width: "60vw", height: "60vh", top: "20vh", left: "20vw",
-        background: "radial-gradient(ellipse, rgba(0,240,255,0.045) 0%, transparent 70%)",
-        animation: "aurora-pulse 9s ease-in-out infinite",
-      }} />
+      <div aria-hidden style={{ ...BASE, width:"110vw", height:"90vh", top:"-30vh", left:"-20vw", background:"radial-gradient(ellipse, rgba(0,15,80,0.55) 0%, transparent 70%)" }} />
+      <div aria-hidden ref={blobARef} style={{ ...BASE, width:"80vw", height:"70vh", top:"-15vh", left:"10vw", background:"radial-gradient(ellipse, rgba(0,240,255,0.07) 0%, transparent 65%)", willChange:"transform" }} />
+      <div aria-hidden ref={blobCRef} style={{ ...BASE, width:"75vw", height:"75vh", top:"-20vh", right:"-10vw", background:"radial-gradient(ellipse, rgba(45,0,120,0.13) 0%, transparent 70%)", willChange:"transform" }} />
+      <div aria-hidden ref={blobDRef} style={{ ...BASE, width:"140vw", height:"55vh", bottom:"5vh", left:"-20vw", background:"radial-gradient(ellipse, rgba(0,75,95,0.28) 0%, transparent 70%)", willChange:"transform, opacity" }} />
+      <div aria-hidden style={{ ...BASE, width:"60vw", height:"60vh", top:"20vh", left:"20vw", background:"radial-gradient(ellipse, rgba(0,240,255,0.045) 0%, transparent 70%)", animation:"aurora-pulse 9s ease-in-out infinite" }} />
     </>
   );
 }
 
 // ── Export ────────────────────────────────────────────────────────────────────
 export default function BrownsOS() {
-  const scrollRef = useRef(0);
-  const glitchRef = useRef(false);
-  const isMobile  = typeof window !== "undefined" && window.innerWidth < 768;
+  const scrollRef  = useRef(0);
+  const glitchRef  = useRef(false);
+  const visibleRef = useRef(true);
+  const canvasRef  = useRef<HTMLDivElement>(null);
+  const isMobile   = typeof window !== "undefined" && window.innerWidth < 768;
 
   // Scroll tracking
   useEffect(() => {
@@ -400,6 +354,17 @@ export default function BrownsOS() {
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // IntersectionObserver — pause Three.js when canvas leaves viewport
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { visibleRef.current = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    obs.observe(canvasRef.current);
+    return () => obs.disconnect();
   }, []);
 
   // Click → glitch (desktop only)
@@ -415,43 +380,29 @@ export default function BrownsOS() {
 
   return (
     <>
-      {/* ── Aurora blobs (mobile: 2 static, desktop: 5 animated) ─────────── */}
       <AuroraBlobs scrollRef={scrollRef} isMobile={isMobile} />
 
-      {/* Scanlines — desktop only */}
       {!isMobile && (
-        <div
-          aria-hidden
-          className="pointer-events-none fixed inset-0"
-          style={{ zIndex: 1, background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.011) 2px, rgba(0,240,255,0.011) 4px)" }}
-        />
+        <div aria-hidden className="pointer-events-none fixed inset-0" style={{ zIndex:1, background:"repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.011) 2px, rgba(0,240,255,0.011) 4px)" }} />
       )}
-
-      {/* Corner HUD — desktop only */}
       {!isMobile && (
-        <div
-          aria-hidden
-          className="pointer-events-none fixed bottom-5 right-5"
-          style={{
-            zIndex: 2, fontFamily: "var(--font-jet-brains-mono), 'Courier New', monospace",
-            fontSize: "9px", lineHeight: "1.7", letterSpacing: "0.1em",
-            color: "rgba(0,240,255,0.3)", textAlign: "right",
-          }}
-        >
+        <div aria-hidden className="pointer-events-none fixed bottom-5 right-5" style={{ zIndex:2, fontFamily:"var(--font-jet-brains-mono), 'Courier New', monospace", fontSize:"9px", lineHeight:"1.7", letterSpacing:"0.1em", color:"rgba(0,240,255,0.3)", textAlign:"right" }}>
           <div>MEM: 10,000 NODES</div>
           <div>V_2.0.26</div>
         </div>
       )}
 
-      {/* Three.js canvas — desktop full quality, mobile reduced */}
-      <Canvas
-        camera={{ position: [0, 0, 14], fov: isMobile ? 65 : 55 }}
-        gl={{ alpha: true, antialias: false, powerPreference: "high-performance", stencil: false }}
-        dpr={isMobile ? Math.min(window.devicePixelRatio, 1) : Math.min(window.devicePixelRatio, 1.5)}
-        style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", background: "transparent" }}
-      >
-        <Scene scrollRef={scrollRef} glitchRef={glitchRef} isMobile={isMobile} />
-      </Canvas>
+      {/* Wrapper div for IntersectionObserver */}
+      <div ref={canvasRef} style={{ position:"fixed", inset:0, zIndex:0, pointerEvents:"none" }}>
+        <Canvas
+          camera={{ position: [0, 0, 14], fov: isMobile ? 65 : 55 }}
+          gl={{ alpha:true, antialias:false, powerPreference:"low-power", stencil:false, depth:false }}
+          dpr={isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5)}
+          style={{ width:"100%", height:"100%", background:"transparent" }}
+        >
+          <Scene scrollRef={scrollRef} glitchRef={glitchRef} isMobile={isMobile} visibleRef={visibleRef} />
+        </Canvas>
+      </div>
     </>
   );
 }
