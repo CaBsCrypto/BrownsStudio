@@ -289,21 +289,32 @@ function AuroraBlobs({
     };
   }, [isMobile]);
 
-  // Mobile: only 2 static blobs, smaller blur (60px vs 100px)
+  // Mobile: 3 blobs with CSS animation — no JS cost
   if (isMobile) {
     return (
       <>
+        {/* Deep navy base */}
         <div aria-hidden style={{
           position: "fixed", pointerEvents: "none", borderRadius: "50%",
-          filter: "blur(60px)", zIndex: 0,
-          width: "120vw", height: "70vh", top: "-20vh", left: "-10vw",
-          background: "radial-gradient(ellipse, rgba(0,15,80,0.5) 0%, transparent 70%)",
+          filter: "blur(70px)", zIndex: 0,
+          width: "150vw", height: "80vh", top: "-25vh", left: "-25vw",
+          background: "radial-gradient(ellipse, rgba(0,15,80,0.65) 0%, transparent 70%)",
         }} />
+        {/* Cyan glow — pulsing */}
         <div aria-hidden style={{
           position: "fixed", pointerEvents: "none", borderRadius: "50%",
-          filter: "blur(60px)", zIndex: 0,
-          width: "80vw", height: "50vh", top: "5vh", left: "10vw",
-          background: "radial-gradient(ellipse, rgba(0,240,255,0.055) 0%, transparent 65%)",
+          filter: "blur(55px)", zIndex: 0,
+          width: "100vw", height: "60vh", top: "-5vh", left: "0vw",
+          background: "radial-gradient(ellipse, rgba(0,240,255,0.14) 0%, transparent 65%)",
+          animation: "aurora-pulse 7s ease-in-out infinite",
+        }} />
+        {/* Indigo bottom — slow pulse offset */}
+        <div aria-hidden style={{
+          position: "fixed", pointerEvents: "none", borderRadius: "50%",
+          filter: "blur(70px)", zIndex: 0,
+          width: "120vw", height: "55vh", bottom: "-10vh", left: "-10vw",
+          background: "radial-gradient(ellipse, rgba(45,0,120,0.22) 0%, transparent 70%)",
+          animation: "aurora-pulse 11s ease-in-out infinite reverse",
         }} />
       </>
     );
