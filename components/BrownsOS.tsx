@@ -15,8 +15,9 @@ const OCEAN_ROT_X = -1.22;
 
 function DataOcean({ scrollRef, isMobile }: { scrollRef: React.MutableRefObject<number>; isMobile: boolean }) {
   const { camera } = useThree();
-  const mouseNDC = useRef({ x: 0, y: 0 });
-  const origXY   = useRef<Float32Array>(null!);
+  const mouseNDC  = useRef({ x: 0, y: 0 });
+  const origXY    = useRef<Float32Array>(null!);
+  const frameSkip = useRef(0);
 
   const oceanGeo = useMemo(() => {
     const SEGS = isMobile ? 45 : 90;  // half resolution on mobile
@@ -68,6 +69,12 @@ function DataOcean({ scrollRef, isMobile }: { scrollRef: React.MutableRefObject<
   }, []);
 
   useFrame(({ clock }) => {
+    // 30fps cap on mobile — skip every other frame
+    if (isMobile) {
+      frameSkip.current = (frameSkip.current + 1) % 2;
+      if (frameSkip.current !== 0) return;
+    }
+
     const t   = clock.elapsedTime;
     const s   = scrollRef.current;
     const arr = oceanGeo.attributes.position.array as Float32Array;
@@ -130,7 +137,8 @@ function QuantumCore({
   const r2Ref    = useRef<THREE.Mesh>(null!);
   const r3Ref    = useRef<THREE.Mesh>(null!);
   const lightRef = useRef<THREE.PointLight>(null!);
-  const tgt      = useRef(new THREE.Vector3());
+  const tgt       = useRef(new THREE.Vector3());
+  const frameSkip = useRef(0);
 
   const coreMat = useMemo(() => new THREE.MeshStandardMaterial({
     color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 0.55,
@@ -149,6 +157,13 @@ function QuantumCore({
 
   useFrame(({ clock }, dt) => {
     if (!groupRef.current) return;
+
+    // 30fps cap on mobile
+    if (isMobile) {
+      frameSkip.current = (frameSkip.current + 1) % 2;
+      if (frameSkip.current !== 0) return;
+    }
+
     const t = clock.elapsedTime;
     const s = scrollRef.current;
 
