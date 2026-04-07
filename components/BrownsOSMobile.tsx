@@ -45,32 +45,24 @@ export default function BrownsOSMobile() {
 
   return (
     <>
-      {/* ── Aurora base blobs ──────────────────────────────────────────── */}
+      {/* ── Aurora base — NO filter:blur (causes scroll repaint on mobile) ── */}
       <div aria-hidden style={{
         position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
-        background: "radial-gradient(ellipse 120% 70% at 50% -10%, rgba(0,15,80,0.75) 0%, transparent 70%)",
-      }} />
-      <div aria-hidden style={{
-        position: "fixed", pointerEvents: "none", zIndex: 0,
-        width: "100vw", height: "60vh", top: "-5vh", left: 0,
-        background: "radial-gradient(ellipse, rgba(0,240,255,0.10) 0%, transparent 65%)",
-        animation: "aurora-pulse 7s ease-in-out infinite",
-      }} />
-      <div aria-hidden style={{
-        position: "fixed", pointerEvents: "none", zIndex: 0,
-        width: "120vw", height: "50vh", bottom: "-10vh", left: "-10vw",
-        background: "radial-gradient(ellipse, rgba(45,0,120,0.20) 0%, transparent 70%)",
-        animation: "aurora-pulse 11s ease-in-out infinite reverse",
+        background: `
+          radial-gradient(ellipse 130% 60% at 50% -5%, rgba(0,15,80,0.80) 0%, transparent 65%),
+          radial-gradient(ellipse 80% 50% at 50% 10%, rgba(0,240,255,0.07) 0%, transparent 60%),
+          radial-gradient(ellipse 100% 40% at 50% 100%, rgba(45,0,120,0.18) 0%, transparent 65%)
+        `,
+        transform: "translateZ(0)", // force GPU layer
       }} />
 
-      {/* ── Dot grid ──────────────────────────────────────────────────── */}
+      {/* ── Dot grid — static, no animation, no mask (both expensive on mobile) */}
       <div aria-hidden style={{
         position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
-        backgroundImage: "radial-gradient(circle, rgba(0,240,255,0.18) 1px, transparent 1px)",
-        backgroundSize: "28px 28px",
-        maskImage: "radial-gradient(ellipse 90% 60% at 50% 60%, black 30%, transparent 80%)",
-        WebkitMaskImage: "radial-gradient(ellipse 90% 60% at 50% 60%, black 30%, transparent 80%)",
-        animation: "mobile-grid-fade 6s ease-in-out infinite alternate",
+        backgroundImage: "radial-gradient(circle, rgba(0,240,255,0.12) 1px, transparent 1px)",
+        backgroundSize: "32px 32px",
+        opacity: 0.6,
+        transform: "translateZ(0)",
       }} />
 
       {/* ── Quantum Core — CSS geometry + scroll movement ─────────────── */}
@@ -90,41 +82,29 @@ export default function BrownsOSMobile() {
           transition: "transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         }}
       >
-        {/* Core glow */}
+        {/* Core glow — morph animation only (opacity/scale, cheap) */}
         <div style={{
           position: "absolute", inset: "30%",
           background: "radial-gradient(circle, rgba(0,240,255,0.95) 0%, rgba(0,180,220,0.6) 50%, transparent 100%)",
-          borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
-          boxShadow: "0 0 30px rgba(0,240,255,0.6), 0 0 60px rgba(0,240,255,0.25)",
-          animation: "core-morph 4s ease-in-out infinite",
-        }} />
-        {/* Ring 1 */}
-        <div style={{
-          position: "absolute", inset: "10%",
-          border: "1px solid rgba(0,240,255,0.35)",
           borderRadius: "50%",
-          animation: "ring-spin-x 4s linear infinite",
+          boxShadow: "0 0 28px rgba(0,240,255,0.55), 0 0 56px rgba(0,240,255,0.2)",
+          animation: "aurora-pulse 3s ease-in-out infinite",
+        }} />
+        {/* Ring 1 — spin on transform only (GPU composited) */}
+        <div style={{
+          position: "absolute", inset: "8%",
+          border: "1px solid rgba(0,240,255,0.30)",
+          borderRadius: "50%",
+          animation: "ring-spin-x 5s linear infinite",
+          willChange: "transform",
         }} />
         {/* Ring 2 */}
         <div style={{
-          position: "absolute", inset: "2%",
-          border: "1px solid rgba(0,240,255,0.20)",
+          position: "absolute", inset: "-6%",
+          border: "1px solid rgba(0,240,255,0.15)",
           borderRadius: "50%",
-          animation: "ring-spin-y 6s linear infinite reverse",
-        }} />
-        {/* Ring 3 */}
-        <div style={{
-          position: "absolute", inset: "-8%",
-          border: "1px solid rgba(0,240,255,0.13)",
-          borderRadius: "50%",
-          animation: "ring-spin-z 9s linear infinite",
-        }} />
-        {/* Shell */}
-        <div style={{
-          position: "absolute", inset: "18%",
-          border: "1px solid rgba(0,240,255,0.28)",
-          borderRadius: "30% 70% 50% 50% / 50% 50% 70% 30%",
-          animation: "core-morph 6s ease-in-out infinite reverse",
+          animation: "ring-spin-y 8s linear infinite reverse",
+          willChange: "transform",
         }} />
       </div>
     </>
