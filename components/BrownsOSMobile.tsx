@@ -2,7 +2,6 @@
 
 import { useRef, useEffect } from "react";
 
-// ── BrownsOSMobile — pure CSS + minimal scroll JS (zero Three.js) ─────────────
 export default function BrownsOSMobile() {
   const coreRef = useRef<HTMLDivElement>(null);
 
@@ -13,9 +12,7 @@ export default function BrownsOSMobile() {
       const max = el.scrollHeight - el.clientHeight;
       const s   = max > 0 ? el.scrollTop / max : 0;
 
-      // Same 4-chapter choreography as desktop Quantum Core
       let tx = 0, ty = 0, scale = 1;
-
       if (s < 0.05) {
         tx = 0; ty = 0;
       } else if (s < 0.25) {
@@ -45,66 +42,102 @@ export default function BrownsOSMobile() {
 
   return (
     <>
-      {/* ── Aurora base — NO filter:blur (causes scroll repaint on mobile) ── */}
+      {/* Background — single div, no blur, GPU composited */}
       <div aria-hidden style={{
         position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
         background: `
-          radial-gradient(ellipse 130% 60% at 50% -5%, rgba(0,15,80,0.80) 0%, transparent 65%),
-          radial-gradient(ellipse 80% 50% at 50% 10%, rgba(0,240,255,0.07) 0%, transparent 60%),
-          radial-gradient(ellipse 100% 40% at 50% 100%, rgba(45,0,120,0.18) 0%, transparent 65%)
+          radial-gradient(ellipse 140% 65% at 50% -5%, rgba(0,10,60,0.92) 0%, transparent 65%),
+          radial-gradient(ellipse 80% 50% at 50% 15%, rgba(0,240,255,0.06) 0%, transparent 60%),
+          radial-gradient(ellipse 100% 45% at 50% 100%, rgba(40,0,100,0.16) 0%, transparent 65%)
         `,
-        transform: "translateZ(0)", // force GPU layer
-      }} />
-
-      {/* ── Dot grid — static, no animation, no mask (both expensive on mobile) */}
-      <div aria-hidden style={{
-        position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
-        backgroundImage: "radial-gradient(circle, rgba(0,240,255,0.12) 1px, transparent 1px)",
-        backgroundSize: "32px 32px",
-        opacity: 0.6,
         transform: "translateZ(0)",
       }} />
 
-      {/* ── Quantum Core — CSS geometry + scroll movement ─────────────── */}
+      {/* Dot grid — static, no animation */}
+      <div aria-hidden style={{
+        position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
+        backgroundImage: "radial-gradient(circle, rgba(0,240,255,0.11) 1px, transparent 1px)",
+        backgroundSize: "32px 32px",
+        opacity: 0.55,
+        transform: "translateZ(0)",
+      }} />
+
+      {/* Quantum Core */}
       <div
         ref={coreRef}
         aria-hidden
         style={{
           position: "fixed",
-          top: "18%",
+          top: "16%",
           left: "50%",
           transform: "translateX(-50%)",
           zIndex: 1,
           pointerEvents: "none",
-          width: 180,
-          height: 180,
+          width: 200,
+          height: 200,
           willChange: "transform",
-          transition: "transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+          transition: "transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         }}
       >
-        {/* Core glow — morph animation only (opacity/scale, cheap) */}
+        {/* Outer glow halo */}
         <div style={{
-          position: "absolute", inset: "30%",
-          background: "radial-gradient(circle, rgba(0,240,255,0.95) 0%, rgba(0,180,220,0.6) 50%, transparent 100%)",
+          position: "absolute", inset: "-40%",
+          background: "radial-gradient(circle, rgba(0,240,255,0.08) 0%, transparent 65%)",
           borderRadius: "50%",
-          boxShadow: "0 0 28px rgba(0,240,255,0.55), 0 0 56px rgba(0,240,255,0.2)",
-          animation: "aurora-pulse 3s ease-in-out infinite",
+          animation: "aurora-pulse 4s ease-in-out infinite",
         }} />
-        {/* Ring 1 — spin on transform only (GPU composited) */}
+
+        {/* Ring 3 — outermost, slow */}
         <div style={{
-          position: "absolute", inset: "8%",
-          border: "1px solid rgba(0,240,255,0.30)",
+          position: "absolute", inset: "-14%",
+          border: "1px solid rgba(0,240,255,0.12)",
           borderRadius: "50%",
-          animation: "ring-spin-x 5s linear infinite",
+          animation: "ring-spin-z 11s linear infinite",
           willChange: "transform",
         }} />
+
         {/* Ring 2 */}
         <div style={{
-          position: "absolute", inset: "-6%",
-          border: "1px solid rgba(0,240,255,0.15)",
+          position: "absolute", inset: "-2%",
+          border: "1px solid rgba(0,240,255,0.20)",
           borderRadius: "50%",
-          animation: "ring-spin-y 8s linear infinite reverse",
+          animation: "ring-spin-y 7s linear infinite reverse",
           willChange: "transform",
+        }} />
+
+        {/* Ring 1 — inner */}
+        <div style={{
+          position: "absolute", inset: "10%",
+          border: "1px solid rgba(0,240,255,0.32)",
+          borderRadius: "50%",
+          animation: "ring-spin-x 4s linear infinite",
+          willChange: "transform",
+        }} />
+
+        {/* Shell wireframe */}
+        <div style={{
+          position: "absolute", inset: "20%",
+          border: "1px solid rgba(0,240,255,0.35)",
+          borderRadius: "38% 62% 55% 45% / 45% 38% 62% 55%",
+          animation: "ring-spin-x 6s linear infinite reverse",
+          willChange: "transform",
+        }} />
+
+        {/* Core icosahedron-ish */}
+        <div style={{
+          position: "absolute", inset: "30%",
+          background: "radial-gradient(circle at 38% 38%, rgba(180,255,255,0.9) 0%, rgba(0,240,255,0.85) 35%, rgba(0,120,180,0.6) 70%, transparent 100%)",
+          borderRadius: "38% 62% 55% 45% / 45% 55% 62% 38%",
+          boxShadow: "0 0 20px rgba(0,240,255,0.7), 0 0 45px rgba(0,240,255,0.3), inset 0 0 15px rgba(0,240,255,0.2)",
+          animation: "core-morph 4s ease-in-out infinite",
+        }} />
+
+        {/* Point light simulation */}
+        <div style={{
+          position: "absolute", inset: "28%",
+          background: "radial-gradient(circle at 35% 30%, rgba(255,255,255,0.25) 0%, transparent 55%)",
+          borderRadius: "50%",
+          pointerEvents: "none",
         }} />
       </div>
     </>
