@@ -117,7 +117,6 @@ export default function Pricing() {
       ref={sectionRef}
       id="precios"
       className="section-padding"
-      style={{ background: "#000000" }}
     >
       {/* Underlight */}
       <div

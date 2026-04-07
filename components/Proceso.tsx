@@ -55,7 +55,6 @@ export default function Proceso() {
       ref={sectionRef}
       id="proceso"
       className="section-padding"
-      style={{ background: "#131313" }}
     >
       <div className="max-w-6xl mx-auto">
         {/* Header */}

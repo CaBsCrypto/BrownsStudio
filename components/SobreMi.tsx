@@ -46,12 +46,11 @@ export default function SobreMi() {
       ref={sectionRef}
       id="sobre-mi"
       className="section-padding overflow-hidden"
-      style={{ background: "linear-gradient(180deg, #000000 0%, #0a0f1e 50%, #000000 100%)" }}
     >
-      {/* AI underlight in the center */}
+      {/* Cyan underlight */}
       <div
         className="absolute inset-x-0 top-1/3 h-96 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(5,169,227,0.04) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(0,240,255,0.03) 0%, transparent 70%)" }}
       />
 
       <div className="relative max-w-6xl mx-auto">

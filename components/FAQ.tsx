@@ -77,7 +77,6 @@ export default function FAQ() {
       ref={sectionRef}
       id="faq"
       className="section-padding"
-      style={{ background: "#0e0e0e" }}
     >
       <div className="max-w-3xl mx-auto">
         {/* Header */}

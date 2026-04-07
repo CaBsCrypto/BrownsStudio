@@ -75,12 +75,11 @@ export default function Portfolio() {
       ref={sectionRef}
       id="portfolio"
       className="section-padding overflow-hidden"
-      style={{ background: "#000000" }}
     >
       {/* Subtle orb behind the section */}
       <div
         className="absolute inset-x-0 top-0 h-full pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at 70% 40%, rgba(147,158,181,0.03) 0%, transparent 60%)" }}
+        style={{ background: "radial-gradient(ellipse at 70% 40%, rgba(0,240,255,0.02) 0%, transparent 60%)" }}
       />
 
       <div className="relative max-w-7xl mx-auto">
@@ -186,12 +185,12 @@ export default function Portfolio() {
           {/* Edge fades — fades to void */}
           <div
             className="absolute right-0 top-0 bottom-4 w-24 pointer-events-none"
-            style={{ background: "linear-gradient(to left, #000000, transparent)" }}
+            style={{ background: "linear-gradient(to left, #050505, transparent)" }}
           />
           <div
             className="absolute left-0 top-0 bottom-4 w-24 pointer-events-none transition-opacity duration-300"
             style={{
-              background: "linear-gradient(to right, #000000, transparent)",
+              background: "linear-gradient(to right, #050505, transparent)",
               opacity: activeIndex > 0 ? 1 : 0,
             }}
           />
