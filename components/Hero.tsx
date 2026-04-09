@@ -116,7 +116,7 @@ export default function Hero() {
           </h1>
 
           {/* Body */}
-          <p className="reveal reveal-delay-2 text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "#7a7a7a" }}>
+          <p className="reveal reveal-delay-2 text-base leading-relaxed mb-10 max-w-sm" style={{ color: "#7a7a7a" }}>
             {t.hero.sub}
           </p>
 
