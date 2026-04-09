@@ -3,8 +3,10 @@
 import { useEffect, useRef } from "react";
 import { MessageCircle, Mail } from "lucide-react";
 import { SITE_CONFIG, WHATSAPP_URL } from "@/lib/config";
+import { useLang } from "@/lib/i18n/LanguageContext";
 
 export default function CTA() {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -48,7 +50,7 @@ export default function CTA() {
           }}
         >
           <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#00f0ff" }} />
-          Espacios disponibles este mes: {SITE_CONFIG.spotsAvailable}
+          {t.cta.spots}: {SITE_CONFIG.spotsAvailable}
         </div>
 
         {/* Headline */}
@@ -56,18 +58,15 @@ export default function CTA() {
           className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#e5e5e5] mb-6 leading-tight"
           style={{ letterSpacing: "-0.03em" }}
         >
-          ¿Listo para crecer
-          <br />
-          con web{" "}
-          <span className="text-gradient-gold">+ IA?</span>
+          {t.cta.title}
         </h2>
 
         <p className="reveal reveal-delay-2 text-lg sm:text-xl mb-4 max-w-xl mx-auto leading-relaxed" style={{ color: "#7a7a7a" }}>
-          La primera consulta es gratuita y sin compromiso. Cuéntanos tu idea y en 24 horas te enviamos una propuesta.
+          {t.cta.sub}
         </p>
 
         <p className="reveal reveal-delay-2 text-sm mb-10" style={{ color: "#3a3a3a" }}>
-          Cada mes tomamos un número limitado de proyectos para garantizar calidad y atención personalizada.
+          {t.cta.note}
         </p>
 
         {/* CTAs */}
@@ -83,7 +82,7 @@ export default function CTA() {
             }}
           >
             <MessageCircle size={16} className="group-hover:scale-110 transition-transform" />
-            Escribir por WhatsApp
+            {t.cta.whatsapp}
           </a>
           <a
             href={`mailto:${SITE_CONFIG.email}?subject=Consulta de proyecto web&body=Hola, me interesa cotizar un proyecto web para mi negocio.`}
@@ -99,7 +98,7 @@ export default function CTA() {
             }}
           >
             <Mail size={16} className="group-hover:scale-110 transition-transform" />
-            Enviar un email
+            {t.cta.email}
           </a>
         </div>
 
@@ -108,9 +107,9 @@ export default function CTA() {
           className="reveal reveal-delay-4 flex flex-col sm:flex-row items-center justify-center gap-6 text-xs uppercase tracking-widest"
           style={{ color: "rgba(0,240,255,0.25)", fontFamily: "var(--font-jet-brains-mono), monospace" }}
         >
-          {["✓ Respuesta en menos de 24h", "✓ Primera consulta gratis", "✓ Sin compromiso"].map((item) => (
-            <span key={item}>{item}</span>
-          ))}
+          <span>{t.cta.check1}</span>
+          <span>{t.cta.check2}</span>
+          <span>{t.cta.check3}</span>
         </div>
       </div>
     </section>

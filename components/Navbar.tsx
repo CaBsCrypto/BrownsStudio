@@ -4,21 +4,24 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { SITE_CONFIG, WHATSAPP_URL } from "@/lib/config";
+import { useLang } from "@/lib/i18n/LanguageContext";
 
-const navLinks = [
-  { label: "Servicios", href: "#servicios", id: "servicios" },
-  { label: "Portfolio",  href: "#portfolio",  id: "portfolio"  },
-  { label: "Proceso",   href: "#proceso",   id: "proceso"   },
-  { label: "Precios",   href: "#precios",   id: "precios"   },
-  { label: "FAQ",       href: "#faq",       id: "faq"       },
-];
-
+const navIds = ["servicios", "portfolio", "proceso", "precios", "faq"];
 const allSectionIds = ["inicio", "sobre-mi", "servicios", "portfolio", "proceso", "precios", "testimonios", "faq", "contacto"];
 
 export default function Navbar() {
+  const { t, lang, toggle } = useLang();
   const [scrolled, setScrolled]       = useState(false);
   const [mobileOpen, setMobileOpen]   = useState(false);
   const [activeSection, setActiveSection] = useState("");
+
+  const navLinks = [
+    { label: t.nav.services, href: "#servicios", id: "servicios" },
+    { label: t.nav.portfolio, href: "#portfolio", id: "portfolio" },
+    { label: t.nav.process,  href: "#proceso",   id: "proceso"   },
+    { label: t.nav.pricing,  href: "#precios",   id: "precios"   },
+    { label: t.nav.faq,      href: "#faq",       id: "faq"       },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -100,8 +103,16 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* CTA + hamburger */}
+            {/* CTA + lang toggle + hamburger */}
             <div className="flex items-center gap-3">
+              {/* Language toggle */}
+              <button
+                onClick={toggle}
+                className="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono font-semibold transition-all duration-200 hover:scale-105"
+                style={{ border: "1px solid rgba(0,240,255,0.3)", color: "#00f0ff", background: "rgba(0,240,255,0.05)" }}
+              >
+                {lang === "en" ? "ES" : "EN"}
+              </button>
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
@@ -109,12 +120,12 @@ export default function Navbar() {
                 className="hidden sm:flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-black hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(198,198,199,0.15)]"
                 style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)" }}
               >
-                Cotizar Proyecto
+                {t.nav.cta}
               </a>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className="lg:hidden p-2 text-[#5a5a5a] hover:text-[#e5e5e5] transition-colors"
-                aria-label="Abrir menú"
+                aria-label="Open menu"
               >
                 {mobileOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
@@ -163,8 +174,16 @@ export default function Navbar() {
               style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)" }}
               onClick={() => setMobileOpen(false)}
             >
-              Cotizar Proyecto
+              {t.nav.cta}
             </a>
+            {/* Language toggle mobile */}
+            <button
+              onClick={() => { toggle(); setMobileOpen(false); }}
+              className="mt-4 flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-xs font-mono font-semibold"
+              style={{ border: "1px solid rgba(0,240,255,0.3)", color: "#00f0ff", background: "rgba(0,240,255,0.05)" }}
+            >
+              {lang === "en" ? "Cambiar a Español" : "Switch to English"}
+            </button>
           </div>
         </div>
       </div>

@@ -1,13 +1,8 @@
+"use client";
+
 import { Instagram, Linkedin, Youtube, Mail, ArrowUpRight } from "lucide-react";
 import { SITE_CONFIG, WHATSAPP_URL } from "@/lib/config";
-
-const navLinks = [
-  { label: "Servicios & Precios", href: "#precios" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Proceso", href: "#proceso" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Contacto", href: "#contacto" },
-];
+import { useLang } from "@/lib/i18n/LanguageContext";
 
 const socialLinks = [
   { icon: Instagram, label: "Instagram", href: SITE_CONFIG.instagram },
@@ -16,6 +11,16 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { t } = useLang();
+
+  const navLinks = [
+    { label: t.footer.services,  href: "#precios"   },
+    { label: t.footer.portfolio, href: "#portfolio"  },
+    { label: t.footer.process,   href: "#proceso"    },
+    { label: t.footer.faq,       href: "#faq"        },
+    { label: t.footer.contact,   href: "#contacto"   },
+  ];
+
   return (
     <footer className="bg-bg-secondary border-t border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -57,11 +62,11 @@ export default function Footer() {
           {/* Nav */}
           <div>
             <h4 className="text-text-primary font-semibold text-sm mb-4 tracking-wide">
-              Navegación
+              {t.footer.nav}
             </h4>
             <ul className="space-y-2.5">
               {navLinks.map((link) => (
-                <li key={link.label}>
+                <li key={link.href}>
                   <a
                     href={link.href}
                     className="text-text-muted text-sm hover:text-accent-gold transition-colors duration-200"
@@ -76,7 +81,7 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h4 className="text-text-primary font-semibold text-sm mb-4 tracking-wide">
-              Contacto
+              {t.footer.contact}
             </h4>
             <div className="space-y-3">
               <a
@@ -105,10 +110,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-text-muted text-xs">
-            © 2026 {SITE_CONFIG.name} — Todos los derechos reservados.
+            © 2026 {SITE_CONFIG.name} — {t.footer.rights}
           </p>
           <p className="text-text-muted text-xs">
-            Hecho con ❤️ para negocios locales de Latinoamérica
+            {t.footer.made}
           </p>
         </div>
       </div>

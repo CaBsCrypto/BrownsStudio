@@ -5,8 +5,10 @@ import { proyectos } from "@/data/proyectos";
 import ProyectoCard from "./ProyectoCard";
 import { WHATSAPP_URL } from "@/lib/config";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useLang } from "@/lib/i18n/LanguageContext";
 
 export default function Portfolio() {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef   = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -91,14 +93,13 @@ export default function Portfolio() {
               className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4"
               style={{ border: "1px solid rgba(71,196,255,0.2)", background: "rgba(71,196,255,0.05)", color: "#47c4ff" }}
             >
-              Nuestro Trabajo
+              {t.portfolio.eyebrow}
             </div>
             <h2
               className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#e5e5e5] leading-tight"
               style={{ letterSpacing: "-0.03em" }}
             >
-              Proyectos que{" "}
-              <span className="text-gradient-gold">hablan por sí solos</span>
+              {t.portfolio.title}
             </h2>
           </div>
 
@@ -111,7 +112,7 @@ export default function Portfolio() {
             <button
               onClick={prev}
               disabled={activeIndex === 0}
-              aria-label="Proyecto anterior"
+              aria-label={t.portfolio.prevLabel}
               className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
               style={{
                 background: "#1f1f1f",
@@ -134,7 +135,7 @@ export default function Portfolio() {
             <button
               onClick={next}
               disabled={activeIndex >= total - 1}
-              aria-label="Proyecto siguiente"
+              aria-label={t.portfolio.nextLabel}
               className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
               style={{
                 background: "#1f1f1f",
@@ -202,7 +203,7 @@ export default function Portfolio() {
             <button
               key={i}
               onClick={() => scrollToCard(i)}
-              aria-label={`Ir al proyecto ${i + 1}`}
+              aria-label={`${t.portfolio.dotLabel} ${i + 1}`}
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 i === activeIndex
                   ? "w-6 bg-[#47c4ff]"
@@ -215,7 +216,7 @@ export default function Portfolio() {
         {/* Bottom CTA */}
         <div className="reveal text-center">
           <p className="text-[#5a5a5a] text-sm mb-4">
-            ¿Quieres que tu negocio sea el próximo en nuestra lista?
+            {t.portfolio.cta}
           </p>
           <a
             href={WHATSAPP_URL}
@@ -227,7 +228,7 @@ export default function Portfolio() {
               boxShadow: "0 0 24px rgba(198,198,199,0.15)",
             }}
           >
-            Empezar mi proyecto
+            {t.portfolio.ctaBtn}
           </a>
         </div>
       </div>

@@ -2,35 +2,12 @@
 
 import { useEffect, useRef } from "react";
 import { MessageSquare, PenTool, Code2, Rocket } from "lucide-react";
+import { useLang } from "@/lib/i18n/LanguageContext";
 
-const pasos = [
-  {
-    numero: "01",
-    icono: MessageSquare,
-    titulo: "Conversación",
-    descripcion: "Nos reunimos para entender tu negocio y objetivos. Sin costo y sin compromiso.",
-  },
-  {
-    numero: "02",
-    icono: PenTool,
-    titulo: "Diseño",
-    descripcion: "Creamos un mockup personalizado para tu aprobación antes de escribir una línea de código.",
-  },
-  {
-    numero: "03",
-    icono: Code2,
-    titulo: "Desarrollo",
-    descripcion: "Construimos con las últimas tecnologías. Revisiones ilimitadas hasta que estés 100% conforme.",
-  },
-  {
-    numero: "04",
-    icono: Rocket,
-    titulo: "Lanzamiento",
-    descripcion: "Publicamos tu web o solución IA y te enseñamos a gestionarla. Soporte continuo incluido.",
-  },
-];
+const stepIcons = [MessageSquare, PenTool, Code2, Rocket];
 
 export default function Proceso() {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -63,24 +40,23 @@ export default function Proceso() {
             className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4"
             style={{ border: "1px solid rgba(198,198,199,0.15)", background: "rgba(198,198,199,0.04)", color: "#9e9e9e" }}
           >
-            Cómo Trabajamos
+            {t.process.eyebrow}
           </div>
           <h2
             className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#e5e5e5] mb-4"
             style={{ letterSpacing: "-0.03em" }}
           >
-            Un proceso claro,
-            <span className="text-gradient-gold"> sin sorpresas</span>
+            {t.process.title}
           </h2>
         </div>
 
         {/* Steps — horizontal on desktop, roadmap-style */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {pasos.map((paso, i) => {
-            const Icon = paso.icono;
+          {t.process.steps.map((step: { num: string; title: string; desc: string }, i: number) => {
+            const Icon = stepIcons[i];
             return (
               <div
-                key={paso.numero}
+                key={step.num}
                 className={`reveal reveal-delay-${i + 1} group relative p-6 rounded-2xl transition-all duration-500`}
                 style={{
                   background: "rgba(25,25,25,0.6)",
@@ -101,7 +77,7 @@ export default function Proceso() {
                   className="absolute top-4 right-4 font-display text-4xl font-bold select-none"
                   style={{ color: "rgba(255,255,255,0.03)" }}
                 >
-                  {paso.numero}
+                  {step.num}
                 </span>
 
                 {/* Icon */}
@@ -122,12 +98,12 @@ export default function Proceso() {
                   className="font-display font-semibold text-lg text-[#e5e5e5] mb-2"
                   style={{ letterSpacing: "-0.02em" }}
                 >
-                  {paso.titulo}
+                  {step.title}
                 </h3>
-                <p className="text-[#5a5a5a] text-sm leading-relaxed">{paso.descripcion}</p>
+                <p className="text-[#5a5a5a] text-sm leading-relaxed">{step.desc}</p>
 
                 {/* Connector dashes */}
-                {i < pasos.length - 1 && (
+                {i < t.process.steps.length - 1 && (
                   <div
                     className="hidden lg:block absolute top-1/2 -right-3 w-6 border-t border-dashed"
                     style={{ borderColor: "rgba(72,72,72,0.3)" }}

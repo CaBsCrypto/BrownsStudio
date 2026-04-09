@@ -3,95 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, Zap, Globe, Bot } from "lucide-react";
 import { getWhatsAppWithPackage, WHATSAPP_URL } from "@/lib/config";
-
-const paquetesWeb = [
-  {
-    nombre: "Básico",
-    subtitulo: "Para empezar online",
-    precio: "$150",
-    features: [
-      "Landing page (1 página)",
-      "Diseño responsive + WhatsApp",
-      "SEO básico + Google Analytics",
-      "2 revisiones de diseño incluidas",
-    ],
-    destacado: false,
-  },
-  {
-    nombre: "Profesional",
-    subtitulo: "El más elegido",
-    precio: "$350",
-    features: [
-      "Web multi-página (hasta 5)",
-      "Diseño premium personalizado",
-      "SEO local + Google Maps",
-      "3 revisiones de diseño incluidas",
-    ],
-    destacado: true,
-  },
-  {
-    nombre: "Premium",
-    subtitulo: "Solución completa",
-    precio: "$800+",
-    features: [
-      "Todo lo del Profesional",
-      "Sistema de citas online + CMS",
-      "Blog + panel de administración",
-      "5 revisiones + 1 mes de soporte",
-    ],
-    destacado: false,
-  },
-];
-
-const serviciosIA = [
-  {
-    nombre: "Gestión de Citas IA",
-    subtitulo: "Agenda que trabaja sola",
-    precio: "$150",
-    features: [
-      "Agenda y confirma citas por WhatsApp",
-      "Recordatorios automáticos — reduce no-shows 60%",
-      "Cancelaciones y reagendamiento sin intervención",
-      "Sincronización con Google Calendar",
-    ],
-  },
-  {
-    nombre: "Gestión de Pedidos IA",
-    subtitulo: "Del pedido a la entrega, solo",
-    precio: "$200",
-    features: [
-      "Toma pedidos por WhatsApp o web automáticamente",
-      "Notificaciones al equipo en tiempo real",
-      "Seguimiento de estado para el cliente",
-      "Integración con carta o catálogo digital",
-    ],
-  },
-  {
-    nombre: "Automatización de Ventas",
-    subtitulo: "Cierra más sin más esfuerzo",
-    precio: "$350",
-    features: [
-      "Califica leads automáticamente",
-      "Seguimiento por WhatsApp/email sin intervención",
-      "Cotizaciones y propuestas automáticas",
-      "Reportes de conversión en tiempo real",
-    ],
-  },
-  {
-    nombre: "Gestor de Contenido IA",
-    subtitulo: "Redes sociales en piloto automático",
-    precio: "$150",
-    precioSuffix: "/mes",
-    features: [
-      "Genera posts para Instagram y Facebook con IA",
-      "Programación automática de publicaciones",
-      "Textos optimizados para tu negocio y voz",
-      "Reporte mensual de rendimiento",
-    ],
-  },
-];
+import { useLang } from "@/lib/i18n/LanguageContext";
 
 export default function Pricing() {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const [activeTab, setActiveTab] = useState<"web" | "ia">("web");
 
@@ -131,17 +46,16 @@ export default function Pricing() {
             className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4"
             style={{ border: "1px solid rgba(71,196,255,0.2)", background: "rgba(71,196,255,0.05)", color: "#47c4ff" }}
           >
-            Servicios & Precios
+            {t.pricing.eyebrow}
           </div>
           <h2
             className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#e5e5e5] mb-4"
             style={{ letterSpacing: "-0.03em" }}
           >
-            Inversión que se{" "}
-            <span className="text-gradient-gold">paga sola</span>
+            {t.pricing.title}
           </h2>
           <p className="reveal reveal-delay-2 text-[#9e9e9e] text-lg max-w-xl mx-auto">
-            Precios claros, sin costos ocultos. Todos en USD.
+            {t.pricing.sub}
           </p>
         </div>
 
@@ -161,7 +75,7 @@ export default function Pricing() {
               }
             >
               <Globe size={15} />
-              Desarrollo Web
+              {t.pricing.tabWeb}
             </button>
             <button
               onClick={() => setActiveTab("ia")}
@@ -173,7 +87,7 @@ export default function Pricing() {
               }
             >
               <Bot size={15} />
-              Soluciones IA
+              {t.pricing.tabAI}
             </button>
           </div>
         </div>
@@ -181,26 +95,26 @@ export default function Pricing() {
         {/* Web packages */}
         {activeTab === "web" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-            {paquetesWeb.map((paquete) => (
+            {t.pricing.plans.map((plan: { name: string; desc: string; price: string; features: readonly string[]; popular?: boolean }) => (
               <div
-                key={paquete.nombre}
+                key={plan.name}
                 className="relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1"
                 style={{
-                  background: paquete.destacado ? "rgba(25,25,25,0.8)" : "rgba(19,19,19,0.6)",
+                  background: plan.popular ? "rgba(25,25,25,0.8)" : "rgba(19,19,19,0.6)",
                   backdropFilter: "blur(20px)",
-                  border: paquete.destacado
+                  border: plan.popular
                     ? "1px solid rgba(198,198,199,0.2)"
                     : "1px solid rgba(72,72,72,0.12)",
-                  ...(paquete.destacado ? { marginTop: "-1rem", marginBottom: "1rem", boxShadow: "0 0 40px rgba(198,198,199,0.05)" } : {}),
+                  ...(plan.popular ? { marginTop: "-1rem", marginBottom: "1rem", boxShadow: "0 0 40px rgba(198,198,199,0.05)" } : {}),
                 }}
               >
-                {paquete.destacado && (
+                {plan.popular && (
                   <div
                     className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1 rounded-full text-xs font-bold text-black"
                     style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)" }}
                   >
                     <Zap size={11} fill="currentColor" />
-                    Más Popular
+                    {t.pricing.popular}
                   </div>
                 )}
 
@@ -209,12 +123,12 @@ export default function Pricing() {
                     className="font-display font-bold text-2xl text-[#e5e5e5] mb-0.5"
                     style={{ letterSpacing: "-0.02em" }}
                   >
-                    {paquete.nombre}
+                    {plan.name}
                   </h3>
-                  <p className="text-[#5a5a5a] text-sm mb-4">{paquete.subtitulo}</p>
+                  <p className="text-[#5a5a5a] text-sm mb-4">{plan.desc}</p>
                   <div className="flex items-baseline gap-1">
                     <span className="font-display font-bold text-4xl text-gradient-gold">
-                      {paquete.precio}
+                      {plan.price}
                     </span>
                     <span className="text-[#5a5a5a] text-sm">USD</span>
                   </div>
@@ -223,7 +137,7 @@ export default function Pricing() {
                 <div className="h-px mb-5" style={{ background: "rgba(72,72,72,0.15)" }} />
 
                 <ul className="space-y-3 mb-6">
-                  {paquete.features.map((feature) => (
+                  {plan.features.map((feature: string) => (
                     <li key={feature} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
                       <Check size={15} className="text-[#c6c6c7] flex-shrink-0 mt-0.5" />
                       {feature}
@@ -232,29 +146,29 @@ export default function Pricing() {
                 </ul>
 
                 <a
-                  href={getWhatsAppWithPackage(paquete.nombre)}
+                  href={getWhatsAppWithPackage(plan.name)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full text-center py-3 rounded-xl text-sm font-semibold transition-all duration-300"
                   style={
-                    paquete.destacado
+                    plan.popular
                       ? { background: "linear-gradient(135deg, #c6c6c7, #939eb5)", color: "#000" }
                       : { border: "1px solid rgba(198,198,199,0.2)", color: "#9e9e9e" }
                   }
                   onMouseEnter={(e) => {
-                    if (!paquete.destacado) {
+                    if (!plan.popular) {
                       (e.currentTarget as HTMLElement).style.borderColor = "rgba(198,198,199,0.4)";
                       (e.currentTarget as HTMLElement).style.color = "#e5e5e5";
                     }
                   }}
                   onMouseLeave={(e) => {
-                    if (!paquete.destacado) {
+                    if (!plan.popular) {
                       (e.currentTarget as HTMLElement).style.borderColor = "rgba(198,198,199,0.2)";
                       (e.currentTarget as HTMLElement).style.color = "#9e9e9e";
                     }
                   }}
                 >
-                  Cotizar paquete {paquete.nombre}
+                  {t.pricing.ctaBtn} {plan.name}
                 </a>
               </div>
             ))}
@@ -264,9 +178,9 @@ export default function Pricing() {
         {/* IA services */}
         {activeTab === "ia" && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {serviciosIA.map((servicio) => (
+            {t.pricing.aiPlans.map((plan: { name: string; desc: string; price: string; priceSuffix?: string; features: readonly string[] }) => (
               <div
-                key={servicio.nombre}
+                key={plan.name}
                 className="relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1"
                 style={{
                   background: "rgba(10,15,30,0.7)",
@@ -291,15 +205,15 @@ export default function Pricing() {
                     className="font-display font-bold text-2xl text-[#e5e5e5] mb-0.5"
                     style={{ letterSpacing: "-0.02em" }}
                   >
-                    {servicio.nombre}
+                    {plan.name}
                   </h3>
-                  <p className="text-[#5a5a5a] text-sm mb-4">{servicio.subtitulo}</p>
+                  <p className="text-[#5a5a5a] text-sm mb-4">{plan.desc}</p>
                   <div className="flex items-baseline gap-1">
                     <span className="font-display font-bold text-4xl text-gradient-tertiary">
-                      {servicio.precio}
+                      {plan.price}
                     </span>
                     <span className="text-[#5a5a5a] text-sm">
-                      {"precioSuffix" in servicio ? (servicio as typeof servicio & { precioSuffix: string }).precioSuffix : "USD"}
+                      {plan.priceSuffix ?? "USD"}
                     </span>
                   </div>
                 </div>
@@ -307,7 +221,7 @@ export default function Pricing() {
                 <div className="h-px mb-5" style={{ background: "rgba(71,196,255,0.1)" }} />
 
                 <ul className="space-y-3 mb-6">
-                  {servicio.features.map((feature) => (
+                  {plan.features.map((feature: string) => (
                     <li key={feature} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
                       <Check size={15} className="text-[#47c4ff] flex-shrink-0 mt-0.5" />
                       {feature}
@@ -316,7 +230,7 @@ export default function Pricing() {
                 </ul>
 
                 <a
-                  href={getWhatsAppWithPackage(servicio.nombre)}
+                  href={getWhatsAppWithPackage(plan.name)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full text-center py-3 rounded-xl text-sm font-semibold transition-all duration-300"
@@ -330,7 +244,7 @@ export default function Pricing() {
                     (e.currentTarget as HTMLElement).style.borderColor = "rgba(71,196,255,0.2)";
                   }}
                 >
-                  Cotizar {servicio.nombre}
+                  {t.pricing.ctaBtn} {plan.name}
                 </a>
               </div>
             ))}
@@ -339,15 +253,13 @@ export default function Pricing() {
 
         {/* Bottom note */}
         <p className="reveal text-center text-[#5a5a5a] text-sm mt-8">
-          ¿Necesitas web + IA juntos?{" "}
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#9e9e9e] hover:text-[#47c4ff] transition-colors duration-200"
-          >
-            Armamos un paquete a tu medida.
-          </a>
+            dangerouslySetInnerHTML={{ __html: t.pricing.combo }}
+          />
         </p>
       </div>
     </section>

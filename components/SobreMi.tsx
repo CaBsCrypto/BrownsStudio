@@ -6,22 +6,14 @@ import {
   PenTool, Search, Lightbulb, type LucideIcon,
 } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/config";
+import { useLang } from "@/lib/i18n/LanguageContext";
 
-interface Cert { area: string; desc: string; icon: LucideIcon; }
-
-const certificaciones: Cert[] = [
-  { area: "AI Fundamentals",      desc: "Base sólida en IA",           icon: Brain    },
-  { area: "AI for App Building",  desc: "Apps con IA integrada",        icon: Code2    },
-  { area: "AI for Data Analysis", desc: "Datos que toman decisiones",   icon: BarChart3 },
-  { area: "AI for Content",       desc: "Contenido automatizado",       icon: FileText  },
-  { area: "AI for Writing",       desc: "Textos potenciados con IA",    icon: PenTool   },
-  { area: "AI for Research",      desc: "Investigación asistida",       icon: Search    },
-  { area: "AI for Brainstorming", desc: "Ideas y estrategia con IA",    icon: Lightbulb },
-];
+const certIcons: LucideIcon[] = [Brain, Code2, BarChart3, FileText, PenTool, Search, Lightbulb];
 
 const skills = ["Next.js", "TypeScript", "Python", "Web3", "AI/ML", "Supabase"];
 
 export default function SobreMi() {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -144,15 +136,15 @@ export default function SobreMi() {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-display font-bold text-xl text-[#e5e5e5]">Cristian</p>
-                      <p className="text-[#5a5a5a] text-sm">Fundador · Browns Studio</p>
+                      <p className="font-display font-bold text-xl text-[#e5e5e5]">{t.about.greeting}</p>
+                      <p className="text-[#5a5a5a] text-sm">{t.about.role}</p>
                     </div>
                     <div
                       className="flex items-center gap-1.5 px-3 py-1 rounded-full"
                       style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)" }}
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                      <span className="text-green-400 text-xs font-medium">Disponible</span>
+                      <span className="text-green-400 text-xs font-medium">{t.about.available}</span>
                     </div>
                   </div>
                 </div>
@@ -169,7 +161,7 @@ export default function SobreMi() {
               >
                 <div className="flex items-center gap-2">
                   <CheckCircle2 size={14} className="text-[#c6c6c7]" />
-                  <span className="text-[#9e9e9e] text-xs font-medium">Freelance verificado</span>
+                  <span className="text-[#9e9e9e] text-xs font-medium">{t.about.verified}</span>
                 </div>
               </div>
             </div>
@@ -181,24 +173,18 @@ export default function SobreMi() {
               className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-6"
               style={{ border: "1px solid rgba(71,196,255,0.2)", background: "rgba(71,196,255,0.05)", color: "#47c4ff" }}
             >
-              Quién está detrás
+              {t.about.eyebrow}
             </div>
 
             <h2
               className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#e5e5e5] mb-5 leading-tight"
               style={{ letterSpacing: "-0.03em" }}
             >
-              Hola, soy Cristian —
-              <br />
-              <span className="text-gradient-gold">web + IA</span> para
-              <br />
-              tu negocio.
+              {t.about.greeting}
             </h2>
 
             <p className="reveal reveal-delay-2 text-[#9e9e9e] text-lg leading-relaxed mb-8">
-              Desarrollador web freelance certificado por Google en Inteligencia Artificial.
-              Fundé Browns Studio para darle a los negocios locales acceso a las mismas herramientas
-              que usan las grandes empresas — a un precio justo.
+              {t.about.bio}
             </p>
 
             {/* Google certs block */}
@@ -210,25 +196,25 @@ export default function SobreMi() {
               >
                 <div className="text-center flex-shrink-0">
                   <p className="font-display font-bold text-4xl text-[#47c4ff] leading-none">7</p>
-                  <p className="text-[#47c4ff]/50 text-xs mt-0.5">certs.</p>
+                  <p className="text-[#47c4ff]/50 text-xs mt-0.5">{t.about.certs}</p>
                 </div>
                 <div>
                   <p className="text-[#e5e5e5] text-sm font-semibold leading-tight mb-0.5">
-                    Certificado por Google en IA
+                    {t.about.certTitle}
                   </p>
                   <p className="text-[#9e9e9e] text-xs leading-relaxed">
-                    Inteligencia Artificial con Gemini · Google Cloud
+                    {t.about.certSub}
                   </p>
                 </div>
               </div>
 
               {/* 7 cert cards — 2 col */}
               <div className="grid grid-cols-2 gap-2 mb-4">
-                {certificaciones.map((cert) => {
-                  const Icon = cert.icon;
+                {t.about.certNames.map((name: string, i: number) => {
+                  const Icon = certIcons[i];
                   return (
                     <div
-                      key={cert.area}
+                      key={name}
                       className="flex items-start gap-3 p-3 rounded-xl transition-all duration-300 group cursor-default"
                       style={{
                         background: "rgba(25,25,25,0.6)",
@@ -250,8 +236,8 @@ export default function SobreMi() {
                         <Icon size={14} className="text-[#47c4ff]" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-[#d0d0d0] text-xs font-semibold leading-tight">{cert.area}</p>
-                        <p className="text-[#5a5a5a] text-xs leading-tight mt-0.5">{cert.desc}</p>
+                        <p className="text-[#d0d0d0] text-xs font-semibold leading-tight">{name}</p>
+                        <p className="text-[#5a5a5a] text-xs leading-tight mt-0.5">{t.about.certDescs[i]}</p>
                       </div>
                     </div>
                   );
@@ -259,7 +245,7 @@ export default function SobreMi() {
               </div>
 
               <p className="text-[#3a3a3a] text-xs italic mb-8">
-                Cada certificación = una herramienta real aplicada a tu negocio.
+                {t.about.certNote}
               </p>
             </div>
 
@@ -275,7 +261,7 @@ export default function SobreMi() {
                   boxShadow: "0 0 24px rgba(198,198,199,0.15)",
                 }}
               >
-                Conversemos sobre tu proyecto
+                {t.about.ctaBtn}
               </a>
             </div>
           </div>

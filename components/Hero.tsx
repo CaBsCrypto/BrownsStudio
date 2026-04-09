@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Sparkles } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/config";
+import { useLang } from "@/lib/i18n/LanguageContext";
 
 function useCountUp(target: number, duration: number, active: boolean) {
   const [count, setCount] = useState(0);
@@ -20,30 +21,31 @@ function useCountUp(target: number, duration: number, active: boolean) {
   return count;
 }
 
-const stats = [
-  { numeric: 5,   suffix: "+", label: "Proyectos"        },
-  { numeric: 7,   suffix: "",  label: "Certs. Google IA"  },
-  { numeric: 100, suffix: "%", label: "Satisfacción"     },
+const statNumerics = [
+  { numeric: 5,   suffix: "+" },
+  { numeric: 7,   suffix: ""  },
+  { numeric: 100, suffix: "%" },
 ];
 
-function StatItem({ stat, active }: { stat: typeof stats[0]; active: boolean }) {
-  const count = useCountUp(stat.numeric, 1200, active);
+function StatItem({ numeric, suffix, label, active }: { numeric: number; suffix: string; label: string; active: boolean }) {
+  const count = useCountUp(numeric, 1200, active);
   return (
     <div className="text-center">
       <div
         className="text-2xl sm:text-3xl font-display font-bold"
         style={{ letterSpacing: "-0.03em", color: "#00f0ff" }}
       >
-        {count}{stat.suffix}
+        {count}{suffix}
       </div>
       <div style={{ color: "rgba(0,240,255,0.4)", fontSize: "10px", marginTop: "4px", letterSpacing: "0.15em", textTransform: "uppercase" }}>
-        {stat.label}
+        {label}
       </div>
     </div>
   );
 }
 
 export default function Hero() {
+  const { t } = useLang();
   const heroRef      = useRef<HTMLElement>(null);
   const [statsActive, setStatsActive] = useState(false);
 
@@ -64,6 +66,8 @@ export default function Hero() {
     if (heroRef.current) observer.observe(heroRef.current);
     return () => observer.disconnect();
   }, []);
+
+  const statLabels = [t.hero.stat1, t.hero.stat2, t.hero.stat3];
 
   return (
     <section
@@ -96,7 +100,7 @@ export default function Hero() {
             }}
           >
             <Sparkles size={11} className="animate-pulse" />
-            Web + Inteligencia Artificial para tu negocio
+            {t.hero.badge}
           </div>
 
           {/* Headline */}
@@ -104,18 +108,16 @@ export default function Hero() {
             className="reveal reveal-delay-1 font-display font-bold text-[2.8rem] sm:text-5xl md:text-[3.8rem] text-[#e5e5e5] mb-6 leading-[1.04]"
             style={{ letterSpacing: "-0.03em" }}
           >
-            El futuro de tu negocio
+            {t.hero.line1}
             <br />
-            <span className="text-gradient-gold">empieza con</span>
+            <span className="text-gradient-gold">{t.hero.line2}</span>
             <br />
-            una decisión.
+            {t.hero.line3}
           </h1>
 
           {/* Body */}
           <p className="reveal reveal-delay-2 text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "#7a7a7a" }}>
-            Diseño web premium e inteligencia artificial para negocios que quieren{" "}
-            <span style={{ color: "#e5e5e5", fontWeight: 500 }}>liderar su mercado</span>.{" "}
-            Clínicas, restaurantes y negocios locales en LATAM.
+            {t.hero.sub}
           </p>
 
           {/* CTAs */}
@@ -131,7 +133,7 @@ export default function Hero() {
               }}
             >
               <MessageCircle size={15} className="group-hover:scale-110 transition-transform" />
-              Cotizar gratis
+              {t.hero.cta1}
             </a>
             <button
               onClick={() => document.getElementById("precios")?.scrollIntoView({ behavior: "smooth" })}
@@ -149,7 +151,7 @@ export default function Hero() {
                 (e.currentTarget as HTMLButtonElement).style.color       = "rgba(0,240,255,0.7)";
               }}
             >
-              Ver servicios
+              {t.hero.cta2}
             </button>
           </div>
 
@@ -162,8 +164,8 @@ export default function Hero() {
               border:         "1px solid rgba(0,240,255,0.1)",
             }}
           >
-            {stats.map((stat) => (
-              <StatItem key={stat.label} stat={stat} active={statsActive} />
+            {statNumerics.map((s, i) => (
+              <StatItem key={i} numeric={s.numeric} suffix={s.suffix} label={statLabels[i]} active={statsActive} />
             ))}
           </div>
 
