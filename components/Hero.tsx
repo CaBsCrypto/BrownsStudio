@@ -159,9 +159,8 @@ export default function Hero() {
           <div
             className="reveal reveal-delay-4 inline-grid grid-cols-3 gap-8 p-5 rounded-2xl"
             style={{
-              background:     "rgba(0,240,255,0.03)",
-              backdropFilter: "blur(20px)",
-              border:         "1px solid rgba(0,240,255,0.1)",
+              background: "rgba(0,10,15,0.85)",
+              border:     "1px solid rgba(0,240,255,0.1)",
             }}
           >
             {statNumerics.map((s, i) => (

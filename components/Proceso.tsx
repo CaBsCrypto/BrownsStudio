@@ -59,8 +59,8 @@ export default function Proceso() {
                 key={step.num}
                 className={`reveal reveal-delay-${i + 1} group relative p-6 rounded-2xl transition-all duration-500`}
                 style={{
-                  background: "rgba(25,25,25,0.6)",
-                  backdropFilter: "blur(20px)",
+                  background: "#191919",
+                  
                   border: "1px solid rgba(72,72,72,0.12)",
                 }}
                 onMouseEnter={(e) => {

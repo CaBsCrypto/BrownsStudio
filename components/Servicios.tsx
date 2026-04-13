@@ -28,7 +28,7 @@ const pilares = [
     // Metallic silver theme
     accentColor: "#c6c6c7",
     borderStyle: "rgba(198,198,199,0.12)",
-    bgGradient: "rgba(25,25,25,0.6)",
+    bgGradient: "#191919",
     highlightBorder: "rgba(198,198,199,0.25)",
   },
   {
@@ -54,7 +54,7 @@ const pilares = [
     // Tertiary electric theme
     accentColor: "#47c4ff",
     borderStyle: "rgba(71,196,255,0.1)",
-    bgGradient: "rgba(10,15,30,0.6)",
+    bgGradient: "#0a0f1e",
     highlightBorder: "rgba(71,196,255,0.25)",
   },
 ];
@@ -116,7 +116,7 @@ export default function Servicios() {
               className={`reveal reveal-delay-${pi + 1} rounded-2xl p-6 lg:p-8`}
               style={{
                 background: pilar.bgGradient,
-                backdropFilter: "blur(20px)",
+                
                 border: `1px solid ${pilar.borderStyle}`,
               }}
             >
@@ -143,7 +143,7 @@ export default function Servicios() {
                       key={servicio.titulo}
                       className="relative p-5 rounded-xl transition-all duration-300 hover:-translate-y-0.5 group"
                       style={{
-                        background: "rgba(0,0,0,0.4)",
+                        background: "rgba(0,0,0,0.85)",
                         border: "1px solid rgba(72,72,72,0.12)",
                       }}
                       onMouseEnter={(e) => {

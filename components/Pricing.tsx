@@ -100,8 +100,8 @@ export default function Pricing() {
                 key={plan.name}
                 className="relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1"
                 style={{
-                  background: plan.popular ? "rgba(25,25,25,0.8)" : "rgba(19,19,19,0.6)",
-                  backdropFilter: "blur(20px)",
+                  background: plan.popular ? "#191919" : "#131313",
+                  
                   border: plan.popular
                     ? "1px solid rgba(198,198,199,0.2)"
                     : "1px solid rgba(72,72,72,0.12)",
@@ -183,8 +183,8 @@ export default function Pricing() {
                 key={plan.name}
                 className="relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1"
                 style={{
-                  background: "rgba(10,15,30,0.7)",
-                  backdropFilter: "blur(20px)",
+                  background: "#0a0f1e",
+                  
                   border: "1px solid rgba(71,196,255,0.1)",
                 }}
                 onMouseEnter={(e) => {

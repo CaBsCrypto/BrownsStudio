@@ -37,7 +37,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
       {/* URL pill */}
       <div
         className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full"
-        style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.08)" }}
+        style={{ background: "rgba(0,0,0,0.75)", border: "1px solid rgba(255,255,255,0.08)" }}
       >
         <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
         <span className="text-white/60 text-[10px] font-mono tracking-tight truncate max-w-[160px]">
@@ -48,7 +48,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
       {/* Arrow top-right */}
       <div
         className="absolute top-3 right-3 w-7 h-7 rounded-full flex items-center justify-center group-hover:opacity-0 transition-opacity duration-200"
-        style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.08)" }}
+        style={{ background: "rgba(0,0,0,0.65)", border: "1px solid rgba(255,255,255,0.08)" }}
       >
         <ArrowUpRight size={12} className="text-white/60" />
       </div>
@@ -57,7 +57,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
       {proyecto.comingSoon && (
         <div
           className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold"
-          style={{ background: "rgba(220,38,38,0.85)", color: "#fff", backdropFilter: "blur(8px)", border: "1px solid rgba(255,100,100,0.3)", boxShadow: "0 0 12px rgba(220,38,38,0.4)" }}
+          style={{ background: "rgba(180,30,30,0.92)", color: "#fff", border: "1px solid rgba(255,100,100,0.3)", boxShadow: "0 0 12px rgba(220,38,38,0.4)" }}
         >
           <Wrench size={10} className="animate-pulse" />
           En Desarrollo
@@ -67,7 +67,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
       {/* Hover overlay — metallic CTA */}
       <div
           className="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300"
-          style={{ background: "rgba(0,0,0,0.8)", backdropFilter: "blur(8px)" }}
+          style={{ background: "rgba(0,0,0,0.85)" }}
         >
           <div
             className="flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm text-black translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
@@ -151,12 +151,11 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
   );
 
   const cardStyle = {
-    background: "rgba(25,25,25,0.6)",
-    backdropFilter: "blur(20px)",
+    background: "#161616",
     border: "1px solid rgba(72,72,72,0.15)",
     borderRadius: "12px",
     overflow: "hidden",
-    transition: "all 0.4s ease",
+    transition: "border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease",
   };
 
   if (proyecto.comingSoon) {

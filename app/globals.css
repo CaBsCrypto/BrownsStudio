@@ -124,6 +124,10 @@ body::before {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
+  /* Kill grain animation — 200%×200% animated fixed element is expensive */
+  body::before { display: none !important; }
+  /* Kill shimmer — GPU composited but still unnecessary on mobile */
+  .text-gradient-gold { animation: none !important; }
   /* Reduce transition complexity */
   .reveal {
     transition: opacity 0.4s ease-out !important;

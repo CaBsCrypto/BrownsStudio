@@ -62,8 +62,8 @@ export default function SobreMi() {
               <div
                 className="relative rounded-3xl overflow-hidden"
                 style={{
-                  background: "rgba(25,25,25,0.6)",
-                  backdropFilter: "blur(20px)",
+                  background: "#191919",
+                  
                   border: "1px solid rgba(72,72,72,0.15)",
                   boxShadow: "0 32px 64px rgba(0,0,0,0.6)",
                 }}
@@ -217,7 +217,7 @@ export default function SobreMi() {
                       key={name}
                       className="flex items-start gap-3 p-3 rounded-xl transition-all duration-300 group cursor-default"
                       style={{
-                        background: "rgba(25,25,25,0.6)",
+                        background: "#191919",
                         border: "1px solid rgba(72,72,72,0.15)",
                       }}
                       onMouseEnter={(e) => {
@@ -226,7 +226,7 @@ export default function SobreMi() {
                       }}
                       onMouseLeave={(e) => {
                         (e.currentTarget as HTMLElement).style.border = "1px solid rgba(72,72,72,0.15)";
-                        (e.currentTarget as HTMLElement).style.background = "rgba(25,25,25,0.6)";
+                        (e.currentTarget as HTMLElement).style.background = "#191919";
                       }}
                     >
                       <div
