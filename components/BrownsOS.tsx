@@ -245,6 +245,172 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
   );
 }
 
+// ── Star Field ────────────────────────────────────────────────────────────────
+function StarField({ visibleRef, isMobile }: {
+  visibleRef: React.MutableRefObject<boolean>;
+  isMobile: boolean;
+}) {
+  const groupRef = useRef<THREE.Group>(null!);
+  const COUNT = isMobile ? 150 : 420;
+
+  const { geo, mat } = useMemo(() => {
+    const pos = new Float32Array(COUNT * 3);
+    const col = new Float32Array(COUNT * 3);
+    for (let i = 0; i < COUNT; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi   = Math.acos(2 * Math.random() - 1);
+      const r     = 10 + Math.random() * 24;
+      pos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+      pos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+      pos[i*3+2] = r * Math.cos(phi);
+      if (Math.random() > 0.55) {
+        col[i*3] = 0; col[i*3+1] = 0.94; col[i*3+2] = 1.0;
+      } else {
+        const v = 0.55 + Math.random() * 0.45;
+        col[i*3] = v; col[i*3+1] = v; col[i*3+2] = v;
+      }
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    g.setAttribute("color",    new THREE.BufferAttribute(col, 3));
+    const m = new THREE.PointsMaterial({
+      size: isMobile ? 0.06 : 0.09, vertexColors: true,
+      transparent: true, opacity: isMobile ? 0.45 : 0.55,
+      sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false,
+    });
+    return { geo: g, mat: m };
+  }, [COUNT, isMobile]);
+
+  useFrame(() => {
+    if (!visibleRef.current || !groupRef.current) return;
+    groupRef.current.rotation.y += 0.00018;
+    groupRef.current.rotation.x += 0.00007;
+  });
+
+  return (
+    <group ref={groupRef}>
+      <points geometry={geo} material={mat} />
+    </group>
+  );
+}
+
+// ── Cursor Ghost ───────────────────────────────────────────────────────────────
+function CursorGhost({ visibleRef }: { visibleRef: React.MutableRefObject<boolean> }) {
+  const meshRef  = useRef<THREE.Mesh>(null!);
+  const lightRef = useRef<THREE.PointLight>(null!);
+  const tgt      = useRef(new THREE.Vector3(0, 0, 2));
+  const mouseNDC = useRef({ x: 0, y: 0 });
+  const { camera } = useThree();
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      mouseNDC.current.x =  (e.clientX / window.innerWidth)  * 2 - 1;
+      mouseNDC.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
+
+  useFrame(({ clock }) => {
+    if (!visibleRef.current) return;
+    // Unproject mouse to world at Z=2
+    const v = new THREE.Vector3(mouseNDC.current.x, mouseNDC.current.y, 0.5);
+    v.unproject(camera);
+    const dir = v.sub(camera.position).normalize();
+    const dist = (2 - camera.position.z) / dir.z;
+    tgt.current.copy(camera.position).addScaledVector(dir, dist);
+    meshRef.current.position.lerp(tgt.current, 0.07);
+    lightRef.current.position.copy(meshRef.current.position);
+    const pulse = 0.8 + Math.sin(clock.elapsedTime * 4) * 0.2;
+    meshRef.current.scale.setScalar(pulse);
+    lightRef.current.intensity = 0.7 * pulse;
+  });
+
+  return (
+    <group>
+      <pointLight ref={lightRef} color={0x00f0ff} distance={12} decay={2} />
+      <mesh ref={meshRef}>
+        <sphereGeometry args={[0.18, 8, 8]} />
+        <meshBasicMaterial color={0x00f0ff} transparent opacity={0.55} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </mesh>
+    </group>
+  );
+}
+
+// ── Cursor Trail ──────────────────────────────────────────────────────────────
+const TRAIL_COUNT = 80;
+function CursorTrail({ visibleRef }: { visibleRef: React.MutableRefObject<boolean> }) {
+  const pointsRef = useRef<THREE.Points>(null!);
+  const geoRef    = useRef<THREE.BufferGeometry>(null!);
+  const positions = useRef(new Float32Array(TRAIL_COUNT * 3));
+  const opacities = useRef(new Float32Array(TRAIL_COUNT)); // life 0→1
+  const head      = useRef(0);
+  const mouseNDC  = useRef({ x: 0, y: 0 });
+  const { camera } = useThree();
+
+  const mat = useMemo(() => new THREE.PointsMaterial({
+    size: 0.22, color: 0x00f0ff, transparent: true, opacity: 1,
+    sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false,
+    vertexColors: false,
+  }), []);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      mouseNDC.current.x =  (e.clientX / window.innerWidth)  * 2 - 1;
+      mouseNDC.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      // Unproject to world Z=2
+      const v = new THREE.Vector3(mouseNDC.current.x, mouseNDC.current.y, 0.5);
+      v.unproject(camera);
+      const dir = v.sub(camera.position).normalize();
+      const dist = (2 - camera.position.z) / dir.z;
+      const world = new THREE.Vector3().copy(camera.position).addScaledVector(dir, dist);
+      const i = head.current % TRAIL_COUNT;
+      positions.current[i*3]   = world.x + (Math.random() - 0.5) * 0.3;
+      positions.current[i*3+1] = world.y + (Math.random() - 0.5) * 0.3;
+      positions.current[i*3+2] = world.z + (Math.random() - 0.5) * 0.3;
+      opacities.current[i] = 1.0;
+      head.current++;
+      if (geoRef.current) geoRef.current.attributes.position.needsUpdate = true;
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [camera]);
+
+  useFrame((_, dt) => {
+    if (!visibleRef.current) return;
+    let anyAlive = false;
+    for (let i = 0; i < TRAIL_COUNT; i++) {
+      if (opacities.current[i] > 0) {
+        opacities.current[i] -= dt * 1.4;
+        if (opacities.current[i] < 0) opacities.current[i] = 0;
+        // Drift upward
+        positions.current[i*3+1] += dt * 0.08;
+        anyAlive = true;
+      }
+    }
+    if (anyAlive && geoRef.current) {
+      geoRef.current.attributes.position.needsUpdate = true;
+      // Fade by scaling size
+      const avgLife = opacities.current.reduce((a, b) => a + b, 0) / TRAIL_COUNT;
+      mat.opacity = Math.min(avgLife * 2, 0.65);
+    }
+  });
+
+  useEffect(() => {
+    if (!geoRef.current) return;
+    geoRef.current.setAttribute(
+      "position",
+      new THREE.BufferAttribute(positions.current, 3)
+    );
+  }, []);
+
+  return (
+    <points ref={pointsRef} material={mat}>
+      <bufferGeometry ref={geoRef} />
+    </points>
+  );
+}
+
 // ── Scene ─────────────────────────────────────────────────────────────────────
 function Scene({ scrollRef, glitchRef, isMobile, visibleRef }: {
   scrollRef: React.MutableRefObject<number>;
@@ -264,8 +430,11 @@ function Scene({ scrollRef, glitchRef, isMobile, visibleRef }: {
   return (
     <>
       {!isMobile && <ambientLight intensity={0.06} color={0x001a2e} />}
+      <StarField visibleRef={visibleRef} isMobile={isMobile} />
       <DataOcean   scrollRef={scrollRef} isMobile={isMobile} visibleRef={visibleRef} />
       <QuantumCore scrollRef={scrollRef} glitchRef={glitchRef} isMobile={isMobile} visibleRef={visibleRef} />
+      {!isMobile && <CursorGhost visibleRef={visibleRef} />}
+      {!isMobile && <CursorTrail visibleRef={visibleRef} />}
     </>
   );
 }
