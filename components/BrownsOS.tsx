@@ -120,8 +120,8 @@ function DataOcean({ scrollRef, isMobile, visibleRef }: {
   );
 }
 
-// ── Quantum Core ──────────────────────────────────────────────────────────────
-// EdgesGeometry + Line rings — LineBasicMaterial only, zero PBR shader overhead
+// ── Quantum Core — Fibonacci Points Sphere ────────────────────────────────────
+// Single Points object, group rotation only — zero vertex updates, one draw call
 function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
   scrollRef: React.MutableRefObject<number>;
   glitchRef: React.MutableRefObject<boolean>;
@@ -129,53 +129,65 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
   visibleRef: React.MutableRefObject<boolean>;
 }) {
   const groupRef  = useRef<THREE.Group>(null!);
-  const coreRef   = useRef<THREE.LineSegments>(null!);
   const r1Ref     = useRef<THREE.LineSegments>(null!);
   const r2Ref     = useRef<THREE.LineSegments>(null!);
-  const r3Ref     = useRef<THREE.LineSegments>(null!);
   const tgt       = useRef(new THREE.Vector3());
   const frameSkip = useRef(0);
 
-  const RING_SEGS = isMobile ? 32 : 64;
+  const COUNT     = isMobile ? 160 : 320;
+  const RING_SEGS = isMobile ? 40  : 72;
 
-  const coreMat = useMemo(() => new THREE.LineBasicMaterial({
-    color: 0x00f0ff, transparent: true, opacity: isMobile ? 0.95 : 0.80,
-    blending: THREE.AdditiveBlending,
-  }), [isMobile]);
+  // Fibonacci sphere distribution — evenly spaced points on a sphere surface
+  const { sphereGeo, sphereMat } = useMemo(() => {
+    const positions = new Float32Array(COUNT * 3);
+    const golden    = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < COUNT; i++) {
+      const y     = 1 - (i / (COUNT - 1)) * 2;
+      const r     = Math.sqrt(Math.max(0, 1 - y * y));
+      const theta = golden * i;
+      positions[i*3]   = Math.cos(theta) * r;
+      positions[i*3+1] = y;
+      positions[i*3+2] = Math.sin(theta) * r;
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    const mat = new THREE.PointsMaterial({
+      size: isMobile ? 0.065 : 0.052,
+      color: 0x00f0ff,
+      transparent: true,
+      opacity: 0.85,
+      sizeAttenuation: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    return { sphereGeo: geo, sphereMat: mat };
+  }, [COUNT, isMobile]);
 
+  // Orbital rings as LineSegments
   const ringMat = useMemo(() => new THREE.LineBasicMaterial({
-    color: 0x00f0ff, transparent: true, opacity: isMobile ? 0.35 : 0.22,
+    color: 0x00f0ff, transparent: true,
+    opacity: isMobile ? 0.30 : 0.18,
     blending: THREE.AdditiveBlending,
   }), [isMobile]);
 
-  // Icosahedron wireframe — EdgesGeometry = just the edges, minimal triangles
-  const coreGeo = useMemo(() => {
-    const base = new THREE.IcosahedronGeometry(1, 1); // detail=1 on all devices
-    return new THREE.EdgesGeometry(base);
-  }, []);
-
-  // Rings as LineSegments (pairs of verts) — avoids <line> JSX/SVG conflict
-  const makeRingGeo = (radius: number, segs: number) => {
+  const makeRingGeo = (r: number, segs: number) => {
     const pts: number[] = [];
     for (let i = 0; i < segs; i++) {
       const a1 = (i / segs) * Math.PI * 2;
       const a2 = ((i + 1) / segs) * Math.PI * 2;
-      pts.push(Math.cos(a1) * radius, Math.sin(a1) * radius, 0,
-               Math.cos(a2) * radius, Math.sin(a2) * radius, 0);
+      pts.push(Math.cos(a1)*r, Math.sin(a1)*r, 0, Math.cos(a2)*r, Math.sin(a2)*r, 0);
     }
     const geo = new THREE.BufferGeometry();
     geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
     return geo;
   };
 
-  const ring1Geo = useMemo(() => makeRingGeo(2.5, RING_SEGS), [RING_SEGS]);
-  const ring2Geo = useMemo(() => makeRingGeo(3.2, RING_SEGS), [RING_SEGS]);
-  const ring3Geo = useMemo(() => makeRingGeo(4.0, RING_SEGS), [RING_SEGS]);
+  const ring1Geo = useMemo(() => makeRingGeo(1.55, RING_SEGS), [RING_SEGS]);
+  const ring2Geo = useMemo(() => makeRingGeo(2.10, RING_SEGS), [RING_SEGS]);
 
   useFrame(({ clock }, dt) => {
     if (!groupRef.current || !visibleRef.current) return;
 
-    // ~12fps cap on mobile
     if (isMobile) {
       frameSkip.current = (frameSkip.current + 1) % 5;
       if (frameSkip.current !== 0) return;
@@ -185,71 +197,51 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
     const t = clock.elapsedTime;
     const s = scrollRef.current;
 
-    // ── Scroll choreography — mobile: subtle center drift, desktop: dramatic sweep
+    // ── Scroll choreography ───────────────────────────────────────────────
     if (isMobile) {
-      if (s < 0.05) {
-        tgt.current.set(0, 0, 0);
-      } else if (s < 0.30) {
-        const p = (s - 0.05) / 0.25;
-        tgt.current.set(p * 1.5, -p * 0.5, 0);
-      } else if (s < 0.60) {
-        const p = (s - 0.30) / 0.30;
-        tgt.current.set(1.5 - p * 3, -0.5 - p * 0.5, -p * 0.5);
-      } else if (s < 0.85) {
-        const p = (s - 0.60) / 0.25;
-        tgt.current.set(-1.5 + p * 1.5, -1.0 + p * 0.5, -0.5 + p * 1.0);
-      } else {
-        tgt.current.set(0, -0.5, 0.5);
-      }
+      if      (s < 0.05) tgt.current.set(0, 0, 0);
+      else if (s < 0.30) { const p=(s-0.05)/0.25; tgt.current.set(p*1.5, -p*0.5, 0); }
+      else if (s < 0.60) { const p=(s-0.30)/0.30; tgt.current.set(1.5-p*3, -0.5-p*0.5, -p*0.5); }
+      else if (s < 0.85) { const p=(s-0.60)/0.25; tgt.current.set(-1.5+p*1.5, -1.0+p*0.5, -0.5+p); }
+      else               tgt.current.set(0, -0.5, 0.5);
     } else {
-      if (s < 0.05) {
-        tgt.current.set(0, 0, 0);
-      } else if (s < 0.25) {
-        const p = (s - 0.05) / 0.20;
-        tgt.current.set(p * 4, -p * 0.8, 0);
-      } else if (s < 0.55) {
-        const p = (s - 0.25) / 0.30;
-        tgt.current.set(4 + p * 2, -0.8 - p * 1.2, -p * 1.5);
-      } else if (s < 0.80) {
-        const p = (s - 0.55) / 0.25;
-        tgt.current.set(6 - p * 14, -2.0 + p * 1.0, -1.5 + p * 2.5);
-      } else {
-        const p = (s - 0.80) / 0.20;
-        tgt.current.set(-8 + p * 8, -1.0 + p * 1.5, 1.0 + p * 5);
-      }
+      if      (s < 0.05) tgt.current.set(0, 0, 0);
+      else if (s < 0.25) { const p=(s-0.05)/0.20; tgt.current.set(p*4, -p*0.8, 0); }
+      else if (s < 0.55) { const p=(s-0.25)/0.30; tgt.current.set(4+p*2, -0.8-p*1.2, -p*1.5); }
+      else if (s < 0.80) { const p=(s-0.55)/0.25; tgt.current.set(6-p*14, -2.0+p, -1.5+p*2.5); }
+      else               { const p=(s-0.80)/0.20; tgt.current.set(-8+p*8, -1.0+p*1.5, 1.0+p*5); }
     }
     groupRef.current.position.lerp(tgt.current, 0.05);
 
-    const spinBoost = glitchRef.current ? 4 : 1;
-    if (coreRef.current) {
-      coreRef.current.rotation.x += dt * 0.32 * spinBoost;
-      coreRef.current.rotation.y += dt * 0.52 * spinBoost;
-    }
-    if (r1Ref.current) r1Ref.current.rotation.x += dt * 0.88;
-    if (r2Ref.current) r2Ref.current.rotation.y += dt * 0.65;
-    if (r3Ref.current) r3Ref.current.rotation.z += dt * 0.45;
+    // ── Whole-group rotation — single matrix op, no vertex updates ────────
+    const spinBoost = glitchRef.current ? 5 : 1;
+    groupRef.current.rotation.y += dt * 0.28 * spinBoost;
+    groupRef.current.rotation.x += dt * 0.11;
 
-    if (coreRef.current) {
-      const pulse = 1 + Math.sin(t * 2.6) * 0.055;
-      coreRef.current.scale.setScalar(pulse);
-    }
+    // Rings rotate independently for orbital feel
+    if (r1Ref.current) r1Ref.current.rotation.z += dt * 0.55;
+    if (r2Ref.current) r2Ref.current.rotation.x += dt * 0.38;
 
-    // Color glitch — single lerp, no PBR emissive needed
+    // Pulse size + opacity
+    const pulse = 1 + Math.sin(t * 2.4) * 0.06;
+    groupRef.current.scale.setScalar(pulse);
+    sphereMat.opacity = 0.72 + Math.sin(t * 2.4) * 0.13;
+
+    // Color glitch
     if (glitchRef.current) {
-      coreMat.color.copy(C_RED);
+      sphereMat.color.copy(C_RED);
       ringMat.color.copy(C_RED);
     } else {
-      coreMat.color.lerp(C_CYAN, 0.09);
-      ringMat.color.lerp(C_CYAN, 0.09);
+      sphereMat.color.lerp(C_CYAN, 0.08);
+      ringMat.color.lerp(C_CYAN, 0.08);
     }
   });
 
   return (
     <group ref={groupRef}>
-      <lineSegments ref={coreRef} geometry={coreGeo} material={coreMat} />
-      <lineSegments ref={r1Ref} geometry={ring1Geo} material={ringMat} rotation={[Math.PI / 3, 0.25, 0]} />
-      <lineSegments ref={r2Ref} geometry={ring2Geo} material={ringMat} rotation={[0.1, Math.PI / 4, Math.PI / 5]} />
-      {!isMobile && <lineSegments ref={r3Ref} geometry={ring3Geo} material={ringMat} rotation={[Math.PI / 6, Math.PI / 3, 0.55]} />}
+      <points geometry={sphereGeo} material={sphereMat} />
+      <lineSegments ref={r1Ref} geometry={ring1Geo} material={ringMat} rotation={[Math.PI/3, 0.3, 0]} />
+      <lineSegments ref={r2Ref} geometry={ring2Geo} material={ringMat} rotation={[0.2, Math.PI/4, Math.PI/5]} />
     </group>
   );
 }
