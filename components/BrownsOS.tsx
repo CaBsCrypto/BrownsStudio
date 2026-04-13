@@ -22,7 +22,7 @@ function DataOcean({ scrollRef, isMobile, visibleRef }: {
   const origXY    = useRef<Float32Array>(null!);
   const frameSkip = useRef(0);
 
-  const SEGS = isMobile ? 25 : 90;  // mobile: 676 verts vs desktop: 8281
+  const SEGS = isMobile ? 15 : 90;  // mobile: 256 verts vs desktop: 8281
 
   const oceanGeo = useMemo(() => {
     const geo = new THREE.PlaneGeometry(80, 80, SEGS, SEGS);
@@ -75,9 +75,9 @@ function DataOcean({ scrollRef, isMobile, visibleRef }: {
     // Pause when canvas is not visible (scrolled away)
     if (!visibleRef.current) return;
 
-    // ~15fps cap on mobile
+    // ~12fps cap on mobile
     if (isMobile) {
-      frameSkip.current = (frameSkip.current + 1) % 4;
+      frameSkip.current = (frameSkip.current + 1) % 5;
       if (frameSkip.current !== 0) return;
     }
 
@@ -121,6 +121,7 @@ function DataOcean({ scrollRef, isMobile, visibleRef }: {
 }
 
 // ── Quantum Core ──────────────────────────────────────────────────────────────
+// EdgesGeometry + Line rings — LineBasicMaterial only, zero PBR shader overhead
 function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
   scrollRef: React.MutableRefObject<number>;
   glitchRef: React.MutableRefObject<boolean>;
@@ -128,47 +129,57 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
   visibleRef: React.MutableRefObject<boolean>;
 }) {
   const groupRef  = useRef<THREE.Group>(null!);
-  const coreRef   = useRef<THREE.Mesh>(null!);
-  const shellRef  = useRef<THREE.Mesh>(null!);
-  const r1Ref     = useRef<THREE.Mesh>(null!);
-  const r2Ref     = useRef<THREE.Mesh>(null!);
-  const r3Ref     = useRef<THREE.Mesh>(null!);
-  const lightRef  = useRef<THREE.PointLight>(null!);
+  const coreRef   = useRef<THREE.LineSegments>(null!);
+  const r1Ref     = useRef<THREE.LineSegments>(null!);
+  const r2Ref     = useRef<THREE.LineSegments>(null!);
+  const r3Ref     = useRef<THREE.LineSegments>(null!);
   const tgt       = useRef(new THREE.Vector3());
   const frameSkip = useRef(0);
 
-  // Mobile: MeshBasicMaterial — no lighting shader = much cheaper GPU
-  const coreMat = useMemo(() => isMobile
-    ? new THREE.MeshBasicMaterial({
-        color: 0x00f0ff, transparent: true, opacity: 0.92,
-        wireframe: false,
-      })
-    : new THREE.MeshStandardMaterial({
-        color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 0.55,
-        metalness: 0.85, roughness: 0.08, transparent: true, opacity: 0.92,
-      }),
-  [isMobile]);
+  const RING_SEGS = isMobile ? 32 : 64;
 
-  const shellMat = useMemo(() => new THREE.MeshBasicMaterial({
-    color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.22,
-    blending: THREE.AdditiveBlending, depthWrite: false,
+  const coreMat = useMemo(() => new THREE.LineBasicMaterial({
+    color: 0x00f0ff, transparent: true, opacity: 0.80,
+    blending: THREE.AdditiveBlending,
   }), []);
 
-  const ringMat = useMemo(() => new THREE.MeshBasicMaterial({
-    color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.16,
-    blending: THREE.AdditiveBlending, depthWrite: false,
+  const ringMat = useMemo(() => new THREE.LineBasicMaterial({
+    color: 0x00f0ff, transparent: true, opacity: 0.22,
+    blending: THREE.AdditiveBlending,
   }), []);
+
+  // Icosahedron wireframe — EdgesGeometry = just the edges, minimal triangles
+  const coreGeo = useMemo(() => {
+    const base = new THREE.IcosahedronGeometry(1, isMobile ? 0 : 1);
+    return new THREE.EdgesGeometry(base);
+  }, [isMobile]);
+
+  // Rings as LineSegments (pairs of verts) — avoids <line> JSX/SVG conflict
+  const makeRingGeo = (radius: number, segs: number) => {
+    const pts: number[] = [];
+    for (let i = 0; i < segs; i++) {
+      const a1 = (i / segs) * Math.PI * 2;
+      const a2 = ((i + 1) / segs) * Math.PI * 2;
+      pts.push(Math.cos(a1) * radius, Math.sin(a1) * radius, 0,
+               Math.cos(a2) * radius, Math.sin(a2) * radius, 0);
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
+    return geo;
+  };
+
+  const ring1Geo = useMemo(() => makeRingGeo(2.5, RING_SEGS), [RING_SEGS]);
+  const ring2Geo = useMemo(() => makeRingGeo(3.2, RING_SEGS), [RING_SEGS]);
+  const ring3Geo = useMemo(() => makeRingGeo(4.0, RING_SEGS), [RING_SEGS]);
 
   useFrame(({ clock }, dt) => {
-    if (!groupRef.current) return;
+    if (!groupRef.current || !visibleRef.current) return;
 
-    // Pause when not visible
-    if (!visibleRef.current) return;
-
-    // ~15fps cap on mobile
+    // ~12fps cap on mobile
     if (isMobile) {
-      frameSkip.current = (frameSkip.current + 1) % 4;
+      frameSkip.current = (frameSkip.current + 1) % 5;
       if (frameSkip.current !== 0) return;
+      dt *= 5;
     }
 
     const t = clock.elapsedTime;
@@ -197,10 +208,6 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
       coreRef.current.rotation.x += dt * 0.32 * spinBoost;
       coreRef.current.rotation.y += dt * 0.52 * spinBoost;
     }
-    if (shellRef.current) {
-      shellRef.current.rotation.x -= dt * 0.18;
-      shellRef.current.rotation.y += dt * 0.78;
-    }
     if (r1Ref.current) r1Ref.current.rotation.x += dt * 0.88;
     if (r2Ref.current) r2Ref.current.rotation.y += dt * 0.65;
     if (r3Ref.current) r3Ref.current.rotation.z += dt * 0.45;
@@ -210,37 +217,22 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
       coreRef.current.scale.setScalar(pulse);
     }
 
-    // Color / light animation — desktop only (mobile has no pointLight)
-    if (!isMobile && lightRef.current) {
-      if (glitchRef.current) {
-        (coreMat as THREE.MeshStandardMaterial).emissive?.copy(C_RED);
-        coreMat.color.copy(C_RED);
-        shellMat.color.copy(C_RED);
-        lightRef.current.color.copy(C_RED);
-        lightRef.current.intensity = 5;
-      } else {
-        (coreMat as THREE.MeshStandardMaterial).emissive?.lerp(C_CYAN, 0.09);
-        coreMat.color.lerp(C_CYAN, 0.09);
-        shellMat.color.lerp(C_CYAN, 0.09);
-        lightRef.current.color.lerp(C_CYAN, 0.09);
-        lightRef.current.intensity = THREE.MathUtils.lerp(
-          lightRef.current.intensity,
-          1.6 + Math.sin(t * 3.1) * 0.4,
-          0.08
-        );
-      }
+    // Color glitch — single lerp, no PBR emissive needed
+    if (glitchRef.current) {
+      coreMat.color.copy(C_RED);
+      ringMat.color.copy(C_RED);
+    } else {
+      coreMat.color.lerp(C_CYAN, 0.09);
+      ringMat.color.lerp(C_CYAN, 0.09);
     }
   });
 
   return (
     <group ref={groupRef}>
-      {/* PointLight: desktop only — not needed with BasicMaterial */}
-      {!isMobile && <pointLight ref={lightRef} color={0x00f0ff} intensity={1.6} distance={28} decay={1.6} />}
-      <mesh ref={coreRef}  material={coreMat}>  <icosahedronGeometry args={[1, 1]} />    </mesh>
-      <mesh ref={shellRef} material={shellMat}> <icosahedronGeometry args={[1.55, 2]} /> </mesh>
-      <mesh ref={r1Ref} rotation={[Math.PI / 3, 0.25, 0]}          material={ringMat}> <torusGeometry args={[2.5, 0.014, 3, isMobile ? 40 : 80]} /> </mesh>
-      <mesh ref={r2Ref} rotation={[0.1, Math.PI / 4, Math.PI / 5]}  material={ringMat}> <torusGeometry args={[3.1, 0.011, 3, isMobile ? 40 : 80]} /> </mesh>
-      {!isMobile && <mesh ref={r3Ref} rotation={[Math.PI / 6, Math.PI / 3, 0.55]} material={ringMat}> <torusGeometry args={[3.7, 0.009, 3, 80]} /> </mesh>}
+      <lineSegments ref={coreRef} geometry={coreGeo} material={coreMat} />
+      <lineSegments ref={r1Ref} geometry={ring1Geo} material={ringMat} rotation={[Math.PI / 3, 0.25, 0]} />
+      <lineSegments ref={r2Ref} geometry={ring2Geo} material={ringMat} rotation={[0.1, Math.PI / 4, Math.PI / 5]} />
+      {!isMobile && <lineSegments ref={r3Ref} geometry={ring3Geo} material={ringMat} rotation={[Math.PI / 6, Math.PI / 3, 0.55]} />}
     </group>
   );
 }
@@ -484,11 +476,12 @@ function AuroraBlobs({ scrollRef, isMobile }: {
   }, [isMobile]);
 
   if (isMobile) {
+    // No filter:blur on mobile — causes full repaint on every scroll frame
     return (
       <>
-        <div aria-hidden style={{ position:"fixed", pointerEvents:"none", borderRadius:"50%", filter:"blur(40px)", zIndex:0, width:"150vw", height:"80vh", top:"-25vh", left:"-25vw", background:"radial-gradient(ellipse, rgba(0,15,80,0.65) 0%, transparent 70%)" }} />
-        <div aria-hidden style={{ position:"fixed", pointerEvents:"none", borderRadius:"50%", filter:"blur(35px)", zIndex:0, width:"100vw", height:"60vh", top:"-5vh", left:"0vw", background:"radial-gradient(ellipse, rgba(0,240,255,0.14) 0%, transparent 65%)", animation:"aurora-pulse 7s ease-in-out infinite" }} />
-        <div aria-hidden style={{ position:"fixed", pointerEvents:"none", borderRadius:"50%", filter:"blur(40px)", zIndex:0, width:"120vw", height:"55vh", bottom:"-10vh", left:"-10vw", background:"radial-gradient(ellipse, rgba(45,0,120,0.22) 0%, transparent 70%)", animation:"aurora-pulse 11s ease-in-out infinite reverse" }} />
+        <div aria-hidden style={{ position:"fixed", pointerEvents:"none", zIndex:0, width:"150vw", height:"80vh", top:"-25vh", left:"-25vw", background:"radial-gradient(ellipse, rgba(0,15,80,0.72) 0%, transparent 70%)" }} />
+        <div aria-hidden style={{ position:"fixed", pointerEvents:"none", zIndex:0, width:"100vw", height:"60vh", top:"-5vh", left:"0vw", background:"radial-gradient(ellipse, rgba(0,240,255,0.10) 0%, transparent 65%)" }} />
+        <div aria-hidden style={{ position:"fixed", pointerEvents:"none", zIndex:0, width:"120vw", height:"55vh", bottom:"-10vh", left:"-10vw", background:"radial-gradient(ellipse, rgba(45,0,120,0.22) 0%, transparent 70%)" }} />
       </>
     );
   }
