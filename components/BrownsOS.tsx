@@ -139,20 +139,20 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
   const RING_SEGS = isMobile ? 32 : 64;
 
   const coreMat = useMemo(() => new THREE.LineBasicMaterial({
-    color: 0x00f0ff, transparent: true, opacity: 0.80,
+    color: 0x00f0ff, transparent: true, opacity: isMobile ? 0.95 : 0.80,
     blending: THREE.AdditiveBlending,
-  }), []);
+  }), [isMobile]);
 
   const ringMat = useMemo(() => new THREE.LineBasicMaterial({
-    color: 0x00f0ff, transparent: true, opacity: 0.22,
+    color: 0x00f0ff, transparent: true, opacity: isMobile ? 0.35 : 0.22,
     blending: THREE.AdditiveBlending,
-  }), []);
+  }), [isMobile]);
 
   // Icosahedron wireframe — EdgesGeometry = just the edges, minimal triangles
   const coreGeo = useMemo(() => {
-    const base = new THREE.IcosahedronGeometry(1, isMobile ? 0 : 1);
+    const base = new THREE.IcosahedronGeometry(1, 1); // detail=1 on all devices
     return new THREE.EdgesGeometry(base);
-  }, [isMobile]);
+  }, []);
 
   // Rings as LineSegments (pairs of verts) — avoids <line> JSX/SVG conflict
   const makeRingGeo = (radius: number, segs: number) => {
@@ -185,21 +185,38 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
     const t = clock.elapsedTime;
     const s = scrollRef.current;
 
-    // ── Scroll choreography — 4 chapters ─────────────────────────────────
-    if (s < 0.05) {
-      tgt.current.set(0, 0, 0);
-    } else if (s < 0.25) {
-      const p = (s - 0.05) / 0.20;
-      tgt.current.set(p * 4, -p * 0.8, 0);
-    } else if (s < 0.55) {
-      const p = (s - 0.25) / 0.30;
-      tgt.current.set(4 + p * 2, -0.8 - p * 1.2, -p * 1.5);
-    } else if (s < 0.80) {
-      const p = (s - 0.55) / 0.25;
-      tgt.current.set(6 - p * 14, -2.0 + p * 1.0, -1.5 + p * 2.5);
+    // ── Scroll choreography — mobile: subtle center drift, desktop: dramatic sweep
+    if (isMobile) {
+      if (s < 0.05) {
+        tgt.current.set(0, 0, 0);
+      } else if (s < 0.30) {
+        const p = (s - 0.05) / 0.25;
+        tgt.current.set(p * 1.5, -p * 0.5, 0);
+      } else if (s < 0.60) {
+        const p = (s - 0.30) / 0.30;
+        tgt.current.set(1.5 - p * 3, -0.5 - p * 0.5, -p * 0.5);
+      } else if (s < 0.85) {
+        const p = (s - 0.60) / 0.25;
+        tgt.current.set(-1.5 + p * 1.5, -1.0 + p * 0.5, -0.5 + p * 1.0);
+      } else {
+        tgt.current.set(0, -0.5, 0.5);
+      }
     } else {
-      const p = (s - 0.80) / 0.20;
-      tgt.current.set(-8 + p * 8, -1.0 + p * 1.5, 1.0 + p * 5);
+      if (s < 0.05) {
+        tgt.current.set(0, 0, 0);
+      } else if (s < 0.25) {
+        const p = (s - 0.05) / 0.20;
+        tgt.current.set(p * 4, -p * 0.8, 0);
+      } else if (s < 0.55) {
+        const p = (s - 0.25) / 0.30;
+        tgt.current.set(4 + p * 2, -0.8 - p * 1.2, -p * 1.5);
+      } else if (s < 0.80) {
+        const p = (s - 0.55) / 0.25;
+        tgt.current.set(6 - p * 14, -2.0 + p * 1.0, -1.5 + p * 2.5);
+      } else {
+        const p = (s - 0.80) / 0.20;
+        tgt.current.set(-8 + p * 8, -1.0 + p * 1.5, 1.0 + p * 5);
+      }
     }
     groupRef.current.position.lerp(tgt.current, 0.05);
 
@@ -476,13 +493,19 @@ function AuroraBlobs({ scrollRef, isMobile }: {
   }, [isMobile]);
 
   if (isMobile) {
-    // No filter:blur on mobile — causes full repaint on every scroll frame
+    // Single fixed div with stacked radial-gradients — GPU composited, no repaint on scroll
     return (
-      <>
-        <div aria-hidden style={{ position:"fixed", pointerEvents:"none", zIndex:0, width:"150vw", height:"80vh", top:"-25vh", left:"-25vw", background:"radial-gradient(ellipse, rgba(0,15,80,0.72) 0%, transparent 70%)" }} />
-        <div aria-hidden style={{ position:"fixed", pointerEvents:"none", zIndex:0, width:"100vw", height:"60vh", top:"-5vh", left:"0vw", background:"radial-gradient(ellipse, rgba(0,240,255,0.10) 0%, transparent 65%)" }} />
-        <div aria-hidden style={{ position:"fixed", pointerEvents:"none", zIndex:0, width:"120vw", height:"55vh", bottom:"-10vh", left:"-10vw", background:"radial-gradient(ellipse, rgba(45,0,120,0.22) 0%, transparent 70%)" }} />
-      </>
+      <div aria-hidden style={{
+        position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
+        transform: "translateZ(0)",
+        background: `
+          radial-gradient(ellipse 120% 55% at 50% -5%,  rgba(0,10,70,0.90)   0%, transparent 65%),
+          radial-gradient(ellipse 80%  45% at 15% 20%,  rgba(0,240,255,0.07) 0%, transparent 60%),
+          radial-gradient(ellipse 70%  40% at 85% 15%,  rgba(40,0,110,0.12)  0%, transparent 60%),
+          radial-gradient(ellipse 100% 40% at 50% 105%, rgba(0,60,100,0.22)  0%, transparent 65%),
+          radial-gradient(ellipse 60%  30% at 50% 50%,  rgba(0,240,255,0.03) 0%, transparent 70%)
+        `,
+      }} />
     );
   }
 
