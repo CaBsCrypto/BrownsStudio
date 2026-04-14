@@ -2,34 +2,15 @@
 
 import { useRef, useEffect } from "react";
 
-// ── Pure CSS Background — zero Three.js, zero GPU shader cost ─────────────────
 export default function BrownsOS() {
-  const scrollRef  = useRef(0);
-  const blob1Ref   = useRef<HTMLDivElement>(null);
-  const blob2Ref   = useRef<HTMLDivElement>(null);
-  const blob3Ref   = useRef<HTMLDivElement>(null);
-  const mTgt       = useRef({ x: 0.5, y: 0.5 });
-  const b1Pos      = useRef({ x: 0, y: 0 });
-  const b2Pos      = useRef({ x: 0, y: 0 });
-  const isMobile   = typeof window !== "undefined" && window.innerWidth < 768;
+  const blob1Ref = useRef<HTMLDivElement>(null);
+  const blob2Ref = useRef<HTMLDivElement>(null);
+  const orbRef   = useRef<HTMLDivElement>(null);
+  const mTgt     = useRef({ x: 0.5, y: 0.5 });
+  const b1Pos    = useRef({ x: 0, y: 0 });
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
-  // Scroll tracking
-  useEffect(() => {
-    const onScroll = () => {
-      const el  = document.documentElement;
-      const max = el.scrollHeight - el.clientHeight;
-      scrollRef.current = max > 0 ? el.scrollTop / max : 0;
-      if (blob3Ref.current) {
-        const s = scrollRef.current;
-        blob3Ref.current.style.transform = `translateY(${-s * 25}vh) translateZ(0)`;
-        blob3Ref.current.style.opacity   = String(0.5 + s * 0.5);
-      }
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Mouse-reactive blobs — desktop only, rAF loop
+  // Mouse-reactive blobs + orb parallax — desktop only
   useEffect(() => {
     if (isMobile) return;
     const onMove = (e: MouseEvent) => {
@@ -39,20 +20,15 @@ export default function BrownsOS() {
     window.addEventListener("mousemove", onMove);
     let rafId: number;
     const loop = () => {
-      const tx1 = (mTgt.current.x - 0.5) * 180;
-      const ty1 = (mTgt.current.y - 0.5) * 130;
-      b1Pos.current.x += (tx1 - b1Pos.current.x) * 0.028;
-      b1Pos.current.y += (ty1 - b1Pos.current.y) * 0.028;
+      const tx = (mTgt.current.x - 0.5) * 60;
+      const ty = (mTgt.current.y - 0.5) * 40;
+      b1Pos.current.x += (tx - b1Pos.current.x) * 0.04;
+      b1Pos.current.y += (ty - b1Pos.current.y) * 0.04;
       if (blob1Ref.current)
         blob1Ref.current.style.transform = `translate(${b1Pos.current.x}px, ${b1Pos.current.y}px) translateZ(0)`;
-
-      const tx2 = (0.5 - mTgt.current.x) * 120;
-      const ty2 = (0.5 - mTgt.current.y) * 90;
-      b2Pos.current.x += (tx2 - b2Pos.current.x) * 0.018;
-      b2Pos.current.y += (ty2 - b2Pos.current.y) * 0.018;
-      if (blob2Ref.current)
-        blob2Ref.current.style.transform = `translate(${b2Pos.current.x}px, ${b2Pos.current.y}px) translateZ(0)`;
-
+      // orb moves slightly opposite for depth
+      if (orbRef.current)
+        orbRef.current.style.transform = `translate(${-b1Pos.current.x * 0.4}px, ${-b1Pos.current.y * 0.3}px) translateZ(0)`;
       rafId = requestAnimationFrame(loop);
     };
     loop();
@@ -61,91 +37,135 @@ export default function BrownsOS() {
 
   return (
     <>
-      {/* ── Base dark space gradient ─────────────────────────────────────── */}
+      {/* ── Base ─────────────────────────────────────────────────────────── */}
       <div aria-hidden style={{
         position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
-        background: "linear-gradient(160deg, #020b18 0%, #030d20 50%, #040a14 100%)",
+        background: "linear-gradient(135deg, #020c1b 0%, #030e22 40%, #040a16 100%)",
         transform: "translateZ(0)",
       }} />
 
-      {/* ── Dot grid — isometric feel ────────────────────────────────────── */}
+      {/* ── Dot grid — bottom fade ────────────────────────────────────────── */}
       <div aria-hidden style={{
         position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
-        backgroundImage: "radial-gradient(circle, rgba(0,240,255,0.10) 1px, transparent 1px)",
-        backgroundSize: "36px 36px",
+        backgroundImage: "radial-gradient(circle, rgba(0,240,255,0.13) 1px, transparent 1px)",
+        backgroundSize: "38px 38px",
         transform: "translateZ(0)",
-        maskImage: "radial-gradient(ellipse 100% 80% at 50% 100%, black 20%, transparent 75%)",
-        WebkitMaskImage: "radial-gradient(ellipse 100% 80% at 50% 100%, black 20%, transparent 75%)",
+        maskImage: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 40%, transparent 75%)",
+        WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 40%, transparent 75%)",
       }} />
 
-      {/* ── Aurora blob — top center (mouse-reactive desktop) ───────────── */}
-      <div
-        aria-hidden
-        ref={blob1Ref}
-        style={{
-          position: "fixed", pointerEvents: "none", zIndex: 0,
-          width: "90vw", height: "60vh",
-          top: "-20vh", left: "5vw",
-          background: "radial-gradient(ellipse, rgba(0,240,255,0.07) 0%, transparent 70%)",
-          transform: "translateZ(0)",
-          willChange: isMobile ? "auto" : "transform",
-          animation: isMobile ? "aurora-drift-a 14s ease-in-out infinite" : "none",
-        }}
-      />
+      {/* ── Aurora top-left (mouse reactive on desktop) ───────────────────── */}
+      <div aria-hidden ref={blob1Ref} style={{
+        position: "fixed", pointerEvents: "none", zIndex: 0,
+        width: "70vw", height: "65vh",
+        top: "-20vh", left: "-5vw",
+        background: "radial-gradient(ellipse, rgba(0,200,255,0.09) 0%, rgba(0,80,200,0.05) 40%, transparent 70%)",
+        transform: "translateZ(0)",
+        willChange: isMobile ? "auto" : "transform",
+        animation: isMobile ? "aurora-drift-a 16s ease-in-out infinite" : "none",
+      }} />
 
-      {/* ── Aurora blob — purple right (counter-moves on desktop) ───────── */}
-      <div
-        aria-hidden
-        ref={blob2Ref}
-        style={{
-          position: "fixed", pointerEvents: "none", zIndex: 0,
-          width: "75vw", height: "65vh",
-          top: "-15vh", right: "-10vw",
-          background: "radial-gradient(ellipse, rgba(60,0,140,0.13) 0%, transparent 70%)",
-          transform: "translateZ(0)",
-          willChange: isMobile ? "auto" : "transform",
-          animation: isMobile ? "aurora-drift-b 18s ease-in-out infinite" : "none",
-        }}
-      />
+      {/* ── Aurora bottom-right ────────────────────────────────────────────── */}
+      <div aria-hidden ref={blob2Ref} style={{
+        position: "fixed", pointerEvents: "none", zIndex: 0,
+        width: "65vw", height: "55vh",
+        bottom: "-10vh", right: "-5vw",
+        background: "radial-gradient(ellipse, rgba(80,0,180,0.12) 0%, rgba(0,40,120,0.06) 50%, transparent 70%)",
+        transform: "translateZ(0)",
+        animation: "aurora-drift-b 20s ease-in-out infinite",
+      }} />
 
-      {/* ── Aurora blob — bottom accent (scroll-reactive) ───────────────── */}
-      <div
-        aria-hidden
-        ref={blob3Ref}
-        style={{
-          position: "fixed", pointerEvents: "none", zIndex: 0,
-          width: "130vw", height: "45vh",
-          bottom: "0", left: "-15vw",
-          background: "radial-gradient(ellipse, rgba(0,80,120,0.20) 0%, transparent 70%)",
-          opacity: 0.5,
-          transform: "translateZ(0)",
-        }}
-      />
+      {/* ── CSS ORB — right side focal point ─────────────────────────────── */}
+      <div aria-hidden ref={orbRef} style={{
+        position: "fixed", pointerEvents: "none", zIndex: 0,
+        right: isMobile ? "5vw" : "8vw",
+        top: "10vh",
+        width: isMobile ? "280px" : "420px",
+        height: isMobile ? "280px" : "420px",
+        transform: "translateZ(0)",
+        willChange: isMobile ? "auto" : "transform",
+      }}>
+        {/* Core glow */}
+        <div style={{
+          position: "absolute", inset: "30%",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(0,240,255,0.22) 0%, rgba(0,180,255,0.08) 50%, transparent 80%)",
+          boxShadow: "0 0 60px 20px rgba(0,240,255,0.08), 0 0 120px 60px rgba(0,100,200,0.06)",
+          animation: "orb-pulse 4s ease-in-out infinite",
+        }} />
 
-      {/* ── Deep top vignette ───────────────────────────────────────────── */}
+        {/* Ring 1 */}
+        <div style={{
+          position: "absolute", inset: "18%",
+          borderRadius: "50%",
+          border: "1px solid rgba(0,240,255,0.18)",
+          boxShadow: "0 0 12px rgba(0,240,255,0.06) inset",
+          animation: "orb-spin-1 12s linear infinite",
+        }}>
+          {/* Dot on ring */}
+          <div style={{
+            position: "absolute", top: "-3px", left: "50%", marginLeft: "-3px",
+            width: "6px", height: "6px", borderRadius: "50%",
+            background: "#00f0ff",
+            boxShadow: "0 0 8px 2px rgba(0,240,255,0.6)",
+          }} />
+        </div>
+
+        {/* Ring 2 */}
+        <div style={{
+          position: "absolute", inset: "6%",
+          borderRadius: "50%",
+          border: "1px solid rgba(0,180,255,0.10)",
+          animation: "orb-spin-2 20s linear infinite",
+        }}>
+          <div style={{
+            position: "absolute", bottom: "-3px", left: "50%", marginLeft: "-3px",
+            width: "5px", height: "5px", borderRadius: "50%",
+            background: "rgba(0,200,255,0.8)",
+            boxShadow: "0 0 6px 2px rgba(0,200,255,0.5)",
+          }} />
+        </div>
+
+        {/* Ring 3 — tilted */}
+        <div style={{
+          position: "absolute", inset: "-4%",
+          borderRadius: "50%",
+          border: "1px solid rgba(100,0,255,0.10)",
+          transform: "rotateX(65deg) rotateZ(20deg)",
+          animation: "orb-spin-3 28s linear infinite",
+        }}>
+          <div style={{
+            position: "absolute", top: "-2px", right: "30%",
+            width: "4px", height: "4px", borderRadius: "50%",
+            background: "rgba(160,80,255,0.9)",
+            boxShadow: "0 0 5px 2px rgba(140,60,255,0.4)",
+          }} />
+        </div>
+      </div>
+
+      {/* ── Vignette corners ─────────────────────────────────────────────── */}
       <div aria-hidden style={{
-        position: "fixed", top: 0, left: 0, right: 0, height: "55vh",
-        zIndex: 0, pointerEvents: "none",
-        background: "radial-gradient(ellipse 110% 60% at 50% -5%, rgba(0,15,80,0.75) 0%, transparent 70%)",
+        position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
+        background: "radial-gradient(ellipse 120% 70% at 50% -10%, rgba(0,20,80,0.6) 0%, transparent 65%)",
         transform: "translateZ(0)",
       }} />
 
-      {/* ── Scan lines — desktop only ────────────────────────────────────── */}
+      {/* ── Scan lines — desktop ──────────────────────────────────────────── */}
       {!isMobile && (
         <div aria-hidden style={{
           position: "fixed", inset: 0, zIndex: 1, pointerEvents: "none",
-          background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.009) 2px, rgba(0,240,255,0.009) 4px)",
+          background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.008) 2px, rgba(0,240,255,0.008) 4px)",
           transform: "translateZ(0)",
         }} />
       )}
 
-      {/* ── HUD corner — desktop ─────────────────────────────────────────── */}
+      {/* ── HUD ──────────────────────────────────────────────────────────── */}
       {!isMobile && (
         <div aria-hidden style={{
           position: "fixed", bottom: "20px", right: "20px", zIndex: 2, pointerEvents: "none",
           fontFamily: "var(--font-jet-brains-mono), 'Courier New', monospace",
           fontSize: "9px", lineHeight: "1.7", letterSpacing: "0.1em",
-          color: "rgba(0,240,255,0.28)", textAlign: "right",
+          color: "rgba(0,240,255,0.25)", textAlign: "right",
         }}>
           <div>SYS: ONLINE</div>
           <div>V_2.1.0</div>
