@@ -94,6 +94,18 @@ body::before {
   50%      { opacity: 1.0;  transform: scale(1.12); }
 }
 
+/* ── Aurora drift — mobile blobs (CSS only, no JS) ──────────────────────── */
+@keyframes aurora-drift-a {
+  0%, 100% { transform: translate(0px, 0px) translateZ(0); }
+  33%       { transform: translate(30px, -20px) translateZ(0); }
+  66%       { transform: translate(-20px, 15px) translateZ(0); }
+}
+@keyframes aurora-drift-b {
+  0%, 100% { transform: translate(0px, 0px) translateZ(0); }
+  40%       { transform: translate(-40px, 20px) translateZ(0); }
+  70%       { transform: translate(25px, -15px) translateZ(0); }
+}
+
 /* ── Mobile CSS core animations ─────────────────────────────────────────── */
 @keyframes core-morph {
   0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: scale(1); }
