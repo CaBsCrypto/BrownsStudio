@@ -450,7 +450,6 @@ function Scene({ scrollRef, glitchRef, isMobile, visibleRef }: {
   return (
     <>
       {!isMobile && <ambientLight intensity={0.06} color={0x001a2e} />}
-      <StarField visibleRef={visibleRef} isMobile={isMobile} />
       <DataOcean   scrollRef={scrollRef} isMobile={isMobile} visibleRef={visibleRef} />
       <QuantumCore scrollRef={scrollRef} glitchRef={glitchRef} isMobile={isMobile} visibleRef={visibleRef} />
       {!isMobile && <CursorGhost visibleRef={visibleRef} />}
