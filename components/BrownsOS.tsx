@@ -454,7 +454,6 @@ function Scene({ scrollRef, glitchRef, isMobile, visibleRef }: {
       <DataOcean   scrollRef={scrollRef} isMobile={isMobile} visibleRef={visibleRef} />
       <QuantumCore scrollRef={scrollRef} glitchRef={glitchRef} isMobile={isMobile} visibleRef={visibleRef} />
       {!isMobile && <CursorGhost visibleRef={visibleRef} />}
-      {!isMobile && <CursorTrail visibleRef={visibleRef} />}
     </>
   );
 }
