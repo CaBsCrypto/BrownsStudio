@@ -11,15 +11,16 @@ export default function BrownsOS() {
   const scrollS   = useRef(0); // 0→1 scroll progress
   const isMobile  = typeof window !== "undefined" && window.innerWidth < 768;
 
-  // Scroll path keyframes — orb travels through the page like a planet
+  // Scroll path keyframes — orb drifts and returns like a planet in orbit
   const KEYFRAMES = [
     { s: 0.00, x:   0, y:   0, scale: 1.00, opacity: 1.0 },
-    { s: 0.12, x:  40, y:  80, scale: 0.96, opacity: 1.0 },
-    { s: 0.28, x: -60, y: 180, scale: 0.82, opacity: 0.95 },
-    { s: 0.45, x:-200, y: 100, scale: 0.65, opacity: 0.80 },
-    { s: 0.62, x:-160, y: 280, scale: 0.48, opacity: 0.55 },
-    { s: 0.78, x:-320, y: 200, scale: 0.32, opacity: 0.25 },
-    { s: 1.00, x:-420, y: 380, scale: 0.18, opacity: 0.00 },
+    { s: 0.15, x: -40, y:  90, scale: 0.90, opacity: 1.0 },
+    { s: 0.30, x:-120, y: 160, scale: 0.75, opacity: 0.90 },
+    { s: 0.45, x:-180, y:  80, scale: 0.60, opacity: 0.75 },
+    { s: 0.60, x:-120, y: 180, scale: 0.55, opacity: 0.70 },
+    { s: 0.75, x: -50, y:  90, scale: 0.65, opacity: 0.80 },
+    { s: 0.88, x:  20, y:  20, scale: 0.80, opacity: 0.90 },
+    { s: 1.00, x:   0, y:   0, scale: 0.90, opacity: 1.0  },
   ];
 
   const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
