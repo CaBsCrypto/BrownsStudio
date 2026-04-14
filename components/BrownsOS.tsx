@@ -11,15 +11,40 @@ export default function BrownsOS() {
   const scrollS   = useRef(0); // 0→1 scroll progress
   const isMobile  = typeof window !== "undefined" && window.innerWidth < 768;
 
-  // Shared function to apply orb transform (combines mouse + scroll)
+  // Scroll path keyframes — orb travels through the page like a planet
+  const KEYFRAMES = [
+    { s: 0.00, x:   0, y:   0, scale: 1.00, opacity: 1.0 },
+    { s: 0.12, x:  40, y:  80, scale: 0.96, opacity: 1.0 },
+    { s: 0.28, x: -60, y: 180, scale: 0.82, opacity: 0.95 },
+    { s: 0.45, x:-200, y: 100, scale: 0.65, opacity: 0.80 },
+    { s: 0.62, x:-160, y: 280, scale: 0.48, opacity: 0.55 },
+    { s: 0.78, x:-320, y: 200, scale: 0.32, opacity: 0.25 },
+    { s: 1.00, x:-420, y: 380, scale: 0.18, opacity: 0.00 },
+  ];
+
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+  // Shared function to apply orb transform (combines mouse + scroll path)
   const applyOrbTransform = (mouseX = 0, mouseY = 0) => {
     if (!orbRef.current) return;
     const s = scrollS.current;
-    // Scroll choreography: moves left + up + scales + fades
-    const sx = s * -260;
-    const sy = s * -80;
-    const scale = 1 - s * 0.45;
-    const opacity = Math.max(0, 1 - s * 1.4);
+
+    // Find surrounding keyframes
+    let k0 = KEYFRAMES[0], k1 = KEYFRAMES[1];
+    for (let i = 0; i < KEYFRAMES.length - 1; i++) {
+      if (s >= KEYFRAMES[i].s && s <= KEYFRAMES[i + 1].s) {
+        k0 = KEYFRAMES[i]; k1 = KEYFRAMES[i + 1]; break;
+      }
+    }
+    const t = k1.s === k0.s ? 1 : (s - k0.s) / (k1.s - k0.s);
+    // Smooth step easing
+    const e = t * t * (3 - 2 * t);
+
+    const sx      = lerp(k0.x, k1.x, e);
+    const sy      = lerp(k0.y, k1.y, e);
+    const scale   = lerp(k0.scale, k1.scale, e);
+    const opacity = lerp(k0.opacity, k1.opacity, e);
+
     orbRef.current.style.transform =
       `translate(${mouseX + sx}px, ${mouseY + sy}px) scale(${scale}) translateZ(0)`;
     orbRef.current.style.opacity = String(opacity);
