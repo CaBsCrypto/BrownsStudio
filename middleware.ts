@@ -1,7 +1,7 @@
 // ── Middleware: locale detection + admin protection ──────────────────────────
 import { NextRequest, NextResponse } from "next/server";
 
-const LOCALES = ["en", "es"];
+const LOCALES = ["en", "es", "pt"];
 const DEFAULT_LOCALE = "es";
 
 export function middleware(request: NextRequest) {
@@ -30,13 +30,21 @@ export function middleware(request: NextRequest) {
 
   if (!isSkipped && pathname === "/") {
     // Detect preferred language from Accept-Language header
-    // e.g. "es-419,es;q=0.9,en;q=0.8"
+    // e.g. "pt-BR,pt;q=0.9,en;q=0.8" or "es-419,es;q=0.9,en;q=0.8"
     const acceptLang = request.headers.get("accept-language") ?? "";
-    const preferred = acceptLang.split(",")[0].split(";")[0].trim().toLowerCase();
+    // Check all listed languages in order of preference
+    const langs = acceptLang
+      .split(",")
+      .map((l) => l.split(";")[0].trim().toLowerCase());
 
     let locale = DEFAULT_LOCALE;
-    if (preferred.startsWith("en")) locale = "en";
-    // All other languages (pt, fr, etc.) → Spanish (main market)
+    for (const l of langs) {
+      if (l.startsWith("pt")) { locale = "pt"; break; }     // Brazil / Portugal
+      if (l.startsWith("es")) { locale = "es"; break; }     // All Spanish-speaking LATAM
+      if (l.startsWith("en")) { locale = "en"; break; }     // USA / Europe (English)
+      // Any other language (fr, de, zh, ja, ko…) → continue to next preference
+      // If none match → falls back to DEFAULT_LOCALE (es)
+    }
 
     return NextResponse.redirect(new URL(`/${locale}`, request.url));
   }

@@ -11,7 +11,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import BrownsOSLoader from "@/components/BrownsOSLoader";
 import { notFound } from "next/navigation";
 
-const LOCALES = ["en", "es"] as const;
+const LOCALES = ["en", "es", "pt"] as const;
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
