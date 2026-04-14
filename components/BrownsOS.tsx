@@ -3,12 +3,40 @@
 import { useRef, useEffect } from "react";
 
 export default function BrownsOS() {
-  const blob1Ref = useRef<HTMLDivElement>(null);
-  const blob2Ref = useRef<HTMLDivElement>(null);
-  const orbRef   = useRef<HTMLDivElement>(null);
-  const mTgt     = useRef({ x: 0.5, y: 0.5 });
-  const b1Pos    = useRef({ x: 0, y: 0 });
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const blob1Ref  = useRef<HTMLDivElement>(null);
+  const blob2Ref  = useRef<HTMLDivElement>(null);
+  const orbRef    = useRef<HTMLDivElement>(null);
+  const mTgt      = useRef({ x: 0.5, y: 0.5 });
+  const b1Pos     = useRef({ x: 0, y: 0 });
+  const scrollS   = useRef(0); // 0→1 scroll progress
+  const isMobile  = typeof window !== "undefined" && window.innerWidth < 768;
+
+  // Shared function to apply orb transform (combines mouse + scroll)
+  const applyOrbTransform = (mouseX = 0, mouseY = 0) => {
+    if (!orbRef.current) return;
+    const s = scrollS.current;
+    // Scroll choreography: moves left + up + scales + fades
+    const sx = s * -260;
+    const sy = s * -80;
+    const scale = 1 - s * 0.45;
+    const opacity = Math.max(0, 1 - s * 1.4);
+    orbRef.current.style.transform =
+      `translate(${mouseX + sx}px, ${mouseY + sy}px) scale(${scale}) translateZ(0)`;
+    orbRef.current.style.opacity = String(opacity);
+  };
+
+  // Scroll listener — updates progress + triggers orb transform
+  useEffect(() => {
+    const onScroll = () => {
+      const el  = document.documentElement;
+      const max = el.scrollHeight - el.clientHeight;
+      scrollS.current = max > 0 ? el.scrollTop / max : 0;
+      // On mobile: update orb directly (no mouse rAF running)
+      if (isMobile) applyOrbTransform();
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isMobile]);
 
   // Mouse-reactive blobs + orb parallax — desktop only
   useEffect(() => {
@@ -26,9 +54,8 @@ export default function BrownsOS() {
       b1Pos.current.y += (ty - b1Pos.current.y) * 0.04;
       if (blob1Ref.current)
         blob1Ref.current.style.transform = `translate(${b1Pos.current.x}px, ${b1Pos.current.y}px) translateZ(0)`;
-      // orb moves slightly opposite for depth
-      if (orbRef.current)
-        orbRef.current.style.transform = `translate(${-b1Pos.current.x * 0.4}px, ${-b1Pos.current.y * 0.3}px) translateZ(0)`;
+      // Orb = mouse parallax + scroll choreography combined
+      applyOrbTransform(-b1Pos.current.x * 0.4, -b1Pos.current.y * 0.3);
       rafId = requestAnimationFrame(loop);
     };
     loop();
