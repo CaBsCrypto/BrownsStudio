@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, Zap, Globe, Bot } from "lucide-react";
+import { Check, Zap, Globe, Bot, GraduationCap } from "lucide-react";
 import { getWhatsAppWithPackage, WHATSAPP_URL } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 export default function Pricing() {
   const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
-  const [activeTab, setActiveTab] = useState<"web" | "ia">("web");
+  const [activeTab, setActiveTab] = useState<"web" | "ia" | "training">("web");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -88,6 +88,18 @@ export default function Pricing() {
             >
               <Bot size={15} />
               {t.pricing.tabAI}
+            </button>
+            <button
+              onClick={() => setActiveTab("training")}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300"
+              style={
+                activeTab === "training"
+                  ? { background: "rgba(168,85,247,0.15)", color: "#c084fc", boxShadow: "0 0 20px rgba(168,85,247,0.1)", border: "1px solid rgba(168,85,247,0.2)" }
+                  : { color: "#5a5a5a" }
+              }
+            >
+              <GraduationCap size={15} />
+              {t.pricing.tabTraining}
             </button>
           </div>
         </div>
@@ -245,6 +257,70 @@ export default function Pricing() {
                   }}
                 >
                   {t.pricing.ctaBtn} {plan.name}
+                </a>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Training plans */}
+        {activeTab === "training" && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {(t.pricing as any).trainingPlans.map((plan: { name: string; desc: string; price: string; priceSuffix?: string; features: readonly string[]; popular?: boolean }) => (
+              <div
+                key={plan.name}
+                className="relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1"
+                style={{
+                  background: plan.popular ? "rgba(20,10,35,0.85)" : "rgba(14,8,25,0.70)",
+                  backdropFilter: "none",
+                  border: plan.popular ? "1px solid rgba(168,85,247,0.25)" : "1px solid rgba(168,85,247,0.10)",
+                  ...(plan.popular ? { boxShadow: "0 0 40px rgba(168,85,247,0.08)" } : {}),
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(168,85,247,0.35)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = plan.popular ? "rgba(168,85,247,0.25)" : "rgba(168,85,247,0.10)"; }}
+              >
+                {plan.popular && (
+                  <div
+                    className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1 rounded-full text-xs font-bold"
+                    style={{ background: "linear-gradient(135deg, #a855f7, #7c3aed)", color: "#fff" }}
+                  >
+                    <Zap size={11} fill="currentColor" />
+                    {t.pricing.popular}
+                  </div>
+                )}
+
+                <div className="mb-5">
+                  <h3 className="font-display font-bold text-xl text-[#e5e5e5] mb-0.5" style={{ letterSpacing: "-0.02em" }}>
+                    {plan.name}
+                  </h3>
+                  <p className="text-[#5a5a5a] text-sm mb-4">{plan.desc}</p>
+                  <div className="flex items-baseline gap-1">
+                    <span className="font-display font-bold text-3xl" style={{ color: "#c084fc" }}>{plan.price}</span>
+                    {plan.priceSuffix && <span className="text-[#5a5a5a] text-sm">{plan.priceSuffix}</span>}
+                  </div>
+                </div>
+
+                <div className="h-px mb-5" style={{ background: "rgba(168,85,247,0.12)" }} />
+
+                <ul className="space-y-3 mb-6">
+                  {plan.features.map((feature: string) => (
+                    <li key={feature} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
+                      <Check size={15} className="flex-shrink-0 mt-0.5" style={{ color: "#c084fc" }} />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href={getWhatsAppWithPackage(plan.name)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-center py-3 rounded-xl text-sm font-semibold transition-all duration-300"
+                  style={{ border: "1px solid rgba(168,85,247,0.25)", color: "#c084fc" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(168,85,247,0.12)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(168,85,247,0.45)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(168,85,247,0.25)"; }}
+                >
+                  {t.pricing.ctaBtn} — {plan.name}
                 </a>
               </div>
             ))}

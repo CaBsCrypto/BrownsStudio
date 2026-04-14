@@ -22,7 +22,7 @@ function useCountUp(target: number, duration: number, active: boolean) {
 }
 
 const statNumerics = [
-  { numeric: 5,   suffix: "+" },
+  { numeric: 12,  suffix: "+" },
   { numeric: 7,   suffix: ""  },
   { numeric: 100, suffix: "%" },
 ];
