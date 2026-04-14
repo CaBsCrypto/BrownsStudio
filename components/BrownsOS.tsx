@@ -22,7 +22,7 @@ function DataOcean({ scrollRef, isMobile, visibleRef }: {
   const origXY    = useRef<Float32Array>(null!);
   const frameSkip = useRef(0);
 
-  const SEGS = isMobile ? 15 : 90;  // mobile: 256 verts vs desktop: 8281
+  const SEGS = isMobile ? 10 : 90;  // mobile: 121 verts vs desktop: 8281
 
   const oceanGeo = useMemo(() => {
     const geo = new THREE.PlaneGeometry(80, 80, SEGS, SEGS);
@@ -71,7 +71,7 @@ function DataOcean({ scrollRef, isMobile, visibleRef }: {
     return () => window.removeEventListener("mousemove", onMove);
   }, [isMobile]);
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock, invalidate }) => {
     // Pause when canvas is not visible (scrolled away)
     if (!visibleRef.current) return;
 
@@ -110,6 +110,7 @@ function DataOcean({ scrollRef, isMobile, visibleRef }: {
     oceanGeo.attributes.position.needsUpdate = true;
     pointsMat.opacity = 0.12 + s * 0.28;
     if (!isMobile) wireMat.opacity = 0.018 + s * 0.042;
+    invalidate();
   });
 
   return (
@@ -134,12 +135,12 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
   const tgt       = useRef(new THREE.Vector3());
   const frameSkip = useRef(0);
 
-  const COUNT     = isMobile ? 160 : 320;
-  const RING_SEGS = isMobile ? 40  : 72;
+  const COUNT     = isMobile ? 80  : 320;
+  const RING_SEGS = isMobile ? 32  : 72;
 
   // Soft circular dot texture — prevents square WebGL points
   const dotTexture = useMemo(() => {
-    const size = 64;
+    const size = isMobile ? 32 : 64;
     const canvas = document.createElement("canvas");
     canvas.width = canvas.height = size;
     const ctx = canvas.getContext("2d")!;
@@ -204,13 +205,12 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
   const ring1Geo = useMemo(() => makeRingGeo(1.55, RING_SEGS), [RING_SEGS]);
   const ring2Geo = useMemo(() => makeRingGeo(2.10, RING_SEGS), [RING_SEGS]);
 
-  useFrame(({ clock }, dt) => {
+  useFrame(({ clock, invalidate }, dt) => {
     if (!groupRef.current || !visibleRef.current) return;
 
     if (isMobile) {
       frameSkip.current = (frameSkip.current + 1) % 5;
       if (frameSkip.current !== 0) return;
-      dt *= 5;
     }
 
     const t = clock.elapsedTime;
@@ -254,6 +254,7 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
       sphereMat.color.lerp(C_CYAN, 0.08);
       ringMat.color.lerp(C_CYAN, 0.08);
     }
+    invalidate();
   });
 
   return (
@@ -440,12 +441,13 @@ function Scene({ scrollRef, glitchRef, isMobile, visibleRef }: {
 }) {
   const { camera } = useThree();
   const camTgt = useRef(new THREE.Vector3(0, 0, 14));
-  useFrame(() => {
+  useFrame(({ invalidate }) => {
     if (!visibleRef.current) return;
     const s = scrollRef.current;
     camTgt.current.set(0, -s * 2.8, 14 - s * 2.2);
     camera.position.lerp(camTgt.current, 0.028);
     (camera as THREE.PerspectiveCamera).lookAt(0, -s * 1.6, 0);
+    invalidate();
   });
   return (
     <>
@@ -590,7 +592,8 @@ export default function BrownsOS() {
         <Canvas
           camera={{ position: [0, 0, 14], fov: isMobile ? 65 : 55 }}
           gl={{ alpha:true, antialias:false, powerPreference:"low-power", stencil:false, depth:false }}
-          dpr={isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5)}
+          dpr={isMobile ? 0.75 : Math.min(window.devicePixelRatio, 1.5)}
+          frameloop="demand"
           style={{ width:"100%", height:"100%", background:"transparent" }}
         >
           <Scene scrollRef={scrollRef} glitchRef={glitchRef} isMobile={isMobile} visibleRef={visibleRef} />
