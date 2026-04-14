@@ -123,6 +123,10 @@ body::before {
   from { transform: rotateX(65deg) rotateZ(0deg); }
   to   { transform: rotateX(65deg) rotateZ(360deg); }
 }
+@keyframes orb-spin-4 {
+  from { transform: rotateY(72deg) rotateZ(0deg); }
+  to   { transform: rotateY(72deg) rotateZ(360deg); }
+}
 
 /* ── Mobile CSS core animations ─────────────────────────────────────────── */
 @keyframes core-morph {

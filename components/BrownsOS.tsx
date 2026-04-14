@@ -78,67 +78,97 @@ export default function BrownsOS() {
       {/* ── CSS ORB — right side focal point ─────────────────────────────── */}
       <div aria-hidden ref={orbRef} style={{
         position: "fixed", pointerEvents: "none", zIndex: 0,
-        right: isMobile ? "5vw" : "8vw",
-        top: "10vh",
-        width: isMobile ? "280px" : "420px",
-        height: isMobile ? "280px" : "420px",
+        right: isMobile ? "0vw" : "6vw",
+        top: isMobile ? "8vh" : "12vh",
+        width: isMobile ? "320px" : "500px",
+        height: isMobile ? "320px" : "500px",
         transform: "translateZ(0)",
         willChange: isMobile ? "auto" : "transform",
       }}>
-        {/* Core glow */}
+        {/* Outer ambient glow */}
         <div style={{
-          position: "absolute", inset: "30%",
+          position: "absolute", inset: "-10%",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(0,240,255,0.22) 0%, rgba(0,180,255,0.08) 50%, transparent 80%)",
-          boxShadow: "0 0 60px 20px rgba(0,240,255,0.08), 0 0 120px 60px rgba(0,100,200,0.06)",
+          background: "radial-gradient(circle, rgba(0,180,255,0.06) 0%, transparent 70%)",
+          animation: "orb-pulse 6s ease-in-out infinite",
+        }} />
+
+        {/* Core sphere */}
+        <div style={{
+          position: "absolute", inset: "34%",
+          borderRadius: "50%",
+          background: "radial-gradient(circle at 38% 38%, rgba(120,240,255,0.55) 0%, rgba(0,200,255,0.30) 35%, rgba(0,100,200,0.12) 65%, transparent 100%)",
+          boxShadow: "0 0 40px 12px rgba(0,240,255,0.18), 0 0 80px 40px rgba(0,140,255,0.10), inset 0 0 20px rgba(0,240,255,0.15)",
           animation: "orb-pulse 4s ease-in-out infinite",
         }} />
 
-        {/* Ring 1 */}
+        {/* Ring 1 — close orbit, bright */}
         <div style={{
-          position: "absolute", inset: "18%",
+          position: "absolute", inset: "22%",
           borderRadius: "50%",
-          border: "1px solid rgba(0,240,255,0.18)",
-          boxShadow: "0 0 12px rgba(0,240,255,0.06) inset",
-          animation: "orb-spin-1 12s linear infinite",
+          border: "1.5px solid rgba(0,240,255,0.45)",
+          boxShadow: "0 0 8px rgba(0,240,255,0.15), inset 0 0 8px rgba(0,240,255,0.08)",
+          animation: "orb-spin-1 9s linear infinite",
         }}>
-          {/* Dot on ring */}
           <div style={{
-            position: "absolute", top: "-3px", left: "50%", marginLeft: "-3px",
-            width: "6px", height: "6px", borderRadius: "50%",
+            position: "absolute", top: "-4px", left: "calc(50% - 4px)",
+            width: "8px", height: "8px", borderRadius: "50%",
             background: "#00f0ff",
-            boxShadow: "0 0 8px 2px rgba(0,240,255,0.6)",
+            boxShadow: "0 0 12px 4px rgba(0,240,255,0.8)",
           }} />
         </div>
 
-        {/* Ring 2 */}
+        {/* Ring 2 — mid orbit */}
         <div style={{
-          position: "absolute", inset: "6%",
+          position: "absolute", inset: "8%",
           borderRadius: "50%",
-          border: "1px solid rgba(0,180,255,0.10)",
-          animation: "orb-spin-2 20s linear infinite",
+          border: "1px solid rgba(0,200,255,0.28)",
+          animation: "orb-spin-2 16s linear infinite",
         }}>
           <div style={{
-            position: "absolute", bottom: "-3px", left: "50%", marginLeft: "-3px",
-            width: "5px", height: "5px", borderRadius: "50%",
-            background: "rgba(0,200,255,0.8)",
-            boxShadow: "0 0 6px 2px rgba(0,200,255,0.5)",
+            position: "absolute", bottom: "-4px", left: "calc(50% - 3px)",
+            width: "6px", height: "6px", borderRadius: "50%",
+            background: "rgba(80,220,255,0.95)",
+            boxShadow: "0 0 10px 3px rgba(0,200,255,0.6)",
           }} />
-        </div>
-
-        {/* Ring 3 — tilted */}
-        <div style={{
-          position: "absolute", inset: "-4%",
-          borderRadius: "50%",
-          border: "1px solid rgba(100,0,255,0.10)",
-          transform: "rotateX(65deg) rotateZ(20deg)",
-          animation: "orb-spin-3 28s linear infinite",
-        }}>
           <div style={{
-            position: "absolute", top: "-2px", right: "30%",
+            position: "absolute", top: "-3px", right: "25%",
             width: "4px", height: "4px", borderRadius: "50%",
-            background: "rgba(160,80,255,0.9)",
-            boxShadow: "0 0 5px 2px rgba(140,60,255,0.4)",
+            background: "rgba(0,240,255,0.6)",
+            boxShadow: "0 0 6px 2px rgba(0,240,255,0.3)",
+          }} />
+        </div>
+
+        {/* Ring 3 — tilted, wide */}
+        <div style={{
+          position: "absolute", inset: "-6%",
+          borderRadius: "50%",
+          border: "1px solid rgba(120,60,255,0.30)",
+          boxShadow: "0 0 6px rgba(120,60,255,0.08)",
+          transform: "rotateX(68deg) rotateZ(15deg)",
+          animation: "orb-spin-3 24s linear infinite",
+        }}>
+          <div style={{
+            position: "absolute", top: "-3px", right: "28%",
+            width: "5px", height: "5px", borderRadius: "50%",
+            background: "rgba(180,100,255,1)",
+            boxShadow: "0 0 8px 3px rgba(160,80,255,0.6)",
+          }} />
+        </div>
+
+        {/* Ring 4 — outer tilted opposite axis */}
+        <div style={{
+          position: "absolute", inset: "-14%",
+          borderRadius: "50%",
+          border: "1px solid rgba(0,180,255,0.15)",
+          transform: "rotateY(72deg) rotateZ(-10deg)",
+          animation: "orb-spin-1 32s linear infinite reverse",
+        }}>
+          <div style={{
+            position: "absolute", top: "-3px", left: "35%",
+            width: "4px", height: "4px", borderRadius: "50%",
+            background: "rgba(0,220,255,0.8)",
+            boxShadow: "0 0 7px 2px rgba(0,200,255,0.4)",
           }} />
         </div>
       </div>
