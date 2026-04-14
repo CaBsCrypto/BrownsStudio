@@ -137,6 +137,23 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
   const COUNT     = isMobile ? 160 : 320;
   const RING_SEGS = isMobile ? 40  : 72;
 
+  // Soft circular dot texture — prevents square WebGL points
+  const dotTexture = useMemo(() => {
+    const size = 64;
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = size;
+    const ctx = canvas.getContext("2d")!;
+    const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+    grad.addColorStop(0,   "rgba(0,240,255,1)");
+    grad.addColorStop(0.4, "rgba(0,240,255,0.6)");
+    grad.addColorStop(1,   "rgba(0,240,255,0)");
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
+    ctx.fill();
+    return new THREE.CanvasTexture(canvas);
+  }, []);
+
   // Fibonacci sphere distribution — evenly spaced points on a sphere surface
   const { sphereGeo, sphereMat } = useMemo(() => {
     const positions = new Float32Array(COUNT * 3);
@@ -152,16 +169,18 @@ function QuantumCore({ scrollRef, glitchRef, isMobile, visibleRef }: {
     const geo = new THREE.BufferGeometry();
     geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     const mat = new THREE.PointsMaterial({
-      size: isMobile ? 0.065 : 0.052,
+      size: isMobile ? 0.14 : 0.11,
       color: 0x00f0ff,
+      map: dotTexture,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.90,
       sizeAttenuation: true,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
+      alphaTest: 0.01,
     });
     return { sphereGeo: geo, sphereMat: mat };
-  }, [COUNT, isMobile]);
+  }, [COUNT, isMobile, dotTexture]);
 
   // Orbital rings as LineSegments
   const ringMat = useMemo(() => new THREE.LineBasicMaterial({
