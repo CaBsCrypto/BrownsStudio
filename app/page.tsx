@@ -16,9 +16,9 @@ export default function Home() {
       <BrownsOSLoader />
       <Navbar />
       <Hero />
-      <Pricing />
       <Portfolio />
       <SobreMi />
+      <Pricing />
       <Proceso />
       <FAQ />
       <CTA />
