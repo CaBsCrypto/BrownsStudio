@@ -208,40 +208,71 @@ export default function SobreMi() {
                 </div>
               </div>
 
-              {/* 7 cert cards — 2 col */}
-              <div className="grid grid-cols-2 gap-2 mb-4">
-                {t.about.certNames.map((name: string, i: number) => {
-                  const Icon = certIcons[i];
-                  return (
-                    <div
-                      key={name}
-                      className="flex items-start gap-3 p-3 rounded-xl transition-all duration-300 group cursor-default"
-                      style={{
-                        background: "#191919",
-                        border: "1px solid rgba(72,72,72,0.15)",
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.border = "1px solid rgba(71,196,255,0.2)";
-                        (e.currentTarget as HTMLElement).style.background = "rgba(10,15,30,0.6)";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.border = "1px solid rgba(72,72,72,0.15)";
-                        (e.currentTarget as HTMLElement).style.background = "#191919";
-                      }}
-                    >
+              {/* Credibility marquee — elegant horizontal strip */}
+              <div
+                className="mb-4 overflow-hidden relative group"
+                style={{
+                  maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+                }}
+              >
+                <div
+                  className="flex gap-3 w-max"
+                  style={{
+                    animation: "marquee-scroll 35s linear infinite",
+                    animationPlayState: "running",
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.animationPlayState = "paused"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.animationPlayState = "running"; }}
+                >
+                  {[...t.about.certNames, ...t.about.certNames].map((name: string, i: number) => {
+                    const Icon = certIcons[i % certIcons.length];
+                    const desc = t.about.certDescs[i % t.about.certDescs.length];
+                    return (
                       <div
-                        className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
-                        style={{ background: "rgba(71,196,255,0.08)", border: "1px solid rgba(71,196,255,0.15)" }}
+                        key={`${name}-${i}`}
+                        className="relative flex items-center gap-2 px-3 py-2 rounded-full flex-shrink-0 cursor-default"
+                        style={{
+                          background: "#191919",
+                          border: "1px solid rgba(72,72,72,0.2)",
+                        }}
+                        onMouseEnter={(e) => {
+                          (e.currentTarget as HTMLElement).style.borderColor = "rgba(71,196,255,0.35)";
+                          (e.currentTarget as HTMLElement).style.background = "rgba(10,15,30,0.8)";
+                          const tip = e.currentTarget.querySelector("[data-tip]") as HTMLElement | null;
+                          if (tip) tip.style.opacity = "1";
+                        }}
+                        onMouseLeave={(e) => {
+                          (e.currentTarget as HTMLElement).style.borderColor = "rgba(72,72,72,0.2)";
+                          (e.currentTarget as HTMLElement).style.background = "#191919";
+                          const tip = e.currentTarget.querySelector("[data-tip]") as HTMLElement | null;
+                          if (tip) tip.style.opacity = "0";
+                        }}
                       >
-                        <Icon size={14} className="text-[#47c4ff]" />
+                        <div
+                          className="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0"
+                          style={{ background: "rgba(71,196,255,0.1)", border: "1px solid rgba(71,196,255,0.18)" }}
+                        >
+                          <Icon size={12} className="text-[#47c4ff]" />
+                        </div>
+                        <span className="text-[#d0d0d0] text-xs font-medium whitespace-nowrap">{name}</span>
+                        {/* Tooltip */}
+                        <div
+                          data-tip
+                          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-3 py-1.5 rounded-lg text-[11px] text-[#9e9e9e] whitespace-nowrap pointer-events-none z-20 transition-opacity duration-200"
+                          style={{
+                            opacity: 0,
+                            background: "#0e0e0e",
+                            border: "1px solid rgba(71,196,255,0.2)",
+                            boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
+                          }}
+                        >
+                          {desc}
+                        </div>
                       </div>
-                      <div className="min-w-0">
-                        <p className="text-[#d0d0d0] text-xs font-semibold leading-tight">{name}</p>
-                        <p className="text-[#5a5a5a] text-xs leading-tight mt-0.5">{t.about.certDescs[i]}</p>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
 
               <p className="text-[#3a3a3a] text-xs italic mb-8">
