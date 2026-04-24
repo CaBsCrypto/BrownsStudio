@@ -3,8 +3,14 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
-// ── Swap this ID when your video is uploaded ─────────────────────────────────
-const YOUTUBE_VIDEO_ID = ""; // e.g. "dQw4w9WgXcQ"
+// ── Agregar/editar videos acá. `id` vacío = placeholder "coming soon". ───────
+type ShowcaseVideo = { id: string; label: string };
+const VIDEOS: ShowcaseVideo[] = [
+  { id: "", label: "Lo que podemos hacer con IA" },
+  { id: "", label: "Bots de WhatsApp en acción" },
+  { id: "", label: "Automatizaciones con Make + IA" },
+  { id: "", label: "Training Google AI Studio" },
+];
 
 // ── Video Modal ───────────────────────────────────────────────────────────────
 function VideoModal({ open, onClose, videoId, label }: {
@@ -134,9 +140,14 @@ export default function AIShowcase() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [current, setCurrent] = useState(0);
+  const total = VIDEOS.length;
+  const currentVideo = VIDEOS[current];
 
   const openModal  = useCallback(() => setModalOpen(true),  []);
   const closeModal = useCallback(() => setModalOpen(false), []);
+  const prev = useCallback(() => setCurrent((i) => (i - 1 + total) % total), [total]);
+  const next = useCallback(() => setCurrent((i) => (i + 1) % total), [total]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -153,8 +164,8 @@ export default function AIShowcase() {
       <VideoModal
         open={modalOpen}
         onClose={closeModal}
-        videoId={YOUTUBE_VIDEO_ID}
-        label={s.videoLabel}
+        videoId={currentVideo.id}
+        label={currentVideo.label}
       />
 
       <section
@@ -191,12 +202,55 @@ export default function AIShowcase() {
             </p>
           </div>
 
-          {/* ── Video thumbnail / play trigger ────────────────────────────── */}
+          {/* ── Video carousel ───────────────────────────────────────────── */}
           <div className={`mb-16 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-            <div style={{ maxWidth: "680px", margin: "0 auto" }}>
+            <div style={{ maxWidth: "680px", margin: "0 auto", position: "relative" }}>
+
+              {/* Prev arrow */}
+              <button
+                onClick={prev}
+                aria-label="Previous video"
+                className="absolute top-1/2 -translate-y-1/2 z-10 transition-all duration-200 hover:scale-110"
+                style={{
+                  left: "-8px",
+                  width: "40px", height: "40px", borderRadius: "50%",
+                  background: "rgba(0,0,0,0.6)",
+                  border: "1px solid rgba(0,240,255,0.25)",
+                  color: "#00f0ff",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer",
+                  backdropFilter: "blur(6px)",
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+
+              {/* Next arrow */}
+              <button
+                onClick={next}
+                aria-label="Next video"
+                className="absolute top-1/2 -translate-y-1/2 z-10 transition-all duration-200 hover:scale-110"
+                style={{
+                  right: "-8px",
+                  width: "40px", height: "40px", borderRadius: "50%",
+                  background: "rgba(0,0,0,0.6)",
+                  border: "1px solid rgba(0,240,255,0.25)",
+                  color: "#00f0ff",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer",
+                  backdropFilter: "blur(6px)",
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+
               <button
                 onClick={openModal}
-                aria-label={s.videoLabel}
+                aria-label={currentVideo.label}
                 style={{
                   display: "block", width: "100%", cursor: "pointer",
                   background: "none", border: "none", padding: 0,
@@ -229,6 +283,18 @@ export default function AIShowcase() {
                     backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(0,240,255,0.025) 28px, rgba(0,240,255,0.025) 29px)",
                     pointerEvents: "none",
                   }} />
+
+                  {/* YouTube thumbnail (if id present) */}
+                  {currentVideo.id && (
+                    <img
+                      src={`https://img.youtube.com/vi/${currentVideo.id}/maxresdefault.jpg`}
+                      alt={currentVideo.label}
+                      style={{
+                        position: "absolute", inset: 0, width: "100%", height: "100%",
+                        objectFit: "cover", opacity: 0.55,
+                      }}
+                    />
+                  )}
 
                   {/* Center play button */}
                   <div style={{
@@ -264,15 +330,15 @@ export default function AIShowcase() {
                     </div>
 
                     {/* Label */}
-                    <div style={{ textAlign: "center" }}>
+                    <div style={{ textAlign: "center", padding: "0 20px" }}>
                       <p style={{
-                        color: "rgba(0,240,255,0.75)", fontSize: "13px",
+                        color: "rgba(0,240,255,0.85)", fontSize: "13px",
                         fontFamily: "var(--font-jet-brains-mono), monospace",
                         letterSpacing: "0.1em",
                       }}>
-                        {s.videoLabel}
+                        {currentVideo.label}
                       </p>
-                      {!YOUTUBE_VIDEO_ID && (
+                      {!currentVideo.id && (
                         <p style={{ color: "rgba(255,255,255,0.18)", fontSize: "10px", marginTop: "6px", letterSpacing: "0.06em" }}>
                           — coming soon —
                         </p>
@@ -281,6 +347,41 @@ export default function AIShowcase() {
                   </div>
                 </div>
               </button>
+
+              {/* Dots */}
+              <div style={{
+                display: "flex", justifyContent: "center", alignItems: "center",
+                gap: "8px", marginTop: "18px",
+              }}>
+                {VIDEOS.map((_, i) => {
+                  const active = i === current;
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => setCurrent(i)}
+                      aria-label={`Go to video ${i + 1}`}
+                      style={{
+                        width: active ? "24px" : "8px",
+                        height: "8px",
+                        borderRadius: "4px",
+                        background: active ? "#00f0ff" : "rgba(0,240,255,0.25)",
+                        border: "none",
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                        padding: 0,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+              <p style={{
+                textAlign: "center", marginTop: "8px",
+                fontSize: "11px", color: "rgba(255,255,255,0.3)",
+                fontFamily: "var(--font-jet-brains-mono), monospace",
+                letterSpacing: "0.1em",
+              }}>
+                {String(current + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+              </p>
 
               {/* Below video CTA */}
               <div className="text-center mt-5">
