@@ -3,6 +3,8 @@ import { Space_Grotesk, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SITE_CONFIG } from "@/lib/config";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -63,20 +65,12 @@ export const metadata: Metadata = {
     title: `${SITE_CONFIG.name} | ${SITE_CONFIG.tagline}`,
     description: SITE_CONFIG.description,
     siteName: SITE_CONFIG.name,
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: `${SITE_CONFIG.name} — Diseño Web Premium + IA para Negocios en LATAM`,
-      },
-    ],
+    // OG image generated dynamically by app/opengraph-image.tsx
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE_CONFIG.name} | ${SITE_CONFIG.tagline}`,
     description: SITE_CONFIG.description,
-    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -198,6 +192,8 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${dmSans.variable} ${jetBrainsMono.variable} font-body antialiased bg-bg-primary text-text-primary`}
       >
         <LanguageProvider>{children}</LanguageProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
