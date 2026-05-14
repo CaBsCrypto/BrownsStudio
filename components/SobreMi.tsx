@@ -10,7 +10,7 @@ import { useLang } from "@/lib/i18n/LanguageContext";
 
 const certIcons: LucideIcon[] = [Brain, Code2, BarChart3, FileText, PenTool, Search, Lightbulb];
 
-const skills = ["Antigravity", "AI Studio", "Claude", "Codex"];
+const skills = ["Antigravity", "AI Studio", "Claude", "Codex", "OpenCode"];
 
 export default function SobreMi() {
   const { t } = useLang();
