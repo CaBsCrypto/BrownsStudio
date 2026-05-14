@@ -18,6 +18,31 @@ export interface Proyecto {
 
 export const proyectos: Proyecto[] = [
   {
+    slug: "trust-leaf",
+    nombre: "Trust Leaf",
+    tipo: "Plataforma HealthTech",
+    descripcion:
+      "Plataforma integral que conecta a pacientes, profesionales y dispensarios para un acceso seguro y trazable al cannabis medicinal.",
+    descripcionLarga:
+      "Trust Leaf es una plataforma diseñada para resolver la falta de trazabilidad y seguridad en el acceso al cannabis medicinal. Permite a los pacientes mantener el control total de su información clínica con privacidad, al mismo tiempo que garantiza que los médicos puedan emitir recetas verificables y los dispensarios registren entregas precisas. Un ecosistema completo para una gestión médica transparente y regulada.",
+    tecnologias: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+    color: "linear-gradient(135deg, #0A2A21 0%, #154734 50%, #C5A070 100%)",
+    colorAccent: "#C5A070",
+    caracteristicas: [
+      "Portal exclusivo para pacientes",
+      "Panel de gestión para profesionales",
+      "Administración y registro de dispensarios",
+      "Trazabilidad total de recetas y entregas",
+      "Control de privacidad clínica",
+      "Monitoreo de cumplimiento regulatorio",
+    ],
+    resultado: "Ecosistema seguro y regulado para el acceso al cannabis medicinal con trazabilidad total.",
+    quote: "Acceso seguro y trazable al cannabis medicinal con privacidad clínica garantizada.",
+    quoteAutor: "Trust Leaf",
+    linkDemo: "https://www.trustleaf.org/",
+    año: 2025,
+  },
+  {
     slug: "pizzadao-musica-w3",
     nombre: "PizzaDAO x Musica W3",
     tipo: "Música + Web3",

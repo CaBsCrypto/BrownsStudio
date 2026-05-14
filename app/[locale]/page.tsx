@@ -33,7 +33,7 @@ export default async function LocalePage({
       <Navbar />
       <Hero />
       <Portfolio />
-      <AIShowcase />
+      {/* <AIShowcase /> */}
       <SobreMi />
       <Testimonios />
       <Pricing />
