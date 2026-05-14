@@ -64,7 +64,7 @@ export const translations = {
         {
           name: "Basic",
           desc: "Get online",
-          price: "$150 USD",
+          price: "$200 USD",
           features: [
             "Landing page (1 page)",
             "Responsive design + WhatsApp",
@@ -75,7 +75,7 @@ export const translations = {
         {
           name: "Professional",
           desc: "Most chosen",
-          price: "$350 USD",
+          price: "$500 USD",
           features: [
             "Multi-page website (up to 5)",
             "Custom premium design",
@@ -344,7 +344,7 @@ export const translations = {
         {
           name: "Básico",
           desc: "Para empezar online",
-          price: "$150 USD",
+          price: "$200 USD",
           features: [
             "Landing page (1 página)",
             "Diseño responsive + WhatsApp",
@@ -355,7 +355,7 @@ export const translations = {
         {
           name: "Profesional",
           desc: "El más elegido",
-          price: "$350 USD",
+          price: "$500 USD",
           features: [
             "Web multi-página (hasta 5)",
             "Diseño premium personalizado",
