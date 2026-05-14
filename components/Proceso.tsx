@@ -126,7 +126,7 @@ export default function Proceso() {
                 </p>
 
                 <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-white/30 group-hover:text-white/60 transition-colors">
-                  <span>Saber más</span>
+                  <span>{t.process.learnMore}</span>
                   <div className="w-1 h-1 rounded-full bg-current" />
                 </div>
 
@@ -182,7 +182,7 @@ export default function Proceso() {
             </div>
 
             <div className="mb-2 flex items-center gap-3">
-              <span className="text-sm font-mono font-bold" style={{ color: stepColors[selectedStep] }}>Step {t.process.steps[selectedStep].num}</span>
+              <span className="text-sm font-mono font-bold" style={{ color: stepColors[selectedStep] }}>{t.process.step} {t.process.steps[selectedStep].num}</span>
               <div className="h-px flex-grow bg-white/10" />
             </div>
 
@@ -199,7 +199,7 @@ export default function Proceso() {
               className="w-full py-4 rounded-2xl font-bold text-black transition-transform active:scale-95"
               style={{ background: `linear-gradient(135deg, ${stepColors[selectedStep]}, ${stepColors[selectedStep]}dd)` }}
             >
-              Entendido
+              {t.process.understood}
             </button>
           </div>
         </div>

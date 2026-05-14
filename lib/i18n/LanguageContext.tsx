@@ -24,10 +24,11 @@ const Context = createContext<LangCtx>({
   toggle: () => {},
 });
 
-const CYCLE: Lang[] = ["es", "en"];
+const CYCLE: Lang[] = ["es", "en", "pt"];
 
 function getLangFromPath(pathname: string | null): Lang {
   if (pathname?.startsWith("/en")) return "en";
+  if (pathname?.startsWith("/pt")) return "pt";
   return "es"; // default
 }
 
@@ -45,7 +46,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const toggle = () => {
     const idx = CYCLE.indexOf(lang);
     const next = CYCLE[(idx + 1) % CYCLE.length];
-    const newPath = (pathname ?? "/").replace(/^\/(en|es)(\/|$)/, `/${next}$2`);
+    const newPath = (pathname ?? "/").replace(/^\/(en|es|pt)(\/|$)/, `/${next}$2`);
     router.push(newPath || `/${next}`);
   };
 

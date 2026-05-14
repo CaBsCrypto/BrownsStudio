@@ -153,6 +153,9 @@ export const translations = {
         { num: "03", title: "Development", desc: "We build with the latest tech. Unlimited revisions until you're 100% happy.", details: "We use vibecoding and agentic engineering for ultra-fast and robust development. We implement native integrations with LLMs (Claude, Gemini) and build autonomous automation pipelines." },
         { num: "04", title: "Launch", desc: "We go live and teach you how to manage it. Ongoing support included.", details: "Deployment on high-performance Edge servers for maximum global speed. We include hands-on training so your team can operate and scale the system autonomously without vendor lock-in." },
       ],
+      learnMore: "Learn more",
+      understood: "Understood",
+      step: "Step",
     },
     faq: {
       eyebrow: "FAQ",
@@ -259,6 +262,11 @@ export const translations = {
       rights: "All rights reserved.",
       made: "Built for businesses ready to grow with AI — wherever you are.",
     },
+    seo: {
+      title: "Browns Studio | Premium Web Design + AI for Business",
+      description: "Browns Studio builds high-impact digital presences with professional web design and artificial intelligence. Chatbots, automations, and conversion-optimized websites for businesses in LATAM.",
+      keywords: ["web development LATAM", "business websites", "professional web design", "WhatsApp chatbot for business", "AI bot", "AI automation", "websites for clinics", "websites for restaurants", "digital agency LATAM", "premium digital presence", "AI chatbot for clinics", "AI chatbot for restaurants"],
+    }
   },
 
   es: {
@@ -416,6 +424,9 @@ export const translations = {
         { num: "03", title: "Desarrollo", desc: "Construimos con las últimas tecnologías. Revisiones ilimitadas hasta que estés 100% conforme.", details: "Utilizamos vibecoding e ingeniería agéntica para un desarrollo ultra-rápido y robusto. Implementamos integraciones nativas con LLMs (Claude, Gemini) y construimos flujos de automatización autónomos." },
         { num: "04", title: "Lanzamiento", desc: "Publicamos tu web o solución IA y te enseñamos a gestionarla. Soporte continuo incluido.", details: "Despliegue en servidores Edge de alto rendimiento para máxima velocidad global. Incluimos capacitación práctica para que tu equipo opere y escale el sistema de forma autónoma sin dependencia técnica." },
       ],
+      learnMore: "Saber más",
+      understood: "Entendido",
+      step: "Paso",
     },
     faq: {
       eyebrow: "Preguntas Frecuentes",
@@ -522,6 +533,281 @@ export const translations = {
       rights: "Todos los derechos reservados.",
       made: "Para negocios que quieren crecer con IA — donde sea que estés.",
     },
+    seo: {
+      title: "Browns Studio | Diseño Web Premium + IA para Negocios",
+      description: "Browns Studio crea presencias digitales de alto impacto con diseño web profesional e inteligencia artificial. Chatbots, automatizaciones y webs que convierten para negocios en LATAM.",
+      keywords: ["desarrollo web LATAM", "páginas web para negocios", "diseño web profesional", "chatbot WhatsApp para negocios", "bot inteligencia artificial", "automatización con IA", "web para clínicas", "web para restaurantes", "agencia digital LATAM", "presencia digital premium", "chatbot IA para clínicas", "chatbot IA para restaurantes"],
+    }
+  },
+
+  pt: {
+    nav: {
+      services: "Serviços",
+      portfolio: "Portfólio",
+      process: "Processo",
+      pricing: "Preços",
+      faq: "FAQ",
+      cta: "Orçar Projeto",
+    },
+    hero: {
+      badge: "Vibecoding · Engenharia Agêntica · Treinamento",
+      line1: "O futuro do seu",
+      line2: "negócio se constrói",
+      line3: "com vibecoding.",
+      sub: "Desenvolvemos sistemas de software completos através de vibecoding e treinamos sua equipe para dominar a engenharia agêntica.",
+      cta1: "Orçar grátis",
+      cta2: "Ver serviços",
+      stat1: "Clientes",
+      stat2: "Certs. Google IA",
+      stat3: "Satisfação",
+    },
+    portfolio: {
+      eyebrow: "Nosso Trabalho",
+      title: "Projetos que falam por si só",
+      prevLabel: "Projeto anterior",
+      nextLabel: "Próximo projeto",
+      dotLabel: "Ir para o projeto",
+      cta: "Quer que seu negócio seja o próximo na nossa lista?",
+      ctaBtn: "Começar meu projeto",
+    },
+    about: {
+      eyebrow: "Quem está por trás",
+      greeting: "Olá, sou Cristian. Vibecoder certificado.",
+      role: "Fundador · Browns Studio",
+      available: "Disponível",
+      verified: "Freelancer verificado",
+      bio: "Vibecoder certificado pelo Google. Na Browns Studio praticamos a engenharia agêntica para construir sistemas que não apenas funcionam, mas transformam negócios.",
+      certTitle: "Certificado pelo Google em IA",
+      certSub: "Inteligência Artificial com Gemini · Google Cloud",
+      certs: "certs.",
+      certNote: "Cada certificação = uma ferramenta real aplicada ao seu negócio.",
+      ctaBtn: "Vamos conversar sobre seu projeto",
+      certNames: [
+        "AI Fundamentals", "AI for App Building", "AI for Data Analysis",
+        "AI for Content", "AI for Writing", "AI for Research", "AI for Brainstorming",
+      ],
+      certDescs: [
+        "Base sólida em IA", "Apps com IA integrada", "Dados que tomam decisões",
+        "Conteúdo automatizado", "Textos potencializados por IA", "Pesquisa assistida", "Ideias e estratégia com IA",
+      ],
+    },
+    pricing: {
+      eyebrow: "Serviços & Preços",
+      title: "Investimento que se paga sozinho",
+      sub: "Preços claros, sem custos ocultos. Todos em USD.",
+      tabWeb: "Vibecoding",
+      tabAI: "Agentes IA",
+      tabTraining: "Treinamento",
+      popular: "Mais Popular",
+      ctaBtn: "Orçar",
+      combo: "Procurando acelerar seu desenvolvimento? Montamos uma arquitetura agêntica sob medida.",
+      plans: [
+        {
+          name: "Básico",
+          desc: "Para começar online",
+          price: "$200 USD",
+          features: [
+            "Landing page (1 página)",
+            "Design responsivo + WhatsApp",
+            "Implantação ultra-rápida (Edge)",
+            "2 revisões de design incluídas",
+          ],
+        },
+        {
+          name: "Profissional",
+          desc: "O mais escolhido",
+          price: "$500 USD",
+          features: [
+            "Site multi-página (até 5)",
+            "Design premium personalizado",
+            "Arquitetura web moderna",
+            "3 revisões de design incluídas",
+          ],
+        },
+        {
+          name: "Premium",
+          desc: "Solução completa",
+          price: "$800+ USD",
+          features: [
+            "Tudo do Profissional",
+            "Sistema de agendamento online + CMS",
+            "Blog + painel administrativo",
+            "5 revisões + 1 mês de suporte",
+          ],
+        },
+        {
+          name: "Arquitetura Agêntica",
+          desc: "Agentes IA sob medida",
+          price: "Vamos conversar",
+          features: [
+            "Agentes autônomos personalizados",
+            "Automação de fluxos de trabalho",
+            "Integração com Antigravity e AI Studio",
+            "Sistemas agênticos escaláveis",
+          ],
+        },
+      ],
+      trainingPlans: [
+        {
+          name: "Vibecoding Starter",
+          desc: "Sua equipe desenvolvendo com IA em uma sessão",
+          price: "$299 USD",
+          features: [
+            "Sessão ao vivo de 2h (até 5 pessoas)",
+            "Claude, Cursor, AI Studio e Antigravity",
+            "Templates de prompts para sua indústria",
+            "Gravação + documento de resumo incluído",
+          ],
+        },
+        {
+          name: "Programa Engenharia Agêntica",
+          desc: "Transformação técnica completa para sua equipe",
+          price: "$599 USD",
+          features: [
+            "4 sessões × 1.5h em 2 semanas (até 10 pessoas)",
+            "Criação de pipelines com Claude, Codex e AI Studio",
+            "Manual de IA personalizado para seu negócio",
+            "Acompanhamento de 30 dias incluído",
+          ],
+          popular: true,
+        },
+        {
+          name: "Consultoria Estratégica IA",
+          desc: "Roteiro personalizado para seu negócio",
+          price: "$150 USD",
+          priceSuffix: "/ sessão",
+          features: [
+            "90 min de imersão — seus processos, seus objetivos",
+            "Auditoria IA: o que automatizar, o que manter humano",
+            "Roteiro de implementação passo a passo",
+            "Suporte prioritário por WhatsApp por 2 semanas",
+          ],
+        },
+      ],
+    },
+    process: {
+      eyebrow: "Como Trabalhamos",
+      title: "Um processo claro, sem surpresas",
+      steps: [
+        { num: "01", title: "Descoberta", desc: "Reunimo-nos para entender seu negócio e objetivos. Sem custo e sem compromisso.", details: "Definimos o escopo, objetivos e viabilidade técnica do seu projeto. Assessoramos sobre as melhores ferramentas agênticas e integrações de IA para seu caso específico, garantindo uma base sólida." },
+        { num: "02", title: "Design", desc: "Criamos um mockup personalizado para sua aprovação antes de escrever uma linha de código.", details: "Criamos protótipos de alta fidelidade que refletem a experiência final do usuário. Validamos o fluxo de interação e a estética antes do desenvolvimento para garantir que o produto final cumpra sua visão à perfeição." },
+        { num: "03", title: "Desenvolvimento", desc: "Construímos com as tecnologias mais recentes. Revisões ilimitadas até você estar 100% satisfeito.", details: "Utilizamos vibecoding e engenharia agêntica para um desenvolvimento ultra-rápido e robusto. Implementamos integrações nativas com LLMs (Claude, Gemini) e construímos fluxos de automação autônomos." },
+        { num: "04", title: "Lançamento", desc: "Publicamos seu site ou solução IA e ensinamos como gerenciá-la. Suporte contínuo incluído.", details: "Implantação em servidores Edge de alto desempenho para máxima velocidade global. Incluímos treinamento prático para que sua equipe opere e escale o sistema de forma autônoma sem dependência técnica." },
+      ],
+      learnMore: "Saber mais",
+      understood: "Entendido",
+      step: "Passo",
+    },
+    faq: {
+      eyebrow: "FAQ",
+      title: "Suas dúvidas, resolvidas",
+      cta: "Tem uma pergunta que não está aqui? Escreva para nós no WhatsApp.",
+      items: [
+        {
+          q: "Quanto tempo leva para criar meu projeto?",
+          a: "Depende do serviço: uma landing page básica em 5 dias úteis; um site profissional entre 10 e 15 dias; um projeto com chatbot ou IA integrada pode levar 3–4 semanas. Sempre damos um prazo exato na proposta antes de começar.",
+        },
+        {
+          q: "Aceitam pagamentos parcelados?",
+          a: "Sim. Trabalhamos com um esquema de 50% no início e 50% na entrega. Para projetos maiores, também podemos acordar um plano em 3 parcelas. Aceitamos transferência bancária, PayPal e cripto (USDT/USDC).",
+        },
+        {
+          q: "Quantas revisões meu projeto inclui?",
+          a: "Cada plano inclui um número definido de revisões: Básico 2, Profissional 3 e Premium 5. Antes de escrever o código, apresentamos um mockup completo do design para sua aprovação, o que minimiza mudanças na etapa final.",
+        },
+        {
+          q: "Vocês fazem treinamento em IA para empresas ou equipes?",
+          a: "Sim — é um dos nossos serviços principais. Realizamos workshops (presenciais ou remotos) onde sua equipe aprende a usar ferramentas como ChatGPT, Gemini, Notion AI e plataformas de automação como Make ou Zapier. As sessões são adaptadas à sua indústria.",
+        },
+        {
+          q: "Oferecem manutenção e mudanças futuras?",
+          a: "Sim. Após o lançamento, oferecemos planos de manutenção mensal que incluem atualizações de conteúdo, ajustes de design, backup do site e suporte técnico. O plano Premium inclui 1 mês de suporte sem custo.",
+        },
+        {
+          q: "Os preços incluem hospedagem e domínio?",
+          a: "Os preços são pelo desenvolvimento e configuração do site. Hospedagem e domínio são contratados separadamente — recomendamos opções conforme seu orçamento e ajudamos na configuração completa. Custo estimado de USD 10–20 por mês.",
+        },
+      ],
+    },
+    aiShowcase: {
+      eyebrow: "IA · Bots · Treinamento",
+      title: "O que construímos e ensinamos com IA",
+      sub: "De bots personalizados a treinamento de equipe — veja o que é possível quando a IA trabalha para o seu negócio.",
+      videoLabel: "Ver: O que podemos fazer com IA",
+      videoCta: "Ver planos e preços",
+      categories: [
+        {
+          icon: "🤖",
+          title: "Bots que trabalham 24/7",
+          desc: "Bots de WhatsApp que vendem, agendam e respondem o dia todo. Construídos para o seu negócio exato — não um modelo genérico.",
+          tag: "Bot personalizado",
+        },
+        {
+          icon: "⚡",
+          title: "Fluxos no piloto automático",
+          desc: "Conectamos suas ferramentas e eliminamos tarefas repetitivas. Make, Zapier, n8n — automações que economizam horas toda semana.",
+          tag: "Automação",
+        },
+        {
+          icon: "🎓",
+          title: "Equipes que dominam a IA",
+          desc: "Workshops ao vivo onde sua equipe aprende ChatGPT, Gemini, Notion AI e mais — adaptados à sua indústria.",
+          tag: "Workshop ao vivo",
+        },
+        {
+          icon: "🛠️",
+          title: "Crie suas próprias ferramentas de IA",
+          desc: "Ensinamos você a construir ferramentas de IA sob medida com a plataforma do Google — sem código. Sua equipe se torna a especialista.",
+          tag: "Skill de plataforma",
+        },
+      ],
+      ctaTitle: "Sua equipe poderia estar usando IA esta semana.",
+      ctaSub: "Veja os planos e comece a transformação IA em dias, não meses.",
+      ctaBtn: "Ver planos e preços →",
+    },
+    cta: {
+      spots: "RESTAM 3 VAGAS PARA JUNHO",
+      title: "Transforme seu negócio em uma potência agêntica.",
+      sub: "Não apenas fazemos sites. Construímos sistemas autônomos que trabalham, vendem e escalam para você 24/7.",
+      note: "Aceitamos apenas 3 projetos por mês para garantir foco absoluto e excelência técnica.",
+      whatsapp: "Escrever pelo WhatsApp",
+      email: "Enviar um e-mail",
+      check1: "✓ Auditoria Agêntica incluída",
+      check2: "✓ Resposta em < 24h",
+      check3: "✓ Sem compromisso",
+      contactOptions: [
+        { label: "Desenvolvimento Web / Vibecoding", msg: "Olá! Tenho interesse em orçar um projeto de Desenvolvimento Web / Vibecoding." },
+        { label: "Agentes IA & Automação", msg: "Olá! Gostaria de informações sobre Agentes IA e Automação." },
+        { label: "Treinamento & Workshops", msg: "Olá! Tenho interesse em treinamento de IA para minha equipe." },
+        { label: "Outras Consultas", msg: "Olá! Tenho uma pergunta sobre seus serviços." },
+      ],
+    },
+    crypto: {
+      eyebrow: "Pagamentos Rápidos",
+      title: "Aceitamos Criptomoedas",
+      sub: "Pagos sem fronteiras e entrega imediata. Priorizamos a agilidade em cada passo.",
+      features: [
+        { title: "USDT / USDC", desc: "Base, Polygon & Ethereum" },
+        { title: "Bitcoin / ETH", desc: "Pagamentos diretos on-chain" },
+        { title: "Zero Fees", desc: "Sem comissões bancárias" },
+        { title: "Global", desc: "De qualquer lugar" }
+      ]
+    },
+    footer: {
+      nav: "Navegação",
+      services: "Serviços & Preços",
+      portfolio: "Portfólio",
+      process: "Processo",
+      faq: "FAQ",
+      contact: "Contato",
+      rights: "Todos os direitos reservados.",
+      made: "Para negócios que querem crescer com IA — onde quer que você esteja.",
+    },
+    seo: {
+      title: "Browns Studio | Design Web Premium + IA para Negócios",
+      description: "A Browns Studio cria presenças digitais de alto impacto com design web profissional e inteligência artificial. Chatbots, automações e sites que convertem para negócios na América Latina.",
+      keywords: ["desenvolvimento web LATAM", "sites para negócios", "design web profissional", "chatbot WhatsApp para negócios", "bot inteligência artificial", "automação com IA", "site para clínicas", "site para restaurantes", "agência digital LATAM", "presença digital premium", "chatbot IA para clínicas", "chatbot IA para restaurantes"],
+    }
   },
 } as const;
 
