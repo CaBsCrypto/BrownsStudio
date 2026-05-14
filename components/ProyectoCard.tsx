@@ -8,6 +8,7 @@ interface ProyectoCardProps {
 }
 
 export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
+  const { lang, t } = useLang();
   const delayClass = `reveal-delay-${Math.min(index + 1, 4)}`;
 
   const preview = (
@@ -60,7 +61,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
           style={{ background: "rgba(180,30,30,0.92)", color: "#fff", border: "1px solid rgba(255,100,100,0.3)", boxShadow: "0 0 12px rgba(220,38,38,0.4)" }}
         >
           <Wrench size={10} className="animate-pulse" />
-          En Desarrollo
+          {lang === "en" ? "In Development" : lang === "pt" ? "Em Desenvolvimento" : "En Desarrollo"}
         </div>
       )}
 
@@ -74,7 +75,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
             style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)", boxShadow: "0 0 20px rgba(198,198,199,0.15)" }}
           >
             <ExternalLink size={14} />
-            Ver proyecto completo
+            {lang === "en" ? "View full project" : lang === "pt" ? "Ver projeto completo" : "Ver proyecto completo"}
           </div>
           <div className="flex flex-wrap justify-center gap-1.5 max-w-[200px] translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">
             {proyecto.tecnologias.slice(0, 3).map((tech) => (
@@ -105,7 +106,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
           className="px-2 py-0.5 rounded-full text-xs font-medium"
           style={{ background: "rgba(71,196,255,0.08)", color: "#47c4ff", border: "1px solid rgba(71,196,255,0.15)" }}
         >
-          {proyecto.tipo}
+          {proyecto.tipo[lang]}
         </span>
         <span className="text-[#484848] text-xs">{proyecto.año}</span>
         {proyecto.comingSoon && (
@@ -113,13 +114,13 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
             className="px-2 py-0.5 rounded-full text-xs font-medium"
             style={{ background: "rgba(255,255,255,0.03)", color: "#484848", border: "1px solid rgba(72,72,72,0.2)" }}
           >
-            Próximamente
+            {lang === "en" ? "Coming Soon" : lang === "pt" ? "Próximamente" : "Próximamente"}
           </span>
         )}
       </div>
 
       <p className="text-[#9e9e9e] text-sm leading-relaxed mb-4 line-clamp-2">
-        {proyecto.descripcion}
+        {proyecto.descripcion[lang]}
       </p>
 
       {/* Tech chips */}
@@ -139,12 +140,12 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
       {!proyecto.comingSoon ? (
         <div className="pt-4" style={{ borderTop: "1px solid rgba(72,72,72,0.12)" }}>
           <Quote size={12} className="mb-1" style={{ color: "rgba(198,198,199,0.25)" }} fill="currentColor" />
-          <p className="text-[#5a5a5a] text-xs italic leading-relaxed mb-1">{proyecto.quote}</p>
+          <p className="text-[#5a5a5a] text-xs italic leading-relaxed mb-1">{proyecto.quote[lang]}</p>
           <p className="text-[#9e9e9e] text-xs font-medium" style={{ opacity: 0.6 }}>{proyecto.quoteAutor}</p>
         </div>
       ) : (
         <div className="pt-4" style={{ borderTop: "1px solid rgba(72,72,72,0.12)" }}>
-          <p className="text-[#5a5a5a] text-xs italic">{proyecto.resultado}</p>
+          <p className="text-[#5a5a5a] text-xs italic">{proyecto.resultado[lang]}</p>
         </div>
       )}
     </div>
@@ -161,7 +162,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
   if (proyecto.comingSoon) {
     return (
       <Link
-        href={`/proyecto/${proyecto.slug}`}
+        href={`/${lang}/proyecto/${proyecto.slug}`}
         className={`reveal ${delayClass} group block opacity-80 hover:opacity-100`}
         style={cardStyle}
         onMouseEnter={(e) => {
@@ -183,7 +184,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
 
   return (
     <Link
-      href={`/proyecto/${proyecto.slug}`}
+      href={`/${lang}/proyecto/${proyecto.slug}`}
       className={`reveal ${delayClass} group block`}
       style={cardStyle}
       onMouseEnter={(e) => {

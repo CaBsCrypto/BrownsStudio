@@ -24,13 +24,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   }));
 
-  // Case studies (/proyecto/[slug])
-  const proyectoRoutes: MetadataRoute.Sitemap = proyectos.map((p) => ({
-    url: `${base}/proyecto/${p.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  // Case studies (/[locale]/proyecto/[slug])
+  const proyectoRoutes: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
+    proyectos.map((p) => ({
+      url: `${base}/${locale}/proyecto/${p.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }))
+  );
 
   return [...localeRoutes, ...proyectoRoutes];
 }
