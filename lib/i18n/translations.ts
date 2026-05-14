@@ -346,6 +346,8 @@ export const translations = {
           ],
         },
         {
+          name: "Premium",
+          desc: "Solución completa",
           price: "$800+ USD",
           features: [
             "Todo lo del Profesional",

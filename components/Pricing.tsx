@@ -99,7 +99,7 @@ export default function Pricing() {
             {t.pricing.plans.map((plan: { name: string; desc: string; price: string; features: readonly string[]; popular?: boolean }) => (
               <div
                 key={plan.name}
-                className="relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1"
+                className="relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full"
                 style={{
                   background: plan.popular ? "#191919" : "#131313",
                   
@@ -119,25 +119,31 @@ export default function Pricing() {
                   </div>
                 )}
 
-                <div className="mb-6">
+                <div className="mb-6 h-36 flex flex-col">
                   <h3
-                    className="font-display font-bold text-2xl text-[#e5e5e5] mb-0.5"
+                    className="font-display font-bold text-xl sm:text-2xl text-[#e5e5e5] mb-1 line-clamp-2"
                     style={{ letterSpacing: "-0.02em" }}
                   >
                     {plan.name}
                   </h3>
-                  <p className="text-[#5a5a5a] text-sm mb-4">{plan.desc}</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="font-display font-bold text-4xl text-gradient-gold">
+                  <p className="text-[#5a5a5a] text-xs mb-auto">{plan.desc}</p>
+                  <div className="mt-4 flex items-baseline gap-1">
+                    <span 
+                      className={`font-display font-bold text-gradient-gold ${
+                        plan.price.length > 8 ? 'text-2xl' : 'text-3xl sm:text-4xl'
+                      }`}
+                    >
                       {plan.price}
                     </span>
-                    <span className="text-[#5a5a5a] text-sm">USD</span>
+                    {!plan.price.toLowerCase().includes('talk') && !plan.price.toLowerCase().includes('convers') && (
+                      <span className="text-[#5a5a5a] text-xs">USD</span>
+                    )}
                   </div>
                 </div>
 
                 <div className="h-px mb-5" style={{ background: "rgba(72,72,72,0.15)" }} />
 
-                <ul className="space-y-3 mb-6">
+                <ul className="space-y-3 mb-8 flex-grow">
                   {plan.features.map((feature: string) => (
                     <li key={feature} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
                       <Check size={15} className="text-[#c6c6c7] flex-shrink-0 mt-0.5" />
