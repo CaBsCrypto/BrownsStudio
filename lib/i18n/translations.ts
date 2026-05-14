@@ -35,7 +35,7 @@ export const translations = {
       role: "Founder · Browns Studio",
       available: "Available",
       verified: "Verified Freelancer",
-      bio: "Google-certified Vibecoder. At Browns Studio we embrace agentic engineering to build systems that don't just work—they transform businesses.",
+      bio: "Google-certified Vibecoder. At Browns Studio we embrace agentic engineering to build systems that don't just work, they transform businesses.",
       certTitle: "Google Certified in AI",
       certSub: "Artificial Intelligence with Gemini · Google Cloud",
       certs: "certs.",
