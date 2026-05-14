@@ -5,6 +5,7 @@ import { MessageSquare, PenTool, Code2, Rocket } from "lucide-react";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 const stepIcons = [MessageSquare, PenTool, Code2, Rocket];
+const stepColors = ["#00f0ff", "#ff003c", "#939eb5", "#10b981"];
 
 export default function Proceso() {
   const { t } = useLang();
@@ -31,11 +32,16 @@ export default function Proceso() {
     <section
       ref={sectionRef}
       id="proceso"
-      className="section-padding"
+      className="section-padding relative overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto">
+      {/* Background decoration */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-full pointer-events-none opacity-20">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,#00f0ff08_0%,transparent_50%)]" />
+      </div>
+
+      <div className="relative max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-16">
           <div
             className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4"
             style={{ border: "1px solid rgba(198,198,199,0.15)", background: "rgba(198,198,199,0.04)", color: "#9e9e9e" }}
@@ -51,64 +57,77 @@ export default function Proceso() {
         </div>
 
         {/* Steps — horizontal on desktop, roadmap-style */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {t.process.steps.map((step: { num: string; title: string; desc: string }, i: number) => {
             const Icon = stepIcons[i];
+            const color = stepColors[i];
             return (
               <div
                 key={step.num}
-                className={`reveal reveal-delay-${i + 1} group relative p-6 rounded-2xl transition-all duration-500`}
+                className={`reveal reveal-delay-${i + 1} group relative p-8 rounded-3xl transition-all duration-500`}
                 style={{
-                  background: "#191919",
-                  
-                  border: "1px solid rgba(72,72,72,0.12)",
+                  background: "rgba(25, 25, 25, 0.4)",
+                  backdropFilter: "blur(10px)",
+                  border: "1px solid rgba(72,72,72,0.15)",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(198,198,199,0.15)";
-                  (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
+                  (e.currentTarget as HTMLElement).style.borderColor = `${color}40`;
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(-8px)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = `0 12px 30px -10px ${color}15`;
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(72,72,72,0.12)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(72,72,72,0.15)";
                   (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "none";
                 }}
               >
-                {/* Big number — ghost */}
+                {/* Big number — outline style */}
                 <span
-                  className="absolute top-4 right-4 font-display text-4xl font-bold select-none"
-                  style={{ color: "rgba(255,255,255,0.03)" }}
+                  className="absolute top-6 right-6 font-display text-6xl font-black select-none opacity-10 group-hover:opacity-20 transition-opacity duration-500"
+                  style={{ 
+                    color: "transparent", 
+                    WebkitTextStroke: `1px ${color}`,
+                  }}
                 >
                   {step.num}
                 </span>
 
-                {/* Icon */}
+                {/* Icon wrapper */}
                 <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300"
-                  style={{ background: "rgba(198,198,199,0.06)", border: "1px solid rgba(198,198,199,0.12)" }}
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110"
+                  style={{ 
+                    background: `${color}10`, 
+                    border: `1px solid ${color}30`,
+                    boxShadow: `inset 0 0 15px ${color}10`
+                  }}
                 >
-                  <Icon size={20} className="text-[#9e9e9e]" />
+                  <Icon size={24} style={{ color }} />
                 </div>
 
-                {/* Active node indicator — timeline style */}
-                <div
-                  className="absolute top-0 left-6 w-px h-4 -translate-y-full"
-                  style={{ background: i === 0 ? "transparent" : "rgba(72,72,72,0.3)" }}
-                />
-
                 <h3
-                  className="font-display font-semibold text-lg text-[#e5e5e5] mb-2"
+                  className="font-display font-bold text-xl text-[#e5e5e5] mb-3 group-hover:text-white transition-colors duration-300"
                   style={{ letterSpacing: "-0.02em" }}
                 >
                   {step.title}
                 </h3>
-                <p className="text-[#5a5a5a] text-sm leading-relaxed">{step.desc}</p>
+                <p className="text-[#9a9a9a] text-sm leading-relaxed group-hover:text-[#c5c5c5] transition-colors duration-300">
+                  {step.desc}
+                </p>
 
-                {/* Connector dashes */}
-                {i < t.process.steps.length - 1 && (
-                  <div
-                    className="hidden lg:block absolute top-1/2 -right-3 w-6 border-t border-dashed"
-                    style={{ borderColor: "rgba(72,72,72,0.3)" }}
-                  />
-                )}
+                {/* Progress dot — horizontal connector visual */}
+                <div 
+                  className="mt-6 flex items-center gap-2"
+                  aria-hidden="true"
+                >
+                  <div className="h-1 w-8 rounded-full" style={{ background: `linear-gradient(90deg, ${color}, transparent)` }} />
+                  <div className="w-1.5 h-1.5 rounded-full" style={{ background: color }} />
+                </div>
+
+                {/* Vertical timeline line for mobile/tablet */}
+                <div
+                  className="absolute top-0 left-8 w-px h-6 -translate-y-full lg:hidden"
+                  style={{ background: i === 0 ? "transparent" : "rgba(72,72,72,0.3)" }}
+                />
               </div>
             );
           })}

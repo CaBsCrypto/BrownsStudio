@@ -267,6 +267,17 @@ export const translations = {
       check2: "✓ First consult free",
       check3: "✓ No commitment",
     },
+    crypto: {
+      eyebrow: "Fast Payments",
+      title: "We Accept Crypto",
+      sub: "Borderless payments and immediate delivery. We prioritize speed in every step.",
+      features: [
+        { title: "USDT / USDC", desc: "Base, Polygon & Ethereum" },
+        { title: "Bitcoin / ETH", desc: "Direct on-chain payments" },
+        { title: "Zero Fees", desc: "No bank commissions" },
+        { title: "Global", desc: "From anywhere in the world" }
+      ]
+    },
     footer: {
       nav: "Navigation",
       services: "Services & Pricing",
@@ -546,6 +557,17 @@ export const translations = {
       check1: "✓ Respuesta en menos de 24h",
       check2: "✓ Primera consulta gratis",
       check3: "✓ Sin compromiso",
+    },
+    crypto: {
+      eyebrow: "Pagos Rápidos",
+      title: "Aceptamos Criptomonedas",
+      sub: "Pagos sin fronteras y entrega inmediata. Priorizamos la agilidad en cada paso.",
+      features: [
+        { title: "USDT / USDC", desc: "Base, Polygon & Ethereum" },
+        { title: "Bitcoin / ETH", desc: "Pagos directos on-chain" },
+        { title: "Zero Fees", desc: "Sin comisiones bancarias" },
+        { title: "Global", desc: "Desde cualquier lugar" }
+      ]
     },
     footer: {
       nav: "Navegación",
