@@ -8,7 +8,7 @@ import { useLang } from "@/lib/i18n/LanguageContext";
 export default function Pricing() {
   const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
-  const [activeTab, setActiveTab] = useState<"web" | "ia" | "training">("web");
+  const [activeTab, setActiveTab] = useState<"web" | "training">("web");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -77,18 +77,7 @@ export default function Pricing() {
               <Globe size={15} />
               {t.pricing.tabWeb}
             </button>
-            <button
-              onClick={() => setActiveTab("ia")}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300"
-              style={
-                activeTab === "ia"
-                  ? { background: "rgba(71,196,255,0.15)", color: "#47c4ff", boxShadow: "0 0 20px rgba(71,196,255,0.1)", border: "1px solid rgba(71,196,255,0.2)" }
-                  : { color: "#5a5a5a" }
-              }
-            >
-              <Bot size={15} />
-              {t.pricing.tabAI}
-            </button>
+
             <button
               onClick={() => setActiveTab("training")}
               className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300"
@@ -106,7 +95,7 @@ export default function Pricing() {
 
         {/* Web packages */}
         {activeTab === "web" && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
             {t.pricing.plans.map((plan: { name: string; desc: string; price: string; features: readonly string[]; popular?: boolean }) => (
               <div
                 key={plan.name}
@@ -187,81 +176,7 @@ export default function Pricing() {
           </div>
         )}
 
-        {/* IA services */}
-        {activeTab === "ia" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {t.pricing.aiPlans.map((plan: { name: string; desc: string; price: string; priceSuffix?: string; features: readonly string[] }) => (
-              <div
-                key={plan.name}
-                className="relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1"
-                style={{
-                  background: "#0a0f1e",
-                  
-                  border: "1px solid rgba(71,196,255,0.1)",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(71,196,255,0.25)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(71,196,255,0.1)";
-                }}
-              >
-                {/* AI corner orb */}
-                <div
-                  className="absolute top-0 right-0 w-24 h-24 rounded-bl-full pointer-events-none"
-                  style={{ background: "radial-gradient(circle at top right, rgba(71,196,255,0.06) 0%, transparent 70%)" }}
-                />
 
-                <div className="mb-6">
-                  <h3
-                    className="font-display font-bold text-2xl text-[#e5e5e5] mb-0.5"
-                    style={{ letterSpacing: "-0.02em" }}
-                  >
-                    {plan.name}
-                  </h3>
-                  <p className="text-[#5a5a5a] text-sm mb-4">{plan.desc}</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="font-display font-bold text-4xl text-gradient-tertiary">
-                      {plan.price}
-                    </span>
-                    <span className="text-[#5a5a5a] text-sm">
-                      {plan.priceSuffix ?? "USD"}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="h-px mb-5" style={{ background: "rgba(71,196,255,0.1)" }} />
-
-                <ul className="space-y-3 mb-6">
-                  {plan.features.map((feature: string) => (
-                    <li key={feature} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
-                      <Check size={15} className="text-[#47c4ff] flex-shrink-0 mt-0.5" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                <a
-                  href={getWhatsAppWithPackage(plan.name)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-center py-3 rounded-xl text-sm font-semibold transition-all duration-300"
-                  style={{ border: "1px solid rgba(71,196,255,0.2)", color: "#47c4ff" }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = "rgba(71,196,255,0.1)";
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(71,196,255,0.4)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = "transparent";
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(71,196,255,0.2)";
-                  }}
-                >
-                  {t.pricing.ctaBtn} {plan.name}
-                </a>
-              </div>
-            ))}
-          </div>
-        )}
 
         {/* Training plans */}
         {activeTab === "training" && (

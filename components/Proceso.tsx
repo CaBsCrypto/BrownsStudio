@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { MessageSquare, PenTool, Code2, Rocket } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { MessageSquare, PenTool, Code2, Rocket, X } from "lucide-react";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 const stepIcons = [MessageSquare, PenTool, Code2, Rocket];
@@ -10,6 +10,7 @@ const stepColors = ["#00f0ff", "#ff003c", "#939eb5", "#10b981"];
 export default function Proceso() {
   const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
+  const [selectedStep, setSelectedStep] = useState<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,6 +27,15 @@ export default function Proceso() {
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
+  }, []);
+
+  // Close modal on escape key
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedStep(null);
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
   return (
@@ -58,13 +68,14 @@ export default function Proceso() {
 
         {/* Steps — horizontal on desktop, roadmap-style */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {t.process.steps.map((step: { num: string; title: string; desc: string }, i: number) => {
+          {t.process.steps.map((step: { num: string; title: string; desc: string; details: string }, i: number) => {
             const Icon = stepIcons[i];
             const color = stepColors[i];
             return (
               <div
                 key={step.num}
-                className={`reveal reveal-delay-${i + 1} group relative p-8 rounded-3xl transition-all duration-500`}
+                onClick={() => setSelectedStep(i)}
+                className={`reveal reveal-delay-${i + 1} group relative p-8 rounded-3xl transition-all duration-500 cursor-pointer`}
                 style={{
                   background: "rgba(25, 25, 25, 0.4)",
                   backdropFilter: "blur(10px)",
@@ -110,9 +121,14 @@ export default function Proceso() {
                 >
                   {step.title}
                 </h3>
-                <p className="text-[#9a9a9a] text-sm leading-relaxed group-hover:text-[#c5c5c5] transition-colors duration-300">
+                <p className="text-[#9a9a9a] text-sm leading-relaxed group-hover:text-[#c5c5c5] transition-colors duration-300 mb-4">
                   {step.desc}
                 </p>
+
+                <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-white/30 group-hover:text-white/60 transition-colors">
+                  <span>Saber más</span>
+                  <div className="w-1 h-1 rounded-full bg-current" />
+                </div>
 
                 {/* Progress dot — horizontal connector visual */}
                 <div 
@@ -133,6 +149,62 @@ export default function Proceso() {
           })}
         </div>
       </div>
+
+      {/* Pop-up Modal */}
+      {selectedStep !== null && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity"
+            onClick={() => setSelectedStep(null)}
+          />
+          <div 
+            className="relative w-full max-w-lg glass rounded-3xl p-8 md:p-12 border-ghost animate-in fade-in zoom-in duration-300"
+            style={{ 
+              borderColor: `${stepColors[selectedStep]}30`,
+              boxShadow: `0 0 50px ${stepColors[selectedStep]}15`
+            }}
+          >
+            <button 
+              onClick={() => setSelectedStep(null)}
+              className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center bg-white/5 border border-white/10 text-white/50 hover:text-white transition-colors"
+            >
+              <X size={20} />
+            </button>
+
+            <div
+              className="w-16 h-16 rounded-2xl flex items-center justify-center mb-8"
+              style={{ background: `${stepColors[selectedStep]}15`, border: `1px solid ${stepColors[selectedStep]}30` }}
+            >
+              {(() => {
+                const Icon = stepIcons[selectedStep];
+                return <Icon size={32} style={{ color: stepColors[selectedStep] }} />;
+              })()}
+            </div>
+
+            <div className="mb-2 flex items-center gap-3">
+              <span className="text-sm font-mono font-bold" style={{ color: stepColors[selectedStep] }}>Step {t.process.steps[selectedStep].num}</span>
+              <div className="h-px flex-grow bg-white/10" />
+            </div>
+
+            <h3 className="font-display font-bold text-3xl text-white mb-6">
+              {t.process.steps[selectedStep].title}
+            </h3>
+            
+            <p className="text-[#e5e5e5] text-lg leading-relaxed mb-8">
+              {t.process.steps[selectedStep].details}
+            </p>
+
+            <button 
+              onClick={() => setSelectedStep(null)}
+              className="w-full py-4 rounded-2xl font-bold text-black transition-transform active:scale-95"
+              style={{ background: `linear-gradient(135deg, ${stepColors[selectedStep]}, ${stepColors[selectedStep]}dd)` }}
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
+
