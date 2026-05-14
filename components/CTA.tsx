@@ -41,7 +41,7 @@ export default function CTA() {
     <section
       ref={sectionRef}
       id="contacto"
-      className="relative overflow-hidden py-8 md:py-12"
+      className="relative overflow-hidden pt-8 pb-4 md:pt-12 md:pb-6"
     >
       {/* Subtle cyan glow behind content */}
       <div
@@ -66,22 +66,22 @@ export default function CTA() {
 
         {/* Headline */}
         <h2
-          className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#e5e5e5] mb-6 leading-tight"
+          className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#e5e5e5] mb-4 leading-tight"
           style={{ letterSpacing: "-0.03em" }}
         >
           {t.cta.title}
         </h2>
 
-        <p className="reveal reveal-delay-2 text-lg sm:text-xl mb-4 max-w-xl mx-auto leading-relaxed" style={{ color: "#7a7a7a" }}>
+        <p className="reveal reveal-delay-2 text-lg sm:text-xl mb-3 max-w-xl mx-auto leading-relaxed" style={{ color: "#7a7a7a" }}>
           {t.cta.sub}
         </p>
 
-        <p className="reveal reveal-delay-2 text-sm mb-10" style={{ color: "#3a3a3a" }}>
+        <p className="reveal reveal-delay-2 text-sm mb-4" style={{ color: "#3a3a3a" }}>
           {t.cta.note}
         </p>
 
         {/* CTAs */}
-        <div className="reveal reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 relative">
+        <div className="reveal reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 relative">
           <div className="relative w-full sm:w-auto" ref={dropdownRef}>
             <button
               onClick={() => setShowDropdown(!showDropdown)}
