@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Mail, ChevronDown, ExternalLink } from "lucide-react";
 import { SITE_CONFIG, WHATSAPP_URL, getWhatsAppWithPackage } from "@/lib/config";
