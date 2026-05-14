@@ -68,7 +68,7 @@ export const translations = {
           features: [
             "Landing page (1 page)",
             "Responsive design + WhatsApp",
-            "Google Analytics integration",
+            "Ultra-fast deployment (Edge)",
             "2 design revisions included",
           ],
         },
@@ -79,7 +79,7 @@ export const translations = {
           features: [
             "Multi-page website (up to 5)",
             "Custom premium design",
-            "Google Maps integration",
+            "Modern web architecture",
             "3 design revisions included",
           ],
         },
@@ -348,7 +348,7 @@ export const translations = {
           features: [
             "Landing page (1 página)",
             "Diseño responsive + WhatsApp",
-            "Integración con Google Analytics",
+            "Despliegue ultra-rápido (Edge)",
             "2 revisiones de diseño incluidas",
           ],
         },
@@ -359,7 +359,7 @@ export const translations = {
           features: [
             "Web multi-página (hasta 5)",
             "Diseño premium personalizado",
-            "Integración con Google Maps",
+            "Arquitectura web moderna",
             "3 revisiones de diseño incluidas",
           ],
         },
