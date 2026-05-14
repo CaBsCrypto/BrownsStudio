@@ -34,39 +34,48 @@ export default function Portfolio() {
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+
     const handleScroll = () => {
+      const trackWidth = track.offsetWidth;
+      const scrollLeft = track.scrollLeft;
       const cards = track.querySelectorAll<HTMLElement>("[data-card-index]");
-      let closest = 0, minDiff = Infinity;
-      const trackCenter = track.scrollLeft + (track.offsetWidth / 2);
       
+      let closestIdx = 0;
+      let minDistance = Infinity;
+
       cards.forEach((card) => {
         const idx = parseInt(card.dataset.cardIndex!);
         const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
-        const diff = Math.abs(cardCenter - trackCenter);
-        
-        if (diff < minDiff) { 
-          minDiff = diff; 
-          closest = idx; 
+        const trackCenter = scrollLeft + (trackWidth / 2);
+        const distance = Math.abs(cardCenter - trackCenter);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIdx = idx;
         }
       });
-      
-      if (closest !== activeIndex) {
-        setActiveIndex(closest);
+
+      if (closestIdx !== activeIndex) {
+        setActiveIndex(closestIdx);
       }
     };
+
     track.addEventListener("scroll", handleScroll, { passive: true });
     return () => track.removeEventListener("scroll", handleScroll);
-  }, [activeIndex]);
+  }, [activeIndex, total]);
 
   const scrollToCard = useCallback((index: number) => {
     const track = trackRef.current;
     if (!track) return;
     const card = track.querySelector<HTMLElement>(`[data-card-index="${index}"]`);
     if (card) {
-      // Use scrollTo with a bit of offset to ensure it hits the center or snap point
-      track.scrollTo({ 
-        left: card.offsetLeft - (track.offsetWidth - card.offsetWidth) / 2, 
-        behavior: "smooth" 
+      const trackWidth = track.offsetWidth;
+      const cardWidth = card.offsetWidth;
+      const targetScroll = card.offsetLeft - (trackWidth / 2) + (cardWidth / 2);
+      
+      track.scrollTo({
+        left: targetScroll,
+        behavior: "smooth"
       });
     }
   }, []);
@@ -81,19 +90,14 @@ export default function Portfolio() {
     scrollToCard(nextIdx);
   };
 
-  // Autoplay — avanza cada 3.5s, se pausa si el usuario interactúa
   const [paused, setPaused] = useState(false);
   useEffect(() => {
     if (paused) return;
     const timer = setInterval(() => {
-      setActiveIndex((current) => {
-        const next = current >= total - 1 ? 0 : current + 1;
-        scrollToCard(next);
-        return next;
-      });
-    }, 3500);
+      next();
+    }, 4500);
     return () => clearInterval(timer);
-  }, [paused, total, scrollToCard]);
+  }, [paused, activeIndex, total, next]);
 
   return (
     <section
@@ -195,10 +199,10 @@ export default function Portfolio() {
               <div
                 key={proyecto.slug}
                 data-card-index={i}
-                className="flex-none w-[85vw] sm:w-[340px] lg:w-[380px]"
+                className="flex-none w-[88vw] sm:w-[350px] lg:w-[400px]"
                 style={{ scrollSnapAlign: "center" }}
               >
-                <ProyectoCard proyecto={proyecto} index={0} />
+                <ProyectoCard proyecto={proyecto} index={i} />
               </div>
             ))}
           </div>
