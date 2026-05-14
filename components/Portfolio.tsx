@@ -96,7 +96,7 @@ export default function Portfolio() {
     if (paused) return;
     const timer = setInterval(() => {
       next();
-    }, 4500);
+    }, 2500);
     return () => clearInterval(timer);
   }, [paused, activeIndex, total, next]);
 
