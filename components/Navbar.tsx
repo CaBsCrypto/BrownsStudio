@@ -110,9 +110,9 @@ export default function Navbar() {
                 onClick={toggle}
                 className="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono font-semibold transition-all duration-200 hover:scale-105"
                 style={{ border: "1px solid rgba(0,240,255,0.3)", color: "#00f0ff", background: "rgba(0,240,255,0.05)" }}
-                title={lang === "es" ? "Switch to English" : lang === "en" ? "Mudar para Português" : "Cambiar a Español"}
+                title={lang === "en" ? "Cambiar a Español" : lang === "es" ? "Mudar para Português" : "Switch to English"}
               >
-                {lang === "es" ? "EN" : lang === "en" ? "PT" : "ES"}
+                {lang === "en" ? "ES" : lang === "es" ? "PT" : "EN"}
               </button>
               <a
                 href={WHATSAPP_URL}
@@ -183,7 +183,7 @@ export default function Navbar() {
               className="mt-4 flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-xs font-mono font-semibold"
               style={{ border: "1px solid rgba(0,240,255,0.3)", color: "#00f0ff", background: "rgba(0,240,255,0.05)" }}
             >
-              {lang === "es" ? "Switch to English" : lang === "en" ? "Mudar para Português" : "Cambiar a Español"}
+              {lang === "en" ? "Cambiar a Español" : lang === "es" ? "Mudar para Português" : "Switch to English"}
             </button>
           </div>
         </div>

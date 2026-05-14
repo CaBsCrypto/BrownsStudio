@@ -143,6 +143,7 @@ export const translations = {
           ],
         },
       ],
+      aiPlans: [],
     },
     process: {
       eyebrow: "How We Work",
@@ -684,6 +685,7 @@ export const translations = {
           ],
         },
       ],
+      aiPlans: [],
     },
     process: {
       eyebrow: "Como Trabalhamos",

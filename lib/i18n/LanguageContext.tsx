@@ -24,7 +24,7 @@ const Context = createContext<LangCtx>({
   toggle: () => {},
 });
 
-const CYCLE: Lang[] = ["es", "en", "pt"];
+const CYCLE: Lang[] = ["en", "es", "pt"];
 
 function getLangFromPath(pathname: string | null): Lang {
   if (pathname?.startsWith("/en")) return "en";
