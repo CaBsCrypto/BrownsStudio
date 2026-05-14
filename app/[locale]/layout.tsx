@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       template: `%s | ${SITE_CONFIG.name}`,
     },
     description: t.seo.description,
-    keywords: t.seo.keywords,
+    keywords: [...t.seo.keywords],
     alternates: {
       canonical: `${SITE_CONFIG.url}/${locale}`,
       languages: {
