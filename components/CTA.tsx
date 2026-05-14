@@ -1,13 +1,24 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-import { MessageCircle, Mail } from "lucide-react";
-import { SITE_CONFIG, WHATSAPP_URL } from "@/lib/config";
+import { useEffect, useRef, useState } from "react";
+import { MessageCircle, Mail, ChevronDown, ExternalLink } from "lucide-react";
+import { SITE_CONFIG, WHATSAPP_URL, getWhatsAppWithPackage } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 export default function CTA() {
   const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -30,7 +41,7 @@ export default function CTA() {
     <section
       ref={sectionRef}
       id="contacto"
-      className="relative section-padding overflow-hidden"
+      className="relative overflow-hidden py-8 md:py-12"
     >
       {/* Subtle cyan glow behind content */}
       <div
@@ -70,20 +81,40 @@ export default function CTA() {
         </p>
 
         {/* CTAs */}
-        <div className="reveal reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-sm text-black hover:scale-105 transition-all duration-300 w-full sm:w-auto justify-center"
-            style={{
-              background: "linear-gradient(135deg, #c6c6c7, #939eb5)",
-              boxShadow:  "0 0 28px rgba(198,198,199,0.12)",
-            }}
-          >
-            <MessageCircle size={16} className="group-hover:scale-110 transition-transform" />
-            {t.cta.whatsapp}
-          </a>
+        <div className="reveal reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 relative">
+          <div className="relative w-full sm:w-auto" ref={dropdownRef}>
+            <button
+              onClick={() => setShowDropdown(!showDropdown)}
+              className="group flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-sm text-black hover:scale-105 transition-all duration-300 w-full sm:w-auto justify-center"
+              style={{
+                background: "linear-gradient(135deg, #c6c6c7, #939eb5)",
+                boxShadow:  "0 0 28px rgba(198,198,199,0.12)",
+              }}
+            >
+              <MessageCircle size={16} className="group-hover:scale-110 transition-transform" />
+              {t.cta.whatsapp}
+              <ChevronDown size={14} className={`transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
+            </button>
+
+            {/* Dropdown Menu */}
+            {showDropdown && (
+              <div className="absolute bottom-full mb-4 left-0 right-0 sm:left-auto sm:right-auto sm:min-w-[280px] glass rounded-2xl p-2 border-ghost shadow-2xl animate-in slide-in-from-bottom-2 duration-300 z-50">
+                {t.cta.contactOptions.map((opt: { label: string; msg: string }, i: number) => (
+                  <a
+                    key={i}
+                    href={`${WHATSAPP_URL}&text=${encodeURIComponent(opt.msg)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between gap-4 px-4 py-3 rounded-xl text-sm text-[#e5e5e5] hover:bg-white/5 transition-colors group/item"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    <span>{opt.label}</span>
+                    <ExternalLink size={12} className="opacity-0 group-hover/item:opacity-100 transition-opacity text-[#47c4ff]" />
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
           <a
             href={`mailto:${SITE_CONFIG.email}?subject=Consulta de proyecto web&body=Hola, me interesa cotizar un proyecto web para mi negocio.`}
             className="group flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-sm transition-all duration-300 w-full sm:w-auto justify-center"

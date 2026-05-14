@@ -37,31 +37,47 @@ export default function Portfolio() {
     const handleScroll = () => {
       const cards = track.querySelectorAll<HTMLElement>("[data-card-index]");
       let closest = 0, minDiff = Infinity;
+      const trackCenter = track.scrollLeft + (track.offsetWidth / 2);
+      
       cards.forEach((card) => {
-        const idx  = parseInt(card.dataset.cardIndex!);
-        const diff = Math.abs(card.offsetLeft - track.scrollLeft);
-        if (diff < minDiff) { minDiff = diff; closest = idx; }
+        const idx = parseInt(card.dataset.cardIndex!);
+        const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+        const diff = Math.abs(cardCenter - trackCenter);
+        
+        if (diff < minDiff) { 
+          minDiff = diff; 
+          closest = idx; 
+        }
       });
-      setActiveIndex(closest);
+      
+      if (closest !== activeIndex) {
+        setActiveIndex(closest);
+      }
     };
     track.addEventListener("scroll", handleScroll, { passive: true });
     return () => track.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [activeIndex]);
 
   const scrollToCard = useCallback((index: number) => {
     const track = trackRef.current;
     if (!track) return;
     const card = track.querySelector<HTMLElement>(`[data-card-index="${index}"]`);
-    if (card) track.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+    if (card) {
+      // Use scrollTo with a bit of offset to ensure it hits the center or snap point
+      track.scrollTo({ 
+        left: card.offsetLeft - (track.offsetWidth - card.offsetWidth) / 2, 
+        behavior: "smooth" 
+      });
+    }
   }, []);
 
   const prev = () => {
-    const nextIdx = activeIndex === 0 ? total - 1 : activeIndex - 1;
+    const nextIdx = (activeIndex - 1 + total) % total;
     scrollToCard(nextIdx);
   };
 
   const next = () => {
-    const nextIdx = activeIndex === total - 1 ? 0 : activeIndex + 1;
+    const nextIdx = (activeIndex + 1) % total;
     scrollToCard(nextIdx);
   };
 
@@ -179,13 +195,12 @@ export default function Portfolio() {
               <div
                 key={proyecto.slug}
                 data-card-index={i}
-                className="flex-none w-[80vw] sm:w-[340px] lg:w-[380px]"
-                style={{ scrollSnapAlign: "start" }}
+                className="flex-none w-[85vw] sm:w-[340px] lg:w-[380px]"
+                style={{ scrollSnapAlign: "center" }}
               >
                 <ProyectoCard proyecto={proyecto} index={0} />
               </div>
             ))}
-            <div className="flex-none w-4 sm:w-8" aria-hidden="true" />
           </div>
 
           {/* Edge fades — fades to void */}

@@ -231,6 +231,12 @@ export const translations = {
       check1: "✓ Agentic Audit included",
       check2: "✓ 24h response time",
       check3: "✓ No commitment",
+      contactOptions: [
+        { label: "Web Development / Vibecoding", msg: "Hi! I'm interested in a Web Development / Vibecoding project." },
+        { label: "AI Agents & Automation", msg: "Hi! I'd like to know more about AI Agents and Automation." },
+        { label: "Training & Workshops", msg: "Hi! I'm interested in AI training for my team." },
+        { label: "Other Inquiries", msg: "Hi! I have a question about your services." },
+      ],
     },
     crypto: {
       eyebrow: "Fast Payments",
@@ -486,6 +492,12 @@ export const translations = {
       check1: "✓ Auditoría Agéntica incluida",
       check2: "✓ Respuesta en < 24h",
       check3: "✓ Sin compromiso",
+      contactOptions: [
+        { label: "Desarrollo Web / Vibecoding", msg: "¡Hola! Me interesa cotizar un proyecto de Desarrollo Web / Vibecoding." },
+        { label: "Agentes IA & Automatización", msg: "¡Hola! Me gustaría información sobre Agentes IA y Automatización." },
+        { label: "Capacitación & Talleres", msg: "¡Hola! Me interesa capacitación en IA para mi equipo." },
+        { label: "Otras Consultas", msg: "¡Hola! Tengo una consulta sobre sus servicios." },
+      ],
     },
     crypto: {
       eyebrow: "Pagos Rápidos",
