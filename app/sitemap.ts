@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE_CONFIG } from "@/lib/config";
 import { proyectos } from "@/data/proyectos";
 
-const LOCALES = ["es", "en", "pt"] as const;
+const LOCALES = ["es", "en"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = SITE_CONFIG.url.replace(/\/$/, "");
@@ -18,7 +18,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       languages: {
         es: `${base}/es`,
         en: `${base}/en`,
-        pt: `${base}/pt`,
         "x-default": `${base}/es`,
       },
     },

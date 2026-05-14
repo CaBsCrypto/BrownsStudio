@@ -1,7 +1,7 @@
 // ── Middleware: locale detection + admin protection ──────────────────────────
 import { NextRequest, NextResponse } from "next/server";
 
-const LOCALES = ["en", "es", "pt"];
+const LOCALES = ["en", "es"];
 const DEFAULT_LOCALE = "es";
 
 export function middleware(request: NextRequest) {
@@ -39,7 +39,6 @@ export function middleware(request: NextRequest) {
 
     let locale = DEFAULT_LOCALE;
     for (const l of langs) {
-      if (l.startsWith("pt")) { locale = "pt"; break; }     // Brazil / Portugal
       if (l.startsWith("es")) { locale = "es"; break; }     // All Spanish-speaking LATAM
       if (l.startsWith("en")) { locale = "en"; break; }     // USA / Europe (English)
       // Any other language (fr, de, zh, ja, ko…) → continue to next preference
