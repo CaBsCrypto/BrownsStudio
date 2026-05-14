@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, ExternalLink, Quote, Wrench } from "lucide-react";
 import type { Proyecto } from "@/data/proyectos";
+import { useLang } from "@/lib/i18n/LanguageContext";
 
 interface ProyectoCardProps {
   proyecto: Proyecto;
@@ -196,6 +197,8 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
         (e.currentTarget as HTMLElement).style.border = "1px solid rgba(72,72,72,0.15)";
         (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
         (e.currentTarget as HTMLElement).style.boxShadow = "none";
+        track.addEventListener("scroll", handleScroll, { passive: true });
+        return () => track.removeEventListener("scroll", handleScroll);
       }}
     >
       {preview}

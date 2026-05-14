@@ -8,7 +8,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 export default function Portfolio() {
-  const { t } = useLang();
+  const { lang, t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef   = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -55,14 +55,15 @@ export default function Portfolio() {
         }
       });
 
-      if (closestIdx !== activeIndex) {
-        setActiveIndex(closestIdx);
-      }
+      setActiveIndex((current) => {
+        if (closestIdx !== current) return closestIdx;
+        return current;
+      });
     };
 
     track.addEventListener("scroll", handleScroll, { passive: true });
     return () => track.removeEventListener("scroll", handleScroll);
-  }, [activeIndex, total]);
+  }, []); // Only attach listener once to the track
 
   const scrollToCard = useCallback((index: number) => {
     const track = trackRef.current;
@@ -80,15 +81,15 @@ export default function Portfolio() {
     }
   }, []);
 
-  const prev = () => {
+  const prev = useCallback(() => {
     const nextIdx = (activeIndex - 1 + total) % total;
     scrollToCard(nextIdx);
-  };
+  }, [activeIndex, total, scrollToCard]);
 
-  const next = () => {
+  const next = useCallback(() => {
     const nextIdx = (activeIndex + 1) % total;
     scrollToCard(nextIdx);
-  };
+  }, [activeIndex, total, scrollToCard]);
 
   const [paused, setPaused] = useState(false);
   useEffect(() => {
