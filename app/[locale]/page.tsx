@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import SobreMi from "@/components/SobreMi";
 import Pricing from "@/components/Pricing";
-import CryptoPayments from "@/components/CryptoPayments";
 import Portfolio from "@/components/Portfolio";
 import AIShowcase from "@/components/AIShowcase";
 // import Testimonios from "@/components/Testimonios";
@@ -38,7 +37,6 @@ export default async function LocalePage({
       <SobreMi />
       {/* <Testimonios /> */}
       <Pricing />
-      <CryptoPayments />
       <Proceso />
       <FAQ />
       <CTA />
