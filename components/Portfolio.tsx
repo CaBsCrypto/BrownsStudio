@@ -55,8 +55,15 @@ export default function Portfolio() {
     if (card) track.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
   }, []);
 
-  const prev = () => scrollToCard(Math.max(0, activeIndex - 1));
-  const next = () => scrollToCard(Math.min(total - 1, activeIndex + 1));
+  const prev = () => {
+    const nextIdx = activeIndex === 0 ? total - 1 : activeIndex - 1;
+    scrollToCard(nextIdx);
+  };
+
+  const next = () => {
+    const nextIdx = activeIndex === total - 1 ? 0 : activeIndex + 1;
+    scrollToCard(nextIdx);
+  };
 
   // Autoplay — avanza cada 3.5s, se pausa si el usuario interactúa
   const [paused, setPaused] = useState(false);
@@ -111,7 +118,6 @@ export default function Portfolio() {
             </span>
             <button
               onClick={prev}
-              disabled={activeIndex === 0}
               aria-label={t.portfolio.prevLabel}
               className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
               style={{
@@ -134,7 +140,6 @@ export default function Portfolio() {
             </button>
             <button
               onClick={next}
-              disabled={activeIndex >= total - 1}
               aria-label={t.portfolio.nextLabel}
               className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
               style={{
