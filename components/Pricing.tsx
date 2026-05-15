@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, Zap, Globe, Bot, GraduationCap } from "lucide-react";
+import { Check, Zap, Globe, Bot, GraduationCap, MessageCircle } from "lucide-react";
 import { getWhatsAppWithPackage, WHATSAPP_URL } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
