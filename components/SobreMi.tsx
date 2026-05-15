@@ -70,7 +70,7 @@ export default function SobreMi() {
                     className="w-full h-full object-cover grayscale-[0.1] group-hover/photo:grayscale-0 transition-all duration-1000"
                     style={{ objectPosition: "40% 30%" }}
                   />
-                  
+
                   {/* Bottom info overlay */}
                   <div className="absolute inset-x-0 bottom-0 p-8 pt-20 bg-gradient-to-t from-[#121212] via-[#121212]/80 to-transparent">
                     <div className="relative z-10">
@@ -78,7 +78,7 @@ export default function SobreMi() {
                       <h3 className="font-display font-bold text-3xl sm:text-4xl text-white leading-tight mb-4">
                         Cristian <span className="text-white/40">Brown</span>
                       </h3>
-                      
+
                       {/* Availability badge */}
                       <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
                         <span className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_10px_#4ade80]" />
@@ -90,7 +90,7 @@ export default function SobreMi() {
 
                 {/* Platform Ecosystem Marquee */}
                 <div className="py-6 bg-[#161616] border-t border-white/5 overflow-hidden relative">
-                  <div 
+                  <div
                     className="flex gap-4 w-max px-4"
                     style={{
                       animation: "marquee-scroll 25s linear infinite",
@@ -108,12 +108,12 @@ export default function SobreMi() {
                           { name: 'Gemini', icon: Search },
                           { name: 'Labs Google', icon: CheckCircle2 }
                         ].map((tech, i) => (
-                          <div 
-                            key={`${tech.name}-${groupIdx}-${i}`} 
+                          <div
+                            key={`${tech.name}-${groupIdx}-${i}`}
                             className="flex items-center gap-2 px-4 py-2 rounded-full border whitespace-nowrap"
-                            style={{ 
-                              background: "rgba(10,15,30,0.6)", 
-                              border: "1px solid rgba(71,196,255,0.15)" 
+                            style={{
+                              background: "rgba(10,15,30,0.6)",
+                              border: "1px solid rgba(71,196,255,0.15)"
                             }}
                           >
                             <tech.icon size={12} className="text-[#47c4ff]" />

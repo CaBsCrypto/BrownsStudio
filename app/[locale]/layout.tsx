@@ -66,13 +66,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     icons: {
       icon: [
-        { url: "/icon.png?v=3", sizes: "32x32" },
-        { url: "/icon.png?v=3", sizes: "16x16" },
+        { url: "/icon.png?v=4", sizes: "32x32" },
+        { url: "/icon.png?v=4", sizes: "16x16" },
       ],
       apple: [
-        { url: "/icon.png?v=3", sizes: "180x180" },
+        { url: "/icon.png?v=4", sizes: "180x180" },
       ],
-      shortcut: ["/icon.png?v=3"],
+      shortcut: ["/icon.png?v=4"],
     },
   };
 }
