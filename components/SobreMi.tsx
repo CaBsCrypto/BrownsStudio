@@ -97,9 +97,7 @@ export default function SobreMi() {
                 </div>
 
                 {/* Platform Ecosystem Marquee */}
-                <div className="py-10 bg-[#161616] border-t border-white/5 overflow-hidden relative">
-                  <p className="text-[10px] font-mono text-white/20 uppercase tracking-[0.3em] mb-8 text-center">{lang === 'en' ? 'Integrated Systems' : 'Sistemas Integrados'}</p>
-                  
+                <div className="py-12 bg-[#161616] border-t border-white/5 overflow-hidden relative">
                   <div 
                     className="flex gap-4 w-max px-4"
                     style={{
