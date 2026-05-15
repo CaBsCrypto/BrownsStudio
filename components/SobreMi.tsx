@@ -96,33 +96,42 @@ export default function SobreMi() {
                   </div>
                 </div>
 
-                {/* Platform Ecosystem Grid */}
-                <div className="px-10 py-10 bg-[#161616] border-t border-white/5">
-                  <div className="flex items-center justify-between mb-8">
-                    <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em]">Core Ecosystem</span>
-                    <div className="flex gap-1">
-                      <div className="w-1 h-1 rounded-full bg-accent-gold" />
-                      <div className="w-12 h-[1px] bg-white/10 mt-0.5" />
-                    </div>
-                  </div>
+                {/* Platform Ecosystem Marquee */}
+                <div className="py-10 bg-[#161616] border-t border-white/5 overflow-hidden relative">
+                  <p className="text-[10px] font-mono text-white/20 uppercase tracking-[0.3em] mb-8 text-center">{lang === 'en' ? 'Integrated Systems' : 'Sistemas Integrados'}</p>
                   
-                  <div className="grid grid-cols-3 gap-y-10 gap-x-6">
-                    {[
-                      { name: 'Codex', icon: Code2 },
-                      { name: 'Claude', icon: Brain },
-                      { name: 'Antigravity', icon: Lightbulb },
-                      { name: 'AI Studio', icon: PenTool },
-                      { name: 'Gemini', icon: Search },
-                      { name: 'Labs Google', icon: CheckCircle2 }
-                    ].map((tech) => (
-                      <div key={tech.name} className="flex flex-col items-center gap-3 group/tech">
-                        <div className="relative">
-                          <div className="absolute inset-0 bg-accent-gold blur-md opacity-0 group-hover/tech:opacity-20 transition-opacity" />
-                          <tech.icon size={18} className="text-white/40 group-hover/tech:text-accent-gold transition-colors relative z-10" />
-                        </div>
-                        <span className="text-[10px] font-display font-bold text-white/60 group-hover/tech:text-white transition-colors text-center uppercase tracking-wider">
-                          {tech.name}
-                        </span>
+                  <div 
+                    className="flex gap-4 w-max px-4"
+                    style={{
+                      animation: "marquee-scroll 25s linear infinite",
+                      maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+                      WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+                    }}
+                  >
+                    {[...Array(3)].map((_, groupIdx) => (
+                      <div key={groupIdx} className="flex gap-4">
+                        {[
+                          { name: 'Codex', icon: Code2 },
+                          { name: 'Claude', icon: Brain },
+                          { name: 'Antigravity', icon: Lightbulb },
+                          { name: 'AI Studio', icon: PenTool },
+                          { name: 'Gemini', icon: Search },
+                          { name: 'Labs Google', icon: CheckCircle2 }
+                        ].map((tech, i) => (
+                          <div 
+                            key={`${tech.name}-${groupIdx}-${i}`} 
+                            className="flex items-center gap-2 px-4 py-2 rounded-full border whitespace-nowrap"
+                            style={{ 
+                              background: "rgba(10,15,30,0.6)", 
+                              border: "1px solid rgba(71,196,255,0.15)" 
+                            }}
+                          >
+                            <tech.icon size={12} className="text-[#47c4ff]" />
+                            <span className="text-[10px] font-display font-bold text-[#47c4ff] uppercase tracking-wider">
+                              {tech.name}
+                            </span>
+                          </div>
+                        ))}
                       </div>
                     ))}
                   </div>
