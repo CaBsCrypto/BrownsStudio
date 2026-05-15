@@ -97,7 +97,7 @@ export default function SobreMi() {
                 </div>
 
                 {/* Platform Ecosystem Marquee */}
-                <div className="py-12 bg-[#161616] border-t border-white/5 overflow-hidden relative">
+                <div className="py-6 bg-[#161616] border-t border-white/5 overflow-hidden relative">
                   <div 
                     className="flex gap-4 w-max px-4"
                     style={{
@@ -134,14 +134,6 @@ export default function SobreMi() {
                     ))}
                   </div>
                 </div>
-              </div>
-
-              {/* Floating ID Tag */}
-              <div
-                className="absolute -bottom-4 -right-4 px-5 py-3 rounded-2xl backdrop-blur-2xl bg-white/5 border border-white/10 hidden xl:block"
-                style={{ boxShadow: "0 20px 40px rgba(0,0,0,0.4)" }}
-              >
-                <p className="text-[9px] font-mono text-white/30 uppercase tracking-widest mb-0.5">BSTUDIO-SYS-8829-001</p>
               </div>
             </div>
           </div>
