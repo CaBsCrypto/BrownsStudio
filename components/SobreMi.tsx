@@ -62,12 +62,13 @@ export default function SobreMi() {
                 }}
               >
                 {/* Hero Photo Section */}
-                <div className="relative w-full aspect-[5/6] overflow-hidden group/photo">
+                <div className="relative w-full aspect-square overflow-hidden group/photo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/cristian.jpeg"
                     alt="Cristian"
-                    className="w-full h-full object-cover grayscale-[0.1] group-hover/photo:grayscale-0 transition-all duration-1000 scale-105 group-hover/photo:scale-110"
+                    className="w-full h-full object-cover grayscale-[0.1] group-hover/photo:grayscale-0 transition-all duration-1000"
+                    style={{ objectPosition: "50% 30%" }}
                   />
                   
                   {/* Glass Header overlay */}
