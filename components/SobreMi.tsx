@@ -45,24 +45,24 @@ export default function SobreMi() {
         style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(0,240,255,0.03) 0%, transparent 70%)" }}
       />
 
-      <div className="relative max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-16 lg:gap-24 items-start">
+      <div className="relative max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-start">
 
           {/* ── Left — High Impact Identity Cover ────────────────────────── */}
           <div className="reveal">
-            <div className="relative w-full max-w-md mx-auto lg:mx-0">
+            <div className="relative w-full mx-auto lg:mx-0">
 
               {/* Card — Cover style */}
               <div
                 className="relative rounded-[40px] overflow-hidden"
                 style={{
                   background: "#121212",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  boxShadow: "0 50px 100px -20px rgba(0,0,0,0.8)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  boxShadow: "0 40px 80px -20px rgba(0,0,0,0.8)",
                 }}
               >
-                {/* Hero Photo — Ultra Prominent */}
-                <div className="relative w-full aspect-[3/4] overflow-hidden group/photo">
+                {/* Hero Photo Section */}
+                <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden group/photo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/cristian.jpeg"
@@ -71,44 +71,44 @@ export default function SobreMi() {
                   />
                   
                   {/* Glass Header overlay */}
-                  <div className="absolute top-0 inset-x-0 p-8 flex justify-between items-start">
+                  <div className="absolute top-0 inset-x-0 p-6 flex justify-between items-start">
                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-xl bg-black/40 border border-white/10">
                       <div className="w-2 h-2 rounded-full bg-accent-gold animate-pulse" />
-                      <span className="text-[10px] font-mono text-white/80 tracking-widest uppercase">Verified Expert</span>
+                      <span className="text-[9px] font-mono text-white/80 tracking-widest uppercase">Verified Expert</span>
                     </div>
                   </div>
 
                   {/* Bottom info overlay */}
-                  <div className="absolute inset-x-0 bottom-0 p-10 pt-20 bg-gradient-to-t from-[#121212] via-[#121212]/80 to-transparent">
+                  <div className="absolute inset-x-0 bottom-0 p-8 pt-20 bg-gradient-to-t from-[#121212] via-[#121212]/80 to-transparent">
                     <div className="relative z-10">
-                      <p className="text-accent-gold font-mono text-xs uppercase tracking-[0.3em] mb-2">{t.about.role}</p>
-                      <h3 className="font-display font-bold text-4xl sm:text-5xl text-white leading-tight mb-6">
-                        Cristian <span className="block text-white/40">Brown</span>
+                      <p className="text-accent-gold font-mono text-[10px] uppercase tracking-[0.3em] mb-2">{t.about.role}</p>
+                      <h3 className="font-display font-bold text-3xl sm:text-4xl text-white leading-tight mb-4">
+                        Cristian <span className="text-white/40">Brown</span>
                       </h3>
                       
                       {/* Availability badge */}
-                      <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-                        <span className="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_10px_#4ade80]" />
-                        <span className="text-green-400 text-xs font-bold uppercase tracking-widest">{t.about.available}</span>
+                      <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_10px_#4ade80]" />
+                        <span className="text-green-400 text-[10px] font-bold uppercase tracking-widest">{t.about.available}</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Bottom Stats / Details Strip */}
-                <div className="px-10 py-10 bg-[#161616] border-t border-white/5">
-                  <div className="grid grid-cols-3 gap-8">
-                    <div className="space-y-2">
-                      <p className="text-[10px] font-mono text-white/20 uppercase tracking-widest">{lang === 'en' ? 'Portfolio' : 'Proyectos'}</p>
-                      <p className="font-display font-bold text-2xl text-white">+120</p>
+                {/* Bottom Stats Strip */}
+                <div className="px-8 py-8 bg-[#161616] border-t border-white/5">
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="space-y-1">
+                      <p className="text-[9px] font-mono text-white/20 uppercase tracking-widest">{lang === 'en' ? 'Portfolio' : 'Proyectos'}</p>
+                      <p className="font-display font-bold text-xl text-white">+120</p>
                     </div>
-                    <div className="space-y-2">
-                      <p className="text-[10px] font-mono text-white/20 uppercase tracking-widest">{lang === 'en' ? 'Exp.' : 'Exp.'}</p>
-                      <p className="font-display font-bold text-2xl text-white">4.5 <span className="text-xs text-white/40">Yrs</span></p>
+                    <div className="space-y-1">
+                      <p className="text-[9px] font-mono text-white/20 uppercase tracking-widest">{lang === 'en' ? 'Exp.' : 'Exp.'}</p>
+                      <p className="font-display font-bold text-xl text-white">4.5 <span className="text-[10px] text-white/40">Yrs</span></p>
                     </div>
-                    <div className="space-y-2">
-                      <p className="text-[10px] font-mono text-white/20 uppercase tracking-widest">{lang === 'en' ? 'Status' : 'Nivel'}</p>
-                      <p className="font-display font-bold text-2xl text-accent-gold">Senior</p>
+                    <div className="space-y-1">
+                      <p className="text-[9px] font-mono text-white/20 uppercase tracking-widest">{lang === 'en' ? 'Status' : 'Nivel'}</p>
+                      <p className="font-display font-bold text-xl text-accent-gold">Senior</p>
                     </div>
                   </div>
                 </div>
@@ -116,11 +116,10 @@ export default function SobreMi() {
 
               {/* Floating ID Tag */}
               <div
-                className="absolute -bottom-6 -left-6 px-6 py-4 rounded-[20px] backdrop-blur-2xl bg-white/5 border border-white/10 hidden sm:block"
+                className="absolute -bottom-4 -right-4 px-5 py-3 rounded-2xl backdrop-blur-2xl bg-white/5 border border-white/10 hidden xl:block"
                 style={{ boxShadow: "0 20px 40px rgba(0,0,0,0.4)" }}
               >
-                <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-1">Founder @ Browns Studio</p>
-                <p className="text-white font-mono text-xs tracking-tighter">BSTUDIO-SYS-8829-001</p>
+                <p className="text-[9px] font-mono text-white/30 uppercase tracking-widest mb-0.5">BSTUDIO-SYS-8829-001</p>
               </div>
             </div>
           </div>
