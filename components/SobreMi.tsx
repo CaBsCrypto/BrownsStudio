@@ -48,13 +48,13 @@ export default function SobreMi() {
       <div className="relative max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-start">
 
-          {/* ── Left — High Impact Identity Cover ────────────────────────── */}
+          {/* ── Left — Elegant Identity Card ─────────────────────────────── */}
           <div className="reveal">
-            <div className="relative w-full mx-auto lg:mx-0">
+            <div className="relative w-full max-w-sm mx-auto lg:mx-0">
 
               {/* Card — Cover style */}
               <div
-                className="relative rounded-[40px] overflow-hidden"
+                className="relative rounded-[32px] overflow-hidden"
                 style={{
                   background: "#121212",
                   border: "1px solid rgba(255,255,255,0.08)",
@@ -62,7 +62,7 @@ export default function SobreMi() {
                 }}
               >
                 {/* Hero Photo Section */}
-                <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] overflow-hidden group/photo">
+                <div className="relative w-full aspect-[5/6] overflow-hidden group/photo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/cristian.jpeg"
