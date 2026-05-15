@@ -248,6 +248,41 @@ export default function Pricing() {
           </div>
         )}
 
+        {/* Training note callout */}
+        {activeTab === "training" && (t.pricing as any).trainingNote && (
+          <div className="reveal mt-12 max-w-4xl mx-auto">
+            <div 
+              className="rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6"
+              style={{ 
+                background: "rgba(168,85,247,0.05)", 
+                border: "1px solid rgba(168,85,247,0.15)",
+                boxShadow: "0 0 30px rgba(168,85,247,0.03)"
+              }}
+            >
+              <div className="text-center md:text-left">
+                <h4 className="font-display font-bold text-lg text-[#e5e5e5] mb-2">
+                  {(t.pricing as any).trainingNote.title}
+                </h4>
+                <p className="text-[#9e9e9e] text-sm max-w-md">
+                  {(t.pricing as any).trainingNote.desc}
+                </p>
+              </div>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 whitespace-nowrap"
+                style={{ background: "rgba(168,85,247,0.15)", color: "#c084fc", border: "1px solid rgba(168,85,247,0.2)" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(168,85,247,0.25)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(168,85,247,0.15)"; }}
+              >
+                <MessageCircle size={16} />
+                {(t.pricing as any).trainingNote.btn}
+              </a>
+            </div>
+          </div>
+        )}
+
         {/* Bottom note */}
         <p className="reveal text-center text-[#5a5a5a] text-sm mt-8">
           <a

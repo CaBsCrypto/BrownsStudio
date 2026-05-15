@@ -118,7 +118,7 @@ export default function CTA() {
             )}
           </div>
           <a
-            href={`mailto:${SITE_CONFIG.email}?subject=Consulta de proyecto web&body=Hola, me interesa cotizar un proyecto web para mi negocio.`}
+            href={`mailto:${SITE_CONFIG.email}?subject=${encodeURIComponent(t.cta.emailSubject)}&body=${encodeURIComponent(t.cta.emailBody)}`}
             className="group flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-sm transition-all duration-300 w-full sm:w-auto justify-center"
             style={{ border: "1px solid rgba(0,240,255,0.18)", color: "rgba(0,240,255,0.7)" }}
             onMouseEnter={(e) => {

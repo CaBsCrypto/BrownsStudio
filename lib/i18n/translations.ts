@@ -144,6 +144,11 @@ export const translations = {
         },
       ],
       aiPlans: [],
+      trainingNote: {
+        title: "Team Training & Workshops",
+        desc: "Looking for a custom plan for your entire team? We design tailored programs for companies and startups.",
+        btn: "Consult team training"
+      }
     },
     process: {
       eyebrow: "How We Work",
@@ -224,14 +229,21 @@ export const translations = {
       ctaTitle: "Your team could be using AI this week.",
       ctaSub: "See the plans below and start your AI transformation in days, not months.",
       ctaBtn: "View plans & pricing →",
+      trainingConsult: {
+        title: "Looking for a customized AI workshop?",
+        desc: "We tailor our training to your team's specific workflows and tech stack.",
+        btn: "Request a consultation"
+      }
     },
     cta: {
-      spots: "3 SPOTS LEFT FOR JUNE",
-      title: "Turn your business into an agentic powerhouse.",
+      spots: "3 SPOTS REMAINING FOR JUNE",
+      title: "Transform your business into an agentic powerhouse.",
       sub: "We don't just build websites. We build autonomous systems that work, sell, and scale for you 24/7.",
-      note: "We only take 3 projects per month to ensure absolute focus and engineering excellence.",
+      note: "We only accept 3 projects per month to ensure absolute focus and technical excellence.",
       whatsapp: "Chat on WhatsApp",
       email: "Send an email",
+      emailSubject: "Inquiry about high-performance engineering",
+      emailBody: "Hello, I am interested in quoting a project or mentorship for my business.",
       check1: "✓ Agentic Audit included",
       check2: "✓ 24h response time",
       check3: "✓ No commitment",
@@ -415,6 +427,11 @@ export const translations = {
           ],
         },
       ],
+      trainingNote: {
+        title: "Capacitación para Equipos",
+        desc: "¿Buscas un plan a medida para todo tu equipo? Diseñamos programas personalizados para empresas y startups.",
+        btn: "Consulta la capacitación de tu equipo"
+      }
     },
     process: {
       eyebrow: "Cómo Trabajamos",
@@ -495,14 +512,21 @@ export const translations = {
       ctaTitle: "Tu equipo podría estar usando IA esta semana.",
       ctaSub: "Mirá los planes y empezá la transformación IA en días, no meses.",
       ctaBtn: "Ver planes y precios →",
+      trainingConsult: {
+        title: "¿Buscas un taller de IA personalizado?",
+        desc: "Adaptamos nuestra capacitación a los flujos de trabajo específicos y a las herramientas de tu equipo.",
+        btn: "Solicitar consulta"
+      }
     },
     cta: {
-      spots: "QUEDAN 3 CUPOS PARA JUNIO",
+      spots: "RESTAN 3 VAGAS PARA JUNIO",
       title: "Transforma tu negocio en una potencia agéntica.",
       sub: "No solo hacemos webs. Construimos sistemas autónomos que trabajan, venden y escalan por ti 24/7.",
-      note: "Solo tomamos 3 proyectos al mes para garantizar foco absoluto y excelencia técnica.",
+      note: "Aceptamos solo 3 proyectos al mes para garantizar foco absoluto y excelencia técnica.",
       whatsapp: "Escribir por WhatsApp",
-      email: "Enviar un email",
+      email: "Enviar un correo",
+      emailSubject: "Consulta sobre ingeniería de alto rendimiento",
+      emailBody: "Hola, me interesa cotizar un proyecto o mentoría para mi negocio.",
       check1: "✓ Auditoría Agéntica incluida",
       check2: "✓ Respuesta en < 24h",
       check3: "✓ Sin compromiso",
@@ -686,6 +710,11 @@ export const translations = {
         },
       ],
       aiPlans: [],
+      trainingNote: {
+        title: "Treinamento para Equipes",
+        desc: "Procurando um plano personalizado para toda a sua equipe? Projetamos programas sob medida para empresas e startups.",
+        btn: "Consulte o treinamento da sua equipe"
+      }
     },
     process: {
       eyebrow: "Como Trabalhamos",
@@ -774,6 +803,8 @@ export const translations = {
       note: "Aceitamos apenas 3 projetos por mês para garantir foco absoluto e excelência técnica.",
       whatsapp: "Escrever pelo WhatsApp",
       email: "Enviar um e-mail",
+      emailSubject: "Consulta sobre engenharia de alto rendimento",
+      emailBody: "Olá, tenho interesse em orçar um projeto ou mentoria para o meu negócio.",
       check1: "✓ Auditoria Agêntica incluída",
       check2: "✓ Resposta em < 24h",
       check3: "✓ Sem compromisso",
