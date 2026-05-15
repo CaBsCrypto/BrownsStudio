@@ -63,7 +63,7 @@ export default function Portfolio() {
 
     track.addEventListener("scroll", handleScroll, { passive: true });
     return () => track.removeEventListener("scroll", handleScroll);
-  }, []); // Only attach listener once to the track
+  }, [trackRef.current]); // Re-attach if track changes or is finally set
 
   const scrollToCard = useCallback((index: number) => {
     const track = trackRef.current;
@@ -186,8 +186,6 @@ export default function Portfolio() {
 
         {/* Carousel track */}
         <div className="relative"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
           onTouchStart={() => setPaused(true)}
           onTouchEnd={() => setTimeout(() => setPaused(false), 3000)}
         >
