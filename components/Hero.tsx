@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, Sparkles } from "lucide-react";
+import { MessageCircle, Sparkles, ChevronDown, ExternalLink } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
@@ -48,6 +48,19 @@ export default function Hero() {
   const { t } = useLang();
   const heroRef      = useRef<HTMLElement>(null);
   const [statsActive, setStatsActive] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -122,22 +135,43 @@ export default function Hero() {
 
           {/* CTAs */}
           <div className="reveal reveal-delay-3 flex flex-col sm:flex-row items-start gap-4 mb-14">
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm text-black hover:scale-105 transition-all duration-300"
-              style={{
-                background:  "linear-gradient(135deg, #c6c6c7, #939eb5)",
-                boxShadow:   "0 0 28px rgba(198,198,199,0.12)",
-              }}
-            >
-              <MessageCircle size={15} className="group-hover:scale-110 transition-transform" />
-              {t.hero.cta1}
-            </a>
+            <div className="relative w-full sm:w-auto" ref={dropdownRef}>
+              <button
+                onClick={() => setShowDropdown(!showDropdown)}
+                className="group flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm text-black hover:scale-105 transition-all duration-300 w-full sm:w-auto justify-center"
+                style={{
+                  background:  "linear-gradient(135deg, #c6c6c7, #939eb5)",
+                  boxShadow:   "0 0 28px rgba(198,198,199,0.12)",
+                }}
+              >
+                <MessageCircle size={15} className="group-hover:scale-110 transition-transform" />
+                {t.hero.cta1}
+                <ChevronDown size={14} className={`transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Dropdown Menu */}
+              {showDropdown && (
+                <div className="absolute top-full mt-2 left-0 right-0 sm:left-auto sm:right-auto sm:min-w-[280px] glass rounded-2xl p-2 border-ghost shadow-2xl animate-in fade-in slide-in-from-top-2 duration-300 z-50">
+                  {t.cta.contactOptions.map((opt: { label: string; msg: string }, i: number) => (
+                    <a
+                      key={i}
+                      href={`${WHATSAPP_URL}&text=${encodeURIComponent(opt.msg)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between gap-4 px-4 py-3 rounded-xl text-sm text-[#e5e5e5] hover:bg-white/5 transition-colors group/item"
+                      onClick={() => setShowDropdown(false)}
+                    >
+                      <span>{opt.label}</span>
+                      <ExternalLink size={12} className="opacity-0 group-hover/item:opacity-100 transition-opacity text-[#47c4ff]" />
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <button
               onClick={() => document.getElementById("precios")?.scrollIntoView({ behavior: "smooth" })}
-              className="flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm transition-all duration-300"
+              className="flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm transition-all duration-300 w-full sm:w-auto justify-center"
               style={{
                 border: "1px solid rgba(0,240,255,0.2)",
                 color:  "rgba(0,240,255,0.7)",
