@@ -108,10 +108,7 @@ export default function SobreMi() {
                         <img
                           src="/cristian.jpeg"
                           alt="Cristian"
-                          className="w-full h-full object-cover grayscale-[0.2] group-hover/photo:grayscale-0 transition-all duration-500 scale-[2.2]"
-                          style={{
-                            objectPosition: "50% 65%",
-                          }}
+                          className="w-full h-full object-cover grayscale-[0.2] group-hover/photo:grayscale-0 transition-all duration-500"
                         />
                       </div>
                     </div>
