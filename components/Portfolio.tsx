@@ -82,23 +82,29 @@ export default function Portfolio() {
   }, []);
 
   const prev = useCallback(() => {
-    const nextIdx = (activeIndex - 1 + total) % total;
-    scrollToCard(nextIdx);
-  }, [activeIndex, total, scrollToCard]);
+    setActiveIndex((current) => {
+      const nextIdx = (current - 1 + total) % total;
+      scrollToCard(nextIdx);
+      return nextIdx;
+    });
+  }, [total, scrollToCard]);
 
   const next = useCallback(() => {
-    const nextIdx = (activeIndex + 1) % total;
-    scrollToCard(nextIdx);
-  }, [activeIndex, total, scrollToCard]);
+    setActiveIndex((current) => {
+      const nextIdx = (current + 1) % total;
+      scrollToCard(nextIdx);
+      return nextIdx;
+    });
+  }, [total, scrollToCard]);
 
   const [paused, setPaused] = useState(false);
   useEffect(() => {
     if (paused) return;
     const timer = setInterval(() => {
       next();
-    }, 1000);
+    }, 1500);
     return () => clearInterval(timer);
-  }, [paused, activeIndex, total, next]);
+  }, [paused, next]);
 
   return (
     <section
