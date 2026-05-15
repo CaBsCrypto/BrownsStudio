@@ -109,10 +109,10 @@ export const translations = {
       trainingPlans: [
         {
           name: "Vibecoding Starter",
-          desc: "Your team developing with AI in one session",
-          price: "$299 USD",
+          desc: "Your team developing with AI in 4 sessions",
+          price: "$600 USD",
           features: [
-            "2-hour live session (up to 5 people)",
+            "4 live sessions × 1.5h (up to 5 people)",
             "Claude, Cursor, AI Studio & Antigravity",
             "Custom prompt templates for your industry",
             "Session recording + summary doc included",
@@ -121,19 +121,19 @@ export const translations = {
         {
           name: "Agentic Engineering Program",
           desc: "Full technical transformation for your team",
-          price: "$599 USD",
+          price: "$1200 USD",
           features: [
-            "4 sessions × 1.5h over 2 weeks (up to 10 people)",
+            "8 sessions over 4 weeks (up to 10 people)",
             "Pipeline creation with Claude, Codex & AI Studio",
             "Custom AI playbook built for your business",
-            "30-day follow-up support included",
+            "60-day follow-up support included",
           ],
           popular: true,
         },
         {
           name: "AI Strategy Consulting",
           desc: "One-on-one roadmap for your business",
-          price: "$150 USD",
+          price: "$300 USD",
           priceSuffix: "/ session",
           features: [
             "90-min deep dive — your processes, your goals",
@@ -381,8 +381,8 @@ export const translations = {
       trainingPlans: [
         {
           name: "Vibecoding Starter",
-          desc: "Tu equipo desarrollando con IA en una sesión",
-          price: "$299 USD",
+          desc: "Tu equipo desarrollando con IA en 4 sesiones",
+          price: "$600 USD",
           features: [
             "Sesión en vivo de 2h (hasta 5 personas)",
             "Claude, Cursor, AI Studio y Antigravity",
@@ -393,7 +393,7 @@ export const translations = {
         {
           name: "Programa Ingeniería Agéntica",
           desc: "Transformación técnica completa para tu equipo",
-          price: "$599 USD",
+          price: "$1200 USD",
           features: [
             "4 sesiones × 1.5h en 2 semanas (hasta 10 personas)",
             "Creación de pipelines con Claude, Codex y AI Studio",
@@ -405,7 +405,7 @@ export const translations = {
         {
           name: "Consultoría Estratégica IA",
           desc: "Hoja de ruta personalizada para tu negocio",
-          price: "$150 USD",
+          price: "$300 USD",
           priceSuffix: "/ sesión",
           features: [
             "90 min de inmersión — tus procesos, tus objetivos",
@@ -651,8 +651,8 @@ export const translations = {
       trainingPlans: [
         {
           name: "Vibecoding Starter",
-          desc: "Sua equipe desenvolvendo com IA em uma sessão",
-          price: "$299 USD",
+          desc: "Sua equipe desenvolvendo com IA em 4 sessões",
+          price: "$600 USD",
           features: [
             "Sessão ao vivo de 2h (até 5 pessoas)",
             "Claude, Cursor, AI Studio e Antigravity",
@@ -663,7 +663,7 @@ export const translations = {
         {
           name: "Programa Engenharia Agêntica",
           desc: "Transformação técnica completa para sua equipe",
-          price: "$599 USD",
+          price: "$1200 USD",
           features: [
             "4 sessões × 1.5h em 2 semanas (até 10 pessoas)",
             "Criação de pipelines com Claude, Codex e AI Studio",
@@ -675,7 +675,7 @@ export const translations = {
         {
           name: "Consultoria Estratégica IA",
           desc: "Roteiro personalizado para seu negócio",
-          price: "$150 USD",
+          price: "$300 USD",
           priceSuffix: "/ sessão",
           features: [
             "90 min de imersão — seus processos, seus objetivos",
