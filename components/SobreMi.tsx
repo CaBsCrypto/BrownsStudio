@@ -80,73 +80,61 @@ export default function SobreMi() {
                 </div>
 
                 {/* Identity Content Area */}
-                <div className="relative p-8">
-                  {/* Background Accents */}
-                  <div
-                    className="absolute inset-0 opacity-10"
-                    style={{
-                      backgroundImage: "radial-gradient(circle, #fff 0.5px, transparent 0.5px)",
-                      backgroundSize: "20px 20px",
-                    }}
-                  />
-
-                  <div className="relative z-10 flex flex-col items-center sm:flex-row sm:items-start gap-8">
-                    {/* Left: Photo */}
-                    <div className="relative flex-shrink-0 group/photo">
-                      <div className="absolute inset-0 rounded-2xl bg-accent-gold blur-xl opacity-20 group-hover/photo:opacity-40 transition-opacity" />
-                      <div className="relative w-32 h-32 rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src="/cristian.jpeg"
-                          alt="Cristian"
-                          className="w-full h-full object-cover grayscale-[0.2] group-hover/photo:grayscale-0 transition-all duration-500"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Right: Key Stats */}
-                    <div className="flex flex-col gap-5 pt-2">
-                      <div className="space-y-1">
-                        <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest">{lang === 'en' ? 'Projects' : 'Proyectos'}</p>
-                        <p className="font-display font-bold text-2xl text-white">+120</p>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest">{lang === 'en' ? 'Experience' : 'Experiencia'}</p>
-                        <p className="font-display font-bold text-2xl text-white">4.5 <span className="text-xs text-white/40">{lang === 'en' ? 'Years' : 'Años'}</span></p>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest">{lang === 'en' ? 'Efficiency' : 'Eficiencia'}</p>
-                        <p className="font-display font-bold text-2xl text-accent-gold">99.8%</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Skills Strip */}
-                  <div className="relative z-10 flex flex-wrap gap-2 mt-8 pt-6 border-t border-white/5">
-                    {skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-2.5 py-1 rounded bg-white/[0.03] border border-white/5 text-[10px] font-mono text-white/50 uppercase tracking-tight"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Identity Footer */}
-                <div className="px-8 py-6 bg-white/[0.02] border-t border-white/5">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-display font-bold text-xl text-white leading-tight">{t.about.greeting}</h3>
-                      <p className="text-white/40 text-sm mt-1">{t.about.role}</p>
-                    </div>
+                <div className="relative">
+                  {/* Hero Photo Section */}
+                  <div className="relative w-full aspect-[4/5] overflow-hidden group/photo">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/cristian.jpeg"
+                      alt="Cristian"
+                      className="w-full h-full object-cover grayscale-[0.2] group-hover/photo:grayscale-0 transition-all duration-700 scale-105 group-hover/photo:scale-110"
+                    />
+                    {/* Bottom fade for text legibility if needed */}
+                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#161616] to-transparent" />
+                    
+                    {/* Floating status on photo */}
                     <div
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-full"
-                      style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)" }}
+                      className="absolute bottom-4 left-6 flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-black/40 border border-white/10"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                      <span className="text-green-400 text-[10px] font-bold uppercase tracking-wider">{t.about.available}</span>
+                      <span className="text-green-400 text-[9px] font-bold uppercase tracking-wider">{t.about.available}</span>
+                    </div>
+                  </div>
+
+                  {/* Info Section */}
+                  <div className="p-8 pt-6">
+                    {/* Name & Role */}
+                    <div className="mb-6">
+                      <h3 className="font-display font-bold text-2xl text-white leading-tight">{t.about.greeting}</h3>
+                      <p className="text-accent-gold text-sm font-mono mt-1 uppercase tracking-wider">{t.about.role}</p>
+                    </div>
+
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-3 gap-4 py-6 border-y border-white/5">
+                      <div className="space-y-1">
+                        <p className="text-[9px] font-mono text-white/30 uppercase tracking-widest">{lang === 'en' ? 'Projects' : 'Proyectos'}</p>
+                        <p className="font-display font-bold text-lg text-white">+120</p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-[9px] font-mono text-white/30 uppercase tracking-widest">{lang === 'en' ? 'Exp.' : 'Exp.'}</p>
+                        <p className="font-display font-bold text-lg text-white">4.5 <span className="text-[10px] text-white/40">{lang === 'en' ? 'Yrs' : 'Años'}</span></p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-[9px] font-mono text-white/30 uppercase tracking-widest">{lang === 'en' ? 'Rate' : 'Tasa'}</p>
+                        <p className="font-display font-bold text-lg text-accent-gold">99.8%</p>
+                      </div>
+                    </div>
+
+                    {/* Skills Strip */}
+                    <div className="flex flex-wrap gap-2 mt-6">
+                      {skills.map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-2 py-0.5 rounded bg-white/[0.03] border border-white/5 text-[9px] font-mono text-white/40 uppercase tracking-tight"
+                        >
+                          {skill}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
