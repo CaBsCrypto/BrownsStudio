@@ -31,7 +31,7 @@ export const translations = {
     },
     about: {
       eyebrow: "Who's behind it",
-      greeting: "Hi, I'm Cristian. Certified Vibecoder.",
+      greeting: "Hi, I'm Cristian. Founder of Browns Studio.",
       role: "Founder · Browns Studio",
       available: "Available",
       verified: "Verified Freelancer",
@@ -302,7 +302,7 @@ export const translations = {
     },
     about: {
       eyebrow: "Quién está detrás",
-      greeting: "Hola, soy Cristian. Vibecoder certificado.",
+      greeting: "Hola, soy Cristian. Founder de Browns Studio.",
       role: "Founder de Browns Studio",
       available: "Disponible",
       verified: "Freelance verificado",
@@ -573,7 +573,7 @@ export const translations = {
     },
     about: {
       eyebrow: "Quem está por trás",
-      greeting: "Olá, sou Cristian. Vibecoder certificado.",
+      greeting: "Olá, sou Cristian. Founder da Browns Studio.",
       role: "Founder da Browns Studio",
       available: "Disponível",
       verified: "Freelancer verificado",
