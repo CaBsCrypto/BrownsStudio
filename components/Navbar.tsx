@@ -66,13 +66,14 @@ export default function Navbar() {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
 
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group" aria-label={SITE_CONFIG.name}>
-              <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center"
-                style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)" }}
-              >
-                <span className="text-black font-display font-bold text-[11px] leading-none">BS</span>
+            <Link href="/" className="flex items-center gap-3 group" aria-label={SITE_CONFIG.name}>
+              <div className="relative">
+                <div className="absolute inset-0 bg-accent-gold/20 blur-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <img 
+                  src="/icon.png?v=5" 
+                  alt="Logo" 
+                  className="w-9 h-9 object-contain relative z-10 transition-transform duration-500 group-hover:scale-110" 
+                />
               </div>
               <span className="font-display font-semibold text-lg tracking-wide text-[#e5e5e5] group-hover:text-[#c6c6c7] transition-colors duration-300">
                 BROWNS{" "}
