@@ -52,8 +52,8 @@ export const translations = {
     },
     pricing: {
       eyebrow: "Services & Pricing",
-      title: "Investment that pays for itself",
-      sub: "Clear pricing, no hidden costs. All in USD.",
+      title: "Strategic Digital Infrastructure",
+      sub: "Transparent pricing models built for sustainable business scaling.",
       tabWeb: "Vibecoding",
       tabAI: "AI Agents",
       tabTraining: "Training",
@@ -323,8 +323,8 @@ export const translations = {
     },
     pricing: {
       eyebrow: "Servicios & Precios",
-      title: "Inversión que se paga sola",
-      sub: "Precios claros, sin costos ocultos. Todos en USD.",
+      title: "Inversión en Infraestructura Digital",
+      sub: "Modelos de precios transparentes diseñados para el escalamiento estratégico.",
       tabWeb: "Vibecoding",
       tabAI: "Agentes IA",
       tabTraining: "Capacitación",
@@ -594,8 +594,8 @@ export const translations = {
     },
     pricing: {
       eyebrow: "Serviços & Preços",
-      title: "Investimento que se paga sozinho",
-      sub: "Preços claros, sem custos ocultos. Todos em USD.",
+      title: "Investimento em Infraestrutura Digital",
+      sub: "Modelos de preços transparentes projetados para escala estratégica.",
       tabWeb: "Vibecoding",
       tabAI: "Agentes IA",
       tabTraining: "Treinamento",
