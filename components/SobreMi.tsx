@@ -71,14 +71,6 @@ export default function SobreMi() {
                     style={{ objectPosition: "50% 30%" }}
                   />
                   
-                  {/* Glass Header overlay */}
-                  <div className="absolute top-0 inset-x-0 p-6 flex justify-between items-start">
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-xl bg-black/40 border border-white/10">
-                      <div className="w-2 h-2 rounded-full bg-accent-gold animate-pulse" />
-                      <span className="text-[9px] font-mono text-white/80 tracking-widest uppercase">Verified Expert</span>
-                    </div>
-                  </div>
-
                   {/* Bottom info overlay */}
                   <div className="absolute inset-x-0 bottom-0 p-8 pt-20 bg-gradient-to-t from-[#121212] via-[#121212]/80 to-transparent">
                     <div className="relative z-10">
