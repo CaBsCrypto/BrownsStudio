@@ -52,8 +52,8 @@ export const translations = {
     },
     pricing: {
       eyebrow: "Services & Pricing",
-      title: "Strategic Digital Infrastructure",
-      sub: "Transparent pricing models built for sustainable business scaling.",
+      title: "High-Performance Engineering & Mentorship",
+      sub: "Technological solutions and knowledge transfer for businesses that demand more than the standard.",
       tabWeb: "Vibecoding",
       tabAI: "AI Agents",
       tabTraining: "Training",
@@ -323,8 +323,8 @@ export const translations = {
     },
     pricing: {
       eyebrow: "Servicios & Precios",
-      title: "Inversión en Infraestructura Digital",
-      sub: "Modelos de precios transparentes diseñados para el escalamiento estratégico.",
+      title: "Ingeniería y Mentoría de Alto Rendimiento",
+      sub: "Soluciones tecnológicas y transferencia de conocimiento para empresas que no se conforman con lo estándar.",
       tabWeb: "Vibecoding",
       tabAI: "Agentes IA",
       tabTraining: "Capacitación",
@@ -594,8 +594,8 @@ export const translations = {
     },
     pricing: {
       eyebrow: "Serviços & Preços",
-      title: "Investimento em Infraestrutura Digital",
-      sub: "Modelos de preços transparentes projetados para escala estratégica.",
+      title: "Engenharia e Mentoria de Alto Rendimento",
+      sub: "Soluções tecnológicas e transferência de conhecimento para empresas que não se conformam com o padrão.",
       tabWeb: "Vibecoding",
       tabAI: "Agentes IA",
       tabTraining: "Treinamento",
