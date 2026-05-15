@@ -9,6 +9,7 @@ import {
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { translations, type Lang } from "./translations";
+export type { Lang };
 
 type T = typeof translations.en;
 
