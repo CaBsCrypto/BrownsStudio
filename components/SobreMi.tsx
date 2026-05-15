@@ -100,20 +100,21 @@ export default function SobreMi() {
                     style={{ background: "radial-gradient(circle, rgba(71,196,255,0.1) 0%, transparent 70%)" }}
                   />
 
-                  {/* Profile Photo */}
-                  <div className="relative z-10 mb-6 group/photo">
-                    <div className="absolute inset-0 rounded-2xl bg-accent-gold blur opacity-20 group-hover/photo:opacity-40 transition-opacity" />
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src="/cristian.jpeg"
-                      alt="Cristian"
-                      className="relative z-10 w-28 h-28 rounded-2xl object-cover grayscale-[0.2] group-hover/photo:grayscale-0 transition-all duration-500"
-                      style={{
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        boxShadow: "0 12px 32px rgba(0,0,0,0.4)",
-                      }}
-                    />
-                  </div>
+                    {/* Profile Photo */}
+                    <div className="relative z-10 mb-6 group/photo">
+                      <div className="absolute inset-0 rounded-2xl bg-accent-gold blur-xl opacity-20 group-hover/photo:opacity-40 transition-opacity" />
+                      <div className="relative z-10 w-32 h-32 rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src="/cristian.jpeg"
+                          alt="Cristian"
+                          className="w-full h-full object-cover grayscale-[0.2] group-hover/photo:grayscale-0 transition-all duration-500 scale-[2.2]"
+                          style={{
+                            objectPosition: "50% 65%",
+                          }}
+                        />
+                      </div>
+                    </div>
 
                   {/* Skill chips */}
                   <div className="relative z-10 flex flex-wrap justify-center gap-2 max-w-[220px]">
