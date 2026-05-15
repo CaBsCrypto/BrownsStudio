@@ -118,6 +118,7 @@ export const translations = {
             "Expert-level prompt engineering templates",
             "Session recording + source code included",
           ],
+          popular: true,
         },
         {
           name: "Agentic Swarm Mastery",
@@ -129,7 +130,6 @@ export const translations = {
             "Private architecture audit & optimization",
             "60-day priority engineering support",
           ],
-          popular: true,
         },
         {
           name: "Executive AI Strategy",
@@ -414,6 +414,7 @@ export const translations = {
             "Plantillas de ingeniería de prompts de nivel experto",
             "Grabación + código fuente de las sesiones",
           ],
+          popular: true,
         },
         {
           name: "Mastery en Swarms Agénticos",
@@ -425,7 +426,6 @@ export const translations = {
             "Auditoría y optimización de arquitectura privada",
             "Soporte de ingeniería prioritario por 60 días",
           ],
-          popular: true,
         },
         {
           name: "Estrategia IA Ejecutiva",
@@ -708,6 +708,7 @@ export const translations = {
             "Templates de engenharia de prompts de nível expert",
             "Gravação + código-fonte das sessões",
           ],
+          popular: true,
         },
         {
           name: "Mastery em Swarms Agênticos",
@@ -719,7 +720,6 @@ export const translations = {
             "Auditoria e otimização de arquitetura privada",
             "Suporte de engenharia prioritário por 60 dias",
           ],
-          popular: true,
         },
         {
           name: "Estratégia IA Executiva",
