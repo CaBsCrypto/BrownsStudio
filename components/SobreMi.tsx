@@ -13,7 +13,7 @@ const certIcons: LucideIcon[] = [Brain, Code2, BarChart3, FileText, PenTool, Sea
 const skills = ["Antigravity", "AI Studio", "Claude", "Codex", "OpenCode"];
 
 export default function SobreMi() {
-  const { t } = useLang();
+  const { lang, t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -62,48 +62,39 @@ export default function SobreMi() {
               <div
                 className="relative rounded-3xl overflow-hidden"
                 style={{
-                  background: "#191919",
-                  
-                  border: "1px solid rgba(72,72,72,0.15)",
-                  boxShadow: "0 32px 64px rgba(0,0,0,0.6)",
+                  background: "#161616",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  boxShadow: "0 40px 80px rgba(0,0,0,0.7)",
                 }}
               >
-                {/* Identity hero area */}
-                <div
-                  className="aspect-square flex flex-col items-center justify-center relative overflow-hidden p-8"
-                  style={{ background: "linear-gradient(135deg, #0a0f1e 0%, #131313 60%, #0e0e0e 100%)" }}
-                >
-                  {/* Dot grid */}
+                {/* Technical Header */}
+                <div className="flex items-center justify-between px-6 py-3 bg-white/5 border-b border-white/5">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
+                    <span className="text-[10px] font-mono text-white/40 tracking-[0.2em] uppercase">ID: 2026-VIBE-001</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-white/5 border border-white/5">
+                    <CheckCircle2 size={10} className="text-accent-gold" />
+                    <span className="text-[9px] font-mono text-accent-gold uppercase tracking-wider">{t.about.verified}</span>
+                  </div>
+                </div>
+
+                {/* Identity Content Area */}
+                <div className="relative p-8">
+                  {/* Background Accents */}
                   <div
-                    className="absolute inset-0 opacity-15"
+                    className="absolute inset-0 opacity-10"
                     style={{
-                      backgroundImage: "radial-gradient(circle, #939eb5 1px, transparent 1px)",
-                      backgroundSize: "24px 24px",
+                      backgroundImage: "radial-gradient(circle, #fff 0.5px, transparent 0.5px)",
+                      backgroundSize: "20px 20px",
                     }}
                   />
-                  {/* Concentric rings */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    {[160, 220, 280].map((size) => (
-                      <div
-                        key={size}
-                        className="absolute rounded-full"
-                        style={{
-                          width: size, height: size,
-                          border: "1px solid rgba(147,158,181,0.08)",
-                        }}
-                      />
-                    ))}
-                  </div>
-                  {/* AI orb */}
-                  <div
-                    className="absolute top-8 right-8 w-20 h-20 rounded-full blur-2xl"
-                    style={{ background: "radial-gradient(circle, rgba(71,196,255,0.1) 0%, transparent 70%)" }}
-                  />
 
-                    {/* Profile Photo */}
-                    <div className="relative z-10 mb-6 group/photo">
+                  <div className="relative z-10 flex flex-col items-center sm:flex-row sm:items-start gap-8">
+                    {/* Left: Photo */}
+                    <div className="relative flex-shrink-0 group/photo">
                       <div className="absolute inset-0 rounded-2xl bg-accent-gold blur-xl opacity-20 group-hover/photo:opacity-40 transition-opacity" />
-                      <div className="relative z-10 w-32 h-32 rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
+                      <div className="relative w-32 h-32 rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src="/cristian.jpeg"
@@ -113,17 +104,29 @@ export default function SobreMi() {
                       </div>
                     </div>
 
-                  {/* Skill chips */}
-                  <div className="relative z-10 flex flex-wrap justify-center gap-2 max-w-[220px]">
+                    {/* Right: Key Stats */}
+                    <div className="flex flex-col gap-5 pt-2">
+                      <div className="space-y-1">
+                        <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest">{lang === 'en' ? 'Projects' : 'Proyectos'}</p>
+                        <p className="font-display font-bold text-2xl text-white">+120</p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest">{lang === 'en' ? 'Experience' : 'Experiencia'}</p>
+                        <p className="font-display font-bold text-2xl text-white">4.5 <span className="text-xs text-white/40">{lang === 'en' ? 'Years' : 'Años'}</span></p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest">{lang === 'en' ? 'Efficiency' : 'Eficiencia'}</p>
+                        <p className="font-display font-bold text-2xl text-accent-gold">99.8%</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Skills Strip */}
+                  <div className="relative z-10 flex flex-wrap gap-2 mt-8 pt-6 border-t border-white/5">
                     {skills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-2.5 py-1 rounded-full text-xs font-medium"
-                        style={{
-                          background: "rgba(255,255,255,0.05)",
-                          border: "1px solid rgba(72,72,72,0.3)",
-                          color: "#9e9e9e",
-                        }}
+                        className="px-2.5 py-1 rounded bg-white/[0.03] border border-white/5 text-[10px] font-mono text-white/50 uppercase tracking-tight"
                       >
                         {skill}
                       </span>
@@ -131,39 +134,21 @@ export default function SobreMi() {
                   </div>
                 </div>
 
-                {/* Name badge */}
-                <div
-                  className="p-5"
-                  style={{ borderTop: "1px solid rgba(72,72,72,0.2)" }}
-                >
+                {/* Identity Footer */}
+                <div className="px-8 py-6 bg-white/[0.02] border-t border-white/5">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-display font-bold text-xl text-[#e5e5e5]">{t.about.greeting}</p>
-                      <p className="text-[#5a5a5a] text-sm">{t.about.role}</p>
+                      <h3 className="font-display font-bold text-xl text-white leading-tight">{t.about.greeting}</h3>
+                      <p className="text-white/40 text-sm mt-1">{t.about.role}</p>
                     </div>
                     <div
-                      className="flex items-center gap-1.5 px-3 py-1 rounded-full"
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-full"
                       style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)" }}
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                      <span className="text-green-400 text-xs font-medium">{t.about.available}</span>
+                      <span className="text-green-400 text-[10px] font-bold uppercase tracking-wider">{t.about.available}</span>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* Floating verification badge */}
-              <div
-                className="absolute -bottom-4 -right-2 lg:right-0 px-3 py-2 rounded-2xl"
-                style={{
-                  background: "#191919",
-                  border: "1px solid rgba(72,72,72,0.2)",
-                  boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-                }}
-              >
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-[#c6c6c7]" />
-                  <span className="text-[#9e9e9e] text-xs font-medium">{t.about.verified}</span>
                 </div>
               </div>
             </div>
