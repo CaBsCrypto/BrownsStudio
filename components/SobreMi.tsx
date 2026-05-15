@@ -96,23 +96,31 @@ export default function SobreMi() {
                   </div>
                 </div>
 
-                {/* Core AI Tech Stack */}
-                <div className="px-8 py-10 bg-[#161616] border-t border-white/5">
-                  <p className="text-[10px] font-mono text-white/20 uppercase tracking-[0.3em] mb-8 text-center">{lang === 'en' ? 'Core Platform Stack' : 'Stack de Plataformas Core'}</p>
+                {/* System Stack Modules */}
+                <div className="px-10 py-10 bg-[#161616] border-t border-white/5">
+                  <div className="flex items-center gap-2 mb-8">
+                    <div className="w-1 h-3 bg-accent-gold rounded-full" />
+                    <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.3em]">System Modules</span>
+                  </div>
                   
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 gap-x-12 gap-y-6">
                     {[
                       'Codex', 'Claude', 'Antigravity',
                       'AI Studio', 'Gemini', 'Labs Google'
                     ].map((tech) => (
-                      <div 
-                        key={tech} 
-                        className="flex flex-col items-center justify-center p-3 rounded-xl bg-white/[0.03] border border-white/5 group/tech hover:border-accent-gold/30 transition-all duration-300"
-                      >
-                        <div className="w-1.5 h-1.5 rounded-full bg-white/20 group-hover/tech:bg-accent-gold mb-2 transition-colors" />
-                        <span className="text-[10px] font-display font-bold text-white/70 group-hover/tech:text-white transition-colors text-center leading-tight">
-                          {tech}
-                        </span>
+                      <div key={tech} className="group/item relative">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-mono text-white/70 group-hover/item:text-white transition-colors">{tech}</span>
+                          <div className="flex gap-0.5">
+                            {[1, 2, 3].map((i) => (
+                              <div 
+                                key={i} 
+                                className={`w-1 h-1 rounded-full ${i === 3 ? 'bg-accent-gold' : 'bg-white/10'}`} 
+                              />
+                            ))}
+                          </div>
+                        </div>
+                        <div className="mt-2 h-[1px] w-full bg-gradient-to-r from-white/10 to-transparent" />
                       </div>
                     ))}
                   </div>
