@@ -46,98 +46,81 @@ export default function SobreMi() {
       />
 
       <div className="relative max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-16 lg:gap-24 items-start">
 
-          {/* ── Left — Glass identity card ──────────────────────────────── */}
+          {/* ── Left — High Impact Identity Cover ────────────────────────── */}
           <div className="reveal">
-            <div className="relative w-full max-w-sm mx-auto lg:mx-0">
+            <div className="relative w-full max-w-md mx-auto lg:mx-0">
 
-              {/* Ambient glow behind the card */}
+              {/* Card — Cover style */}
               <div
-                className="absolute inset-0 rounded-3xl blur-2xl scale-95 pointer-events-none"
-                style={{ background: "radial-gradient(ellipse, rgba(147,158,181,0.08) 0%, transparent 70%)" }}
-              />
-
-              {/* Card — glass sheet */}
-              <div
-                className="relative rounded-3xl overflow-hidden"
+                className="relative rounded-[40px] overflow-hidden"
                 style={{
-                  background: "#161616",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  boxShadow: "0 40px 80px rgba(0,0,0,0.7)",
+                  background: "#121212",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  boxShadow: "0 50px 100px -20px rgba(0,0,0,0.8)",
                 }}
               >
-                {/* Technical Header */}
-                <div className="flex items-center justify-between px-6 py-3 bg-white/5 border-b border-white/5">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
-                    <span className="text-[10px] font-mono text-white/40 tracking-[0.2em] uppercase">ID: 2026-VIBE-001</span>
+                {/* Hero Photo — Ultra Prominent */}
+                <div className="relative w-full aspect-[3/4] overflow-hidden group/photo">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/cristian.jpeg"
+                    alt="Cristian"
+                    className="w-full h-full object-cover grayscale-[0.1] group-hover/photo:grayscale-0 transition-all duration-1000 scale-105 group-hover/photo:scale-110"
+                  />
+                  
+                  {/* Glass Header overlay */}
+                  <div className="absolute top-0 inset-x-0 p-8 flex justify-between items-start">
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-xl bg-black/40 border border-white/10">
+                      <div className="w-2 h-2 rounded-full bg-accent-gold animate-pulse" />
+                      <span className="text-[10px] font-mono text-white/80 tracking-widest uppercase">Verified Expert</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-white/5 border border-white/5">
-                    <CheckCircle2 size={10} className="text-accent-gold" />
-                    <span className="text-[9px] font-mono text-accent-gold uppercase tracking-wider">{t.about.verified}</span>
+
+                  {/* Bottom info overlay */}
+                  <div className="absolute inset-x-0 bottom-0 p-10 pt-20 bg-gradient-to-t from-[#121212] via-[#121212]/80 to-transparent">
+                    <div className="relative z-10">
+                      <p className="text-accent-gold font-mono text-xs uppercase tracking-[0.3em] mb-2">{t.about.role}</p>
+                      <h3 className="font-display font-bold text-4xl sm:text-5xl text-white leading-tight mb-6">
+                        Cristian <span className="block text-white/40">Brown</span>
+                      </h3>
+                      
+                      {/* Availability badge */}
+                      <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+                        <span className="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_10px_#4ade80]" />
+                        <span className="text-green-400 text-xs font-bold uppercase tracking-widest">{t.about.available}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Identity Content Area */}
-                <div className="relative">
-                  {/* Hero Photo Section */}
-                  <div className="relative w-full aspect-[4/5] overflow-hidden group/photo">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src="/cristian.jpeg"
-                      alt="Cristian"
-                      className="w-full h-full object-cover grayscale-[0.2] group-hover/photo:grayscale-0 transition-all duration-700 scale-105 group-hover/photo:scale-110"
-                    />
-                    {/* Bottom fade for text legibility if needed */}
-                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#161616] to-transparent" />
-                    
-                    {/* Floating status on photo */}
-                    <div
-                      className="absolute bottom-4 left-6 flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md bg-black/40 border border-white/10"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                      <span className="text-green-400 text-[9px] font-bold uppercase tracking-wider">{t.about.available}</span>
+                {/* Bottom Stats / Details Strip */}
+                <div className="px-10 py-10 bg-[#161616] border-t border-white/5">
+                  <div className="grid grid-cols-3 gap-8">
+                    <div className="space-y-2">
+                      <p className="text-[10px] font-mono text-white/20 uppercase tracking-widest">{lang === 'en' ? 'Portfolio' : 'Proyectos'}</p>
+                      <p className="font-display font-bold text-2xl text-white">+120</p>
                     </div>
-                  </div>
-
-                  {/* Info Section */}
-                  <div className="p-8 pt-6">
-                    {/* Name & Role */}
-                    <div className="mb-6">
-                      <h3 className="font-display font-bold text-2xl text-white leading-tight">{t.about.greeting}</h3>
-                      <p className="text-accent-gold text-sm font-mono mt-1 uppercase tracking-wider">{t.about.role}</p>
+                    <div className="space-y-2">
+                      <p className="text-[10px] font-mono text-white/20 uppercase tracking-widest">{lang === 'en' ? 'Exp.' : 'Exp.'}</p>
+                      <p className="font-display font-bold text-2xl text-white">4.5 <span className="text-xs text-white/40">Yrs</span></p>
                     </div>
-
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-3 gap-4 py-6 border-y border-white/5">
-                      <div className="space-y-1">
-                        <p className="text-[9px] font-mono text-white/30 uppercase tracking-widest">{lang === 'en' ? 'Projects' : 'Proyectos'}</p>
-                        <p className="font-display font-bold text-lg text-white">+120</p>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-[9px] font-mono text-white/30 uppercase tracking-widest">{lang === 'en' ? 'Exp.' : 'Exp.'}</p>
-                        <p className="font-display font-bold text-lg text-white">4.5 <span className="text-[10px] text-white/40">{lang === 'en' ? 'Yrs' : 'Años'}</span></p>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-[9px] font-mono text-white/30 uppercase tracking-widest">{lang === 'en' ? 'Rate' : 'Tasa'}</p>
-                        <p className="font-display font-bold text-lg text-accent-gold">99.8%</p>
-                      </div>
-                    </div>
-
-                    {/* Skills Strip */}
-                    <div className="flex flex-wrap gap-2 mt-6">
-                      {skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded bg-white/[0.03] border border-white/5 text-[9px] font-mono text-white/40 uppercase tracking-tight"
-                        >
-                          {skill}
-                        </span>
-                      ))}
+                    <div className="space-y-2">
+                      <p className="text-[10px] font-mono text-white/20 uppercase tracking-widest">{lang === 'en' ? 'Status' : 'Nivel'}</p>
+                      <p className="font-display font-bold text-2xl text-accent-gold">Senior</p>
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Floating ID Tag */}
+              <div
+                className="absolute -bottom-6 -left-6 px-6 py-4 rounded-[20px] backdrop-blur-2xl bg-white/5 border border-white/10 hidden sm:block"
+                style={{ boxShadow: "0 20px 40px rgba(0,0,0,0.4)" }}
+              >
+                <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-1">Founder @ Browns Studio</p>
+                <p className="text-white font-mono text-xs tracking-tighter">BSTUDIO-SYS-8829-001</p>
               </div>
             </div>
           </div>
