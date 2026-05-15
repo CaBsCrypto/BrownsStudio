@@ -97,21 +97,22 @@ export default function SobreMi() {
                 </div>
 
                 {/* Core AI Tech Stack */}
-                <div className="px-10 py-10 bg-[#161616] border-t border-white/5">
-                  <p className="text-[9px] font-mono text-white/30 uppercase tracking-[0.2em] mb-6 text-center">{lang === 'en' ? 'Core Intelligence Stack' : 'Stack de Inteligencia Core'}</p>
+                <div className="px-8 py-10 bg-[#161616] border-t border-white/5">
+                  <p className="text-[10px] font-mono text-white/20 uppercase tracking-[0.3em] mb-8 text-center">{lang === 'en' ? 'Core Platform Stack' : 'Stack de Plataformas Core'}</p>
                   
-                  <div className="grid grid-cols-2 gap-x-8 gap-y-6">
+                  <div className="grid grid-cols-3 gap-3">
                     {[
-                      { name: 'Codex', val: 'V3.5' },
-                      { name: 'Claude', val: 'Sonnet' },
-                      { name: 'Antigravity', val: 'Active' },
-                      { name: 'AI Studio', val: 'Pro' },
-                      { name: 'Gemini', val: 'Ultra' },
-                      { name: 'Labs Google', val: 'Exp' }
+                      'Codex', 'Claude', 'Antigravity',
+                      'AI Studio', 'Gemini', 'Labs Google'
                     ].map((tech) => (
-                      <div key={tech.name} className="flex items-center justify-between border-b border-white/5 pb-2 group/tech">
-                        <span className="text-[10px] font-mono text-white/40 group-hover/tech:text-accent-gold transition-colors">{tech.name}</span>
-                        <span className="text-[10px] font-mono text-white/80 font-bold">{tech.val}</span>
+                      <div 
+                        key={tech} 
+                        className="flex flex-col items-center justify-center p-3 rounded-xl bg-white/[0.03] border border-white/5 group/tech hover:border-accent-gold/30 transition-all duration-300"
+                      >
+                        <div className="w-1.5 h-1.5 rounded-full bg-white/20 group-hover/tech:bg-accent-gold mb-2 transition-colors" />
+                        <span className="text-[10px] font-display font-bold text-white/70 group-hover/tech:text-white transition-colors text-center leading-tight">
+                          {tech}
+                        </span>
                       </div>
                     ))}
                   </div>
