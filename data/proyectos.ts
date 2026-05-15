@@ -78,7 +78,7 @@ export const proyectos: Proyecto[] = [
     },
     quoteAutor: "Trust Leaf",
     linkDemo: "https://www.trustleaf.org/",
-    año: 2025,
+    año: 2026,
   },
   {
     slug: "pizzadao-musica-w3",
@@ -139,7 +139,7 @@ export const proyectos: Proyecto[] = [
     },
     quoteAutor: "PizzaDAO x Musica W3",
     linkDemo: "https://pizzadao-mw3.vercel.app",
-    año: 2025,
+    año: 2026,
   },
   {
     slug: "cms-agencia-marketing",
@@ -200,7 +200,7 @@ export const proyectos: Proyecto[] = [
     },
     quoteAutor: "Umbra Creator Hub",
     linkDemo: "https://creator-hub-three-lake.vercel.app",
-    año: 2025,
+    año: 2026,
   },
   {
     slug: "discord-analytics-bot",
@@ -261,7 +261,7 @@ export const proyectos: Proyecto[] = [
     },
     quoteAutor: "BS Discord Tracker",
     linkDemo: "https://discord-tracker-three.vercel.app",
-    año: 2025,
+    año: 2026,
   },
   {
     slug: "estudio-morales-araya",
@@ -322,7 +322,7 @@ export const proyectos: Proyecto[] = [
     },
     quoteAutor: "Estudio Morales Araya",
     linkDemo: "https://estudiomoralesaraya.vercel.app",
-    año: 2025,
+    año: 2026,
   },
   {
     slug: "gm-nail-artist",
@@ -383,7 +383,7 @@ export const proyectos: Proyecto[] = [
     },
     quoteAutor: "GM Nail Artist",
     linkDemo: "https://gm-nailartist.vercel.app",
-    año: 2025,
+    año: 2026,
   },
   {
     slug: "rhythm-slice",
@@ -444,7 +444,7 @@ export const proyectos: Proyecto[] = [
     },
     quoteAutor: "Browns Studio",
     linkDemo: "https://cabscrypto.github.io/guitarPizza--AntiGravity/",
-    año: 2025,
+    año: 2026,
     comingSoon: true,
   },
 ];
