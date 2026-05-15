@@ -68,7 +68,7 @@ export default function SobreMi() {
                     src="/cristian.jpeg"
                     alt="Cristian"
                     className="w-full h-full object-cover grayscale-[0.1] group-hover/photo:grayscale-0 transition-all duration-1000"
-                    style={{ objectPosition: "50% 30%" }}
+                    style={{ objectPosition: "40% 30%" }}
                   />
                   
                   {/* Bottom info overlay */}
