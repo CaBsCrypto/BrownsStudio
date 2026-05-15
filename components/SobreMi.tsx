@@ -96,21 +96,24 @@ export default function SobreMi() {
                   </div>
                 </div>
 
-                {/* Bottom Stats Strip */}
-                <div className="px-8 py-8 bg-[#161616] border-t border-white/5">
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="space-y-1">
-                      <p className="text-[9px] font-mono text-white/20 uppercase tracking-widest">{lang === 'en' ? 'Portfolio' : 'Proyectos'}</p>
-                      <p className="font-display font-bold text-xl text-white">+120</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-[9px] font-mono text-white/20 uppercase tracking-widest">{lang === 'en' ? 'Exp.' : 'Exp.'}</p>
-                      <p className="font-display font-bold text-xl text-white">4.5 <span className="text-[10px] text-white/40">Yrs</span></p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-[9px] font-mono text-white/20 uppercase tracking-widest">{lang === 'en' ? 'Status' : 'Nivel'}</p>
-                      <p className="font-display font-bold text-xl text-accent-gold">Senior</p>
-                    </div>
+                {/* Core AI Tech Stack */}
+                <div className="px-10 py-10 bg-[#161616] border-t border-white/5">
+                  <p className="text-[9px] font-mono text-white/30 uppercase tracking-[0.2em] mb-6 text-center">{lang === 'en' ? 'Core Intelligence Stack' : 'Stack de Inteligencia Core'}</p>
+                  
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-6">
+                    {[
+                      { name: 'Codex', val: 'V3.5' },
+                      { name: 'Claude', val: 'Sonnet' },
+                      { name: 'Antigravity', val: 'Active' },
+                      { name: 'AI Studio', val: 'Pro' },
+                      { name: 'Gemini', val: 'Ultra' },
+                      { name: 'Labs Google', val: 'Exp' }
+                    ].map((tech) => (
+                      <div key={tech.name} className="flex items-center justify-between border-b border-white/5 pb-2 group/tech">
+                        <span className="text-[10px] font-mono text-white/40 group-hover/tech:text-accent-gold transition-colors">{tech.name}</span>
+                        <span className="text-[10px] font-mono text-white/80 font-bold">{tech.val}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
