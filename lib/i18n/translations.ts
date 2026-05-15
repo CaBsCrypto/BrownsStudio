@@ -82,6 +82,7 @@ export const translations = {
             "Modern web architecture",
             "3 design revisions included",
           ],
+          popular: true,
         },
         {
           name: "Premium",
@@ -376,6 +377,7 @@ export const translations = {
             "Arquitectura web moderna",
             "3 revisiones de diseño incluidas",
           ],
+          popular: true,
         },
         {
           name: "Premium",
@@ -670,6 +672,7 @@ export const translations = {
             "Arquitetura web moderna",
             "3 revisões de design incluídas",
           ],
+          popular: true,
         },
         {
           name: "Premium",

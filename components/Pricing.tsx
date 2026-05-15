@@ -101,17 +101,17 @@ export default function Pricing() {
                 key={plan.name}
                 className="relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full"
                 style={{
-                  background: plan.popular ? "rgba(20,25,22,0.8)" : "#0c0d0c",
+                  background: plan.popular ? "rgba(0,240,255,0.03)" : "#0c0d0c",
                   border: plan.popular
-                    ? "1px solid rgba(0,255,159,0.3)"
-                    : "1px solid rgba(0,255,159,0.1)",
-                  ...(plan.popular ? { marginTop: "-1rem", marginBottom: "1rem", boxShadow: "0 0 40px rgba(0,255,159,0.08)" } : {}),
+                    ? "1px solid rgba(0,240,255,0.3)"
+                    : "1px solid rgba(0,240,255,0.1)",
+                  ...(plan.popular ? { marginTop: "-1rem", marginBottom: "1rem", boxShadow: "0 0 40px rgba(0,240,255,0.08)" } : {}),
                 }}
               >
                 {plan.popular && (
                   <div
                     className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1 rounded-full text-xs font-bold text-black"
-                    style={{ background: "linear-gradient(135deg, #00ff9f, #00d1ff)", boxShadow: "0 0 15px rgba(0,255,159,0.4)" }}
+                    style={{ background: "linear-gradient(135deg, #00f0ff, #0070ff)", boxShadow: "0 0 15px rgba(0,240,255,0.4)" }}
                   >
                     <Zap size={11} fill="currentColor" />
                     {t.pricing.popular}
@@ -131,7 +131,7 @@ export default function Pricing() {
                       className={`font-display font-bold ${
                         plan.price.length > 8 ? 'text-2xl' : 'text-3xl sm:text-4xl'
                       }`}
-                      style={{ color: "#00ff9f", textShadow: "0 0 15px rgba(0,255,159,0.3)" }}
+                      style={{ color: "#00f0ff", textShadow: "0 0 15px rgba(0,240,255,0.3)" }}
                     >
                       {plan.price}
                     </span>
@@ -146,7 +146,7 @@ export default function Pricing() {
                 <ul className="space-y-3 mb-8 flex-grow">
                   {plan.features.map((feature: string) => (
                     <li key={feature} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
-                      <Check size={15} className="flex-shrink-0 mt-0.5" style={{ color: "#00ff9f" }} />
+                      <Check size={15} className="flex-shrink-0 mt-0.5" style={{ color: "#00f0ff" }} />
                       {feature}
                     </li>
                   ))}
@@ -159,19 +159,19 @@ export default function Pricing() {
                   className="block w-full text-center py-3 rounded-xl text-sm font-semibold transition-all duration-300"
                   style={
                     plan.popular
-                      ? { background: "linear-gradient(135deg, #00ff9f, #00d1ff)", color: "#000", boxShadow: "0 0 20px rgba(0,255,159,0.2)" }
-                      : { border: "1px solid rgba(0,255,159,0.3)", color: "#00ff9f" }
+                      ? { background: "linear-gradient(135deg, #00f0ff, #0070ff)", color: "#000", boxShadow: "0 0 20px rgba(0,240,255,0.2)" }
+                      : { border: "1px solid rgba(0,240,255,0.3)", color: "#00f0ff" }
                   }
                   onMouseEnter={(e) => {
                     if (!plan.popular) {
-                      (e.currentTarget as HTMLElement).style.background = "rgba(0,255,159,0.05)";
-                      (e.currentTarget as HTMLElement).style.borderColor = "#00ff9f";
+                      (e.currentTarget as HTMLElement).style.background = "rgba(0,240,255,0.05)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "#00f0ff";
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!plan.popular) {
                       (e.currentTarget as HTMLElement).style.background = "transparent";
-                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,255,159,0.3)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,240,255,0.3)";
                     }
                   }}
                 >
