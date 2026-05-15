@@ -64,6 +64,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.seo.title,
       description: t.seo.description,
     },
+    icons: {
+      icon: [
+        { url: "/icon.png?v=2", sizes: "32x32" },
+        { url: "/icon.png?v=2", sizes: "16x16" },
+      ],
+      apple: [
+        { url: "/icon.png?v=2", sizes: "180x180" },
+      ],
+      shortcut: ["/icon.png?v=2"],
+    },
   };
 }
 
