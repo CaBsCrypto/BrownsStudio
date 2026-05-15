@@ -64,7 +64,7 @@ export const translations = {
         {
           name: "Basic",
           desc: "Get online",
-          price: "$200 USD",
+          price: "$400 USD",
           features: [
             "Landing page (1 page)",
             "Responsive design + WhatsApp",
@@ -75,7 +75,7 @@ export const translations = {
         {
           name: "Professional",
           desc: "Most chosen",
-          price: "$500 USD",
+          price: "$800 USD",
           features: [
             "Multi-page website (up to 5)",
             "Custom premium design",
@@ -86,7 +86,7 @@ export const translations = {
         {
           name: "Premium",
           desc: "Complete solution",
-          price: "$800+ USD",
+          price: "$1200+ USD",
           features: [
             "Everything in Professional",
             "Online booking system + CMS",
@@ -335,7 +335,7 @@ export const translations = {
         {
           name: "Básico",
           desc: "Para empezar online",
-          price: "$200 USD",
+          price: "$400 USD",
           features: [
             "Landing page (1 página)",
             "Diseño responsive + WhatsApp",
@@ -346,7 +346,7 @@ export const translations = {
         {
           name: "Profesional",
           desc: "El más elegido",
-          price: "$500 USD",
+          price: "$800 USD",
           features: [
             "Web multi-página (hasta 5)",
             "Diseño premium personalizado",
@@ -357,7 +357,7 @@ export const translations = {
         {
           name: "Premium",
           desc: "Solución completa",
-          price: "$800+ USD",
+          price: "$1200+ USD",
           features: [
             "Todo lo del Profesional",
             "Sistema de citas online + CMS",
@@ -606,7 +606,7 @@ export const translations = {
         {
           name: "Básico",
           desc: "Para começar online",
-          price: "$200 USD",
+          price: "$400 USD",
           features: [
             "Landing page (1 página)",
             "Design responsivo + WhatsApp",
@@ -617,7 +617,7 @@ export const translations = {
         {
           name: "Profissional",
           desc: "O mais escolhido",
-          price: "$500 USD",
+          price: "$800 USD",
           features: [
             "Site multi-página (até 5)",
             "Design premium personalizado",
@@ -628,7 +628,7 @@ export const translations = {
         {
           name: "Premium",
           desc: "Solução completa",
-          price: "$800+ USD",
+          price: "$1200+ USD",
           features: [
             "Tudo do Profissional",
             "Sistema de agendamento online + CMS",
