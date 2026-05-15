@@ -72,7 +72,7 @@ export default function Navbar() {
                 className="w-8 h-8 rounded-lg flex items-center justify-center"
                 style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)" }}
               >
-                <span className="text-black font-display font-bold text-sm leading-none">B</span>
+                <span className="text-black font-display font-bold text-[11px] leading-none">BS</span>
               </div>
               <span className="font-display font-semibold text-lg tracking-wide text-[#e5e5e5] group-hover:text-[#c6c6c7] transition-colors duration-300">
                 BROWNS{" "}
