@@ -303,7 +303,7 @@ export const translations = {
     about: {
       eyebrow: "Quién está detrás",
       greeting: "Hola, soy Cristian. Vibecoder certificado.",
-      role: "Fundador · Browns Studio",
+      role: "Founder de Browns Studio",
       available: "Disponible",
       verified: "Freelance verificado",
       bio: "Vibecoder certificado por Google. En Browns Studio practicamos la ingeniería agéntica para construir sistemas que no solo funcionan, sino que transforman negocios.",
@@ -574,7 +574,7 @@ export const translations = {
     about: {
       eyebrow: "Quem está por trás",
       greeting: "Olá, sou Cristian. Vibecoder certificado.",
-      role: "Fundador · Browns Studio",
+      role: "Founder da Browns Studio",
       available: "Disponível",
       verified: "Freelancer verificado",
       bio: "Vibecoder certificado pelo Google. Na Browns Studio praticamos a engenharia agêntica para construir sistemas que não apenas funcionam, mas transformam negócios.",
