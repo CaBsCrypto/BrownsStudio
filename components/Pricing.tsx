@@ -186,7 +186,7 @@ export default function Pricing() {
 
         {/* Training plans */}
         {activeTab === "training" && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {(t.pricing as any).trainingPlans.map((plan: { name: string; desc: string; price: string; priceSuffix?: string; features: readonly string[]; popular?: boolean }) => (
               <div
                 key={plan.name}

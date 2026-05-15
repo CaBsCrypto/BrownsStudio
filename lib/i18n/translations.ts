@@ -142,6 +142,17 @@ export const translations = {
             "Direct WhatsApp access to the founder",
           ],
         },
+        {
+          name: "Corporate Team Workshops",
+          desc: "Tailored training for your entire technical team",
+          price: "Let's talk",
+          features: [
+            "Custom roadmap for team workflows",
+            "On-site or remote live sessions",
+            "Group project implementation support",
+            "Advanced agentic stack for companies",
+          ],
+        },
       ],
       aiPlans: [],
       trainingNote: {
@@ -426,6 +437,17 @@ export const translations = {
             "Acceso directo al fundador por WhatsApp",
           ],
         },
+        {
+          name: "Workshops para Equipos",
+          desc: "Capacitación a medida para todo tu equipo técnico",
+          price: "A cotizar",
+          features: [
+            "Hoja de ruta para flujos del equipo",
+            "Sesiones en vivo (presencial o remoto)",
+            "Soporte en implementación de proyectos grupales",
+            "Stack agéntico avanzado para empresas",
+          ],
+        },
       ],
       trainingNote: {
         title: "Capacitación para Equipos",
@@ -706,6 +728,17 @@ export const translations = {
             "Auditoria de transformação e diseño de flujos",
             "Roteiro passo a passo de integração agêntica",
             "Acesso direto ao fundador pelo WhatsApp",
+          ],
+        },
+        {
+          name: "Workshops para Equipes",
+          desc: "Treinamento sob medida para toda a sua equipe técnica",
+          price: "A cotizar",
+          features: [
+            "Roteiro para fluxos da equipe",
+            "Sessões ao vivo (presencial ou remoto)",
+            "Suporte na implementação de projetos grupais",
+            "Stack agêntico avançado para empresas",
           ],
         },
       ],
