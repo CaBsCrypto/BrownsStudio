@@ -76,8 +76,13 @@ export default function Pricing() {
         </div>
 
         {/* Plans Grid */}
-        <div className={`grid grid-cols-1 md:grid-cols-2 ${activeTab === 'web' || (t.pricing as any).trainingPlans.length >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6 max-w-7xl mx-auto`}>
-          {((activeTab === 'web' ? (t.pricing as any).plans : (t.pricing as any).trainingPlans) as any[]).map((plan) => (
+        {(() => {
+          const plansCount = activeTab === 'web' 
+            ? (t.pricing as any).plans.length 
+            : (t.pricing as any).trainingPlans.length;
+          return (
+            <div className={`grid grid-cols-1 md:grid-cols-2 ${plansCount >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6 max-w-7xl mx-auto`}>
+              {((activeTab === 'web' ? (t.pricing as any).plans : (t.pricing as any).trainingPlans) as any[]).map((plan) => (
             <div
               key={plan.name}
               className={`reveal relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full ${isRevealed ? 'visible' : ''}`}
@@ -155,12 +160,15 @@ export default function Pricing() {
               </a>
             </div>
           ))}
-        </div>
+            </div>
+          );
+        })()}
 
         {/* Training note callout */}
         {activeTab === "training" && (t.pricing as any).trainingNote && (
           <div 
             className={`reveal mt-12 max-w-4xl mx-auto ${isRevealed ? 'visible' : ''}`}
+          >
             <div 
               className="rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6"
               style={{ 
