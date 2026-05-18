@@ -9,12 +9,14 @@ export default function Pricing() {
   const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const [activeTab, setActiveTab] = useState<'web' | 'training'>('web');
+  const [isRevealed, setIsRevealed] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            setIsRevealed(true);
             entry.target.querySelectorAll(".reveal").forEach((el, i) => {
               setTimeout(() => el.classList.add("visible"), i * 100);
             });
@@ -78,7 +80,7 @@ export default function Pricing() {
           {((activeTab === 'web' ? (t.pricing as any).plans : (t.pricing as any).trainingPlans) as any[]).map((plan) => (
             <div
               key={plan.name}
-              className="reveal relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full"
+              className={`reveal relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full ${isRevealed ? 'visible' : ''}`}
               style={{
                 background: "#0c0d0c",
                 border: plan.popular
@@ -157,7 +159,8 @@ export default function Pricing() {
 
         {/* Training note callout */}
         {activeTab === "training" && (t.pricing as any).trainingNote && (
-          <div className="reveal mt-12 max-w-4xl mx-auto">
+          <div 
+            className={`reveal mt-12 max-w-4xl mx-auto ${isRevealed ? 'visible' : ''}`}
             <div 
               className="rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6"
               style={{ 
