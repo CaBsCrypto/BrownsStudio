@@ -139,12 +139,23 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
         ))}
       </div>
 
-      {/* Quote / coming soon note */}
+      {/* Quote / result note */}
       {!proyecto.comingSoon ? (
         <div className="pt-4" style={{ borderTop: "1px solid rgba(72,72,72,0.12)" }}>
           <Quote size={12} className="mb-1" style={{ color: "rgba(198,198,199,0.25)" }} fill="currentColor" />
-          <p className="text-[#5a5a5a] text-xs italic leading-relaxed mb-1">{proyecto.quote[lang]}</p>
-          <p className="text-[#9e9e9e] text-xs font-medium" style={{ opacity: 0.6 }}>{proyecto.quoteAutor}</p>
+          <p className="text-[#5a5a5a] text-xs italic leading-relaxed mb-3">{proyecto.quote[lang]}</p>
+          {/* Resultado metric chip */}
+          <div
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold"
+            style={{
+              background: `${proyecto.colorAccent}12`,
+              border: `1px solid ${proyecto.colorAccent}30`,
+              color: proyecto.colorAccent,
+            }}
+          >
+            <span style={{ fontSize: "9px" }}>✦</span>
+            {proyecto.resultado[lang]}
+          </div>
         </div>
       ) : (
         <div className="pt-4" style={{ borderTop: "1px solid rgba(72,72,72,0.12)" }}>

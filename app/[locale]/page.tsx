@@ -3,8 +3,9 @@ import Hero from "@/components/Hero";
 import SobreMi from "@/components/SobreMi";
 import Pricing from "@/components/Pricing";
 import Portfolio from "@/components/Portfolio";
-import AIShowcase from "@/components/AIShowcase";
-// import Testimonios from "@/components/Testimonios";
+import CasosDeUso from "@/components/CasosDeUso";
+import Testimonios from "@/components/Testimonios";
+// import AIShowcase from "@/components/AIShowcase";
 import Proceso from "@/components/Proceso";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
@@ -33,11 +34,11 @@ export default async function LocalePage({
       <Navbar />
       <Hero />
       <Portfolio />
-      {/* <AIShowcase /> */}
+      <CasosDeUso />
       <SobreMi />
-      {/* <Testimonios /> */}
       <Pricing />
       <Proceso />
+      <Testimonios />
       <FAQ />
       <CTA />
       <Footer />

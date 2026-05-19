@@ -5,34 +5,37 @@ import { Star, Quote } from "lucide-react";
 
 const testimonios = [
   {
-    nombre: "Dra. Carmen Salinas",
-    negocio: "Clínica Dental Sonríe",
-    tipo: "Clínica Dental",
+    nombre: "Valentina Ríos",
+    negocio: "Clínica EstéticaMed",
+    tipo: "Salud & Estética",
     rating: 5,
     texto:
-      "Desde que lanzamos la web con Browns Studio, las consultas por WhatsApp se triplicaron. El sistema de citas online fue un game-changer para nosotros — los pacientes pueden agendar a cualquier hora sin tener que llamar. Increíble trabajo.",
-    iniciales: "CS",
+      "Tenía a dos personas respondiendo WhatsApp todo el día y aun así perdíamos consultas. Browns Studio mapeó nuestro proceso de agendamiento y construyó un agente que ahora maneja el 80% de las consultas solo. Mi equipo se liberó para atención de calidad.",
+    iniciales: "VR",
     color: "from-teal-600/30 to-teal-800/10",
+    resultado: "80% de consultas gestionadas por el agente",
   },
   {
-    nombre: "Marco Tanaka",
-    negocio: "Sakura Sushi Bar",
-    tipo: "Restaurante",
+    nombre: "Diego Paredes",
+    negocio: "InmoParedes",
+    tipo: "Inmobiliaria",
     rating: 5,
     texto:
-      "Teníamos miedo de invertir en una web y que no resultara, pero Browns Studio nos convenció con sus resultados. El menú digital es exactamente lo que queríamos — elegante, rápido y nuestros clientes lo aman. ¡Lo recomiendo sin dudarlo!",
-    iniciales: "MT",
-    color: "from-red-700/30 to-red-900/10",
+      "El proceso de calificación de leads nos consumía horas. Ahora el agente pregunta, filtra y solo me pasa los contactos listos para cerrar. En el primer mes recuperé 12 horas semanales y cerré más operaciones que antes con menos esfuerzo.",
+    iniciales: "DP",
+    color: "from-blue-700/30 to-blue-900/10",
+    resultado: "12h semanales recuperadas por el equipo",
   },
   {
-    nombre: "Lic. Roberto Méndez",
-    negocio: "Estudio Legal Méndez",
-    tipo: "Despacho Legal",
+    nombre: "Catalina Soto",
+    negocio: "Umbra Creator Hub",
+    tipo: "Agencia de Marketing",
     rating: 5,
     texto:
-      "La profesionalidad del trabajo es impecable. Entendieron perfectamente la imagen que un estudio legal necesita proyectar. En dos meses ya estábamos en Google con las búsquedas que más importan para nuestro negocio.",
-    iniciales: "RM",
-    color: "from-blue-800/30 to-blue-900/10",
+      "El onboarding de clientes era un caos de DMs y Excel. El agente que construyeron con nosotros ahora guía a cada cliente nuevo por todo el proceso — contratos, briefs, accesos — sin que yo tenga que intervenir. Escalar se volvió posible.",
+    iniciales: "CS",
+    color: "from-purple-700/30 to-purple-900/10",
+    resultado: "Onboarding completamente automatizado",
   },
 ];
 
@@ -100,12 +103,27 @@ export default function Testimonios() {
               </div>
 
               {/* Text */}
-              <p className="text-text-secondary text-sm leading-relaxed mb-6 italic">
+              <p className="text-text-secondary text-sm leading-relaxed mb-4 italic">
                 &ldquo;{t.texto}&rdquo;
               </p>
 
+              {/* Result chip */}
+              {t.resultado && (
+                <div
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold mb-4"
+                  style={{
+                    background: "rgba(0,240,255,0.06)",
+                    border: "1px solid rgba(0,240,255,0.18)",
+                    color: "#00f0ff",
+                  }}
+                >
+                  <span style={{ fontSize: "9px" }}>✦</span>
+                  {t.resultado}
+                </div>
+              )}
+
               {/* Author */}
-              <div className="flex items-center gap-3 mt-auto pt-4 border-t border-white/5">
+              <div className="flex items-center gap-3 pt-4 border-t border-white/5">
                 <div
                   className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.color} border border-accent-gold/20 flex items-center justify-center flex-shrink-0`}
                 >

@@ -5,6 +5,15 @@ import { MessageCircle, Sparkles, ChevronDown, ExternalLink } from "lucide-react
 import { WHATSAPP_URL } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
+const CLIENT_LOGOS = [
+  { name: "Trust Leaf",       abbr: "TL", color: "#C5A070" },
+  { name: "PizzaDAO",         abbr: "PZ", color: "#c084fc" },
+  { name: "Umbra Hub",        abbr: "UH", color: "#818cf8" },
+  { name: "Morales Araya",    abbr: "MA", color: "#c8a45e" },
+  { name: "GM Nail",          abbr: "GM", color: "#f472b6" },
+  { name: "BS Tracker",       abbr: "BS", color: "#5865F2" },
+];
+
 function useCountUp(target: number, duration: number, active: boolean) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -200,6 +209,38 @@ export default function Hero() {
             {statNumerics.map((s, i) => (
               <StatItem key={i} numeric={s.numeric} suffix={s.suffix} label={statLabels[i]} active={statsActive} />
             ))}
+          </div>
+
+          {/* Client logos strip */}
+          <div className="reveal reveal-delay-4 mt-10">
+            <p
+              className="text-[10px] uppercase tracking-[0.2em] mb-4"
+              style={{ color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-jet-brains-mono), monospace" }}
+            >
+              {t.hero.trustedBy ?? "Trusted by"}
+            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              {CLIENT_LOGOS.map((client) => (
+                <div
+                  key={client.name}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300 hover:scale-105"
+                  style={{
+                    background: "rgba(255,255,255,0.03)",
+                    border: `1px solid ${client.color}28`,
+                  }}
+                >
+                  <div
+                    className="w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-bold flex-shrink-0"
+                    style={{ background: `${client.color}22`, color: client.color }}
+                  >
+                    {client.abbr}
+                  </div>
+                  <span className="text-[11px] font-medium" style={{ color: "rgba(255,255,255,0.4)" }}>
+                    {client.name}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
         </div>
