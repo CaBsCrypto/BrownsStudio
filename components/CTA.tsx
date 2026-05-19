@@ -52,19 +52,6 @@ export default function CTA() {
       />
 
       <div className="relative z-10 max-w-3xl mx-auto text-center">
-        {/* Status badge */}
-        <div
-          className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-6"
-          style={{
-            border:     "1px solid rgba(0,240,255,0.2)",
-            background: "rgba(0,240,255,0.05)",
-            color:      "#00f0ff",
-            fontFamily: "var(--font-jet-brains-mono), monospace",
-          }}
-        >
-          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#00f0ff" }} />
-          {t.cta.spots}
-        </div>
 
         {/* Headline */}
         <h2
