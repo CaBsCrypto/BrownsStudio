@@ -1,65 +1,183 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Globe, CalendarCheck, Bot, BarChart3, ArrowRight } from "lucide-react";
+import { Brain, Link2, ShieldCheck, Zap, ArrowRight, MessageSquare } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/config";
+import { useLang } from "@/lib/i18n/LanguageContext";
 
-const pilares = [
-  {
-    categoria: "Desarrollo Web",
-    descripcion: "Webs profesionales que convierten visitas en clientes.",
-    emoji: "🌐",
-    servicios: [
+/* ── Localized content ─────────────────────────────────────────────────── */
+const content = {
+  en: {
+    eyebrow: "Agent as a Service",
+    title: "Not a bot. A digital worker.",
+    sub: "Our agents reason, act on your real systems, remember every customer, and ask for your approval before doing anything critical.",
+    tiers: [
       {
-        icon: Globe,
-        titulo: "Web para Negocios",
-        descripcion: "Desde landing page hasta sitio multi-página. Responsive, rápido y con integración WhatsApp.",
-        desde: "$150",
+        tag: "Entry Point",
+        name: "Agent Starter",
+        price: "$350",
+        period: "/mo",
+        setup: "+ $500 activation",
+        desc: "WhatsApp's native agent configured and maintained. Responds 24/7 in your brand voice.",
+        features: ["Knowledge base updated monthly", "Agentic loop: reason → respond → qualify", "Escalation to human when needed", "Monthly conversation report"],
+        cta: "Activate my agent",
+        msg: "Hi! I'm interested in the Agent Starter plan.",
+        accent: "#c6c6c7",
         popular: false,
       },
       {
-        icon: CalendarCheck,
-        titulo: "Web con Reservas",
-        descripcion: "Sistema de citas online, galería, blog y panel CMS para que actualices tú mismo.",
-        desde: "$800",
+        tag: "Most Recommended",
+        name: "Agent Pro",
+        price: "$800",
+        period: "/mo",
+        setup: "+ $1,500 setup",
+        desc: "Custom-coded agent connected to your real systems. Books, qualifies and sells — with you validating key actions.",
+        features: ["Real-time integrations (Calendar, CRM, Shopify)", "Persistent customer memory (RAG)", "Approval gates for critical actions", "Monthly optimization + observability report"],
+        cta: "Build my agent",
+        msg: "Hi! I'm interested in the Agent Pro plan.",
+        accent: "#00f0ff",
         popular: true,
       },
-    ],
-    // Metallic silver theme
-    accentColor: "#c6c6c7",
-    borderStyle: "rgba(198,198,199,0.12)",
-    bgGradient: "#191919",
-    highlightBorder: "rgba(198,198,199,0.25)",
-  },
-  {
-    categoria: "Soluciones de IA",
-    descripcion: "Automatización inteligente para que tu negocio trabaje 24/7.",
-    emoji: "🤖",
-    servicios: [
       {
-        icon: Bot,
-        titulo: "Chatbot / Asistente IA",
-        descripcion: "Asistente virtual que responde clientes, agenda citas y califica leads automáticamente.",
-        desde: "$300",
-        popular: false,
-      },
-      {
-        icon: BarChart3,
-        titulo: "Automatización con IA",
-        descripcion: "Flujos de trabajo inteligentes: reportes automáticos, respuestas a emails, análisis de datos.",
-        desde: "$200",
+        tag: "Enterprise",
+        name: "Agent Enterprise",
+        price: "Custom",
+        period: "",
+        setup: "Architecture audit included",
+        desc: "Multi-agent orchestration system for complex operations. Designed, built and operated by us.",
+        features: ["LangGraph multi-agent orchestration", "Internal knowledge agent for your team", "Full observability (LangFuse)", "Dedicated engineering support"],
+        cta: "Book a call",
+        msg: "Hi! I'd like to discuss an Enterprise Agentic System.",
+        accent: "#c8a45e",
         popular: false,
       },
     ],
-    // Tertiary electric theme
-    accentColor: "#47c4ff",
-    borderStyle: "rgba(71,196,255,0.1)",
-    bgGradient: "#0a0f1e",
-    highlightBorder: "rgba(71,196,255,0.25)",
+    pillarsTitle: "Why our agents are different",
+    pillars: [
+      { icon: Brain,       title: "Reasons before acting",      desc: "The agent evaluates context, consults your knowledge base and decides the best action — not just keyword matching." },
+      { icon: Link2,       title: "Connected to your real tools", desc: "Calendar, CRM, Shopify, Sheets. The agent acts on your real systems in real time, with no human in between." },
+      { icon: ShieldCheck, title: "Human in the loop",           desc: "Before any critical action (payment, cancellation, bulk send) the agent pauses and waits for your approval." },
+      { icon: Zap,         title: "Remembers every customer",    desc: "Persistent memory via RAG: the agent knows each customer's history, preferences and previous conversations." },
+    ],
+    bottomNote: "Not sure which tier fits? ",
+    bottomLink: "Book a free 45-min process audit.",
   },
-];
+  es: {
+    eyebrow: "Agent as a Service",
+    title: "No es un bot. Es un trabajador digital.",
+    sub: "Nuestros agentes razonan, actúan en tus sistemas reales, recuerdan a cada cliente y te piden aprobación antes de hacer algo crítico.",
+    tiers: [
+      {
+        tag: "Punto de Entrada",
+        name: "Agent Starter",
+        price: "$350",
+        period: "/mes",
+        setup: "+ $500 de activación",
+        desc: "El agente nativo de WhatsApp configurado y mantenido. Responde 24/7 con el tono exacto de tu marca.",
+        features: ["Knowledge base actualizado cada mes", "Bucle agéntico: razona → responde → califica", "Escalación a humano cuando es necesario", "Reporte mensual de conversaciones"],
+        cta: "Activar mi agente",
+        msg: "¡Hola! Me interesa el plan Agent Starter.",
+        accent: "#c6c6c7",
+        popular: false,
+      },
+      {
+        tag: "Más Recomendado",
+        name: "Agent Pro",
+        price: "$800",
+        period: "/mes",
+        setup: "+ $1,500 de setup",
+        desc: "Agente programado a medida conectado a tus sistemas reales. Agenda, califica y vende — con tú validando las acciones clave.",
+        features: ["Integraciones en tiempo real (Calendar, CRM, Shopify)", "Memoria persistente de clientes (RAG)", "Approval gates para acciones críticas", "Optimización mensual + reporte de observabilidad"],
+        cta: "Construir mi agente",
+        msg: "¡Hola! Me interesa el plan Agent Pro.",
+        accent: "#00f0ff",
+        popular: true,
+      },
+      {
+        tag: "Empresarial",
+        name: "Agent Enterprise",
+        price: "A cotizar",
+        period: "",
+        setup: "Auditoría de arquitectura incluida",
+        desc: "Sistema multi-agente para operaciones complejas. Diseñado, construido y operado por nosotros.",
+        features: ["Orquestación multi-agente con LangGraph", "Agente de conocimiento interno para tu equipo", "Observabilidad completa (LangFuse)", "Soporte de ingeniería dedicado"],
+        cta: "Agendar llamada",
+        msg: "¡Hola! Me gustaría hablar sobre un Sistema Agéntico Empresarial.",
+        accent: "#c8a45e",
+        popular: false,
+      },
+    ],
+    pillarsTitle: "Por qué nuestros agentes son diferentes",
+    pillars: [
+      { icon: Brain,       title: "Razona antes de actuar",        desc: "El agente evalúa el contexto, consulta tu knowledge base y decide la mejor acción — no solo hace matching de palabras clave." },
+      { icon: Link2,       title: "Conectado a tus herramientas",  desc: "Calendar, CRM, Shopify, Sheets. El agente actúa en tus sistemas reales en tiempo real, sin intermediarios." },
+      { icon: ShieldCheck, title: "Humano en el bucle",            desc: "Antes de cualquier acción crítica (cobro, cancelación, envío masivo) el agente pausa y espera tu aprobación." },
+      { icon: Zap,         title: "Recuerda a cada cliente",       desc: "Memoria persistente vía RAG: el agente conoce el historial, preferencias y conversaciones previas de cada cliente." },
+    ],
+    bottomNote: "¿No sabes qué tier necesitas? ",
+    bottomLink: "Agenda una auditoría gratuita de 45 min.",
+  },
+  pt: {
+    eyebrow: "Agent as a Service",
+    title: "Não é um bot. É um trabalhador digital.",
+    sub: "Nossos agentes raciocinam, agem nos seus sistemas reais, lembram de cada cliente e pedem sua aprovação antes de fazer algo crítico.",
+    tiers: [
+      {
+        tag: "Ponto de Entrada",
+        name: "Agent Starter",
+        price: "$350",
+        period: "/mês",
+        setup: "+ $500 de ativação",
+        desc: "O agente nativo do WhatsApp configurado e mantido. Responde 24/7 com o tom exato da sua marca.",
+        features: ["Knowledge base atualizado todo mês", "Laço agêntico: raciocina → responde → qualifica", "Escalação para humano quando necessário", "Relatório mensal de conversas"],
+        cta: "Ativar meu agente",
+        msg: "Olá! Tenho interesse no plano Agent Starter.",
+        accent: "#c6c6c7",
+        popular: false,
+      },
+      {
+        tag: "Mais Recomendado",
+        name: "Agent Pro",
+        price: "$800",
+        period: "/mês",
+        setup: "+ $1.500 de setup",
+        desc: "Agente programado sob medida conectado aos seus sistemas reais. Agenda, qualifica e vende — com você validando as ações-chave.",
+        features: ["Integrações em tempo real (Calendar, CRM, Shopify)", "Memória persistente de clientes (RAG)", "Approval gates para ações críticas", "Otimização mensal + relatório de observabilidade"],
+        cta: "Construir meu agente",
+        msg: "Olá! Tenho interesse no plano Agent Pro.",
+        accent: "#00f0ff",
+        popular: true,
+      },
+      {
+        tag: "Empresarial",
+        name: "Agent Enterprise",
+        price: "A cotizar",
+        period: "",
+        setup: "Auditoria de arquitetura incluída",
+        desc: "Sistema multi-agente para operações complexas. Projetado, construído e operado por nós.",
+        features: ["Orquestração multi-agente com LangGraph", "Agente de conhecimento interno para sua equipe", "Observabilidade completa (LangFuse)", "Suporte de engenharia dedicado"],
+        cta: "Agendar chamada",
+        msg: "Olá! Gostaria de falar sobre um Sistema Agêntico Empresarial.",
+        accent: "#c8a45e",
+        popular: false,
+      },
+    ],
+    pillarsTitle: "Por que nossos agentes são diferentes",
+    pillars: [
+      { icon: Brain,       title: "Raciocina antes de agir",       desc: "O agente avalia o contexto, consulta sua knowledge base e decide a melhor ação — não apenas faz matching de palavras." },
+      { icon: Link2,       title: "Conectado às suas ferramentas", desc: "Calendar, CRM, Shopify, Sheets. O agente age nos seus sistemas reais em tempo real, sem intermediários." },
+      { icon: ShieldCheck, title: "Humano no laço",                desc: "Antes de qualquer ação crítica (cobrança, cancelamento, envio em massa) o agente pausa e aguarda sua aprovação." },
+      { icon: Zap,         title: "Lembra de cada cliente",        desc: "Memória persistente via RAG: o agente conhece o histórico, preferências e conversas anteriores de cada cliente." },
+    ],
+    bottomNote: "Não sabe qual tier precisa? ",
+    bottomLink: "Agende uma auditoria gratuita de 45 min.",
+  },
+};
 
+/* ── Component ─────────────────────────────────────────────────────────── */
 export default function Servicios() {
+  const { lang } = useLang();
+  const t = content[lang as keyof typeof content] || content.es;
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -68,150 +186,160 @@ export default function Servicios() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.querySelectorAll(".reveal").forEach((el, i) => {
-              setTimeout(() => el.classList.add("visible"), i * 100);
+              setTimeout(() => el.classList.add("visible"), i * 80);
             });
           }
         });
       },
-      { threshold: 0.08 }
+      { threshold: 0.05 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      id="servicios"
-      className="section-padding"
-      style={{ background: "#0e0e0e" }}
-    >
+    <section ref={sectionRef} id="servicios" className="section-padding" style={{ background: "#0a0a0b" }}>
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
+
+        {/* ── Header ── */}
         <div className="text-center mb-16">
           <div
             className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4"
-            style={{ border: "1px solid rgba(71,196,255,0.2)", background: "rgba(71,196,255,0.05)", color: "#47c4ff" }}
+            style={{ border: "1px solid rgba(0,240,255,0.2)", background: "rgba(0,240,255,0.05)", color: "#00f0ff" }}
           >
-            Servicios
+            {t.eyebrow}
           </div>
           <h2
             className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#e5e5e5] mb-4"
             style={{ letterSpacing: "-0.03em" }}
           >
-            Web e IA —{" "}
-            <span className="text-gradient-gold">dos herramientas,</span>
-            <br className="hidden sm:block" /> un solo objetivo
+            {t.title.split(".")[0] + "."}{" "}
+            <span className="text-gradient-gold">{t.title.split(".")[1]?.trim()}</span>
           </h2>
-          <p className="reveal reveal-delay-2 text-[#9e9e9e] text-lg max-w-xl mx-auto">
-            Conseguir más clientes para tu negocio.
+          <p className="reveal reveal-delay-2 text-[#9e9e9e] text-base max-w-xl mx-auto leading-relaxed">
+            {t.sub}
           </p>
         </div>
 
-        {/* Two pillars */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {pilares.map((pilar, pi) => (
+        {/* ── Service Tiers ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-20">
+          {t.tiers.map((tier, i) => (
             <div
-              key={pilar.categoria}
-              className={`reveal reveal-delay-${pi + 1} rounded-2xl p-6 lg:p-8`}
+              key={tier.name}
+              className={`reveal reveal-delay-${i + 1} relative rounded-2xl p-6 flex flex-col transition-all duration-300`}
               style={{
-                background: pilar.bgGradient,
-                
-                border: `1px solid ${pilar.borderStyle}`,
+                background: tier.popular ? "rgba(0,240,255,0.03)" : "rgba(255,255,255,0.02)",
+                border: `1px solid ${tier.popular ? "rgba(0,240,255,0.2)" : "rgba(72,72,72,0.15)"}`,
               }}
             >
-              {/* Pilar header */}
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl">{pilar.emoji}</span>
-                <div>
-                  <h3
-                    className="font-display font-bold text-xl"
-                    style={{ color: pilar.accentColor, letterSpacing: "-0.02em" }}
-                  >
-                    {pilar.categoria}
-                  </h3>
-                  <p className="text-[#5a5a5a] text-sm">{pilar.descripcion}</p>
+              {/* Popular badge */}
+              {tier.popular && (
+                <div
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold text-black whitespace-nowrap"
+                  style={{ background: "linear-gradient(135deg, #00f0ff, #0090b3)" }}
+                >
+                  {tier.tag}
                 </div>
+              )}
+
+              {/* Tag (non-popular) */}
+              {!tier.popular && (
+                <span className="text-xs uppercase tracking-widest mb-4 font-medium" style={{ color: `${tier.accent}80` }}>
+                  {tier.tag}
+                </span>
+              )}
+              {tier.popular && <div className="mb-4 mt-2" />}
+
+              {/* Name */}
+              <h3 className="font-display font-bold text-xl text-[#e5e5e5] mb-1" style={{ letterSpacing: "-0.02em" }}>
+                {tier.name}
+              </h3>
+
+              {/* Price */}
+              <div className="flex items-end gap-1 mb-1">
+                <span className="text-3xl font-display font-bold" style={{ color: tier.accent }}>
+                  {tier.price}
+                </span>
+                {tier.period && (
+                  <span className="text-sm text-[#5a5a5a] mb-1">{tier.period}</span>
+                )}
               </div>
+              <p className="text-xs text-[#5a5a5a] mb-4">{tier.setup}</p>
 
-              {/* Service cards */}
-              <div className="space-y-4">
-                {pilar.servicios.map((servicio) => {
-                  const Icon = servicio.icon;
-                  return (
-                    <div
-                      key={servicio.titulo}
-                      className="relative p-5 rounded-xl transition-all duration-300 hover:-translate-y-0.5 group"
-                      style={{
-                        background: "rgba(0,0,0,0.85)",
-                        border: "1px solid rgba(72,72,72,0.12)",
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.borderColor = pilar.highlightBorder;
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(72,72,72,0.12)";
-                      }}
-                    >
-                      {servicio.popular && (
-                        <span
-                          className="absolute -top-2.5 left-4 px-3 py-0.5 rounded-full text-xs font-bold text-black"
-                          style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)" }}
-                        >
-                          Más solicitado
-                        </span>
-                      )}
+              {/* Desc */}
+              <p className="text-[#9e9e9e] text-sm leading-relaxed mb-6">{tier.desc}</p>
 
-                      <div className="flex items-start justify-between gap-4 mb-2">
-                        <div className="flex items-center gap-3">
-                          <div
-                            className="w-9 h-9 rounded-lg flex items-center justify-center"
-                            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(72,72,72,0.15)" }}
-                          >
-                            <Icon size={17} style={{ color: pilar.accentColor }} />
-                          </div>
-                          <div>
-                            <p className="text-[#e5e5e5] font-semibold text-sm">{servicio.titulo}</p>
-                            <p className="text-xs font-medium" style={{ color: pilar.accentColor }}>
-                              Desde {servicio.desde} USD
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+              {/* Features */}
+              <ul className="space-y-2.5 mb-8 flex-1">
+                {tier.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
+                    <span className="mt-0.5 text-xs" style={{ color: tier.accent }}>✓</span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
 
-                      <p className="text-[#5a5a5a] text-sm leading-relaxed mb-4 pl-12">
-                        {servicio.descripcion}
-                      </p>
-
-                      <a
-                        href={`${WHATSAPP_URL}&text=${encodeURIComponent(`Hola, me interesa cotizar: ${servicio.titulo}`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="pl-12 flex items-center gap-1.5 text-xs font-semibold opacity-50 hover:opacity-100 transition-opacity group-hover:opacity-100"
-                        style={{ color: pilar.accentColor }}
-                      >
-                        Cotizar <ArrowRight size={11} />
-                      </a>
-                    </div>
-                  );
-                })}
-              </div>
+              {/* CTA */}
+              <a
+                href={`${WHATSAPP_URL}&text=${encodeURIComponent(tier.msg)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-[1.02]"
+                style={
+                  tier.popular
+                    ? { background: "linear-gradient(135deg, #00f0ff20, #00f0ff10)", border: "1px solid rgba(0,240,255,0.3)", color: "#00f0ff" }
+                    : { background: "rgba(255,255,255,0.04)", border: "1px solid rgba(72,72,72,0.2)", color: "#9e9e9e" }
+                }
+              >
+                <MessageSquare size={14} />
+                {tier.cta}
+                <ArrowRight size={13} />
+              </a>
             </div>
           ))}
         </div>
 
-        {/* Bottom note */}
-        <p className="reveal text-center text-[#5a5a5a] text-sm mt-8">
-          ¿Necesitas web + IA juntos?{" "}
+        {/* ── 4 Differentiator Pillars ── */}
+        <div className="mb-12">
+          <p className="reveal text-center text-xs uppercase tracking-[0.2em] text-[#5a5a5a] mb-8">
+            {t.pillarsTitle}
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {t.pillars.map((p, i) => {
+              const Icon = p.icon;
+              return (
+                <div
+                  key={p.title}
+                  className={`reveal reveal-delay-${i + 1} p-5 rounded-xl`}
+                  style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(72,72,72,0.1)" }}
+                >
+                  <div
+                    className="w-9 h-9 rounded-lg flex items-center justify-center mb-4"
+                    style={{ background: "rgba(0,240,255,0.06)", border: "1px solid rgba(0,240,255,0.12)" }}
+                  >
+                    <Icon size={16} style={{ color: "#00f0ff" }} />
+                  </div>
+                  <p className="text-[#e5e5e5] font-semibold text-sm mb-2">{p.title}</p>
+                  <p className="text-[#5a5a5a] text-xs leading-relaxed">{p.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ── Bottom note ── */}
+        <p className="reveal text-center text-[#5a5a5a] text-sm">
+          {t.bottomNote}
           <a
-            href={WHATSAPP_URL}
+            href={`${WHATSAPP_URL}&text=${encodeURIComponent("Hola, quiero agendar una auditoría gratuita de procesos.")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#9e9e9e] hover:text-[#47c4ff] transition-colors duration-200"
+            className="text-[#9e9e9e] hover:text-[#00f0ff] transition-colors duration-200"
           >
-            Armamos un paquete a tu medida.
+            {t.bottomLink}
           </a>
         </p>
+
       </div>
     </section>
   );
