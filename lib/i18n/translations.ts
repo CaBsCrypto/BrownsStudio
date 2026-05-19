@@ -241,7 +241,7 @@ export const translations = {
       }
     },
     cta: {
-      spots: "3 SPOTS REMAINING FOR JUNE",
+      spots: "3 PROJECT SLOTS PER MONTH",
       title: "Your process. Your agent. Running 24/7.",
       sub: "We design the agent to your spec, train it with your business logic, and set it free to run on autopilot — while you focus on what only you can do.",
       note: "We only accept 3 projects per month to ensure absolute focus and technical excellence.",
@@ -529,7 +529,7 @@ export const translations = {
       }
     },
     cta: {
-      spots: "RESTAN 3 VAGAS PARA JUNIO",
+      spots: "SOLO 3 PROYECTOS POR MES",
       title: "El proceso es tuyo. El agente trabaja por ti.",
       sub: "Diseñamos el agente a tu medida, lo entrenamos con tu lógica de negocio y lo liberamos para que opere en piloto automático — mientras tú te enfocas en lo que solo tú puedes hacer.",
       note: "Aceptamos solo 3 proyectos al mes para garantizar foco absoluto y excelencia técnica.",
@@ -812,7 +812,7 @@ export const translations = {
       ctaBtn: "Ver planos e preços →",
     },
     cta: {
-      spots: "RESTAM 3 VAGAS PARA JUNHO",
+      spots: "APENAS 3 PROJETOS POR MÊS",
       title: "O processo é seu. O agente trabalha por você.",
       sub: "Projetamos o agente sob medida, o treinamos com a lógica do seu negócio e o liberamos para operar no piloto automático — enquanto você se concentra no que só você pode fazer.",
       note: "Aceitamos apenas 3 projetos por mês para garantir foco absoluto e excelência técnica.",

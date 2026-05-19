@@ -63,7 +63,7 @@ export default function CTA() {
           }}
         >
           <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#00f0ff" }} />
-          {t.cta.spots}: {SITE_CONFIG.spotsAvailable}
+          {t.cta.spots}
         </div>
 
         {/* Headline */}
