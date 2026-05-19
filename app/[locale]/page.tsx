@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import Servicios from "@/components/Servicios";
 import SobreMi from "@/components/SobreMi";
 import Pricing from "@/components/Pricing";
 import Portfolio from "@/components/Portfolio";
@@ -33,6 +34,7 @@ export default async function LocalePage({
       <BrownsOSLoader />
       <Navbar />
       <Hero />
+      <Servicios />
       <Portfolio />
       {/* <CasosDeUso /> — pendiente, revisar más adelante */}
       <Pricing />
