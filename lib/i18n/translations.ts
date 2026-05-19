@@ -6,14 +6,15 @@ export const translations = {
       process: "Process",
       pricing: "Pricing",
       faq: "FAQ",
+      formacion: "Training",
       cta: "Get a Quote",
     },
     hero: {
-      badge: "Intelligent Delegation · Autonomous Agents · AI",
-      line1: "Your operations,",
-      line2: "delegated to agents",
-      line3: "trained your way.",
-      sub: "We analyze your operations, identify every process that can be delegated, and build the agent that runs it for you. Systems that learn, scale, and work while you lead.",
+      badge: "AI Agents · WhatsApp Business · 7 days",
+      line1: "Never lose another",
+      line2: "customer for not",
+      line3: "replying in time.",
+      sub: "We build your WhatsApp agent in 7 days — trained with your exact logic, responding, booking and qualifying leads 24/7.",
       cta1: "Free process audit",
       cta2: "View services",
       stat1: "Clients",
@@ -106,7 +107,7 @@ export const translations = {
         {
           name: "Vibecoding 1-1 Intensive",
           desc: "Personalized mentorship to master agentic engineering",
-          price: "$600 USD",
+          price: "Let's talk",
           features: [
             "4 private 1-on-1 sessions (1.5h each)",
             "Direct implementation into your real projects",
@@ -118,7 +119,7 @@ export const translations = {
         {
           name: "Agentic Swarm Mastery",
           desc: "Deep dive into autonomous multi-agent systems",
-          price: "$1,200 USD",
+          price: "Let's talk",
           features: [
             "8 private sessions over 4 weeks",
             "Building custom agentic pipelines",
@@ -129,8 +130,7 @@ export const translations = {
         {
           name: "Executive AI Strategy",
           desc: "High-level roadmap for your business",
-          price: "$300 USD",
-          priceSuffix: "/ session",
+          price: "Let's talk",
           features: [
             "90-min private immersion session",
             "AI transformation audit & workflow design",
@@ -296,14 +296,15 @@ export const translations = {
       process: "Proceso",
       pricing: "Precios",
       faq: "FAQ",
+      formacion: "Formación",
       cta: "Cotizar Proyecto",
     },
     hero: {
-      badge: "Delegación Inteligente · Agentes Autónomos · IA",
-      line1: "Tu operación,",
-      line2: "delegada a agentes",
-      line3: "entrenados a tu medida.",
-      sub: "Analizamos tu operación, identificamos cada proceso que puede delegarse y construimos el agente que lo ejecuta por ti. Sistemas que aprenden, escalan y trabajan mientras tú lideras.",
+      badge: "Agentes IA · WhatsApp Business · 7 días",
+      line1: "Nunca más pierdas",
+      line2: "un cliente por no",
+      line3: "responder a tiempo.",
+      sub: "Construimos tu agente de WhatsApp en 7 días — entrenado con tu lógica exacta, responde, agenda y califica leads 24/7.",
       cta1: "Auditoría gratuita",
       cta2: "Ver servicios",
       stat1: "Clientes",
@@ -397,7 +398,7 @@ export const translations = {
         {
           name: "Vibecoding 1-1 Intensivo",
           desc: "Mentoría personalizada para dominar la ingeniería agéntica",
-          price: "$600 USD",
+          price: "A cotizar",
           features: [
             "4 asesorías 1-1 privadas (1.5h c/u)",
             "Implementación directa en tus proyectos reales",
@@ -409,7 +410,7 @@ export const translations = {
         {
           name: "Mastery en Swarms Agénticos",
           desc: "Inmersión profunda en sistemas multi-agentes autónomos",
-          price: "$1,200 USD",
+          price: "A cotizar",
           features: [
             "8 sesiones privadas en 4 semanas",
             "Construcción de pipelines agénticos a medida",
@@ -420,8 +421,7 @@ export const translations = {
         {
           name: "Estrategia IA Ejecutiva",
           desc: "Hoja de ruta de alto nivel para tu negocio",
-          price: "$300 USD",
-          priceSuffix: "/ sesión",
+          price: "A cotizar",
           features: [
             "90 min de inmersión privada",
             "Auditoría de transformación y diseño de flujos",
@@ -586,15 +586,16 @@ export const translations = {
       process: "Processo",
       pricing: "Preços",
       faq: "FAQ",
+      formacion: "Formação",
       cta: "Orçar Projeto",
     },
     hero: {
-      badge: "Delegação Inteligente · Agentes Autônomos · IA",
-      line1: "Suas operações,",
-      line2: "delegadas a agentes",
-      line3: "treinados do seu jeito.",
-      sub: "Analisamos sua operação, identificamos cada processo que pode ser delegado e construímos o agente que o executa por você. Sistemas que aprendem, escalam e trabalham enquanto você lidera.",
-      cta1: "Orçar grátis",
+      badge: "Agentes IA · WhatsApp Business · 7 dias",
+      line1: "Nunca perca mais",
+      line2: "um cliente por não",
+      line3: "responder a tempo.",
+      sub: "Construímos seu agente de WhatsApp em 7 dias — treinado com sua lógica exata, respondendo, agendando e qualificando leads 24/7.",
+      cta1: "Auditoria gratuita",
       cta2: "Ver serviços",
       stat1: "Clientes",
       stat2: "Certs. Google IA",
@@ -607,8 +608,8 @@ export const translations = {
       prevLabel: "Projeto anterior",
       nextLabel: "Próximo projeto",
       dotLabel: "Ir para o projeto",
-      cta: "Quer que seu negócio seja o próximo na nossa lista?",
-      ctaBtn: "Começar meu projeto",
+      cta: "Pronto para que seus processos trabalhem sozinhos?",
+      ctaBtn: "Quero meu agente",
     },
     about: {
       eyebrow: "Quem está por trás",
@@ -686,7 +687,7 @@ export const translations = {
         {
           name: "Vibecoding 1-1 Intensivo",
           desc: "Mentoria personalizada para dominar a engenharia agêntica",
-          price: "$600 USD",
+          price: "A cotizar",
           features: [
             "4 assessorias 1-1 privadas (1.5h c/u)",
             "Implementação direta em seus projetos reais",
@@ -698,7 +699,7 @@ export const translations = {
         {
           name: "Mastery em Swarms Agênticos",
           desc: "Imersão profunda em sistemas multi-agentes autônomos",
-          price: "$1.200 USD",
+          price: "A cotizar",
           features: [
             "8 sessões privadas em 4 semanas",
             "Construção de pipelines agênticos sob medida",
@@ -709,8 +710,7 @@ export const translations = {
         {
           name: "Estratégia IA Executiva",
           desc: "Roteiro de alto nível para o seu negócio",
-          price: "$300 USD",
-          priceSuffix: "/ sessão",
+          price: "A cotizar",
           features: [
             "90 min de imersão privada",
             "Auditoria de transformação e design de fluxos",

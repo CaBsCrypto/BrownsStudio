@@ -211,38 +211,6 @@ export default function Hero() {
             ))}
           </div>
 
-          {/* Client logos strip */}
-          <div className="reveal reveal-delay-4 mt-10">
-            <p
-              className="text-[10px] uppercase tracking-[0.2em] mb-4"
-              style={{ color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-jet-brains-mono), monospace" }}
-            >
-              {t.hero.trustedBy ?? "Trusted by"}
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              {CLIENT_LOGOS.map((client) => (
-                <div
-                  key={client.name}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300 hover:scale-105"
-                  style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: `1px solid ${client.color}28`,
-                  }}
-                >
-                  <div
-                    className="w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-bold flex-shrink-0"
-                    style={{ background: `${client.color}22`, color: client.color }}
-                  >
-                    {client.abbr}
-                  </div>
-                  <span className="text-[11px] font-medium" style={{ color: "rgba(255,255,255,0.4)" }}>
-                    {client.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
         </div>
       </div>
     </section>

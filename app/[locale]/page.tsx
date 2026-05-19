@@ -35,10 +35,10 @@ export default async function LocalePage({
       <Hero />
       <Portfolio />
       {/* <CasosDeUso /> — pendiente, revisar más adelante */}
-      <SobreMi />
       <Pricing />
       <Proceso />
       <Testimonios />
+      <SobreMi />
       <FAQ />
       <CTA />
       <Footer />

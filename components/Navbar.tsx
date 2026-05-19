@@ -16,11 +16,12 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("");
 
   const navLinks = [
-    { label: t.nav.services, href: "#servicios", id: "servicios" },
-    { label: t.nav.portfolio, href: "#portfolio", id: "portfolio" },
-    { label: t.nav.process,  href: "#proceso",   id: "proceso"   },
-    { label: t.nav.pricing,  href: "#precios",   id: "precios"   },
-    { label: t.nav.faq,      href: "#faq",       id: "faq"       },
+    { label: t.nav.services, href: "#servicios", id: "servicios", page: false },
+    { label: t.nav.portfolio, href: "#portfolio", id: "portfolio", page: false },
+    { label: t.nav.process,  href: "#proceso",   id: "proceso",   page: false },
+    { label: t.nav.pricing,  href: "#precios",   id: "precios",   page: false },
+    { label: t.nav.faq,      href: "#faq",       id: "faq",       page: false },
+    { label: (t.nav as any).formacion ?? "Formación", href: `/${lang}/formacion`, id: "formacion", page: true },
   ];
 
   useEffect(() => {
@@ -85,6 +86,20 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => {
                 const isActive = activeSection === link.id;
+                if (link.page) {
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`relative text-xs font-medium uppercase tracking-widest transition-all duration-300 group ${
+                        isActive ? "text-[#e5e5e5]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+                      }`}
+                    >
+                      {link.label}
+                      <span className="absolute -bottom-0.5 left-0 h-px w-0 group-hover:w-full bg-[#484848] transition-all duration-300" />
+                    </Link>
+                  );
+                }
                 return (
                   <button
                     key={link.href}
@@ -155,6 +170,21 @@ export default function Navbar() {
           <div className="flex flex-col h-full p-6 pt-20">
             {navLinks.map((link, i) => {
               const isActive = activeSection === link.id;
+              if (link.page) {
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`text-left py-4 text-sm font-medium uppercase tracking-widest transition-colors duration-200 ${
+                      isActive ? "text-[#00f0ff]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+                    }`}
+                    style={{ borderBottom: "1px solid rgba(72,72,72,0.12)" }}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              }
               return (
                 <button
                   key={link.href}
