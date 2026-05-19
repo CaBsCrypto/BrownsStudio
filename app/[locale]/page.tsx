@@ -34,7 +34,7 @@ export default async function LocalePage({
       <Navbar />
       <Hero />
       <Portfolio />
-      <CasosDeUso />
+      {/* <CasosDeUso /> — pendiente, revisar más adelante */}
       <SobreMi />
       <Pricing />
       <Proceso />
