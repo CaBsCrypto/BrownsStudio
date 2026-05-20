@@ -9,8 +9,8 @@ import { useLang } from "@/lib/i18n/LanguageContext";
 const content = {
   en: {
     eyebrow: "Agent as a Service",
-    title: "Not a bot. A digital worker.",
-    sub: "Our agents reason, act on your real systems, remember every customer, and ask for your approval before doing anything critical.",
+    title: "Not a bot. Your business's unfair advantage.",
+    sub: "Our agents power your operation — serving customers 24/7, acting on your real systems, and freeing your team to focus on what truly matters.",
     tiers: [
       {
         tag: "Entry Point",
@@ -64,8 +64,8 @@ const content = {
   },
   es: {
     eyebrow: "Agent as a Service",
-    title: "No es un bot. Es un trabajador digital.",
-    sub: "Nuestros agentes razonan, actúan en tus sistemas reales, recuerdan a cada cliente y te piden aprobación antes de hacer algo crítico.",
+    title: "No es un bot. Es la ventaja de tu negocio.",
+    sub: "Nuestros agentes potencian tu operación — atienden clientes 24/7, actúan en tus sistemas reales y liberan a tu equipo para enfocarse en lo que realmente importa.",
     tiers: [
       {
         tag: "Punto de Entrada",
@@ -119,8 +119,8 @@ const content = {
   },
   pt: {
     eyebrow: "Agent as a Service",
-    title: "Não é um bot. É um trabalhador digital.",
-    sub: "Nossos agentes raciocinam, agem nos seus sistemas reais, lembram de cada cliente e pedem sua aprovação antes de fazer algo crítico.",
+    title: "Não é um bot. É a vantagem do seu negócio.",
+    sub: "Nossos agentes potencializam sua operação — atendem clientes 24/7, agem nos seus sistemas reais e liberam sua equipe para focar no que realmente importa.",
     tiers: [
       {
         tag: "Ponto de Entrada",
