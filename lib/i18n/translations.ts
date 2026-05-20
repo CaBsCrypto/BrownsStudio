@@ -7,6 +7,14 @@ export const translations = {
       pricing: "Pricing",
       faq: "FAQ",
       formacion: "Training",
+      solutions: "Solutions",
+      solutionsList: {
+        dentistas: "Dental Clinics",
+        salud: "Medical Clinics",
+        estetica: "Aesthetic Spas",
+        abogados: "Law Firms",
+        "clases-privadas": "Private Academies"
+      },
       cta: "Get a Quote",
     },
     hero: {
@@ -298,6 +306,14 @@ export const translations = {
       pricing: "Precios",
       faq: "FAQ",
       formacion: "Formación",
+      solutions: "Soluciones",
+      solutionsList: {
+        dentistas: "Clínicas Dentales",
+        salud: "Centros de Salud",
+        estetica: "Clínicas Estéticas",
+        abogados: "Abogados y Firmas",
+        "clases-privadas": "Academias y Clases"
+      },
       cta: "Cotizar Proyecto",
     },
     hero: {
@@ -589,6 +605,14 @@ export const translations = {
       pricing: "Preços",
       faq: "FAQ",
       formacion: "Formação",
+      solutions: "Soluções",
+      solutionsList: {
+        dentistas: "Clínicas Odontológicas",
+        salud: "Centros de Saúde",
+        estetica: "Clínicas Estéticas",
+        abogados: "Escritórios de Advocacia",
+        "clases-privadas": "Academias e Aulas"
+      },
       cta: "Orçar Projeto",
     },
     hero: {

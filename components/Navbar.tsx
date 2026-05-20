@@ -2,11 +2,22 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { SITE_CONFIG, WHATSAPP_URL } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
-const navIds = ["servicios", "portfolio", "proceso", "precios", "faq"];
+interface NavTranslation {
+  services: string;
+  portfolio: string;
+  process: string;
+  pricing: string;
+  faq: string;
+  cta: string;
+  formacion?: string;
+  solutions?: string;
+  solutionsList?: Record<string, string>;
+}
+
 const allSectionIds = ["inicio", "sobre-mi", "servicios", "portfolio", "proceso", "precios", "testimonios", "faq", "contacto"];
 
 export default function Navbar() {
@@ -14,14 +25,19 @@ export default function Navbar() {
   const [scrolled, setScrolled]       = useState(false);
   const [mobileOpen, setMobileOpen]   = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
+
+  const nav = t.nav as NavTranslation;
+  const solutionsList = nav.solutionsList ? Object.entries(nav.solutionsList) : [];
 
   const navLinks = [
-    { label: t.nav.services, href: "#servicios", id: "servicios", page: false },
-    { label: t.nav.portfolio, href: "#portfolio", id: "portfolio", page: false },
-    { label: t.nav.process,  href: "#proceso",   id: "proceso",   page: false },
-    { label: t.nav.pricing,  href: "#precios",   id: "precios",   page: false },
-    { label: t.nav.faq,      href: "#faq",       id: "faq",       page: false },
-    { label: (t.nav as any).formacion ?? "Formación", href: `/${lang}/formacion`, id: "formacion", page: true },
+    { label: nav.services, href: "#servicios", id: "servicios", page: false },
+    { label: nav.portfolio, href: "#portfolio", id: "portfolio", page: false },
+    { label: nav.process,  href: "#proceso",   id: "proceso",   page: false },
+    { label: nav.pricing,  href: "#precios",   id: "precios",   page: false },
+    { label: nav.faq,      href: "#faq",       id: "faq",       page: false },
+    { label: nav.formacion ?? "Formación", href: `/${lang}/formacion`, id: "formacion", page: true },
   ];
 
   useEffect(() => {
@@ -84,7 +100,70 @@ export default function Navbar() {
 
             {/* Desktop nav */}
             <div className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => {
+              {/* Link 1: Services */}
+              <button
+                onClick={() => handleNavClick("#servicios")}
+                className={`relative text-xs font-medium uppercase tracking-widest transition-all duration-300 cursor-pointer group ${
+                  activeSection === "servicios" ? "text-[#e5e5e5]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+                }`}
+              >
+                {t.nav.services}
+                <span
+                  className={`absolute -bottom-0.5 left-0 h-px transition-all duration-300 ${
+                    activeSection === "servicios" ? "w-full bg-[#00f0ff]" : "w-0 group-hover:w-full bg-[#484848]"
+                  }`}
+                />
+              </button>
+
+              {/* Solutions Dropdown */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setDropdownOpen(true)}
+                onMouseLeave={() => setDropdownOpen(false)}
+              >
+                <button
+                  className={`flex items-center gap-1 text-xs font-medium uppercase tracking-widest transition-all duration-300 cursor-pointer group ${
+                    dropdownOpen || activeSection === "soluciones" ? "text-[#00f0ff]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+                  }`}
+                >
+                  {nav.solutions ?? "Soluciones"}
+                  <ChevronDown size={12} className={`transition-transform duration-300 ${dropdownOpen ? "rotate-180 text-[#00f0ff]" : "text-[#5a5a5a] group-hover:text-[#9e9e9e]"}`} />
+                </button>
+                
+                {/* Premium Glassmorphic Dropdown Menu */}
+                <div
+                  className={`absolute left-1/2 -translate-x-1/2 mt-2 w-56 rounded-xl border transition-all duration-300 ${
+                    dropdownOpen 
+                      ? "opacity-100 translate-y-0 pointer-events-auto" 
+                      : "opacity-0 -translate-y-2 pointer-events-none"
+                  }`}
+                  style={{
+                    background: "rgba(10, 11, 10, 0.95)",
+                    backdropFilter: "blur(20px)",
+                    border: "1px solid rgba(0, 240, 255, 0.15)",
+                    boxShadow: "0 10px 40px rgba(0, 0, 0, 0.6)",
+                    padding: "8px 0",
+                    zIndex: 100,
+                  }}
+                >
+                  {solutionsList.map(([key, label]) => (
+                    <Link
+                      key={key}
+                      href={`/${lang}/soluciones/${key}`}
+                      onClick={() => setDropdownOpen(false)}
+                      className="flex items-center px-4 py-3 text-xs font-medium uppercase tracking-wider text-[#9e9e9e] hover:text-[#00f0ff] hover:bg-[#00f0ff]/5 transition-all duration-200"
+                    >
+                      <span className="mr-2 text-sm">
+                        {key === "dentistas" ? "🦷" : key === "salud" ? "🏥" : key === "estetica" ? "✨" : key === "abogados" ? "⚖️" : "🎓"}
+                      </span>
+                      {label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Other Hash Links */}
+              {navLinks.slice(1).map((link) => {
                 const isActive = activeSection === link.id;
                 if (link.page) {
                   return (
@@ -167,8 +246,56 @@ export default function Navbar() {
           }`}
           style={{ background: "#0e0e0e", borderLeft: "1px solid rgba(72,72,72,0.2)" }}
         >
-          <div className="flex flex-col h-full p-6 pt-20">
-            {navLinks.map((link, i) => {
+          <div className="flex flex-col h-full p-6 pt-20 overflow-y-auto">
+            {/* Link 1: Services */}
+            <button
+              onClick={() => handleNavClick("#servicios")}
+              className={`text-left py-4 text-sm font-medium uppercase tracking-widest transition-colors duration-200 cursor-pointer ${
+                activeSection === "servicios" ? "text-[#00f0ff]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+              }`}
+              style={{ borderBottom: "1px solid rgba(72,72,72,0.12)" }}
+            >
+              {t.nav.services}
+            </button>
+
+            {/* Mobile Solutions Accordion */}
+            <div className="py-2" style={{ borderBottom: "1px solid rgba(72,72,72,0.12)" }}>
+              <button
+                onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
+                className="w-full flex items-center justify-between text-left py-2 text-sm font-medium uppercase tracking-widest text-[#5a5a5a] hover:text-[#e5e5e5] transition-colors"
+              >
+                <span>{nav.solutions ?? "Soluciones"}</span>
+                <ChevronDown size={14} className={`transition-transform duration-300 ${mobileSolutionsOpen ? "rotate-180 text-[#00f0ff]" : ""}`} />
+              </button>
+              
+              <div
+                className={`overflow-hidden transition-all duration-500 ${
+                  mobileSolutionsOpen ? "max-h-[300px] mt-2 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+                }`}
+              >
+                <div className="pl-4 flex flex-col gap-3 py-2">
+                  {solutionsList.map(([key, label]) => (
+                    <Link
+                      key={key}
+                      href={`/${lang}/soluciones/${key}`}
+                      onClick={() => {
+                        setMobileSolutionsOpen(false);
+                        setMobileOpen(false);
+                      }}
+                      className="flex items-center text-xs font-semibold uppercase tracking-wider text-[#7c7c7c] hover:text-[#00f0ff] transition-all"
+                    >
+                      <span className="mr-2 text-base">
+                        {key === "dentistas" ? "🦷" : key === "salud" ? "🏥" : key === "estetica" ? "✨" : key === "abogados" ? "⚖️" : "🎓"}
+                      </span>
+                      {label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Other Mobile Links */}
+            {navLinks.slice(1).map((link, i) => {
               const isActive = activeSection === link.id;
               if (link.page) {
                 return (
@@ -192,7 +319,7 @@ export default function Navbar() {
                   className={`text-left py-4 text-sm font-medium uppercase tracking-widest transition-colors duration-200 cursor-pointer ${
                     isActive ? "text-[#00f0ff]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
                   }`}
-                  style={{ borderBottom: "1px solid rgba(72,72,72,0.12)", animationDelay: `${i * 0.05}s` }}
+                  style={{ borderBottom: "1px solid rgba(72,72,72,0.12)", animationDelay: `${(i + 1) * 0.05}s` }}
                 >
                   {link.label}
                 </button>

@@ -6,7 +6,7 @@ import Pricing from "@/components/Pricing";
 import Portfolio from "@/components/Portfolio";
 import CasosDeUso from "@/components/CasosDeUso";
 import Testimonios from "@/components/Testimonios";
-// import AIShowcase from "@/components/AIShowcase";
+import AIShowcase from "@/components/AIShowcase";
 import Proceso from "@/components/Proceso";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
@@ -35,10 +35,11 @@ export default async function LocalePage({
       <Navbar />
       <Hero />
       <Servicios />
+      <CasosDeUso />
       <Portfolio />
-      {/* <CasosDeUso /> — pendiente, revisar más adelante */}
       <Pricing />
       <Proceso />
+      <AIShowcase />
       <Testimonios />
       <SobreMi />
       <FAQ />
