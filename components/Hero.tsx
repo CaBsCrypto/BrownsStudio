@@ -61,9 +61,18 @@ export default function Hero() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Chat Simulator State Engine
+  const [selectedNiche, setSelectedNiche] = useState(0);
+  const [isAutoCycle, setIsAutoCycle] = useState(true);
   const [chatStep, setChatStep] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [typingSender, setTypingSender] = useState<"prospect" | "agent">("prospect");
+
+  const currentSim = t.hero.chatSims[selectedNiche];
+
+  useEffect(() => {
+    setChatStep(0);
+    setIsTyping(false);
+  }, [selectedNiche]);
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -150,12 +159,16 @@ export default function Hero() {
       }, 800);
     } else if (chatStep === 8) {
       timer = setTimeout(() => {
-        setChatStep(0);
+        if (isAutoCycle) {
+          setSelectedNiche((prev) => (prev + 1) % t.hero.chatSims.length);
+        } else {
+          setChatStep(0);
+        }
       }, 8000);
     }
 
     return () => clearTimeout(timer);
-  }, [chatStep]);
+  }, [chatStep, isAutoCycle, t.hero.chatSims.length]);
 
   const statLabels = [t.hero.stat1, t.hero.stat2, t.hero.stat3];
 
@@ -300,31 +313,51 @@ export default function Hero() {
             {/* Ambient behind light border */}
             <div className="w-full max-w-md relative select-none animate-float">
               
+              {/* Carousel Tabs */}
+              <div className="flex flex-wrap justify-center gap-2 mb-4 relative z-30">
+                {t.hero.chatSims.map((sim, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setSelectedNiche(idx);
+                      setIsAutoCycle(false);
+                    }}
+                    className={`px-3 py-1.5 rounded-full text-[10px] font-semibold transition-all backdrop-blur-md border ${
+                      selectedNiche === idx
+                        ? "bg-tertiary/20 border-tertiary/50 text-white shadow-[0_0_10px_rgba(0,240,255,0.2)]"
+                        : "bg-[#181822]/50 border-white/5 text-white/40 hover:text-white/80 hover:bg-[#181822]"
+                    }`}
+                  >
+                    {sim.tabName}
+                  </button>
+                ))}
+              </div>
+
               {/* Phone Frame Glass Chassis */}
               <div className="w-full rounded-3xl border border-white/10 bg-[#060609]/90 backdrop-blur-2xl p-1 relative shadow-2xl shadow-tertiary/5 overflow-hidden">
                 
                 {/* Tech Status Tag */}
                 <div className="absolute top-0 right-12 bg-tertiary/10 border-b border-x border-tertiary/20 px-3.5 py-1 rounded-b-xl text-[9px] font-mono text-tertiary uppercase tracking-widest flex items-center gap-1.5 z-20">
                   <Activity size={9} className="animate-pulse" />
-                  {t.hero.chatSim.hudActive}
+                  {currentSim.hudActive}
                 </div>
 
                 {/* Reactive Header Dashboard */}
                 <div className="p-4 border-b border-white/5 bg-white/[0.01] grid grid-cols-3 gap-3 text-center relative z-10 pt-6">
                   <div className="rounded-xl border border-white/5 bg-[#0e0e13]/60 p-2.5 transition-all">
                     <div className="text-[8px] text-[#9e9e9e] uppercase tracking-wider font-bold mb-1">
-                      {t.hero.chatSim.hudLead}
+                      {currentSim.hudLead}
                     </div>
                     <div className={`text-[10px] font-extrabold font-mono transition-all duration-300 ${chatStep >= 1 ? 'text-white' : 'text-[#444]'}`}>
-                      {chatStep >= 1 ? t.hero.chatSim.hudLead : "---"}
+                      {chatStep >= 1 ? currentSim.hudLead : "---"}
                     </div>
                   </div>
                   <div className="rounded-xl border border-white/5 bg-[#0e0e13]/60 p-2.5 transition-all">
                     <div className="text-[8px] text-[#9e9e9e] uppercase tracking-wider font-bold mb-1">
-                      {t.hero.chatSim.hudStatus}
+                      {currentSim.hudStatus}
                     </div>
                     <div className={`text-[10px] font-extrabold font-mono transition-all duration-300 ${chatStep >= 4 ? 'text-tertiary shadow-[0_0_10px_rgba(0,240,255,0.2)]' : 'text-[#444]'}`}>
-                      {chatStep >= 4 ? t.hero.chatSim.hudStatus : "---"}
+                      {chatStep >= 4 ? currentSim.hudStatus : "---"}
                     </div>
                   </div>
                   <div className="rounded-xl border border-white/5 bg-[#0e0e13]/60 p-2.5 transition-all">
@@ -332,7 +365,7 @@ export default function Hero() {
                       Valor
                     </div>
                     <div className={`text-[10px] font-extrabold font-mono transition-all duration-300 ${chatStep >= 7 ? 'text-[#10b981] drop-shadow-[0_0_8px_rgba(16,185,129,0.3)] font-semibold' : 'text-[#444]'}`}>
-                      {chatStep >= 7 ? t.hero.chatSim.hudValue : "---"}
+                      {chatStep >= 7 ? currentSim.hudValue : "---"}
                     </div>
                   </div>
                 </div>
@@ -345,7 +378,7 @@ export default function Hero() {
                     <div className="flex justify-start animate-in fade-in slide-in-from-left-4 duration-300 max-w-[85%]">
                       <div className="bg-[#181822] text-[#e5e5e5] rounded-2xl rounded-tl-none p-3.5 border border-white/5 relative">
                         <span className="text-[9px] text-white/40 block mb-1 font-semibold uppercase tracking-wider">Prospecto (Cliente)</span>
-                        {t.hero.chatSim.prospect}
+                        {currentSim.prospect}
                       </div>
                     </div>
                   )}
@@ -355,7 +388,7 @@ export default function Hero() {
                     <div className="flex justify-end animate-in fade-in slide-in-from-right-4 duration-300 max-w-[85%] ml-auto">
                       <div className="bg-tertiary/10 text-white rounded-2xl rounded-tr-none p-3.5 border border-tertiary/20 relative shadow-[0_0_15px_rgba(0,240,255,0.03)]">
                         <span className="text-[9px] text-tertiary block mb-1 font-semibold uppercase tracking-wider">Agente BrownsOS</span>
-                        {t.hero.chatSim.agent1}
+                        {currentSim.agent1}
                       </div>
                     </div>
                   )}
@@ -367,12 +400,12 @@ export default function Hero() {
                         {chatStep >= 4 ? (
                           <>
                             <CheckCircle size={9} className="text-green-400" />
-                            {t.hero.chatSim.tool1Success}
+                            {currentSim.tool1Success}
                           </>
                         ) : (
                           <>
                             <span className="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping" />
-                            {t.hero.chatSim.tool1}
+                            {currentSim.tool1}
                           </>
                         )}
                       </div>
@@ -383,7 +416,7 @@ export default function Hero() {
                   {chatStep >= 4 && (
                     <div className="flex justify-end animate-in fade-in slide-in-from-right-4 duration-300 max-w-[85%] ml-auto">
                       <div className="bg-tertiary/10 text-white rounded-2xl rounded-tr-none p-3.5 border border-tertiary/20 relative">
-                        {t.hero.chatSim.agent2}
+                        {currentSim.agent2}
                       </div>
                     </div>
                   )}
@@ -393,7 +426,7 @@ export default function Hero() {
                     <div className="flex justify-start animate-in fade-in slide-in-from-left-4 duration-300 max-w-[85%]">
                       <div className="bg-[#181822] text-[#e5e5e5] rounded-2xl rounded-tl-none p-3.5 border border-white/5 relative">
                         <span className="text-[9px] text-white/40 block mb-1 font-semibold uppercase tracking-wider">Prospecto (Cliente)</span>
-                        {t.hero.chatSim.prospect2}
+                        {currentSim.prospect2}
                       </div>
                     </div>
                   )}
@@ -405,12 +438,12 @@ export default function Hero() {
                         {chatStep >= 7 ? (
                           <>
                             <CheckCircle size={9} className="text-[#10b981]" />
-                            {t.hero.chatSim.tool2Success}
+                            {currentSim.tool2Success}
                           </>
                         ) : (
                           <>
                             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
-                            {t.hero.chatSim.tool2}
+                            {currentSim.tool2}
                           </>
                         )}
                       </div>
@@ -422,7 +455,7 @@ export default function Hero() {
                     <div className="flex justify-end animate-in fade-in slide-in-from-right-4 duration-300 max-w-[85%] ml-auto">
                       <div className="bg-tertiary/10 text-white rounded-2xl rounded-tr-none p-3.5 border border-tertiary/20 relative shadow-[0_0_15px_rgba(0,240,255,0.03)]">
                         <span className="text-[9px] text-tertiary block mb-1 font-semibold uppercase tracking-wider">Agente BrownsOS</span>
-                        {t.hero.chatSim.agent3}
+                        {currentSim.agent3}
                       </div>
                     </div>
                   )}
