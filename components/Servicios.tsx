@@ -202,7 +202,13 @@ export default function Servicios() {
       ref={sectionRef}
       id="servicios"
       className="section-padding"
-      style={{ background: "#050505", position: "relative", zIndex: 5, isolation: "isolate" }}
+      style={{
+        background: "#070709",
+        position: "relative",
+        zIndex: 5,
+        transform: "translateZ(0)",
+        willChange: "transform",
+      }}
     >
       <div className="max-w-6xl mx-auto">
 
@@ -233,8 +239,8 @@ export default function Servicios() {
               key={tier.name}
               className={`reveal reveal-delay-${i + 1} relative rounded-2xl p-6 flex flex-col transition-all duration-300`}
               style={{
-                background: tier.popular ? "#0d1a1c" : "#0c0c0e",
-                border: `1px solid ${tier.popular ? "rgba(0,240,255,0.2)" : "rgba(72,72,72,0.15)"}`,
+                background: tier.popular ? "#10181e" : "#111113",
+                border: `1px solid ${tier.popular ? "rgba(0,240,255,0.25)" : "rgba(255,255,255,0.06)"}`,
               }}
             >
               {/* Popular badge */}
@@ -292,8 +298,8 @@ export default function Servicios() {
                 className="flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-[1.02]"
                 style={
                   tier.popular
-                    ? { background: "linear-gradient(135deg, #00f0ff20, #00f0ff10)", border: "1px solid rgba(0,240,255,0.3)", color: "#00f0ff" }
-                    : { background: "rgba(255,255,255,0.04)", border: "1px solid rgba(72,72,72,0.2)", color: "#9e9e9e" }
+                    ? { background: "#0d2228", border: "1px solid rgba(0,240,255,0.3)", color: "#00f0ff" }
+                    : { background: "#191919", border: "1px solid rgba(255,255,255,0.08)", color: "#9e9e9e" }
                 }
               >
                 <MessageSquare size={14} />
@@ -316,7 +322,7 @@ export default function Servicios() {
                 <div
                   key={p.title}
                   className={`reveal reveal-delay-${i + 1} p-5 rounded-xl`}
-                  style={{ background: "#0c0c0e", border: "1px solid rgba(72,72,72,0.18)" }}
+                  style={{ background: "#111113", border: "1px solid rgba(255,255,255,0.06)" }}
                 >
                   <div
                     className="w-9 h-9 rounded-lg flex items-center justify-center mb-4"
