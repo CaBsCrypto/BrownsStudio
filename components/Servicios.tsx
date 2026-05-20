@@ -198,7 +198,12 @@ export default function Servicios() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="servicios" className="section-padding" style={{ background: "#0a0a0b" }}>
+    <section
+      ref={sectionRef}
+      id="servicios"
+      className="section-padding"
+      style={{ background: "#050505", position: "relative", zIndex: 5, isolation: "isolate" }}
+    >
       <div className="max-w-6xl mx-auto">
 
         {/* ── Header ── */}
@@ -228,7 +233,7 @@ export default function Servicios() {
               key={tier.name}
               className={`reveal reveal-delay-${i + 1} relative rounded-2xl p-6 flex flex-col transition-all duration-300`}
               style={{
-                background: tier.popular ? "rgba(0,240,255,0.03)" : "rgba(255,255,255,0.02)",
+                background: tier.popular ? "#0d1a1c" : "#0c0c0e",
                 border: `1px solid ${tier.popular ? "rgba(0,240,255,0.2)" : "rgba(72,72,72,0.15)"}`,
               }}
             >
@@ -311,7 +316,7 @@ export default function Servicios() {
                 <div
                   key={p.title}
                   className={`reveal reveal-delay-${i + 1} p-5 rounded-xl`}
-                  style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(72,72,72,0.1)" }}
+                  style={{ background: "#0c0c0e", border: "1px solid rgba(72,72,72,0.18)" }}
                 >
                   <div
                     className="w-9 h-9 rounded-lg flex items-center justify-center mb-4"

@@ -54,8 +54,16 @@ function StatItem({ numeric, suffix, label, active }: { numeric: number; suffix:
 }
 
 export default function Hero() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const heroRef      = useRef<HTMLElement>(null);
+
+  const hudLabels = {
+    es: { lead: "PROSPECTO / LEAD", status: "ESTADO INTERNO", value: "VALOR ESTIMADO" },
+    en: { lead: "PROSPECT / LEAD", status: "INTERNAL STATUS", value: "ESTIMATED VALUE" },
+    pt: { lead: "PROSPECTO / LEAD", status: "ESTADO INTERNO", value: "VALOR ESTIMADO" },
+  };
+
+  const activeHudLabels = hudLabels[lang as keyof typeof hudLabels] || hudLabels.es;
   const [statsActive, setStatsActive] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -103,7 +111,7 @@ export default function Hero() {
     return () => observer.disconnect();
   }, []);
 
-  // Chat simulation state machine loop
+  // Chat simulation state machine loop (snappy, outcome-first flow)
   useEffect(() => {
     let timer: NodeJS.Timeout;
     
@@ -114,16 +122,16 @@ export default function Hero() {
         timer = setTimeout(() => {
           setIsTyping(false);
           setChatStep(2);
-        }, 1800);
-      }, 800);
+        }, 400);
+      }, 100);
     } else if (chatStep === 2) {
       timer = setTimeout(() => {
         setChatStep(3);
-      }, 800);
+      }, 150);
     } else if (chatStep === 3) {
       timer = setTimeout(() => {
         setChatStep(4);
-      }, 1500);
+      }, 300);
     } else if (chatStep === 4) {
       timer = setTimeout(() => {
         setTypingSender("prospect");
@@ -131,16 +139,16 @@ export default function Hero() {
         timer = setTimeout(() => {
           setIsTyping(false);
           setChatStep(5);
-        }, 1500);
-      }, 1000);
+        }, 400);
+      }, 100);
     } else if (chatStep === 5) {
       timer = setTimeout(() => {
         setChatStep(6);
-      }, 800);
+      }, 150);
     } else if (chatStep === 6) {
       timer = setTimeout(() => {
         setChatStep(7);
-      }, 1800);
+      }, 300);
     } else if (chatStep === 7) {
       timer = setTimeout(() => {
         setTypingSender("agent");
@@ -148,16 +156,18 @@ export default function Hero() {
         timer = setTimeout(() => {
           setIsTyping(false);
           setChatStep(8);
-        }, 2000);
-      }, 800);
+        }, 400);
+      }, 100);
     } else if (chatStep === 8) {
       timer = setTimeout(() => {
         if (isAutoCycle) {
           setSelectedNiche((prev) => (prev + 1) % t.hero.chatSims.length);
+          setChatStep(1);
+          setIsTyping(false);
         } else {
           setChatStep(1);
         }
-      }, 8000);
+      }, 4000);
     }
 
     return () => clearTimeout(timer);
@@ -314,6 +324,8 @@ export default function Hero() {
                     onClick={() => {
                       setSelectedNiche(idx);
                       setIsAutoCycle(false);
+                      setChatStep(1);
+                      setIsTyping(false);
                     }}
                     className={`px-3 py-1.5 rounded-full text-[10px] font-semibold transition-all backdrop-blur-md border ${
                       selectedNiche === idx
@@ -335,30 +347,30 @@ export default function Hero() {
                   {currentSim.hudActive}
                 </div>
 
-                {/* Reactive Header Dashboard */}
+                {/* Reactive Header Dashboard (Instant outcome display with high-tech status progression) */}
                 <div className="p-4 border-b border-white/5 bg-white/[0.01] grid grid-cols-3 gap-3 text-center relative z-10 pt-6">
                   <div className="rounded-xl border border-white/5 bg-[#0e0e13]/60 p-2.5 transition-all">
                     <div className="text-[8px] text-[#9e9e9e] uppercase tracking-wider font-bold mb-1">
+                      {activeHudLabels.lead}
+                    </div>
+                    <div className="text-[10px] font-extrabold font-mono text-white transition-all duration-300">
                       {currentSim.hudLead}
                     </div>
-                    <div className={`text-[10px] font-extrabold font-mono transition-all duration-300 ${chatStep >= 1 ? 'text-white' : 'text-[#444]'}`}>
-                      {chatStep >= 1 ? currentSim.hudLead : "---"}
-                    </div>
                   </div>
                   <div className="rounded-xl border border-white/5 bg-[#0e0e13]/60 p-2.5 transition-all">
                     <div className="text-[8px] text-[#9e9e9e] uppercase tracking-wider font-bold mb-1">
+                      {activeHudLabels.status}
+                    </div>
+                    <div className={`text-[10px] font-extrabold font-mono transition-all duration-300 ${chatStep >= 4 ? 'text-tertiary shadow-[0_0_10px_rgba(0,240,255,0.2)]' : 'text-white/20'}`}>
                       {currentSim.hudStatus}
                     </div>
-                    <div className={`text-[10px] font-extrabold font-mono transition-all duration-300 ${chatStep >= 4 ? 'text-tertiary shadow-[0_0_10px_rgba(0,240,255,0.2)]' : 'text-[#444]'}`}>
-                      {chatStep >= 4 ? currentSim.hudStatus : "---"}
-                    </div>
                   </div>
                   <div className="rounded-xl border border-white/5 bg-[#0e0e13]/60 p-2.5 transition-all">
                     <div className="text-[8px] text-[#9e9e9e] uppercase tracking-wider font-bold mb-1">
-                      Valor
+                      {activeHudLabels.value}
                     </div>
-                    <div className={`text-[10px] font-extrabold font-mono transition-all duration-300 ${chatStep >= 7 ? 'text-[#10b981] drop-shadow-[0_0_8px_rgba(16,185,129,0.3)] font-semibold' : 'text-[#444]'}`}>
-                      {chatStep >= 7 ? currentSim.hudValue : "---"}
+                    <div className={`text-[10px] font-extrabold font-mono transition-all duration-300 ${chatStep >= 7 ? 'text-[#10b981] drop-shadow-[0_0_8px_rgba(16,185,129,0.3)] font-semibold' : 'text-white/20'}`}>
+                      {currentSim.hudValue}
                     </div>
                   </div>
                 </div>
