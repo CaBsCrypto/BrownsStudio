@@ -63,14 +63,14 @@ export default function Hero() {
   // Chat Simulator State Engine
   const [selectedNiche, setSelectedNiche] = useState(0);
   const [isAutoCycle, setIsAutoCycle] = useState(true);
-  const [chatStep, setChatStep] = useState(0);
+  const [chatStep, setChatStep] = useState(1);
   const [isTyping, setIsTyping] = useState(false);
   const [typingSender, setTypingSender] = useState<"prospect" | "agent">("prospect");
 
   const currentSim = t.hero.chatSims[selectedNiche];
 
   useEffect(() => {
-    setChatStep(0);
+    setChatStep(1);
     setIsTyping(false);
   }, [selectedNiche]);
 
@@ -107,14 +107,7 @@ export default function Hero() {
   useEffect(() => {
     let timer: NodeJS.Timeout;
     
-    if (chatStep === 0) {
-      setTypingSender("prospect");
-      setIsTyping(true);
-      timer = setTimeout(() => {
-        setIsTyping(false);
-        setChatStep(1);
-      }, 2000);
-    } else if (chatStep === 1) {
+    if (chatStep === 1) {
       timer = setTimeout(() => {
         setTypingSender("agent");
         setIsTyping(true);
@@ -162,7 +155,7 @@ export default function Hero() {
         if (isAutoCycle) {
           setSelectedNiche((prev) => (prev + 1) % t.hero.chatSims.length);
         } else {
-          setChatStep(0);
+          setChatStep(1);
         }
       }, 8000);
     }
