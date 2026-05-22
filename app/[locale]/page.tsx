@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Servicios from "@/components/Servicios";
 import SobreMi from "@/components/SobreMi";
 import Pricing from "@/components/Pricing";
 import Portfolio from "@/components/Portfolio";
@@ -35,7 +34,6 @@ export default async function LocalePage({
       <Navbar />
       <Hero />
       <CasosDeUso />
-      <Servicios />
       <Portfolio />
       <Pricing />
       {/* <Proceso /> */}
@@ -44,7 +42,7 @@ export default async function LocalePage({
       <SobreMi />
       <FAQ />
       <CTA />
-      <Footer />
+      {/* <Footer /> */}
       <WhatsAppButton />
     </main>
   );
