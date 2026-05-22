@@ -37,7 +37,8 @@ export default function SobreMi() {
     <section
       ref={sectionRef}
       id="sobre-mi"
-      className="section-padding overflow-hidden"
+      className="section-padding overflow-hidden bg-transparent"
+      style={{ background: "transparent" }}
     >
       {/* Cyan underlight */}
       <div
@@ -56,8 +57,10 @@ export default function SobreMi() {
               <div
                 className="relative rounded-[32px] overflow-hidden"
                 style={{
-                  background: "#121212",
-                  border: "1px solid rgba(255,255,255,0.08)",
+                  background: "rgba(18, 18, 18, 0.6)",
+                  backdropFilter: "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255, 255, 255, 0.12)",
                   boxShadow: "0 40px 80px -20px rgba(0,0,0,0.8)",
                 }}
               >
@@ -89,7 +92,7 @@ export default function SobreMi() {
                 </div>
 
                 {/* Platform Ecosystem Marquee */}
-                <div className="py-6 bg-[#161616] border-t border-white/5 overflow-hidden relative">
+                <div className="py-6 bg-white/[0.02] backdrop-blur-md border-t border-white/5 overflow-hidden relative">
                   <div
                     className="flex gap-4 w-max px-4"
                     style={{
@@ -155,7 +158,12 @@ export default function SobreMi() {
               {/* Summary row */}
               <div
                 className="flex items-start gap-5 mb-5 p-4 rounded-2xl"
-                style={{ background: "rgba(10,15,30,0.8)", border: "1px solid rgba(71,196,255,0.15)" }}
+                style={{
+                  background: "rgba(10, 15, 30, 0.55)",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  border: "1px solid rgba(71,196,255,0.25)"
+                }}
               >
                 <div className="text-center flex-shrink-0">
                   <p className="font-display font-bold text-4xl text-[#47c4ff] leading-none">7</p>
@@ -196,18 +204,20 @@ export default function SobreMi() {
                         key={`${name}-${i}`}
                         className="relative flex items-center gap-2 px-3 py-2 rounded-full flex-shrink-0 cursor-default"
                         style={{
-                          background: "#191919",
-                          border: "1px solid rgba(72,72,72,0.2)",
+                          background: "rgba(25, 25, 25, 0.5)",
+                          backdropFilter: "blur(8px)",
+                          WebkitBackdropFilter: "blur(8px)",
+                          border: "1px solid rgba(255, 255, 255, 0.08)",
                         }}
                         onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLElement).style.borderColor = "rgba(71,196,255,0.35)";
-                          (e.currentTarget as HTMLElement).style.background = "rgba(10,15,30,0.8)";
+                          (e.currentTarget as HTMLElement).style.borderColor = "rgba(71,196,255,0.45)";
+                          (e.currentTarget as HTMLElement).style.background = "rgba(10, 15, 30, 0.75)";
                           const tip = e.currentTarget.querySelector("[data-tip]") as HTMLElement | null;
                           if (tip) tip.style.opacity = "1";
                         }}
                         onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLElement).style.borderColor = "rgba(72,72,72,0.2)";
-                          (e.currentTarget as HTMLElement).style.background = "#191919";
+                          (e.currentTarget as HTMLElement).style.borderColor = "rgba(255, 255, 255, 0.08)";
+                          (e.currentTarget as HTMLElement).style.background = "rgba(25, 25, 25, 0.5)";
                           const tip = e.currentTarget.querySelector("[data-tip]") as HTMLElement | null;
                           if (tip) tip.style.opacity = "0";
                         }}

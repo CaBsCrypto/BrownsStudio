@@ -236,7 +236,7 @@ export default function BrownsOS() {
       {/* ── Scan lines — desktop ──────────────────────────────────────────── */}
       {!isMobile && (
         <div aria-hidden style={{
-          position: "fixed", inset: 0, zIndex: 1, pointerEvents: "none",
+          position: "fixed", inset: 0, zIndex: 20, pointerEvents: "none",
           background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.008) 2px, rgba(0,240,255,0.008) 4px)",
           transform: "translateZ(0)",
         }} />
@@ -245,7 +245,7 @@ export default function BrownsOS() {
       {/* ── HUD ──────────────────────────────────────────────────────────── */}
       {!isMobile && (
         <div aria-hidden style={{
-          position: "fixed", bottom: "20px", right: "20px", zIndex: 2, pointerEvents: "none",
+          position: "fixed", bottom: "20px", right: "20px", zIndex: 30, pointerEvents: "none",
           fontFamily: "var(--font-jet-brains-mono), 'Courier New', monospace",
           fontSize: "9px", lineHeight: "1.7", letterSpacing: "0.1em",
           color: "rgba(0,240,255,0.25)", textAlign: "right",

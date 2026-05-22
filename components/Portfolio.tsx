@@ -110,7 +110,8 @@ export default function Portfolio() {
     <section
       ref={sectionRef}
       id="portfolio"
-      className="section-padding overflow-hidden"
+      className="section-padding overflow-hidden bg-transparent"
+      style={{ background: "transparent" }}
     >
       {/* Subtle orb behind the section */}
       <div
@@ -148,7 +149,9 @@ export default function Portfolio() {
               aria-label={t.portfolio.prevLabel}
               className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
               style={{
-                background: "#1f1f1f",
+                background: "rgba(31, 31, 31, 0.6)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
                 border: "1px solid rgba(72,72,72,0.3)",
                 color: "#9e9e9e",
               }}
@@ -170,7 +173,9 @@ export default function Portfolio() {
               aria-label={t.portfolio.nextLabel}
               className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
               style={{
-                background: "#1f1f1f",
+                background: "rgba(31, 31, 31, 0.6)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
                 border: "1px solid rgba(72,72,72,0.3)",
                 color: "#9e9e9e",
               }}
@@ -215,12 +220,12 @@ export default function Portfolio() {
           {/* Edge fades — fades to void */}
           <div
             className="absolute right-0 top-0 bottom-4 w-24 pointer-events-none"
-            style={{ background: "linear-gradient(to left, #050505, transparent)" }}
+            style={{ background: "linear-gradient(to left, rgba(5,5,5,0.85), transparent)" }}
           />
           <div
             className="absolute left-0 top-0 bottom-4 w-24 pointer-events-none transition-opacity duration-300"
             style={{
-              background: "linear-gradient(to right, #050505, transparent)",
+              background: "linear-gradient(to right, rgba(5,5,5,0.85), transparent)",
               opacity: activeIndex > 0 ? 1 : 0,
             }}
           />

@@ -60,7 +60,7 @@ export default function Testimonios() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="testimonios" className="section-padding bg-bg-secondary">
+    <section ref={sectionRef} id="testimonios" className="section-padding bg-transparent">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -81,7 +81,7 @@ export default function Testimonios() {
           {testimonios.map((t, i) => (
             <div
               key={t.nombre}
-              className={`reveal reveal-delay-${i + 1} group relative p-6 rounded-2xl border border-white/5 hover:border-accent-gold/20 bg-gradient-to-br ${t.color} transition-all duration-500 hover:-translate-y-1 hover:shadow-card`}
+              className={`reveal reveal-delay-${i + 1} group relative p-6 rounded-2xl border border-white/5 hover:border-accent-gold/25 bg-gradient-to-br ${t.color} backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-card`}
             >
               {/* Quote icon */}
               <Quote

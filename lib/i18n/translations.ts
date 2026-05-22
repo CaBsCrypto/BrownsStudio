@@ -377,6 +377,62 @@ export const translations = {
       title: "Browns Studio | AI Agents for Business in LATAM",
       description: "Browns Studio builds custom AI agents that handle customer service, book appointments, and qualify leads on WhatsApp — 24/7. Process analysis, real system integration and launch in 7 days.",
       keywords: ["WhatsApp AI agent", "WhatsApp automation for business", "AI agent for clinics", "AI agent for real estate", "WhatsApp Business AI LATAM", "sales agent WhatsApp", "AI booking agent", "implement AI in my business", "Browns Studio AI agents", "lead qualification AI", "custom WhatsApp chatbot", "Business AI Setup"],
+    },
+    useCases: {
+      eyebrow: "Agent as a Service",
+      title: "Designed to act. Built to scale.",
+      sub: "Our agents power your operation — serving customers 24/7, acting on your real systems, and freeing your team to focus on what truly matters.",
+      sectionTitleLeft: "Business Processes",
+      sectionSubLeft: "Processes we delegate and automate most",
+      sectionTitleRight: "Engineering Safeguards",
+      sectionSubRight: "How the technology works under the hood",
+      items: [
+        {
+          title: "Sales Agent",
+          desc: "Qualifies leads, answers inquiries, quotes, and schedules calls on WhatsApp — 24/7, no human intervention.",
+          tag: "WhatsApp · CRM · Leads",
+          result: "Qualified leads without team effort",
+        },
+        {
+          title: "Operations Agent",
+          desc: "Manages your CRM, generates automatic reports and coordinates internal workflows so no one has to remember.",
+          tag: "Make · n8n · Zapier",
+          result: "Internal operations on autopilot",
+        },
+        {
+          title: "Onboarding Agent",
+          desc: "Onboards new clients or employees with zero friction — automated guides, answers, and follow-ups.",
+          tag: "Email · Slack · Notion",
+          result: "Onboarding without team overhead",
+        },
+        {
+          title: "Multi-Channel Agent",
+          desc: "Operates across WhatsApp, email, web and your system simultaneously — one agent that never loses context.",
+          tag: "Omnichannel · API · Database",
+          result: "Consistent multi-channel presence",
+        },
+      ],
+      pillars: [
+        {
+          title: "Reasons before acting",
+          desc: "The agent evaluates context, consults your knowledge base and decides the best action — not just keyword matching.",
+        },
+        {
+          title: "Connected to your tools",
+          desc: "Calendar, CRM, Shopify, Sheets. The agent acts on your real systems in real time, no human in between.",
+        },
+        {
+          title: "Human in the loop",
+          desc: "Before any critical action (payment, cancellation, bulk send) the agent pauses and waits for your approval.",
+        },
+        {
+          title: "Remembers every customer",
+          desc: "Persistent memory via RAG: the agent knows each customer's history, preferences and previous conversations.",
+        },
+      ],
+      cta: "Tell us your process",
+      bottomNote: "Not sure which tier fits? ",
+      bottomLink: "Book a free 45-min process audit.",
     }
   },
 
@@ -758,6 +814,62 @@ export const translations = {
       title: "Browns Studio | Agentes IA para Negocios en LATAM",
       description: "Browns Studio construye agentes de IA a medida que atienden clientes, agendan citas y califican leads por WhatsApp — 24/7. Análisis de procesos, integración con tus sistemas y lanzamiento en 7 días.",
       keywords: ["agente IA WhatsApp", "automatización WhatsApp para negocios", "agente inteligente para clínicas", "agente IA para inmobiliarias", "WhatsApp Business AI LATAM", "agente de ventas WhatsApp", "agente de agendamiento IA", "implementar IA en mi negocio", "Browns Studio agentes IA", "calificación de leads con IA", "chatbot personalizado WhatsApp", "Business AI Setup"],
+    },
+    useCases: {
+      eyebrow: "Agent as a Service",
+      title: "Diseñado para actuar. Construido para escalar.",
+      sub: "Nuestros agentes potencian tu operación — atienden clientes 24/7, actúan en tus sistemas reales y liberan a tu equipo para enfocarse en lo que realmente importa.",
+      sectionTitleLeft: "Procesos de Negocio",
+      sectionSubLeft: "Qué procesos delegamos y automatizamos",
+      sectionTitleRight: "Garantías de Ingeniería",
+      sectionSubRight: "Cómo funciona la tecnología bajo el capó",
+      items: [
+        {
+          title: "Agente de Ventas",
+          desc: "Califica leads, responde consultas, cotiza y agenda llamadas por WhatsApp — 24/7, sin intervención humana.",
+          tag: "WhatsApp · CRM · Leads",
+          result: "Leads calificados sin esfuerzo",
+        },
+        {
+          title: "Agente de Operaciones",
+          desc: "Gestiona tu CRM, genera reportes automáticos y coordina flujos internos sin que nadie tenga que recordarlo.",
+          tag: "Make · n8n · Zapier",
+          result: "Operación interna en piloto automático",
+        },
+        {
+          title: "Agente de Onboarding",
+          desc: "Incorpora nuevos clientes o empleados con cero fricción — guías, respuestas y seguimiento automatizados.",
+          tag: "Email · Slack · Notion",
+          result: "Onboarding sin sobrecarga",
+        },
+        {
+          title: "Agente Multi-Canal",
+          desc: "Opera en WhatsApp, email, web y tu sistema a la vez — un agente que nunca pierde contexto entre canales.",
+          tag: "Omnicanal · API · Base de datos",
+          result: "Presencia coherente multicanal",
+        },
+      ],
+      pillars: [
+        {
+          title: "Razona antes de actuar",
+          desc: "El agente evalúa el contexto, consulta tu knowledge base y decide la mejor acción — no solo hace matching de palabras clave.",
+        },
+        {
+          title: "Conectado a tus herramientas",
+          desc: "Calendar, CRM, Shopify, Sheets. El agente actúa en tus sistemas reales en tiempo real, sin intermediarios.",
+        },
+        {
+          title: "Humano en el bucle",
+          desc: "Antes de cualquier acción crítica (cobro, cancelación, envío masivo) el agente pausa y espera tu aprobación.",
+        },
+        {
+          title: "Recuerda a cada cliente",
+          desc: "Memoria persistente vía RAG: el agente conoce el historial, preferencias y conversaciones previas de cada cliente.",
+        },
+      ],
+      cta: "Cuéntanos tu proceso",
+      bottomNote: "¿No sabes qué plan necesitas? ",
+      bottomLink: "Agenda una auditoría gratuita de 45 min.",
     }
   },
 
@@ -1134,6 +1246,62 @@ export const translations = {
       title: "Browns Studio | Design Web Premium + IA para Negócios",
       description: "A Browns Studio cria presenças digitais de alto impacto com design web profissional e inteligência artificial. Chatbots, automações e sites que convertem para negócios na América Latina.",
       keywords: ["desenvolvimento web LATAM", "sites para negócios", "design web profissional", "chatbot WhatsApp para negócios", "bot inteligência artificial", "automação com IA", "site para clínicas", "site para restaurantes", "agência digital LATAM", "presença digital premium", "chatbot IA para clínicas", "chatbot IA para restaurantes"],
+    },
+    useCases: {
+      eyebrow: "Agent as a Service",
+      title: "Desenhado para agir. Construído para escalar.",
+      sub: "Nossos agentes potencializam sua operação — atendem clientes 24/7, agem nos seus sistemas reais e liberam sua equipe para focar no que realmente importa.",
+      sectionTitleLeft: "Processos de Negócio",
+      sectionSubLeft: "Processos que mais delegamos e automatizamos",
+      sectionTitleRight: "Garantias de Engenharia",
+      sectionSubRight: "Como a tecnologia funciona sob o capô",
+      items: [
+        {
+          title: "Agente de Vendas",
+          desc: "Qualifica leads, responde consultas, faz orçamentos e agenda ligações pelo WhatsApp — 24/7, sem intervenção humana.",
+          tag: "WhatsApp · CRM · Leads",
+          result: "Leads qualificados sem esforço da equipe",
+        },
+        {
+          title: "Agente de Operações",
+          desc: "Gerencia seu CRM, gera relatórios automáticos e coordena fluxos internos sem que ninguém precise lembrar.",
+          tag: "Make · n8n · Zapier",
+          result: "Operação interna no piloto automático",
+        },
+        {
+          title: "Agente de Onboarding",
+          desc: "Integra novos clientes ou funcionários com zero atrito — guias, respostas e acompanhamento automatizados.",
+          tag: "Email · Slack · Notion",
+          result: "Onboarding sem sobrecarga para a equipe",
+        },
+        {
+          title: "Agente Multi-Canal",
+          desc: "Opera no WhatsApp, e-mail, web y no seu sistema ao mesmo tempo — um agente que nunca perde o contexto.",
+          tag: "Omnicanal · API · Banco de dados",
+          result: "Presença coerente multicanal",
+        },
+      ],
+      pillars: [
+        {
+          title: "Raciocina antes de agir",
+          desc: "O agente avalia o contexto, consulta sua knowledge base e decide a melhor ação — não apenas faz matching de palavras.",
+        },
+        {
+          title: "Conectado às suas ferramentas",
+          desc: "Calendar, CRM, Shopify, Sheets. O agente age nos seus sistemas reais em tempo real, sem intermediários.",
+        },
+        {
+          title: "Humano no laço",
+          desc: "Antes de qualquer ação crítica (cobrança, cancelamento, envio em massa) o agente pausa e aguarda sua aprovação.",
+        },
+        {
+          title: "Lembra de cada cliente",
+          desc: "Memória persistente via RAG: o agente conhece o histórico, preferências e conversas anteriores de cada cliente.",
+        },
+      ],
+      cta: "Conte-nos seu processo",
+      bottomNote: "Não sabe qual plano precisa? ",
+      bottomLink: "Agende uma auditoria gratuita de 45 min.",
     }
   },
 } as const;

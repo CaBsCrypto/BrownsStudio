@@ -166,8 +166,10 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
   );
 
   const cardStyle = {
-    background: "#161616",
-    border: "1px solid rgba(72,72,72,0.15)",
+    background: "rgba(22, 22, 22, 0.55)",
+    backdropFilter: "blur(16px)",
+    WebkitBackdropFilter: "blur(16px)",
+    border: "1px solid rgba(255, 255, 255, 0.08)",
     borderRadius: "12px",
     overflow: "hidden",
     transition: "border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease",
@@ -180,12 +182,14 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
         className={`reveal ${delayClass} group block opacity-80 hover:opacity-100`}
         style={cardStyle}
         onMouseEnter={(e) => {
-          (e.currentTarget as HTMLElement).style.border = "1px solid rgba(71,196,255,0.2)";
+          (e.currentTarget as HTMLElement).style.border = "1px solid rgba(71,196,255,0.35)";
+          (e.currentTarget as HTMLElement).style.background = "rgba(30, 30, 30, 0.75)";
           (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)";
           (e.currentTarget as HTMLElement).style.boxShadow = "0 24px 48px rgba(0,0,0,0.5)";
         }}
         onMouseLeave={(e) => {
-          (e.currentTarget as HTMLElement).style.border = "1px solid rgba(72,72,72,0.15)";
+          (e.currentTarget as HTMLElement).style.border = "1px solid rgba(255, 255, 255, 0.08)";
+          (e.currentTarget as HTMLElement).style.background = "rgba(22, 22, 22, 0.55)";
           (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
           (e.currentTarget as HTMLElement).style.boxShadow = "none";
         }}
@@ -202,12 +206,14 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
       className={`reveal ${delayClass} group block`}
       style={cardStyle}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.border = "1px solid rgba(71,196,255,0.2)";
+        (e.currentTarget as HTMLElement).style.border = "1px solid rgba(71,196,255,0.35)";
+        (e.currentTarget as HTMLElement).style.background = "rgba(30, 30, 30, 0.75)";
         (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)";
         (e.currentTarget as HTMLElement).style.boxShadow = "0 24px 48px rgba(0,0,0,0.5)";
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.border = "1px solid rgba(72,72,72,0.15)";
+        (e.currentTarget as HTMLElement).style.border = "1px solid rgba(255, 255, 255, 0.08)";
+        (e.currentTarget as HTMLElement).style.background = "rgba(22, 22, 22, 0.55)";
         (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
         (e.currentTarget as HTMLElement).style.boxShadow = "none";
       }}

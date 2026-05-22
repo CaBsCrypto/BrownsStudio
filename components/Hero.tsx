@@ -179,7 +179,7 @@ export default function Hero() {
     <section
       ref={heroRef}
       id="inicio"
-      className="relative min-h-screen flex items-center overflow-hidden bg-[#020205] pt-24 pb-12 lg:py-0"
+      className="relative min-h-screen flex items-center overflow-hidden bg-transparent pt-24 pb-12 lg:py-0"
     >
       {/* ── Immersive Cyber Grid & Ambient Vignette ─────────────────────── */}
       <div className="absolute inset-0 pointer-events-none z-0">

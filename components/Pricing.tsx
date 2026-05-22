@@ -39,7 +39,7 @@ export default function Pricing() {
       ref={sectionRef}
       id="precios"
       className="py-24 relative overflow-hidden"
-      style={{ background: "rgba(0,0,0,0.3)" }}
+      style={{ background: "transparent" }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
@@ -87,11 +87,13 @@ export default function Pricing() {
               key={plan.name}
               className={`reveal relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full ${isRevealed ? 'visible' : ''}`}
               style={{
-                background: "#0c0d0c",
+                background: plan.popular ? "rgba(15, 20, 35, 0.65)" : "rgba(12, 13, 12, 0.5)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)",
                 border: plan.popular
-                  ? "1px solid rgba(0,240,255,0.3)"
-                  : "1px solid rgba(0,240,255,0.1)",
-                ...(plan.popular ? { marginTop: "-1rem", marginBottom: "1rem", boxShadow: "0 0 40px rgba(0,240,255,0.08)" } : {}),
+                  ? "1px solid rgba(0,240,255,0.4)"
+                  : "1px solid rgba(255,255,255,0.08)",
+                ...(plan.popular ? { marginTop: "-1rem", marginBottom: "1rem", boxShadow: "0 0 40px rgba(0,240,255,0.12)" } : {}),
               }}
             >
               {plan.popular && (

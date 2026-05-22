@@ -30,7 +30,8 @@ export default function FAQ() {
     <section
       ref={sectionRef}
       id="faq"
-      className="section-padding"
+      className="section-padding bg-transparent"
+      style={{ background: "transparent" }}
     >
       <div className="max-w-3xl mx-auto">
         {/* Header */}
@@ -61,10 +62,12 @@ export default function FAQ() {
                 <div
                   className="rounded-xl overflow-hidden transition-all duration-300"
                   style={{
-                    background: isOpen ? "#191919" : "#131313",
+                    background: isOpen ? "rgba(25, 25, 25, 0.65)" : "rgba(19, 19, 19, 0.45)",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
                     border: isOpen
-                      ? "1px solid rgba(71,196,255,0.15)"
-                      : "1px solid rgba(72,72,72,0.12)",
+                      ? "1px solid rgba(71,196,255,0.3)"
+                      : "1px solid rgba(255, 255, 255, 0.06)",
                   }}
                 >
                   <button
