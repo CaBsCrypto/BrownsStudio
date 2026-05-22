@@ -122,7 +122,7 @@ export default function Pricing() {
                     <span className="text-[#5a5a5a] text-xs">{plan.priceSuffix}</span>
                   ) : (
                     !plan.price.toLowerCase().includes('talk') && !plan.price.toLowerCase().includes('convers') && (
-                      <span className="text-[#5a5a5a] text-xs">USD</span>
+                      <span className="text-[#5a5a5a] text-xs">CLP</span>
                     )
                   )}
                 </div>

@@ -153,7 +153,7 @@ export default function Navbar() {
                       className="flex items-center px-4 py-3 text-xs font-medium uppercase tracking-wider text-[#9e9e9e] hover:text-[#00f0ff] hover:bg-[#00f0ff]/5 transition-all duration-200"
                     >
                       <span className="mr-2 text-sm">
-                        {key === "dentistas" ? "🦷" : key === "salud" ? "🏥" : key === "estetica" ? "✨" : key === "abogados" ? "⚖️" : "🎓"}
+                        {key === "dentistas" ? "🦷" : key === "salud" ? "🏥" : key === "estetica" ? "✨" : key === "abogados" ? "⚖️" : key === "propiedades" ? "🏠" : "🎓"}
                       </span>
                       {label}
                     </Link>
@@ -284,7 +284,7 @@ export default function Navbar() {
                       className="flex items-center text-xs font-semibold uppercase tracking-wider text-[#7c7c7c] hover:text-[#00f0ff] transition-all"
                     >
                       <span className="mr-2 text-base">
-                        {key === "dentistas" ? "🦷" : key === "salud" ? "🏥" : key === "estetica" ? "✨" : key === "abogados" ? "⚖️" : "🎓"}
+                        {key === "dentistas" ? "🦷" : key === "salud" ? "🏥" : key === "estetica" ? "✨" : key === "abogados" ? "⚖️" : key === "propiedades" ? "🏠" : "🎓"}
                       </span>
                       {label}
                     </Link>

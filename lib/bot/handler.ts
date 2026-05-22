@@ -120,10 +120,10 @@ async function detectAndUpdateStage(
       .join("\n");
 
     // Enterprise threshold — escalate to handoff
-    if (lead?.budget_numeric && lead.budget_numeric > 5000 && currentStage !== "handoff") {
+    if (lead?.budget_numeric && lead.budget_numeric > 4500000 && currentStage !== "handoff") {
       await handleHandoff(
         conversationId, waPhone, currentStage,
-        "Presupuesto enterprise (>$5.000 USD)", lead, businessConfig, creds
+        "Presupuesto enterprise (>$4.500.000 CLP)", lead, businessConfig, creds
       );
       return;
     }

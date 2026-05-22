@@ -24,8 +24,8 @@ export default function SolucionNichePage() {
       solucion: "Solución de Impacto",
       calculadoraTitle: "Calculadora de ROI de tu Trabajador Digital",
       calculadoraSub: "Ajusta los parámetros para proyectar el retorno financiero real que este sistema genera al mes.",
-      setupFee: "Setup único de desarrollo desde $500 USD",
-      mensualFee: "Mantenimiento mensual de $100 - $200 USD",
+      setupFee: "Desarrollo e integración desde 450.000 CLP (único)",
+      mensualFee: "Mantenimiento mensual desde 90.000 CLP",
       cta: "Activar mi Trabajador Digital Personalizado",
       beneficiosTitle: "Lo que construimos y operamos para ti:",
       tipoNegocioLabel: "Selecciona el perfil de tu negocio para adaptar el enfoque:",
@@ -35,8 +35,8 @@ export default function SolucionNichePage() {
       solucion: "High-Impact Solution",
       calculadoraTitle: "Your Digital Worker's ROI Calculator",
       calculadoraSub: "Adjust the parameters to project the real monthly financial return this system generates.",
-      setupFee: "One-time development setup from $500 USD",
-      mensualFee: "Monthly maintenance from $100 - $200 USD",
+      setupFee: "Development & integration from 450.000 CLP (one-time)",
+      mensualFee: "Monthly maintenance from 90.000 CLP",
       cta: "Activate my Custom Digital Worker",
       beneficiosTitle: "What we build and operate for you:",
       tipoNegocioLabel: "Select your business profile to adapt the value focus:",
@@ -46,8 +46,8 @@ export default function SolucionNichePage() {
       solucion: "Solução de Impacto",
       calculadoraTitle: "Calculadora de ROI do seu Trabalhador Digital",
       calculadoraSub: "Ajuste os parâmetros para projetar o retorno financeiro real mensal que este sistema gera.",
-      setupFee: "Setup único de desenvolvimento a partir de $500 USD",
-      mensualFee: "Manutenção mensal de $100 - $200 USD",
+      setupFee: "Desenvolvimento e integração a partir de 450.000 CLP (único)",
+      mensualFee: "Manutenção mensal a partir de 90.000 CLP",
       cta: "Ativar meu Trabalhador Digital Personalizado",
       beneficiosTitle: "O que construímos e operamos para você:",
       tipoNegocioLabel: "Selecione o perfil do seu negócio para adaptar o foco de valor:",
@@ -63,6 +63,10 @@ export default function SolucionNichePage() {
   // Calculator states
   const [ticketValue, setTicketValue] = useState(activeProfile.defaultRoiValue);
   const [multiplier, setMultiplier] = useState(activeProfile.defaultRoiMultiplier);
+
+  // Dynamic slider steps for CLP
+  const minVal = profileMode === "estandar" ? 20000 : 100000;
+  const stepVal = profileMode === "estandar" ? 10000 : 50000;
 
   // Sync state values when switching profile modes or niches
   useEffect(() => {
@@ -194,20 +198,20 @@ export default function SolucionNichePage() {
             <div className="mb-6">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-xs sm:text-sm font-medium text-[#9e9e9e]">{activeProfile.roiLabel}</span>
-                <span className="text-sm sm:text-base font-bold text-[#00f0ff]">${ticketValue.toLocaleString()} USD</span>
+                <span className="text-sm sm:text-base font-bold text-[#00f0ff]">{ticketValue.toLocaleString()} CLP</span>
               </div>
               <input
                 type="range"
-                min={100}
+                min={minVal}
                 max={activeProfile.maxTicket}
-                step={50}
+                step={stepVal}
                 value={ticketValue}
                 onChange={(e) => setTicketValue(Number(e.target.value))}
                 className="w-full h-1 bg-[#222] rounded-lg appearance-none cursor-pointer accent-[#00f0ff]"
               />
               <div className="flex justify-between text-[10px] text-[#5a5a5a] mt-1 font-mono">
-                <span>$100</span>
-                <span>${activeProfile.maxTicket.toLocaleString()} USD</span>
+                <span>{minVal.toLocaleString()} CLP</span>
+                <span>{activeProfile.maxTicket.toLocaleString()} CLP</span>
               </div>
             </div>
 
@@ -242,7 +246,7 @@ export default function SolucionNichePage() {
                 {activeProfile.calcResultLabel}
               </span>
               <span className="font-display font-bold text-4xl sm:text-5xl text-gradient-gold animate-pulse drop-shadow-[0_0_15px_rgba(200,160,80,0.25)]">
-                ${estimatedRoi.toLocaleString()} USD
+                {estimatedRoi.toLocaleString()} CLP
               </span>
               <div className="mt-4 flex flex-col gap-1 text-[10px] text-[#5a5a5a] font-mono">
                 <span>{ui.setupFee}</span>

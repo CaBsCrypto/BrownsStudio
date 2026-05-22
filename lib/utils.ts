@@ -8,9 +8,9 @@ export function cn(...inputs: ClassValue[]): string {
 }
 
 export function formatPrice(amount: number): string {
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat("es-CL", {
     style: "currency",
-    currency: "USD",
+    currency: "CLP",
     minimumFractionDigits: 0,
   }).format(amount);
 }

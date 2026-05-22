@@ -61,12 +61,14 @@ export function buildSystemPrompt(
   const serviciosTexto = config.servicios.length
     ? config.servicios
         .map((s) => {
+          const formattedMin = s.precio_min.toLocaleString("es-CL");
+          const formattedMax = s.precio_max.toLocaleString("es-CL");
           const precio =
             s.precio_min === 0 && s.precio_max === 0
               ? "Gratis"
               : s.precio_min === s.precio_max
-              ? `$${s.precio_min} USD`
-              : `$${s.precio_min}–$${s.precio_max} USD`;
+              ? `$${formattedMin} CLP`
+              : `$${formattedMin}–$${formattedMax} CLP`;
           return `- ${s.nombre}: ${precio}${s.descripcion ? `  (${s.descripcion})` : ""}`;
         })
         .join("\n")

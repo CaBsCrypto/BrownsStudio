@@ -74,7 +74,7 @@ export async function extractLeadData(
 
   const prompt = `Extraés datos de leads de conversaciones de WhatsApp de una agencia web.
 Respondés SOLO con JSON válido, sin markdown, sin explicaciones.
-Campos posibles: full_name, business_type, budget_range, budget_numeric (número entero USD),
+Campos posibles: full_name, business_type, budget_range, budget_numeric (número entero en CLP),
 urgency, service_interest (array de strings), pain_point.
 Solo incluís campos que aparezcan CLARAMENTE en la conversación.
 Si no encontrás nada, respondés con {}
@@ -114,7 +114,7 @@ Respondés SOLO con el nombre de la etapa, sin explicación.
 Reglas:
 - greeting → qualifying: cuando el usuario muestra interés concreto
 - qualifying → scheduling: cuando tenemos nombre + tipo de negocio + servicio + presupuesto
-- qualifying → handoff: si presupuesto > $5000 o frustración clara
+- qualifying → handoff: si presupuesto > $4500000 o frustración clara
 - scheduling → closing: si piden precio específico en lugar de llamada
 - cualquiera → handoff: si pide hablar con una persona
 - Si no cambia, respondés con la etapa actual.

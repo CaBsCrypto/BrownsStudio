@@ -64,17 +64,17 @@ export function getFallbackBusinessConfig(): BusinessConfig {
     calendly_url:   process.env.CALENDLY_URL ?? "https://calendly.com/brownsstudio/consulta",
     handoff_phone:  process.env.HANDOFF_NOTIFICATION_PHONE ?? null,
     servicios: [
-      { nombre: "Landing Page Starter",  precio_min: 500,  precio_max: 900,  descripcion: "1 página, diseño premium, SEO básico" },
-      { nombre: "Landing Page Pro",       precio_min: 1200, precio_max: 2500, descripcion: "Multi-sección, animaciones, CMS" },
-      { nombre: "Bot IA Básico",          precio_min: 800,  precio_max: 1500, descripcion: "WhatsApp, FAQ, calificación de leads" },
-      { nombre: "Bot IA Avanzado",        precio_min: 2000, precio_max: 4000, descripcion: "RAG, memoria, integración CRM" },
-      { nombre: "Mentoría 1-1 (1h)",      precio_min: 80,   precio_max: 80   },
-      { nombre: "Pack Mentoría (4h)",     precio_min: 280,  precio_max: 280  },
+      { nombre: "Landing Page Starter",  precio_min: 450000,  precio_max: 800000,  descripcion: "1 página, diseño premium, SEO básico" },
+      { nombre: "Landing Page Pro",       precio_min: 1100000, precio_max: 2300000, descripcion: "Multi-sección, animaciones, CMS" },
+      { nombre: "Bot IA Básico",          precio_min: 750000,  precio_max: 1400000, descripcion: "WhatsApp, FAQ, calificación de leads" },
+      { nombre: "Bot IA Avanzado",        precio_min: 1800000, precio_max: 3600000, descripcion: "RAG, memoria, integración CRM" },
+      { nombre: "Mentoría 1-1 (1h)",      precio_min: 75000,   precio_max: 75000   },
+      { nombre: "Pack Mentoría (4h)",     precio_min: 260000,  precio_max: 260000  },
     ],
     faqs: [],
     reglas_extra:
       "Usás 'vos', 'ustedes'. Respondés SIEMPRE en el idioma del usuario. " +
-      "Si el presupuesto supera $5.000 USD → escalá a handoff. " +
+      "Si el presupuesto supera $4.500.000 CLP → escalá a handoff. " +
       "NUNCA digas que sos una IA a menos que te lo pregunten directamente.",
   };
 }

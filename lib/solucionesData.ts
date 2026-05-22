@@ -43,7 +43,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "While you treat a patient, your digital worker responds in 3 seconds, handles insurance queries, and books appointments automatically. Never let a routine lead slip away during lunch or after hours.",
           estadistica: "Fill up to 15 additional clinical appointment gaps and eliminate manual secretary callbacks.",
           roiLabel: "Average value of general consultation or routine treatment",
-          defaultRoiValue: 150,
+          defaultRoiValue: 140000,
           roiMultiplierLabel: "Missed appointments recovered per month",
           defaultRoiMultiplier: 12,
           calcResultLabel: "Estimated Monthly Recovered Revenue",
@@ -54,7 +54,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Instant answers to patient FAQs (location, routine prices, hours, insurances)",
             "Direct escalation to human staff for urgent toothaches or medical emergencies"
           ],
-          maxTicket: 1000,
+          maxTicket: 950000,
           maxMultiplier: 50
         },
         premium: {
@@ -63,7 +63,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "We present your invisalign, implants, and high-end aesthetic dental services with absolute sophistication. The system qualifies patient intent, filters out low-value inquiries, and secures diagnostic bookings.",
           estadistica: "Capture 3 to 7 premium treatment cases monthly that used to cool down waiting for standard callbacks.",
           roiLabel: "Average value of premium treatment (implants, clear aligners)",
-          defaultRoiValue: 1800,
+          defaultRoiValue: 1700000,
           roiMultiplierLabel: "High-value treatments secured per month",
           defaultRoiMultiplier: 4,
           calcResultLabel: "Estimated Monthly Premium Sales Generated",
@@ -74,7 +74,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Seamless synchronization with specialized doctor/expert calendars",
             "Automated payment integration to secure high-value diagnostic appointments"
           ],
-          maxTicket: 8000,
+          maxTicket: 7500000,
           maxMultiplier: 20
         }
       }
@@ -90,7 +90,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Mientras atiendes en el sillón, tu trabajador digital responde en 3 segundos, aclara convenios y reserva citas solo en tus horarios libres. No pierdas más pacientes por responder tarde o tener la línea ocupada.",
           estadistica: "Recupera hasta 15 citas mensuales que solían perderse fuera de horario o en horas de almuerzo.",
           roiLabel: "Valor promedio de una consulta o tratamiento de volumen",
-          defaultRoiValue: 150,
+          defaultRoiValue: 140000,
           roiMultiplierLabel: "Citas mensuales recuperadas por el sistema",
           defaultRoiMultiplier: 12,
           calcResultLabel: "Ingreso Mensual Recuperado Estimado",
@@ -101,7 +101,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Respuestas automáticas a dudas frecuentes (precios base, ubicación, estacionamiento)",
             "Derivación inmediata a recepcionista humana en caso de urgencias médicas"
           ],
-          maxTicket: 1000,
+          maxTicket: 950000,
           maxMultiplier: 50
         },
         premium: {
@@ -110,7 +110,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Presenta tus servicios de ortodoncia invisible, implantes y estética dental con un trato sofisticado. El sistema precalifica el interés del paciente, descarta curiosos y asegura la reserva de diagnóstico de alto valor.",
           estadistica: "Asegura de 3 a 7 casos de tratamientos premium adicionales al mes automatizando la calificación rápida.",
           roiLabel: "Valor promedio de tu tratamiento premium (implantes, ortodoncia invisible, etc.)",
-          defaultRoiValue: 1800,
+          defaultRoiValue: 1700000,
           roiMultiplierLabel: "Tratamientos premium cerrados al mes",
           defaultRoiMultiplier: 4,
           calcResultLabel: "Ingreso Mensual Adicional Generado",
@@ -121,7 +121,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Coordinación directa y exclusiva con la agenda de especialistas clave",
             "Pasarela de reserva integrada para asegurar el compromiso de la cita de diagnóstico"
           ],
-          maxTicket: 8000,
+          maxTicket: 7500000,
           maxMultiplier: 20
         }
       }
@@ -137,7 +137,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Enquanto você atende na cadeira, seu trabalhador digital responde em 3 segundos, esclarece convênios e reserva consultas nos seus horários livres. Pare de perder pacientes por demora no retorno.",
           estadistica: "Recupere até 15 consultas mensais que costumavam ser perdidas fora do horário comercial.",
           roiLabel: "Valor médio de uma consulta ou procedimento de volume",
-          defaultRoiValue: 150,
+          defaultRoiValue: 140000,
           roiMultiplierLabel: "Consultas mensais recuperadas pelo sistema",
           defaultRoiMultiplier: 12,
           calcResultLabel: "Faturamento Mensal Recuperável Estimado",
@@ -148,7 +148,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Respostas imediatas para dúvidas repetitivas (localização, preços base, convênios)",
             "Direcionamento imediato para a secretária em caso de urgências médicas"
           ],
-          maxTicket: 1000,
+          maxTicket: 950000,
           maxMultiplier: 50
         },
         premium: {
@@ -157,18 +157,18 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Apresente seus tratamentos de alinhadores invisíveis, implantes e estética com sofisticação absoluta. O sistema pré-qualifica o interesse do paciente, descarta curiosos e garante o agendamento de alto valor.",
           estadistica: "Garanta de 3 a 7 casos de tratamentos premium adicionais por mês qualificando os leads na hora.",
           roiLabel: "Valor médio do seu tratamento premium (implantes, alinhadores)",
-          defaultRoiValue: 1800,
+          defaultRoiValue: 1700000,
           roiMultiplierLabel: "Tratamentos premium fechados por mês",
           defaultRoiMultiplier: 4,
           calcResultLabel: "Faturamento Mensal Adicional Gerado",
           ctaMsg: "Olá! Quero implementar a qualificação de pacientes de alto valor para minha clínica premium.",
           beneficios: [
-            "Filtro inteligente interativo de qualificação para tratamentos de alto valor",
+            "Filtre inteligente interativo de qualificação para tratamentos de alto valor",
             "Tom sofisticado de concierge VIP: atendimento impecável e sem atritos",
             "Coordenação direta e exclusiva com a agenda dos especialistas da clínica",
             "Integração de pagamento de reserva para garantir o compromisso da consulta de avaliação"
           ],
-          maxTicket: 8000,
+          maxTicket: 7500000,
           maxMultiplier: 20
         }
       }
@@ -186,7 +186,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Free your reception desk from answering the same questions about location and insurances. Your digital operator schedules, checks insurances, and handles cancellations without human delays.",
           estadistica: "Save over 40 receptionist hours monthly by automating 65% of repetitive administrative questions.",
           roiLabel: "Average fee of a medical consultation or routine check-up",
-          defaultRoiValue: 80,
+          defaultRoiValue: 75000,
           roiMultiplierLabel: "Consultations booked automatically per month",
           defaultRoiMultiplier: 35,
           calcResultLabel: "Monthly Administrative Value & Fee Volume Generated",
@@ -197,16 +197,16 @@ export const solucionesData: Record<string, NicheData> = {
             "Immediate self-service rescheduling and cancellation options via text",
             "Perfect compliance with standard patient data privacy norms"
           ],
-          maxTicket: 500,
+          maxTicket: 450000,
           maxMultiplier: 100
         },
         premium: {
           name: "VIP / Specialized Wellness Centers",
-          headline: "Calify and capture premium patients for exclusive medical programs.",
+          headline: "Qualify and capture premium patients for exclusive medical programs.",
           sub: "Deliver a high-touch booking concierge experience for custom therapies, private surgery diagnostics, or executive health checks. The operator qualifies background and schedules high-value assessments.",
           estadistica: "Increase conversion of cold therapy inquires into private consultations by 35% through instant answers.",
           roiLabel: "Average value of specialized program or private treatment",
-          defaultRoiValue: 800,
+          defaultRoiValue: 750000,
           roiMultiplierLabel: "High-value treatments booked per month",
           defaultRoiMultiplier: 8,
           calcResultLabel: "Estimated Monthly Private Program Revenue",
@@ -217,7 +217,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Direct calendar sync with premium specialists and private operating rooms",
             "Secure deposit integration to validate and guarantee diagnostic slots"
           ],
-          maxTicket: 5000,
+          maxTicket: 3800000,
           maxMultiplier: 30
         }
       }
@@ -233,7 +233,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Libera a tu recepción de contestar todo el día sobre ubicaciones, convenios y horarios libres. Tu operador digital agenda, filtra seguros médicos y procesa cancelaciones al instante sin esperas.",
           estadistica: "Ahorra más de 40 horas mensuales de tu secretaria automatizando el 65% de las llamadas repetitivas.",
           roiLabel: "Valor promedio de una consulta de medicina o sesión general",
-          defaultRoiValue: 80,
+          defaultRoiValue: 75000,
           roiMultiplierLabel: "Consultas agendadas automáticamente al mes",
           defaultRoiMultiplier: 35,
           calcResultLabel: "Valor del Tiempo de Recepción Ahorrado e Ingreso Estimado",
@@ -244,7 +244,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Flujos automáticos y rápidos de reprogramación o cancelación por texto",
             "Respeto absoluto de los protocolos estándar de privacidad de datos de salud"
           ],
-          maxTicket: 500,
+          maxTicket: 450000,
           maxMultiplier: 100
         },
         premium: {
@@ -253,7 +253,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Ofrece una experiencia de conserje médico para terapias personalizadas, cirugías privadas u optimización biológica. El operador califica antecedentes e ingresa leads listos a tus especialistas.",
           estadistica: "Aumenta la conversión de consultas en cirugías o programas caros en un 35% por respuesta inmediata.",
           roiLabel: "Valor promedio de tu programa de salud o cirugía premium",
-          defaultRoiValue: 800,
+          defaultRoiValue: 750000,
           roiMultiplierLabel: "Programas de alto valor vendidos o agendados al mes",
           defaultRoiMultiplier: 8,
           calcResultLabel: "Ingreso Mensual de Programas VIP Generado",
@@ -264,7 +264,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Coordinación directa con la agenda de médicos directores y especialistas elite",
             "Pasarela integrada para el pago de la consulta de diagnóstico inicial para asegurar asistencia"
           ],
-          maxTicket: 5000,
+          maxTicket: 3800000,
           maxMultiplier: 30
         }
       }
@@ -280,7 +280,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Libere sua recepção de responder o dia todo sobre localizações, convênios e horários livres. Seu operador digital agenda, filtra convênios e processa reagendamentos na hora.",
           estadistica: "Economize mais de 40 horas mensais da sua equipe de recepção automatizando 65% das chamadas comuns.",
           roiLabel: "Valor médio de uma consulta médica ou sessão geral",
-          defaultRoiValue: 80,
+          defaultRoiValue: 75000,
           roiMultiplierLabel: "Consultas agendadas de forma 100% automática por mês",
           defaultRoiMultiplier: 35,
           calcResultLabel: "Valor do Tempo da Recepção Salvo e Faturamento Estimado",
@@ -291,7 +291,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Fluxos práticos e automáticos de reagendamento ou cancelamento por mensagem",
             "Segurança total em conformidade com as diretrizes de privacidade de dados médicos"
           ],
-          maxTicket: 500,
+          maxTicket: 450000,
           maxMultiplier: 100
         },
         premium: {
@@ -300,7 +300,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Ofereça uma experiência de concierge de saúde para terapias personalizadas, cirurgias particulares ou medicina preventiva de elite. O operador qualifica os antecedentes e encaminha pacientes prontos.",
           estadistica: "Aumente a conversão de consultas em tratamentos caros em 35% graças à resposta instantânea.",
           roiLabel: "Valor médio do seu programa de saúde ou cirurgia premium",
-          defaultRoiValue: 800,
+          defaultRoiValue: 750000,
           roiMultiplierLabel: "Programas de alto valor agendados por mês",
           defaultRoiMultiplier: 8,
           calcResultLabel: "Faturamento Mensal de Programas VIP Gerado",
@@ -311,7 +311,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Integração com a agenda exclusiva de médicos e cirurgiões especialistas",
             "Opção de pagamento de reserva integrada para garantir a avaliação com o especialista"
           ],
-          maxTicket: 5000,
+          maxTicket: 3800000,
           maxMultiplier: 30
         }
       }
@@ -329,7 +329,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Leads who ask for routine prices cool down in minutes. Your digital worker answers instantly, explains benefits, and secures the booking in your empty calendar slots.",
           estadistica: "Convert up to 30% more price inquiries into paid bookings through immediate 3-second responses.",
           roiLabel: "Average value of a standard package (laser, facial, wax)",
-          defaultRoiValue: 200,
+          defaultRoiValue: 190000,
           roiMultiplierLabel: "New treatment sessions booked per month",
           defaultRoiMultiplier: 18,
           calcResultLabel: "Estimated Monthly Extra Revenue",
@@ -340,7 +340,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Auto follow-up to leads who asked for prices but didn't secure a slot",
             "Smart upselling of complementary services (e.g., body lotion, add-on area)"
           ],
-          maxTicket: 1000,
+          maxTicket: 950000,
           maxMultiplier: 50
         },
         premium: {
@@ -349,7 +349,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Luxury treatment patients require exquisite communication. The system presents treatments, pre-qualifies their eligibility (skin type, objectives), and secures high-ticket evaluation sessions.",
           estadistica: "Acquire 5 to 10 additional premium cosmetic patients monthly by answering high-intent inquiries instantly.",
           roiLabel: "Average value of aesthetic treatment (fillers, advanced lasers, Botox packages)",
-          defaultRoiValue: 900,
+          defaultRoiValue: 850000,
           roiMultiplierLabel: "High-ticket treatments booked per month",
           defaultRoiMultiplier: 8,
           calcResultLabel: "Estimated Monthly Premium Aesthetics Revenue",
@@ -360,7 +360,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Seamless synchronization with specialized medical calendars",
             "Automated payment integration to secure and guarantee high-value clinical consultations"
           ],
-          maxTicket: 5000,
+          maxTicket: 4800000,
           maxMultiplier: 30
         }
       }
@@ -376,7 +376,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Los clientes interesados en tratamientos cotidianos se enfrían en 10 minutos si no contestas. Tu trabajador digital responde al instante, educa sobre el valor y reserva la cita en tus horarios disponibles.",
           estadistica: "Convierte hasta un 30% más de consultas frías en citas pagadas respondiendo en 3 segundos.",
           roiLabel: "Valor promedio de un paquete de depilación, masaje o estética general",
-          defaultRoiValue: 200,
+          defaultRoiValue: 190000,
           roiMultiplierLabel: "Sesiones de estética agendadas por el sistema al mes",
           defaultRoiMultiplier: 18,
           calcResultLabel: "Ingreso Mensual Adicional Estimado",
@@ -387,7 +387,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Seguimiento automático a prospectos que preguntaron pero no reservaron cita",
             "Sugerencia inteligente de servicios y productos complementarios (upselling)"
           ],
-          maxTicket: 1000,
+          maxTicket: 950000,
           maxMultiplier: 50
         },
         premium: {
@@ -396,7 +396,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "El paciente que gasta cientos de dólares exige excelencia en la comunicación. El sistema atiende consultas estéticas con un trato impecable, precalifica su elegibilidad y agenda evaluaciones médicas especializadas.",
           estadistica: "Capta de 5 a 10 tratamientos high-ticket adicionales al mes respondiendo con precisión a prospectos calificados.",
           roiLabel: "Valor promedio de tu tratamiento avanzado (armonización facial, hilos, láser premium)",
-          defaultRoiValue: 900,
+          defaultRoiValue: 850000,
           roiMultiplierLabel: "Tratamientos de alto valor cerrados al mes",
           defaultRoiMultiplier: 8,
           calcResultLabel: "Ingreso de Medicina Estética Mensual Generado",
@@ -407,7 +407,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Sincronización impecable con las agendas de tus médicos estéticos y especialistas",
             "Cobro de reserva de evaluación integrado para evitar la inasistencia a citas de alto costo"
           ],
-          maxTicket: 5000,
+          maxTicket: 4800000,
           maxMultiplier: 30
         }
       }
@@ -423,7 +423,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Quem procura tratamentos de beleza se esfria em minutos se não for atendido. Seu trabalhador digital responde na hora, destaca o valor do procedimento e fecha a reserva.",
           estadistica: "Converta até 30% mais perguntas de preço em sessões fechadas com resposta imediata em 3 segundos.",
           roiLabel: "Valor médio do pacote de estética comum",
-          defaultRoiValue: 200,
+          defaultRoiValue: 190000,
           roiMultiplierLabel: "Consultas ou procedimentos agendados ao mês",
           defaultRoiMultiplier: 18,
           calcResultLabel: "Faturamento Mensal Adicional Recuperado",
@@ -434,7 +434,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Acompanhamento automático de leads interessados que não fecharam a consulta de imediato",
             "Sugestão inteligente de upgrades e pacotes corporais de maior valor (upselling)"
           ],
-          maxTicket: 1000,
+          maxTicket: 950000,
           maxMultiplier: 50
         },
         premium: {
@@ -443,10 +443,10 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "O cliente premium exige excelência na comunicação desde o primeiro contato. O sistema apresenta procedimentos, pré-qualifica o perfil de pele e interesse, e garante a avaliação com o médico especialista.",
           estadistica: "Capte de 5 a 10 tratamentos de alta gama adicionais ao mês garantindo resposta e filtro qualificado 24/7.",
           roiLabel: "Valor médio de tratamentos premium (harmonização facial, bioestimuladores)",
-          defaultRoiValue: 900,
+          defaultRoiValue: 850000,
           roiMultiplierLabel: "Tratamientos de alta gama agendados por mês",
           defaultRoiMultiplier: 8,
-          calcResultLabel: "Faturamento de Medicina Estética Mensal Gerado",
+          calcResultLabel: "Faturamento de Medicina Estética Mensual Gerado",
           ctaMsg: "Olá! Quero implementar o concierge digital VIP para qualificar pacientes premium na minha clínica médica.",
           beneficios: [
             "Tom de conversa refinado, exclusivo e de alto padrão (concierge digital VIP)",
@@ -454,7 +454,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Integração total com a agenda dos cirurgiões plásticos e dermatologistas da clínica",
             "Reserva de avaliação integrada com taxa de compromisso para erradicar no-shows"
           ],
-          maxTicket: 5000,
+          maxTicket: 4800000,
           maxMultiplier: 30
         }
       }
@@ -472,7 +472,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Stop losing hours on unpaid, repetitive phone calls with unqualified leads who just want free advice. Your digital assistant filters out non-leads and directs them to a paid scheduling link.",
           estadistica: "Save 12+ hours monthly of non-billable time and ensure every consultation pays.",
           roiLabel: "Fee value of your standard initial consultation",
-          defaultRoiValue: 150,
+          defaultRoiValue: 140000,
           roiMultiplierLabel: "Paid consultations booked automatically per month",
           defaultRoiMultiplier: 8,
           calcResultLabel: "Consultation Revenue & Billable Time Saved",
@@ -483,7 +483,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Clean scheduling link synced directly with your partner calendar (Cal.com, Calendly)",
             "Polite filter for non-billable inquiries, saving administrative overhead"
           ],
-          maxTicket: 800,
+          maxTicket: 950000,
           maxMultiplier: 40
         },
         premium: {
@@ -492,7 +492,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Filter and intake premium commercial cases, M&A inquiries, or high-stakes corporate disputes. The system runs an automated client qualification checklist and schedules interviews for qualified prospects.",
           estadistica: "Filter out 80% of unqualified inbound requests, ensuring partners only speak to verified corporate leads.",
           roiLabel: "Value of premium corporate client diagnostic retainer or consultation fee",
-          defaultRoiValue: 1200,
+          defaultRoiValue: 1100000,
           roiMultiplierLabel: "Corporate retainer discovery calls secured per month",
           defaultRoiMultiplier: 3,
           calcResultLabel: "Estimated Monthly Qualified Retainer Sales Pipeline",
@@ -503,7 +503,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Seamless calendar coordination for multi-partner or group consultations",
             "Conflict-of-interest intake check to stream client data to your secure CRM"
           ],
-          maxTicket: 6000,
+          maxTicket: 5500000,
           maxMultiplier: 15
         }
       }
@@ -519,7 +519,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Deja de gastar valiosas horas del día en llamadas no facturables con personas que solo quieren respuestas rápidas. Tu asistente digital califica el caso y solo da acceso a tu agenda previo pago de tu tarifa.",
           estadistica: "Ahorra más de 12 horas mensuales de llamadas no facturables y asegura el cobro de tu tiempo.",
           roiLabel: "Valor de tu consulta legal inicial o fee estándar por hora",
-          defaultRoiValue: 150,
+          defaultRoiValue: 140000,
           roiMultiplierLabel: "Consultas pagadas agendadas de forma automática al mes",
           defaultRoiMultiplier: 8,
           calcResultLabel: "Facturación en Consultas y Valor del Tiempo Ahorrado",
@@ -530,7 +530,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Coordinación de agenda impecable y directa con tu calendario personal",
             "Filtro amable pero firme para curiosos, liberando tu valioso tiempo diario"
           ],
-          maxTicket: 800,
+          maxTicket: 950000,
           maxMultiplier: 40
         },
         premium: {
@@ -539,7 +539,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Filtra e ingresa casos mercantiles, fusiones, reestructuraciones o litigios de alta cuantía. El sistema ejecuta una encuesta de precalificación corporativa y agenda la entrevista solo a directores calificados.",
           estadistica: "Filtra el 80% de las consultas no calificadas y asegura que los socios solo hablen con empresas viables.",
           roiLabel: "Valor del retainer inicial o cita de diagnóstico corporativo premium",
-          defaultRoiValue: 1200,
+          defaultRoiValue: 1100000,
           roiMultiplierLabel: "Llamadas de diagnóstico corporativo cerradas al mes",
           defaultRoiMultiplier: 3,
           calcResultLabel: "Valor del Pipeline Comercial Calificado Mensual",
@@ -550,7 +550,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Coordinación de agenda multi-socio integrada y fluida",
             "Envío directo de datos calificados a tu CRM legal bajo estrictas normas de seguridad"
           ],
-          maxTicket: 6000,
+          maxTicket: 5500000,
           maxMultiplier: 15
         }
       }
@@ -566,7 +566,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Pare de perder horas do seu dia em telefonemas não faturáveis com pessoas que só querem tirar dúvidas. Seu assistente qualifica o caso e só libera a agenda após o pagamento da consulta.",
           estadistica: "Economize mais de 12 horas mensais de chamadas não faturáveis e garanta o pagamento do seu tempo.",
           roiLabel: "Valor da sua consulta inicial ou taxa padrão por hora",
-          defaultRoiValue: 150,
+          defaultRoiValue: 140000,
           roiMultiplierLabel: "Consultas pagas agendadas pelo sistema por mês",
           defaultRoiMultiplier: 8,
           calcResultLabel: "Faturamento em Consultas e Tempo Precioso Economizado",
@@ -577,7 +577,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Sincronização impecável com seu calendário pessoal de compromissos",
             "Filtro polido mas firme para curiosos, liberando sua produtividade diária"
           ],
-          maxTicket: 800,
+          maxTicket: 950000,
           maxMultiplier: 40
         },
         premium: {
@@ -586,7 +586,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Filtre casos mercantis, fusões, tributários ou litígios de alto valor. O sistema executa um roteiro estrito de pré-qualificação corporativa e só agenda reuniões com diretores qualificados.",
           estadistica: "Filtre 80% das consultas irrelevantes, garantindo que os sócios falem apenas com negócios viáveis.",
           roiLabel: "Valor de retainer inicial ou diagnóstico corporativo premium",
-          defaultRoiValue: 1200,
+          defaultRoiValue: 1100000,
           roiMultiplierLabel: "Consultas de diagnóstico corporativo fechadas por mês",
           defaultRoiMultiplier: 3,
           calcResultLabel: "Valor de Pipeline Comercial Qualificado Gerado",
@@ -597,7 +597,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Agendamento integrado multi-sócios inteligente",
             "Integração imediata com seu CRM corporativo com segurança máxima de dados"
           ],
-          maxTicket: 6000,
+          maxTicket: 5500000,
           maxMultiplier: 15
         }
       }
@@ -615,7 +615,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Parents who ask for school support need quick responses. Your digital assistant assesses their requirements, checks teacher calendars, and books introductory diagnostic classes.",
           estadistica: "Matriculate up to 45% more students by scheduling their trial lesson instantly.",
           roiLabel: "Average value of standard school support or lesson package",
-          defaultRoiValue: 200,
+          defaultRoiValue: 190000,
           roiMultiplierLabel: "New monthly students secured automatically",
           defaultRoiMultiplier: 12,
           calcResultLabel: "Estimated Monthly Extra Class Revenue",
@@ -626,7 +626,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Automated setup and reminders for the diagnostic trial class",
             "Coordinated payment capture for tuition or session packages"
           ],
-          maxTicket: 800,
+          maxTicket: 1400000,
           maxMultiplier: 30
         },
         premium: {
@@ -635,7 +635,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Professionals looking for high-end test prep (GMAT/TOEFL) or executive coaching require immediate, top-tier attention. The operator qualifies background, budget, and matches specialized elite tutors.",
           estadistica: "Capture 4 to 8 high-ticket student programs monthly with customized, immediate concierge intake.",
           roiLabel: "Average value of elite training program or executive package",
-          defaultRoiValue: 700,
+          defaultRoiValue: 650000,
           roiMultiplierLabel: "High-value executive programs secured per month",
           defaultRoiMultiplier: 5,
           calcResultLabel: "Estimated Premium Monthly Education Revenue",
@@ -646,7 +646,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Direct calendar integration with certified elite teachers and coaches",
             "Automated first-payment integration to guarantee specialized high-ticket trials"
           ],
-          maxTicket: 4000,
+          maxTicket: 3800000,
           maxMultiplier: 15
         }
       }
@@ -662,7 +662,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Los padres que buscan clases de apoyo necesitan respuestas rápidas. Tu asistente digital analiza nivel, materia y disponibilidad, cruzando agendas para agendar la primera clase de prueba.",
           estadistica: "Matricula hasta un 45% más de alumnos coordinando y reservando su clase de prueba al instante.",
           roiLabel: "Valor promedio del paquete mensual o matrícula de apoyo escolar",
-          defaultRoiValue: 200,
+          defaultRoiValue: 190000,
           roiMultiplierLabel: "Nuevos alumnos matriculados automáticamente al mes",
           defaultRoiMultiplier: 12,
           calcResultLabel: "Ingreso Adicional Estimado del Mes",
@@ -673,7 +673,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Reserva de clase inicial de prueba y recordatorios de asistencia automáticos",
             "Facilidad de pago de matrícula directamente en el mismo chat"
           ],
-          maxTicket: 800,
+          maxTicket: 1400000,
           maxMultiplier: 30
         },
         premium: {
@@ -682,7 +682,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Los ejecutivos que buscan preparación de alto nivel (GMAT/TOEFL/MBAs) exigen inmediatez. Tu operador califica disponibilidad, metas y presupuesto, derivando con el profesor ideal en segundos.",
           estadistica: "Asegura de 4 a 8 programas de alto valor al mes captando al profesional en su punto máximo de interés.",
           roiLabel: "Valor promedio de tu programa de capacitación ejecutiva o mentoría premium",
-          defaultRoiValue: 700,
+          defaultRoiValue: 650000,
           roiMultiplierLabel: "Programas ejecutivos de alto costo cerrados al mes",
           defaultRoiMultiplier: 5,
           calcResultLabel: "Nuevos Ingresos Mensuales de Alta Gama Generados",
@@ -693,7 +693,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Integración con las agendas exclusivas de tus consultores o coaches certificados",
             "Pasarela de pago del primer mes integrada para asegurar la sesión de diagnóstico inicial"
           ],
-          maxTicket: 4000,
+          maxTicket: 3800000,
           maxMultiplier: 15
         }
       }
@@ -709,7 +709,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Pais interessados em reforço escolar precisam de retorno rápido. Seu assistente analisa o ano letivo, matéria e disponibilidade, cruzando agendas para reservar a primeira aula teste.",
           estadistica: "Aumente as matrículas em até 45% reservando a aula experimental na hora, de forma automatizada.",
           roiLabel: "Valor médio do pacote mensal ou matrícula de reforço escolar",
-          defaultRoiValue: 200,
+          defaultRoiValue: 190000,
           roiMultiplierLabel: "Novos alunos matriculados automaticamente por mês",
           defaultRoiMultiplier: 12,
           calcResultLabel: "Faturamento Mensal Adicional Recuperado",
@@ -720,7 +720,7 @@ export const solucionesData: Record<string, NicheData> = {
             "Reserva da aula experimental e envio de lembretes de presença automático",
             "Facilidade para confirmação de pagamento do pacote no próprio chat"
           ],
-          maxTicket: 800,
+          maxTicket: 1400000,
           maxMultiplier: 30
         },
         premium: {
@@ -729,7 +729,7 @@ export const solucionesData: Record<string, NicheData> = {
           sub: "Profissionais que buscam preparação avançada (GMAT/TOEFL/MBAs) ou coaching executivo exigem agilidade. Seu operador qualifica o perfil, objetivos e agende o horário na hora.",
           estadistica: "Garanta de 4 a 8 programas de alto padrão por mês qualificando o profissional imediatamente.",
           roiLabel: "Valor médio do programa executivo ou mentoria avançada",
-          defaultRoiValue: 700,
+          defaultRoiValue: 650000,
           roiMultiplierLabel: "Programas executivos fechados por mês pelo sistema",
           defaultRoiMultiplier: 5,
           calcResultLabel: "Novos Faturamentos Educacionais de Elite Gerados",
@@ -740,8 +740,151 @@ export const solucionesData: Record<string, NicheData> = {
             "Integração imediata com a agenda exclusiva de coaches ou consultores",
             "Pagamento do primeiro mês integrado para garantir o início imediato do diagnóstico"
           ],
-          maxTicket: 4000,
+          maxTicket: 3800000,
           maxMultiplier: 15
+        }
+      }
+    }
+  },
+  propiedades: {
+    en: {
+      emoji: "🏠",
+      industria: "Real Estate & Agencies",
+      hasProfiles: true,
+      profiles: {
+        estandar: {
+          name: "Standard Broker / Agency",
+          headline: "Never lose a property inquiry or viewing opportunity again.",
+          sub: "While you are showing a property or in a meeting, your digital worker responds in 3 seconds, qualifies the buyer's budget and credit status, and books exclusive viewings for serious prospects.",
+          estadistica: "Capture up to 8 additional property viewing appointments per month and filter out unqualified browsers.",
+          roiLabel: "Estimated agency commission per closed sale",
+          defaultRoiValue: 1800000,
+          roiMultiplierLabel: "Additional sales closed per month via automated intake",
+          defaultRoiMultiplier: 2,
+          calcResultLabel: "Estimated Monthly Commission Generated",
+          ctaMsg: "Hi! I want to implement the real estate agent for my agency.",
+          beneficios: [
+            "24/7 instant response to property portals and WhatsApp leads",
+            "Automatic pre-qualification of buyer budget, credit pre-approval, and timing",
+            "Direct integration with agent schedules for booking property viewings",
+            "Automated follow-ups to nurture cold leads and schedule home visits"
+          ],
+          maxTicket: 8500000,
+          maxMultiplier: 10
+        },
+        premium: {
+          name: "Luxury Developments / Projects",
+          headline: "Exquisitely pre-qualify high-ticket buyers for premium real estate.",
+          sub: "High-end luxury real estate demands pristine representation. The agent conducts a sophisticated, interactive pre-qualification, verifies purchasing power, and schedules exclusive tours of your pilot apartments.",
+          estadistica: "Capture 1 to 3 additional high-ticket luxury home sales quarterly by securing qualified VIP viewings instantly.",
+          roiLabel: "Average broker fee or profit per premium unit sold",
+          defaultRoiValue: 7500000,
+          roiMultiplierLabel: "VIP property viewings booked per month",
+          defaultRoiMultiplier: 8,
+          calcResultLabel: "Estimated Active Sales Pipeline Value",
+          ctaMsg: "Hi! I want to implement the premium real estate qualification system for our luxury development.",
+          beneficios: [
+            "Sophisticated concierge tone matching your luxury brand's high standards",
+            "Rigorous financial and purchase timeline qualification criteria",
+            "Direct calendar sync with project managers and pilot property hosts",
+            "Integrated document collection for bank pre-approvals and proof of funds"
+          ],
+          maxTicket: 45000000,
+          maxMultiplier: 20
+        }
+      }
+    },
+    es: {
+      emoji: "🏠",
+      industria: "Corredoras e Inmobiliarias",
+      hasProfiles: true,
+      profiles: {
+        estandar: {
+          name: "Corredora Tradicional / Broker",
+          headline: "No dejes prospectos esperando: califica y agenda visitas en piloto automático.",
+          sub: "Mientras muestras una propiedad, tu trabajador digital atiende consultas de portales, filtra por presupuesto y capacidad de compra, y agenda visitas directo en tu calendario. Deja de perder ventas por responder tarde.",
+          estadistica: "Consigue hasta 8 visitas al mes adicionales con prospectos calificados y con financiamiento preaprobado.",
+          roiLabel: "Comisión promedio por propiedad vendida",
+          defaultRoiValue: 1800000,
+          roiMultiplierLabel: "Ventas adicionales cerradas al mes gracias al filtro rápido",
+          defaultRoiMultiplier: 2,
+          calcResultLabel: "Comisión Mensual Adicional Proyectada",
+          ctaMsg: "¡Hola! Quiero implementar el agente de WhatsApp para mi corredora de propiedades.",
+          beneficios: [
+            "Respuesta inmediata 24/7 a consultas de portales (TocToc, PortalInmobiliario, etc.)",
+            "Precalificación automática de presupuesto, pie ahorrado y estado de crédito hipotecario",
+            "Coordinación de agenda en tiempo real con los corredores del equipo",
+            "Seguimiento automático a prospectos interesados para agendar visitas a pilotos"
+          ],
+          maxTicket: 8500000,
+          maxMultiplier: 10
+        },
+        premium: {
+          name: "Proyectos Inmobiliarios y Lujo",
+          headline: "Califica y capta compradores de alta gama para proyectos premium.",
+          sub: "El comprador de propiedades de lujo exige atención impecable. El sistema precalifica de manera sofisticada la capacidad financiera y programa visitas exclusivas al departamento piloto con un trato de conserje VIP.",
+          estadistica: "Asegura de 1 a 3 cierres de departamentos premium adicionales al trimestre automatizando la calificación.",
+          roiLabel: "Ganancia o comisión promedio por unidad de lujo vendida",
+          defaultRoiValue: 7500000,
+          roiMultiplierLabel: "Visitas de pilotos VIP agendadas al mes",
+          defaultRoiMultiplier: 8,
+          calcResultLabel: "Valor de Pipeline Comercial Calificado Mensual",
+          ctaMsg: "¡Hola! Quiero implementar la precalificación VIP para nuestro proyecto inmobiliario premium.",
+          beneficios: [
+            "Tono distinguido y formal que representa tu marca inmobiliaria de lujo",
+            "Filtro financiero estricto (crédito aprobado, fondos propios y plazos)",
+            "Sincronización directa con los anfitriones del piloto y ejecutivos de cuenta",
+            "Recopilación segura de datos bancarios de precalificación previos a la visita"
+          ],
+          maxTicket: 45000000,
+          maxMultiplier: 20
+        }
+      }
+    },
+    pt: {
+      emoji: "🏠",
+      industria: "Imobiliárias e Incorporadoras",
+      hasProfiles: true,
+      profiles: {
+        estandar: {
+          name: "Imobiliária Tradicional / Corretor",
+          headline: "Não perca vendas de imóveis: qualifique e agende visitas 24/7.",
+          sub: "Enquanto você mostra um imóvel ou está em reunião, seu trabalhador digital responde portais, filtra interessados por capacidade financeira e agenda visitas diretamente na sua agenda. Pare de perder leads.",
+          estadistica: "Garanta até 8 visitas a mais por mês com leads pré-qualificados e com crédito aprovado.",
+          roiLabel: "Comissão média recebida por imóvel vendido",
+          defaultRoiValue: 1800000,
+          roiMultiplierLabel: "Vendas adicionais fechadas por mês pelo sistema",
+          defaultRoiMultiplier: 2,
+          calcResultLabel: "Faturamento Mensal Adicional Projetado",
+          ctaMsg: "Olá! Quero implementar o agente imobiliário para minha imobiliária.",
+          beneficios: [
+            "Resposta imediata 24/7 a leads de portais imobiliários e WhatsApp",
+            "Pré-qualificação automática de orçamento, valor de entrada e status de financiamento",
+            "Sincronização de visitas diretamente na agenda dos corretores disponíveis",
+            "Acompanhamento automático para reaquecer leads e garantir visitas"
+          ],
+          maxTicket: 8500000,
+          maxMultiplier: 10
+        },
+        premium: {
+          name: "Empreendimentos e Imóveis de Luxo",
+          headline: "Qualifique e capte compradores premium de alto padrão.",
+          sub: "O cliente de alto padrão exige atendimento exclusivo e ágil. O sistema realiza uma triagem qualificada de capacidade financeira e agenda visitas VIP ao decorado com total discrição e elegância.",
+          estadistica: "Garante de 1 a 3 vendas adicionais de imóveis premium por trimestre com qualificação imediata.",
+          roiLabel: "Comissão ou lucro médio por unidade de luxo vendida",
+          defaultRoiValue: 7500000,
+          roiMultiplierLabel: "Visitas VIP ao decorado agendadas por mês",
+          defaultRoiMultiplier: 8,
+          calcResultLabel: "Faturamento de Pipeline de Vendas Qualificado",
+          ctaMsg: "Olá! Quero implementar o qualificador VIP para nosso empreendimento imobiliário premium.",
+          beneficios: [
+            "Tom de voz distinto, refinado e formal que reflete o prestígio da sua incorporadora",
+            "Filtro financeiro rigoroso (crédito pré-aprovado, fundos próprios e prazos)",
+            "Sincronização com corretores especializados e gerentes de plantão",
+            "Coleta segura de documentos de pré-aprovação de crédito antes da visita VIP"
+          ],
+          maxTicket: 45000000,
+          maxMultiplier: 20
         }
       }
     }
