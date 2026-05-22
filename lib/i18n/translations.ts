@@ -185,6 +185,19 @@ export const translations = {
           ],
         },
         {
+          name: "AI Onboarding & Knowledge Agent",
+          desc: "Structure new hire onboarding and create 24/7 assistants trained on your manuals and tutorials to resolve questions instantly",
+          price: "1,850,000 CLP",
+          priceSuffix: " setup + 225,000 CLP/mo maintenance",
+          features: [
+            "Interactive structure of plans and onboarding stages",
+            "24/7 Q&A assistant trained with your brand guidelines and manuals",
+            "Instant retraining: if you update a manual or video, the AI learns immediately",
+            "75% reduction in internal FAQ resolution time for new hires",
+            "Native integration with Slack, Microsoft Teams, or WhatsApp",
+          ],
+        },
+        {
           name: "Custom WhatsApp Agent",
           desc: "A custom-coded agent that connects to your real systems and takes action — not just answers",
           price: "2,600,000+ CLP",
@@ -419,9 +432,9 @@ export const translations = {
         },
         {
           title: "Onboarding Agent",
-          desc: "Onboards new clients or employees with zero friction — automated guides, answers, and follow-ups.",
-          tag: "Email · Slack · Notion",
-          result: "Onboarding without team overhead",
+          desc: "Structures new employee onboarding and creates 24/7 Q&A assistants trained on your manuals and tutorials that update instantly via AI.",
+          tag: "Slack · Teams · Manuals",
+          result: "Automated training & integration",
         },
         {
           title: "Multi-Channel Agent",
@@ -714,6 +727,19 @@ export const translations = {
           ],
         },
         {
+          name: "Agente de Onboarding & Inducción IA",
+          desc: "Estructura la inducción de nuevos empleados y crea asistentes 24/7 entrenados con tus manuales y tutoriales para resolver dudas al instante",
+          price: "1.850.000 CLP",
+          priceSuffix: " setup + 225.000 CLP/mes mantenimiento",
+          features: [
+            "Estructura interactiva de planes y etapas de inducción",
+            "Asistente Q&A 24/7 entrenado con tus directrices de marca y manuales",
+            "Re-entrenamiento instantáneo: si actualizas un manual o video, la IA aprende de inmediato",
+            "Reducción del 75% en el tiempo de resolución de dudas frecuentes de nuevos empleados",
+            "Integración nativa con Slack, Microsoft Teams o WhatsApp",
+          ],
+        },
+        {
           name: "Agente WhatsApp a Medida",
           desc: "Un agente programado que se conecta a tus sistemas reales y actúa — no solo responde",
           price: "2.600.000+ CLP",
@@ -948,9 +974,9 @@ export const translations = {
         },
         {
           title: "Agente de Onboarding",
-          desc: "Incorpora nuevos clientes o empleados con cero fricción — guías, respuestas y seguimiento automatizados.",
-          tag: "Email · Slack · Notion",
-          result: "Onboarding sin sobrecarga",
+          desc: "Estructura la inducción de nuevos empleados y crea asistentes 24/7 entrenados con tus manuales y videos que se actualizan al instante vía IA.",
+          tag: "Slack · Teams · Manuales",
+          result: "Inducción y capacitación automatizada",
         },
         {
           title: "Agente Multi-Canal",
@@ -1243,6 +1269,19 @@ export const translations = {
           ],
         },
         {
+          name: "Agente de Onboarding & Conhecimento IA",
+          desc: "Estruture o onboarding de novos funcionários e crie assistentes 24/7 treinados em seus manuais e tutoriais para resolver dúvidas instantaneamente",
+          price: "1.850.000 CLP",
+          priceSuffix: " setup + 225.000 CLP/mês manutenção",
+          features: [
+            "Estrutura interativa de planos e etapas de integração",
+            "Assistente de Q&A 24/7 treinado com seus manuais e diretrizes de marca",
+            "Retreinamento imediato: se você atualizar um manual ou vídeo, a IA aprende na hora",
+            "Redução de 75% no tempo de resolução de dúvidas frequentes internas",
+            "Integração nativa com Slack, Microsoft Teams ou WhatsApp",
+          ],
+        },
+        {
           name: "Agente WhatsApp sob Medida",
           desc: "Um agente programado que se conecta aos seus sistemas reais e age — não só responde",
           price: "2.600.000+ CLP",
@@ -1472,9 +1511,9 @@ export const translations = {
         },
         {
           title: "Agente de Onboarding",
-          desc: "Integra novos clientes ou funcionários com zero atrito — guias, respostas e acompanhamento automatizados.",
-          tag: "Email · Slack · Notion",
-          result: "Onboarding sem sobrecarga para a equipe",
+          desc: "Estrutura a integração de novos funcionários e cria assistentes 24/7 treinados em seus manuais e vídeos que se atualizam instantaneamente via IA.",
+          tag: "Slack · Teams · Manuais",
+          result: "Integração e treinamento automatizados",
         },
         {
           title: "Agente Multi-Canal",
