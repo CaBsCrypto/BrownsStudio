@@ -38,14 +38,14 @@ export const translations = {
           hudStatus: "Appointment Booked",
           hudValue: "$140,000",
           prospect: "Hi! I'm interested in your clear aligners treatment. Could you tell me the approximate price and if you have slots available on Thursday afternoons? That's my only free day.",
-          agent1: "Hello! Our diagnostic consultation and 3D study starts from $140,000 (final quote subject to clinical assessment). I'll check our specialist calendar for Thursday afternoons...",
+          agent1: "Hi there! Great question 😊 Our diagnostic consultation and 3D study starts from $140,000 (final quote subject to clinical assessment). Thursday afternoons sound perfect — let me pull up what we have available for you...",
           tool1: "⚙️ Querying clinic schedule...",
           tool1Success: "✓ Open slots found for Thursday",
-          agent2: "We have openings this Thursday at 4:30 PM or 6:00 PM with Dr. Silva. Do either of those work for you?",
+          agent2: "We have Dr. Silva available this Thursday at 4:30 PM or 6:00 PM. Which one suits you best?",
           prospect2: "4:30 PM works perfectly for me.",
           tool2: "⚙️ Registering in CRM & booking slot...",
           tool2Success: "✓ Appointment booked (Ref. $140,000) & Invites sent",
-          agent3: "Excellent! Appointment confirmed for this Thursday at 4:30 PM. I've just sent the calendar invite and details to your email and WhatsApp. See you then! 🚀"
+          agent3: "Amazing! 🚀 You’re all set for this Thursday at 4:30 PM with Dr. Silva. I’ve sent the confirmation and all details to your email and WhatsApp. Looking forward to seeing you!"
         },
         {
           tabName: "Aesthetic",
@@ -54,14 +54,14 @@ export const translations = {
           hudStatus: "Assessment Booked",
           hudValue: "$120,000",
           prospect: "Hi, I wanted to ask about the facial rejuvenation treatment with Botox and fillers. How much does it cost and do you have slots this week?",
-          agent1: "Hello! The facial rejuvenation assessment starts from $120,000 (final quote subject to assessment). We have openings available. Let me check Dr. Rossi's schedule...",
+          agent1: "Hi! Botox and fillers are a great combo for natural rejuvenation 😊 The facial assessment starts from $120,000 (final quote subject to your clinical evaluation). Do you have a preference for morning or afternoon this week? Let me check Dr. Rossi’s availability...",
           tool1: "⚙️ Verifying dermatology schedule...",
           tool1Success: "✓ VIP slots available in calendar",
-          agent2: "We have slots available this Friday at 11:00 AM or 3:30 PM. Which one works best for you?",
+          agent2: "Dr. Rossi has openings this Friday at 11:00 AM or 3:30 PM. Which one feels right for you?",
           prospect2: "3:30 PM works perfectly for me.",
           tool2: "⚙️ Blocking VIP slot & sending prep guide...",
           tool2Success: "✓ Session reserved (Ref. $120,000) & SMS sent",
-          agent3: "Awesome! Your aesthetic assessment is confirmed for this Friday at 3:30 PM. I've sent the preparation guidelines via WhatsApp. See you! ✨"
+          agent3: "You’re confirmed! ✨ This Friday at 3:30 PM with Dr. Rossi. I’ve already sent your preparation guide via WhatsApp. We’re looking forward to seeing you!"
         },
         {
           tabName: "Legal",
@@ -70,14 +70,14 @@ export const translations = {
           hudStatus: "Consult Booked",
           hudValue: "High Priority",
           prospect: "Hello, I need urgent legal advice to structure a high-value commercial contract. What is the process and do you have a partner available to review my case today?",
-          agent1: "Hi! For this type of corporate matter, we first classify the case to assign the right specialist partner (project quote delivered after the strategic session). Let me check our senior partner's schedule...",
+          agent1: "Hello! I understand the urgency, and we’re here to help 🤝 For this type of corporate matter, we first assess the case to assign the right senior partner (project quote delivered after the strategic session). Would you prefer a morning or afternoon slot? Let me check Mr. Mendoza’s availability...",
           tool1: "⚙️ Filtering case by matter & valuation...",
           tool1Success: "✓ Case qualified for Senior Partner",
-          agent2: "Our senior partner, Mr. Mendoza, has openings this Monday at 9:00 AM or 11:30 AM for a strategic session. Which fits best?",
+          agent2: "Great news — Mr. Mendoza has openings this Monday at 9:00 AM or 11:30 AM. Which one works better for you?",
           prospect2: "Monday at 11:30 AM is perfect.",
           tool2: "⚙️ Creating private Zoom room & logging case...",
           tool2Success: "✓ Premium consult booked & Zoom room configured",
-          agent3: "Excellent. Your strategic session is confirmed for Monday at 11:30 AM. I have sent the preliminary non-disclosure agreement and the access link to your email. ⚖️"
+          agent3: "All confirmed! ⚖️ Your strategic session with Mr. Mendoza is set for Monday at 11:30 AM. I’ve sent the preliminary NDA and the Zoom link directly to your email."
         },
         {
           tabName: "Academy",
@@ -86,14 +86,14 @@ export const translations = {
           hudStatus: "Class Booked",
           hudValue: "$95,000",
           prospect: "Hi, I'm looking for intensive tutoring to prepare for the advanced calculus college entry exam. What is the cost of the course and do you have tutors available?",
-          agent1: "Hello! Yes, the diagnostic test and study plan cycle starts from $95,000 (final price subject to hours needed). Let me check available hours this week...",
+          agent1: "Hi! Great that you’re preparing — we love that commitment 💪 The diagnostic and study plan cycle starts from $95,000 (final price subject to hours needed). Do you prefer weekday afternoons or weekends for your sessions? Let me find the right tutor for you...",
           tool1: "⚙️ Searching tutors specialized in Calculus...",
           tool1Success: "✓ 2 senior tutors with open slots",
-          agent2: "We can book your first session this Wednesday at 5:00 PM or Saturday at 10:00 AM. Which one do you prefer?",
+          agent2: "We have a senior tutor available this Wednesday at 5:00 PM or Saturday at 10:00 AM. Which one fits your schedule?",
           prospect2: "Wednesday at 5:00 PM would be ideal.",
           tool2: "⚙️ Assigning senior tutor & registering enrollment...",
           tool2Success: "✓ Intensive prep booked ($95,000)",
-          agent3: "Great choice! Your initial class is confirmed for this Wednesday at 5:00 PM. The PDF study material and classroom link are already in your WhatsApp! 📚"
+          agent3: "Let’s go! 📚 Your first session is confirmed for this Wednesday at 5:00 PM. The intro materials and classroom link are already waiting in your WhatsApp. You’ve got this!"
         },
         {
           tabName: "Health",
@@ -102,14 +102,14 @@ export const translations = {
           hudStatus: "Checkup Booked",
           hudValue: "$115,000",
           prospect: "Hello, I wanted to quote and book the comprehensive one-day executive health checkup. What is the cost and when do you have openings?",
-          agent1: "Hello! Our Executive Premium checkup starts from $115,000 (final price subject to medical history confirmation). Let me check clinical slots...",
+          agent1: "Hi! That’s a great decision 🙌 Our Executive Premium checkup starts from $115,000 (final price subject to medical history confirmation). Do you have a preference between this week or next? Let me check clinical availability...",
           tool1: "⚙️ Checking lab & specialist openings...",
           tool1Success: "✓ Fasting slots available in schedule",
-          agent2: "We have openings this Tuesday or next Thursday at 7:30 AM (fasting required). Which day works best?",
+          agent2: "We have fasting slots available this Tuesday or next Thursday at 7:30 AM. Any preference?",
           prospect2: "This Tuesday at 7:30 AM is perfect.",
           tool2: "⚙️ Reserving medical suite & booking specialist...",
           tool2Success: "✓ Premium checkup confirmed ($115,000)",
-          agent3: "Awesome! Your executive checkup is confirmed for this Tuesday at 7:30 AM. I have sent the preparation and fasting protocol to your email. 🏥"
+          agent3: "You’re all set! 🏥 Your executive checkup is confirmed for this Tuesday at 7:30 AM. I’ve sent the preparation and fasting protocol to your email. Take care and see you soon!"
         },
         {
           tabName: "Real Estate",
@@ -118,14 +118,14 @@ export const translations = {
           hudStatus: "Viewing Booked",
           hudValue: "Rental Confirmed",
           prospect: "Hi, I saw the listing for the 2-bedroom apartment in Providencia. Is it still available? I'd love to schedule a visit this week if possible.",
-          agent1: "Hello! Yes, the apartment is still available. 58 m², 2 bedrooms, 1 bathroom and parking included. Rent: $480,000/month. Let me check available viewing slots for you...",
+          agent1: "Hi! Great news — it’s still available 😊 58 m², 2 bedrooms, 1 bathroom and parking included. Rent: $480,000/month. To schedule a visit, what day of the week works best for you — any preference for morning or evening?",
           tool1: "⚙️ Checking available viewing times...",
           tool1Success: "✓ Viewing slots available this week",
-          agent2: "We can arrange a visit this Wednesday at 11:00 AM or Thursday at 6:00 PM. Which works best for you?",
+          agent2: "Perfect! We have slots this Wednesday at 11:00 AM or Thursday at 6:00 PM. Which one works for you?",
           prospect2: "Thursday at 6:00 PM works perfectly.",
           tool2: "⚙️ Booking visit & notifying assigned agent...",
           tool2Success: "✓ Viewing confirmed & agent assigned",
-          agent3: "All set! Your visit is confirmed for Thursday at 6:00 PM. I've sent the exact address and your assigned agent's contact details to your WhatsApp. See you there! 🏠"
+          agent3: "All set! 🏠 Your visit is confirmed for Thursday at 6:00 PM. I’ve sent the exact address and your agent’s contact to your WhatsApp. Can’t wait for you to see it!"
         }
       ]
     },
@@ -492,14 +492,14 @@ export const translations = {
           hudStatus: "Cita Reservada",
           hudValue: "$140.000",
           prospect: "¡Hola! Me interesa el tratamiento de ortodoncia invisible. ¿Qué precio aproximado tiene y si tienen cupos disponibles los jueves por la tarde? Es el único momento en el que puedo asistir.",
-          agent1: "¡Hola! Con gusto te ayudo a agendar tu evaluación. Como referencia, la consulta diagnóstica y estudio 3D inicia desde $140.000 (presupuesto final sujeto a evaluación clínica). Déjame revisar la agenda de especialistas para los jueves por la tarde...",
+          agent1: "¡Hola, qué bueno que nos escribiste! 😊 La consulta diagnóstica y estudio 3D inicia desde $140.000 (presupuesto final sujeto a evaluación clínica). Vi que los jueves por la tarde te quedan bien — déjame ver exactamente qué horarios tenemos para ese día...",
           tool1: "⚙️ Consultando agenda clínica...",
           tool1Success: "✓ Horarios libres encontrados para Jueves",
-          agent2: "Tengo disponible este Jueves a las 4:30 PM o a las 6:00 PM con la Dra. Silva. ¿Te queda bien alguno?",
+          agent2: "Tengo disponible este Jueves a las 4:30 PM o a las 6:00 PM con la Dra. Silva. ¿Cuál de los dos te queda mejor?",
           prospect2: "Me sirve perfecto el de las 4:30 PM.",
           tool2: "⚙️ Registrando en CRM y reservando cita...",
           tool2Success: "✓ Cita agendada (Ref. $140.000) & Notificaciones enviadas",
-          agent3: "¡Excelente! Cita confirmada para este Jueves a las 4:30 PM. Acabo de enviarte la confirmación por correo y WhatsApp con las indicaciones. ¡Nos vemos! 🚀"
+          agent3: "¡Perfecto, estás agendado! 🚀 Cita confirmada para este Jueves a las 4:30 PM con la Dra. Silva. Acabo de enviarte la confirmación por correo y WhatsApp con todas las indicaciones. ¡Nos vemos!"
         },
         {
           tabName: "Estética",
@@ -508,14 +508,14 @@ export const translations = {
           hudStatus: "Evaluación Agendada",
           hudValue: "$120.000",
           prospect: "Buenas, quería consultar por el tratamiento de rejuvenecimiento facial con bótox y ácido hialurónico. ¿Qué costo tiene y si tienen disponibilidad esta semana?",
-          agent1: "¡Hola! La sesión de evaluación estética inicia desde $120.000 (presupuesto final y plan personalizado sujeto a evaluación). Tenemos cupos disponibles. Dejame verificar la disponibilidad del Dr. Rossi...",
+          agent1: "¡Hola, qué bueno! El bótox con ácido hialurónico es un combo increíble 😊 La sesión de evaluación estética inicia desde $120.000 (presupuesto y plan personalizado sujetos a evaluación). ¿Te acomoda más la mañana o la tarde esta semana? Dejáme ver los cupos del Dr. Rossi...",
           tool1: "⚙️ Verificando agenda dermatológica...",
           tool1Success: "✓ Slots VIP disponibles en agenda",
-          agent2: "Tenemos disponibles horarios para este Viernes a las 11:00 AM o a las 3:30 PM. ¿Cuál de los dos prefieres?",
+          agent2: "El Dr. Rossi tiene disponible este Viernes a las 11:00 AM o a las 3:30 PM. ¿Cuál de los dos prefieres?",
           prospect2: "El de las 3:30 PM está excelente.",
           tool2: "⚙️ Bloqueando slot VIP y enviando links de preparación...",
           tool2Success: "✓ Evaluación reservada (Ref. $120.000) & SMS enviado",
-          agent3: "¡Listo! Tu evaluación estética quedó reservada para este Viernes a las 3:30 PM. Ya te envié por WhatsApp las recomendaciones previas al tratamiento. ¡Te esperamos! ✨"
+          agent3: "¡Confirmado! ✨ Tu evaluación estética quedó reservada para este Viernes a las 3:30 PM con el Dr. Rossi. Ya te envié por WhatsApp las recomendaciones previas al tratamiento. ¡Te esperamos con todo!"
         },
         {
           tabName: "Legal",
@@ -524,14 +524,14 @@ export const translations = {
           hudStatus: "Asesoría Confirmada",
           hudValue: "Prioridad Alta",
           prospect: "Hola, necesito asesoría urgente para redactar un contrato de compraventa inmobiliaria de alto valor. ¿Cuánto cuesta la consulta estratégica y si tienen algún socio disponible?",
-          agent1: "¡Hola! Para este tipo de operaciones, primero clasificamos el caso y asignamos al socio especialista adecuado (presupuesto entregado tras la sesión estratégica). Voy a consultar la disponibilidad de nuestro socio principal...",
+          agent1: "¡Hola! Entiendo la urgencia, estamos para ayudarte 🤝 Para este tipo de operaciones, clasificamos el caso y asignamos al socio especialista adecuado (presupuesto entregado tras la sesión estratégica). ¿Tienes preferencia de horario, mañana o tarde? Consulto la disponibilidad del Lic. Mendoza...",
           tool1: "⚙️ Filtrando caso por materia y cuantía...",
           tool1Success: "✓ Caso calificado para Socio Senior",
-          agent2: "Nuestro socio senior, el Lic. Mendoza, tiene libre el Lunes a las 9:00 AM o a las 11:30 AM para una sesión estratégica. ¿Qué hora te acomoda?",
+          agent2: "Buenas noticias — el Lic. Mendoza tiene libre el Lunes a las 9:00 AM o a las 11:30 AM. ¿Cuál te acomoda mejor?",
           prospect2: "El Lunes a las 11:30 AM está perfecto.",
           tool2: "⚙️ Creando sala de Zoom privada y registrando caso...",
           tool2Success: "✓ Consulta premium agendada (Caso Asignado)",
-          agent3: "Perfecto. Tu sesión estratégica presencial o por Zoom quedó confirmada para el Lunes a las 11:30 AM. He enviado el contrato preliminar y el link de acceso a tu correo. ⚖️"
+          agent3: "¡Todo listo! ⚖️ Tu sesión estratégica con el Lic. Mendoza quedó confirmada para el Lunes a las 11:30 AM. He enviado el contrato preliminar de confidencialidad y el link de acceso a tu correo."
         },
         {
           tabName: "Academias",
@@ -540,14 +540,14 @@ export const translations = {
           hudStatus: "Clase Agendada",
           hudValue: "$95.000",
           prospect: "Hola, busco clases de preparación intensiva para el examen de ingreso de cálculo avanzado. ¿Qué valor tiene el ciclo y si tienen tutores disponibles?",
-          agent1: "¡Hola! Sí, el ciclo de diagnóstico y plan de estudio inicia desde $95.000 (valor final sujeto a evaluación de horas). Déjame ver las horas disponibles esta semana...",
+          agent1: "¡Hola! Me alegra que estés preparando ese examen 💪 El ciclo de diagnóstico y plan de estudio inicia desde $95.000 (valor final sujeto a evaluación de horas). ¿Qué días te quedan mejor: entre semana o fin de semana? Déjame ver qué tutores tenemos disponibles...",
           tool1: "⚙️ Buscando tutores expertos en Cálculo...",
           tool1Success: "✓ 2 tutores senior con cupos disponibles",
-          agent2: "Podemos agendar tu primera sesión este Miércoles a las 5:00 PM o el Sábado a las 10:00 AM. ¿Cuál te viene mejor?",
+          agent2: "Tenemos un tutor senior disponible este Miércoles a las 5:00 PM o el Sábado a las 10:00 AM. ¿Cuál te viene mejor?",
           prospect2: "El Miércoles a las 5:00 PM me va ideal.",
           tool2: "⚙️ Asignando tutor senior y registrando matrícula...",
           tool2Success: "✓ Curso intensivo agendado ($95.000)",
-          agent3: "¡Excelente elección! Tu clase inicial quedó confirmada para este Miércoles a las 5:00 PM. El material introductorio en PDF y el enlace del aula ya están en tu WhatsApp. ¡A romper ese examen! 📚"
+          agent3: "¡Vamos! 📚 Tu primera clase quedó confirmada para este Miércoles a las 5:00 PM. El material introductorio y el link del aula ya están en tu WhatsApp. ¡Tú puedes con ese examen!"
         },
         {
           tabName: "Salud",
@@ -556,14 +556,14 @@ export const translations = {
           hudStatus: "Chequeo Reservado",
           hudValue: "$115.000",
           prospect: "Hola, quería cotizar y agendar el programa de chequeo médico ejecutivo integral de un día. ¿Qué valor tiene y cuándo tienen vacantes?",
-          agent1: "¡Hola! Nuestro programa preventivo de chequeo ejecutivo tiene un valor referencial desde $115.000 (presupuesto definitivo sujeto a confirmación de antecedentes). Déjame revisar el cupo clínico...",
+          agent1: "¡Hola! Qué excelente decisión cuidar tu salud preventivamente 🙌 Nuestro programa de chequeo ejecutivo tiene un valor referencial desde $115.000 (presupuesto definitivo sujeto a confirmación de antecedentes médicos). ¿Tienes alguna preferencia de día o te acomoda cualquiera de esta semana? Déjame revisar el cupo clínico...",
           tool1: "⚙️ Consultando disponibilidad de laboratorios...",
           tool1Success: "✓ Slots integrales disponibles para ayuno",
-          agent2: "Tenemos vacantes disponibles para este Martes o el próximo Jueves a las 7:30 AM (se requiere ayuno). ¿Qué día prefieres?",
+          agent2: "Tenemos vacantes este Martes o el próximo Jueves a las 7:30 AM (se requiere ayuno previo). ¿Cuál te acomoda?",
           prospect2: "Este Martes a las 7:30 AM está perfecto.",
           tool2: "⚙️ Reservando suite médica y agendando especialistas...",
           tool2Success: "✓ Chequeo integral agendado ($115.000)",
-          agent3: "¡Perfecto! Tu programa de chequeo médico integral está confirmado para este Martes a las 7:30 AM. Te acabo de enviar por correo el protocolo de preparación y ayuno. ¡Nos vemos pronto! 🏥"
+          agent3: "¡Perfecto! 🏥 Tu programa de chequeo médico integral está confirmado para este Martes a las 7:30 AM. Te acabo de enviar por correo el protocolo de preparación y ayuno. ¡Nos vemos pronto, cuídate!"
         },
         {
           tabName: "Inmobiliaria",
@@ -572,14 +572,14 @@ export const translations = {
           hudStatus: "Visita Agendada",
           hudValue: "Arriendo Confirmado",
           prospect: "Hola, vi el anuncio del departamento de 2 dormitorios en Ñuñoa. ¿Sigue disponible? Me gustaría visitarlo esta semana si es posible.",
-          agent1: "¡Hola! Sí, el departamento sigue disponible. Tiene 58 m², 2 dormitorios, 1 baño y estacionamiento incluido. Arriendo: $480.000/mes. Déjame revisar los horarios de visita disponibles...",
+          agent1: "¡Hola, qué bueno que te interesó! 😊 Sí, el departamento sigue disponible. Son 58 m², 2 dormitorios, 1 baño y estacionamiento incluido. Arriendo: $480.000/mes. Para coordinar una visita, ¿qué día de la semana te queda mejor — entre semana o el fin de semana?",
           tool1: "⚙️ Verificando disponibilidad de visitas...",
           tool1Success: "✓ Horarios de visita disponibles esta semana",
-          agent2: "Podemos coordinar una visita este Miércoles a las 11:00 AM o el Jueves a las 6:00 PM. ¿Cuál te acomoda mejor?",
+          agent2: "¡Genial! Tenemos disponible este Miércoles a las 11:00 AM o el Jueves a las 6:00 PM. ¿Cuál te acomoda mejor?",
           prospect2: "El Jueves a las 6:00 PM me viene perfecto.",
           tool2: "⚙️ Agendando visita y notificando al corredor...",
           tool2Success: "✓ Visita confirmada y corredor asignado",
-          agent3: "¡Listo! Visita confirmada para el Jueves a las 6:00 PM. Te envié la dirección exacta y los datos de tu corredor asignado por WhatsApp. ¡Nos vemos allá! 🏠"
+          agent3: "¡Listo, te espera el departamento! 🏠 Visita confirmada para el Jueves a las 6:00 PM. Te envié la dirección exacta y los datos de tu corredor asignado por WhatsApp. ¡Nos vemos allá!"
         }
       ]
     },
@@ -946,14 +946,14 @@ export const translations = {
           hudStatus: "Consulta Reservada",
           hudValue: "$140.000",
           prospect: "Olá! Tenho interesse no tratamento de alinhadores invisíveis. Qual é o valor aproximado e se vocês têm horários livres nas quintas-feiras à tarde? É o meu único período disponível.",
-          agent1: "Olá! Com prazer te ajudo a agendar sua avaliação. A consulta diagnóstica e estudo 3D inicia a partir de $140.000 (orçamento final sujeito à avaliação clínica). Deixe-me verificar a agenda para as tardes de quinta-feira...",
+          agent1: "Olá, que ótimo que entrou em contato! 😊 A consulta diagnóstica e estudo 3D inicia a partir de $140.000 (orçamento final sujeito à avaliação clínica). Entendido que as quintas-feiras à tarde são o melhor horário para você — deixe-me ver o que temos disponível nesse dia...",
           tool1: "⚙️ Consultando agenda da clínica...",
           tool1Success: "✓ Horários livres encontrados para Quinta-feira",
-          agent2: "Temos disponibilidade nesta Quinta-feira às 16h30 ou às 18h00 com a Dra. Silva. Algum desses horários funciona para você?",
+          agent2: "Temos a Dra. Silva disponível nesta Quinta-feira às 16h30 ou às 18h00. Qual desses horários funciona melhor para você?",
           prospect2: "O das 16h30 funciona perfeito para mim.",
           tool2: "⚙️ Registrando no CRM e reservando consulta...",
           tool2Success: "✓ Consulta agendada (Ref. $140.000) & Notificações enviadas",
-          agent3: "Excelente! Consulta confirmada para esta Quinta-feira às 16h30. Acabo de enviar a confirmação por e-mail e WhatsApp com as orientações. Até breve! 🚀"
+          agent3: "Perfeito, você está agendado! 🚀 Consulta confirmada para esta Quinta-feira às 16h30 com a Dra. Silva. Enviei a confirmação por e-mail e WhatsApp com todas as orientações. Até breve!"
         },
         {
           tabName: "Estética",
@@ -962,14 +962,14 @@ export const translations = {
           hudStatus: "Avaliação Agendada",
           hudValue: "$120.000",
           prospect: "Olá, gostaria de saber sobre o tratamento de rejuvenescimento facial com botox e preenchimento. Quanto custa e vocês têm horários esta semana?",
-          agent1: "Olá! A sessão de avaliação estética inicia a partir de $120.000 (orçamento e plano personalizados sujeitos à avaliação). Temos horários disponíveis. Deixe-me consultar a agenda do Dr. Rossi...",
+          agent1: "Olá! Botox e preenchimento são uma ótima combinação para um resultado natural 😊 A sessão de avaliação estética inicia a partir de $120.000 (orçamento e plano personalizados sujeitos à avaliação). Você tem preferência por manhã ou tarde esta semana? Deixe-me consultar a agenda do Dr. Rossi...",
           tool1: "⚙️ Verificando agenda dermatológica...",
           tool1Success: "✓ Vagas VIP disponíveis no calendário",
-          agent2: "Temos horários disponíveis nesta Sexta-feira às 11h00 ou às 15h30. Qual prefere?",
-          prospect2: "O das 15h30 is perfeito para mim.",
+          agent2: "O Dr. Rossi tem horários disponíveis nesta Sexta-feira às 11h00 ou às 15h30. Qual prefere?",
+          prospect2: "O das 15h30 é perfeito para mim.",
           tool2: "⚙️ Bloqueando vaga VIP e enviando orientações...",
           tool2Success: "✓ Avaliação agendada (Ref. $120.000) & SMS enviado",
-          agent3: "Perfeito! Sua avaliação estética está reservada para esta Sexta-feira às 15h30. Enviei o protocolo de recomendações pré-atendimento por WhatsApp. ✨"
+          agent3: "Confirmado! ✨ Sua avaliação estética está reservada para esta Sexta-feira às 15h30 com o Dr. Rossi. Enviei o protocolo de recomendações pré-atendimento por WhatsApp. Te esperamos!"
         },
         {
           tabName: "Legal",
@@ -978,14 +978,14 @@ export const translations = {
           hudStatus: "Consulta Agendada",
           hudValue: "Prioridade Alta",
           prospect: "Olá, preciso de assessoria jurídica urgente para elaborar um contrato de compra e venda de imóvel de alto valor. Quanto custa a consulta estratégica e tem advogado disponível?",
-          agent1: "Olá! Para este tipo de operação, classificamos o caso para designar o sócio especialista adequado (orçamento entregue após a reunião estratégica). Deixe-me verificar a agenda do nosso sócio sênior...",
+          agent1: "Olá, compreendo perfeitamente a urgência e estamos prontos para ajudar 🤝 Para este tipo de operação, realizamos uma triagem rápida para alocar o especialista ideal. Você prefere uma reunião pela manhã ou à tarde? Deixe-me verificar a disponibilidade do Dr. Mendoza...",
           tool1: "⚙️ Triando caso por matéria e valor...",
           tool1Success: "✓ Caso qualificado para Sócio Sênior",
-          agent2: "Nosso sócio sênior, Dr. Mendoza, tem vaga nesta Segunda às 9h00 ou às 11h30 para uma sessão estratégica. Qual funciona melhor?",
+          agent2: "O Dr. Mendoza tem um espaço disponível nesta Segunda às 9h00 ou às 11h30. Qual desses horários se encaixa melhor na sua agenda?",
           prospect2: "Segunda-feira às 11h30 é perfeito.",
           tool2: "⚙️ Criando sala Zoom privada e registrando caso...",
           tool2Success: "✓ Reunião premium agendada (Caso Designado)",
-          agent3: "Excelente! Sua sessão estratégica por Zoom está confirmada para Segunda-feira às 11h30. Enviei o pré-contrato e o link de acesso para seu e-mail. ⚖️"
+          agent3: "Tudo confirmado! ⚖️ Sua sessão estratégica com o Dr. Mendoza está marcada para Segunda-feira às 11h30. Enviei o pré-contrato de confidencialidade e o link de acesso para seu e-mail. Até logo!"
         },
         {
           tabName: "Academia",
@@ -994,10 +994,10 @@ export const translations = {
           hudStatus: "Aula Agendada",
           hudValue: "$95.000",
           prospect: "Olá, procuro aulas de preparação intensiva para o exame de admissão de cálculo avançado. Qual é o valor do ciclo e vocês têm tutores disponíveis?",
-          agent1: "Olá! Sim, o ciclo de diagnóstico e plano de estudo inicia a partir de $95.000 (valor final sujeito à avaliação de horas). Deixe-me ver as horas disponíveis esta semana...",
+          agent1: "Olá! Que ótimo que você está se preparando para esse exame 💪 O ciclo de diagnóstico e plano de estudo inicia a partir de $95.000 (valor final sujeito à avaliação de horas). Você prefere aulas durante a semana ou nos fins de semana? Deixe-me encontrar o tutor certo para você...",
           tool1: "⚙️ Buscando tutores experientes em Cálculo...",
-          tool1Success: "✓ 2 tutores seniores com horários livres",
-          agent2: "Podemos agendar sua aula nesta Quarta às 17h00 ou no Sábado às 10h00. Qual fica melhor para você?",
+          tool1Success: "✓ 2 tutores sêniores com horários livres",
+          agent2: "Temos um tutor sênior disponível nesta Quarta às 17h00 ou no Sábado às 10h00. Qual fica melhor para você?",
           prospect2: "Quarta às 17h00 seria excelente.",
           tool2: "⚙️ Alocando tutor sênior e registrando matrícula...",
           tool2Success: "✓ Curso intensivo agendado ($95.000)",
@@ -1010,14 +1010,14 @@ export const translations = {
           hudStatus: "Checkup Confirmado",
           hudValue: "$115.000",
           prospect: "Olá, gostaria de cotar e agendar o programa de checkup médico executivo integral de um dia. Qual é o valor e quando há vagas?",
-          agent1: "Olá! Nosso programa preventivo de checkup executivo custa a partir de $115.000 (orçamento definitivo sujeito à triagem médica inicial). Deixe-me consultar a agenda clínica...",
+          agent1: "Olá! Que ótima decisão cuidar da saúde de forma preventiva 🙌 Nosso programa de checkup executivo custa a partir de $115.000 (orçamento definitivo sujeito à triagem médica inicial). Você tem alguma preferência de dia ou qualquer dia desta semana funciona? Deixe-me consultar a agenda clínica...",
           tool1: "⚙️ Consultando exames e especialistas...",
           tool1Success: "✓ Vagas com preparo de jejum disponíveis",
-          agent2: "Temos vagas disponíveis para esta Terça ou na próxima Quinta às 7h30 (requer jejum). Qual dia prefere?",
+          agent2: "Temos vagas disponíveis para esta Terça ou na próxima Quinta às 7h30 (requer jejum prévio). Qual dia prefere?",
           prospect2: "Esta Terça às 7h30 é perfeito.",
           tool2: "⚙️ Reservando suíte médica e alocando equipe...",
           tool2Success: "✓ Checkup executivo agendado ($115.000)",
-          agent3: "Tudo pronto! Seu checkup executivo está confirmado para esta Terça às 7h30. Enviei o protocolo de jejum e preparo por e-mail. 🏥"
+          agent3: "Tudo certo! 🏥 Seu checkup executivo está confirmado para esta Terça às 7h30. Enviei o protocolo de jejum e preparo por e-mail. Cuide-se e até breve!"
         },
         {
           tabName: "Imóveis",
@@ -1026,14 +1026,14 @@ export const translations = {
           hudStatus: "Visita Agendada",
           hudValue: "Aluguel Confirmado",
           prospect: "Olá, vi o anúncio do apartamento de 2 quartos no Brooklin. Ainda está disponível? Gostaria de visitar esta semana se possível.",
-          agent1: "Olá! Sim, o apartamento ainda está disponível. 58 m², 2 quartos, 1 banheiro e vaga de garagem incluída. Aluguel: R$ 2.800/mês. Deixe-me verificar os horários de visita disponíveis...",
+          agent1: "Olá, que ótimo que se interessou! 😊 Sim, o apartamento ainda está disponível. 58 m², 2 quartos, 1 banheiro e vaga de garagem incluída. Aluguel: R$ 2.800/mês. Para organizar a visita, qual dia da semana fica melhor para você — durante a semana ou no fim de semana?",
           tool1: "⚙️ Verificando disponibilidade de visitas...",
           tool1Success: "✓ Horários de visita disponíveis nesta semana",
-          agent2: "Podemos agendar uma visita nesta Quarta às 11h00 ou na Quinta às 18h00. Qual fica melhor para você?",
+          agent2: "Perfeito! Temos disponível nesta Quarta às 11h00 ou na Quinta às 18h00. Qual fica melhor para você?",
           prospect2: "Quinta às 18h00 é perfeito.",
           tool2: "⚙️ Agendando visita e notificando o corretor...",
           tool2Success: "✓ Visita confirmada e corretor designado",
-          agent3: "Pronto! Sua visita está confirmada para Quinta às 18h00. Enviei o endereço exato e os dados do seu corretor por WhatsApp. Até lá! 🏠"
+          agent3: "Feito! 🏠 Sua visita está confirmada para Quinta às 18h00. Enviei o endereço exato e os dados do seu corretor por WhatsApp. Mal podemos esperar para você conhecer o apartamento!"
         }
       ]
     },
