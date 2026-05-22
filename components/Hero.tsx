@@ -337,7 +337,6 @@ export default function Hero() {
                     key={idx}
                     onClick={() => {
                       setSelectedNiche(idx);
-                      setIsAutoCycle(false);
                       setChatStep(1);
                       setIsTyping(false);
                     }}
