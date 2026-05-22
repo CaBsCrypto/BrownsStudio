@@ -34,12 +34,12 @@ export default async function LocalePage({
       <BrownsOSLoader />
       <Navbar />
       <Hero />
-      <Servicios />
       <CasosDeUso />
+      <Servicios />
       <Portfolio />
       <Pricing />
-      <Proceso />
-      <AIShowcase />
+      {/* <Proceso /> */}
+      {/* <AIShowcase /> */}
       <Testimonios />
       <SobreMi />
       <FAQ />

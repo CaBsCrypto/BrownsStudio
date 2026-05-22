@@ -232,86 +232,8 @@ export default function Servicios() {
           </p>
         </div>
 
-        {/* ── Service Tiers ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-20">
-          {t.tiers.map((tier, i) => (
-            <div
-              key={tier.name}
-              className={`reveal reveal-delay-${i + 1} relative rounded-2xl p-6 flex flex-col transition-all duration-300`}
-              style={{
-                background: tier.popular ? "#10181e" : "#111113",
-                border: `1px solid ${tier.popular ? "rgba(0,240,255,0.25)" : "rgba(255,255,255,0.06)"}`,
-              }}
-            >
-              {/* Popular badge */}
-              {tier.popular && (
-                <div
-                  className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold text-black whitespace-nowrap"
-                  style={{ background: "linear-gradient(135deg, #00f0ff, #0090b3)" }}
-                >
-                  {tier.tag}
-                </div>
-              )}
-
-              {/* Tag (non-popular) */}
-              {!tier.popular && (
-                <span className="text-xs uppercase tracking-widest mb-4 font-medium" style={{ color: `${tier.accent}80` }}>
-                  {tier.tag}
-                </span>
-              )}
-              {tier.popular && <div className="mb-4 mt-2" />}
-
-              {/* Name */}
-              <h3 className="font-display font-bold text-xl text-[#e5e5e5] mb-1" style={{ letterSpacing: "-0.02em" }}>
-                {tier.name}
-              </h3>
-
-              {/* Price */}
-              <div className="flex items-end gap-1 mb-1">
-                <span className="text-3xl font-display font-bold" style={{ color: tier.accent }}>
-                  {tier.price}
-                </span>
-                {tier.period && (
-                  <span className="text-sm text-[#5a5a5a] mb-1">{tier.period}</span>
-                )}
-              </div>
-              <p className="text-xs text-[#5a5a5a] mb-4">{tier.setup}</p>
-
-              {/* Desc */}
-              <p className="text-[#9e9e9e] text-sm leading-relaxed mb-6">{tier.desc}</p>
-
-              {/* Features */}
-              <ul className="space-y-2.5 mb-8 flex-1">
-                {tier.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
-                    <span className="mt-0.5 text-xs" style={{ color: tier.accent }}>✓</span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA */}
-              <a
-                href={`${WHATSAPP_URL}&text=${encodeURIComponent(tier.msg)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-[1.02]"
-                style={
-                  tier.popular
-                    ? { background: "#0d2228", border: "1px solid rgba(0,240,255,0.3)", color: "#00f0ff" }
-                    : { background: "#191919", border: "1px solid rgba(255,255,255,0.08)", color: "#9e9e9e" }
-                }
-              >
-                <MessageSquare size={14} />
-                {tier.cta}
-                <ArrowRight size={13} />
-              </a>
-            </div>
-          ))}
-        </div>
-
         {/* ── 4 Differentiator Pillars ── */}
-        <div className="mb-12">
+        <div className="mb-20">
           <p className="reveal text-center text-xs uppercase tracking-[0.2em] text-[#5a5a5a] mb-8">
             {t.pillarsTitle}
           </p>
