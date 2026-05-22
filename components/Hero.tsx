@@ -111,7 +111,7 @@ export default function Hero() {
     return () => observer.disconnect();
   }, []);
 
-  // Chat simulation state machine loop (snappy, outcome-first flow)
+  // Chat simulation state machine loop (humanized pacing)
   useEffect(() => {
     let timer: NodeJS.Timeout;
     
@@ -122,16 +122,16 @@ export default function Hero() {
         timer = setTimeout(() => {
           setIsTyping(false);
           setChatStep(2);
-        }, 400);
-      }, 100);
+        }, 1200); // 1.2s typing indicator for Agent Msg 1
+      }, 800); // 800ms initial pause
     } else if (chatStep === 2) {
       timer = setTimeout(() => {
         setChatStep(3);
-      }, 150);
+      }, 2500); // 2.5s pause to read Agent Msg 1
     } else if (chatStep === 3) {
       timer = setTimeout(() => {
         setChatStep(4);
-      }, 300);
+      }, 1800); // 1.8s loading spin for Tool 1
     } else if (chatStep === 4) {
       timer = setTimeout(() => {
         setTypingSender("prospect");
@@ -139,16 +139,16 @@ export default function Hero() {
         timer = setTimeout(() => {
           setIsTyping(false);
           setChatStep(5);
-        }, 400);
-      }, 100);
+        }, 1000); // 1s typing indicator for Prospect response
+      }, 3500); // 3.5s pause to read Agent Msg 2
     } else if (chatStep === 5) {
       timer = setTimeout(() => {
         setChatStep(6);
-      }, 150);
+      }, 2200); // 2.2s pause to read Prospect Msg 2
     } else if (chatStep === 6) {
       timer = setTimeout(() => {
         setChatStep(7);
-      }, 300);
+      }, 1800); // 1.8s loading spin for Tool 2
     } else if (chatStep === 7) {
       timer = setTimeout(() => {
         setTypingSender("agent");
@@ -156,8 +156,8 @@ export default function Hero() {
         timer = setTimeout(() => {
           setIsTyping(false);
           setChatStep(8);
-        }, 400);
-      }, 100);
+        }, 1200); // 1.2s typing indicator for final Agent confirmation
+      }, 2500); // 2.5s pause to read success
     } else if (chatStep === 8) {
       timer = setTimeout(() => {
         if (isAutoCycle) {
@@ -167,7 +167,7 @@ export default function Hero() {
         } else {
           setChatStep(1);
         }
-      }, 4000);
+      }, 8000); // 8s pause at the very end to read everything before cycling
     }
 
     return () => clearTimeout(timer);
@@ -263,7 +263,7 @@ export default function Hero() {
 
                 {/* Dropdown Menu */}
                 {showDropdown && (
-                  <div className="absolute top-full mt-2 left-0 right-0 sm:left-auto sm:right-auto sm:min-w-[290px] glass rounded-2xl p-2 border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-300 z-50">
+                  <div className="absolute bottom-full mb-2 left-0 right-0 sm:left-auto sm:right-auto sm:min-w-[290px] glass rounded-2xl p-2 border border-white/10 shadow-2xl animate-in fade-in slide-in-from-bottom-2 duration-300 z-50">
                     {t.cta.contactOptions.map((opt: { label: string; msg: string }, i: number) => (
                       <a
                         key={i}
@@ -376,7 +376,7 @@ export default function Hero() {
                 </div>
 
                 {/* Simulated CRM & Chat Area */}
-                <div className="p-4 h-[350px] overflow-y-auto space-y-4 no-scrollbar flex flex-col justify-end text-[11px] relative z-10">
+                <div className="p-4 h-[460px] overflow-y-auto space-y-4 no-scrollbar flex flex-col justify-end text-[11px] relative z-10">
                   
                   {/* Step 1+: Prospect Msg 1 */}
                   {chatStep >= 1 && (
