@@ -11,8 +11,7 @@ import {
   Link2, 
   ShieldCheck, 
   Zap,
-  ChevronLeft,
-  ChevronRight
+  X
 } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
@@ -27,9 +26,7 @@ export default function CasosDeUso() {
   const sectionRef = useRef<HTMLElement>(null);
   const copy = t.useCases;
 
-  const [activePillar, setActivePillar] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const [selectedPillar, setSelectedPillar] = useState<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -47,41 +44,6 @@ export default function CasosDeUso() {
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
-
-  // Autoplay functionality for the Engineering Pillars Carousel
-  useEffect(() => {
-    if (isPaused) {
-      if (autoplayTimerRef.current) clearInterval(autoplayTimerRef.current);
-      return;
-    }
-
-    autoplayTimerRef.current = setInterval(() => {
-      setActivePillar((prev) => (prev + 1) % 4);
-    }, 6000);
-
-    return () => {
-      if (autoplayTimerRef.current) clearInterval(autoplayTimerRef.current);
-    };
-  }, [isPaused]);
-
-  const handlePillarSelect = (idx: number) => {
-    setActivePillar(idx);
-    setIsPaused(true); // Pause autoplay when user manually interacts
-    // Resume autoplay after 12 seconds of inactivity
-    setTimeout(() => setIsPaused(false), 12000);
-  };
-
-  const handlePrev = () => {
-    setActivePillar((prev) => (prev - 1 + 4) % 4);
-    setIsPaused(true);
-    setTimeout(() => setIsPaused(false), 12000);
-  };
-
-  const handleNext = () => {
-    setActivePillar((prev) => (prev + 1) % 4);
-    setIsPaused(true);
-    setTimeout(() => setIsPaused(false), 12000);
-  };
 
   const getTelemetryData = (idx: number) => {
     switch (idx) {
@@ -117,11 +79,6 @@ export default function CasosDeUso() {
         };
     }
   };
-
-  const activePillarData = copy.pillars[activePillar];
-  const ActivePillarIcon = PILLAR_ICONS[activePillar];
-  const activeAccent = ACCENT_COLORS[activePillar];
-  const telemetry = getTelemetryData(activePillar);
 
   return (
     <section
@@ -256,7 +213,7 @@ export default function CasosDeUso() {
           </div>
         </div>
 
-        {/* ── BOTTOM SECTION: Engineering Guarantees Carousel ── */}
+        {/* ── BOTTOM SECTION: Engineering Guarantees (Compact Grid with Modals) ── */}
         <div className="mb-20 max-w-4xl mx-auto">
           <div className="reveal flex flex-col items-center gap-1.5 mb-10 text-center">
             <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-[#e5e5e5]" style={{ letterSpacing: "-0.02em" }}>
@@ -267,178 +224,66 @@ export default function CasosDeUso() {
             </p>
           </div>
 
-          {/* Interactive Responsive Carousel Container */}
-          <div className="reveal reveal-delay-2 flex flex-col gap-6">
-            
-            {/* Top Carousel Navigation Tabs (Desktop/Tablet) */}
-            <div className="hidden sm:grid grid-cols-4 gap-3 bg-[#0a0a0f]/40 p-1.5 rounded-2xl border border-white/[0.03]">
-              {copy.pillars.map((pillar, idx) => {
-                const TabIcon = PILLAR_ICONS[idx];
-                const active = activePillar === idx;
-                const accent = ACCENT_COLORS[idx];
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => handlePillarSelect(idx)}
-                    className={`flex items-center justify-center gap-2 px-3 py-3 rounded-xl border text-[11px] font-mono uppercase tracking-wider font-extrabold transition-all duration-300 ${
-                      active
-                        ? "text-white shadow-[0_0_20px_rgba(0,240,255,0.06)]"
-                        : "text-[#5e5e66] border-transparent hover:text-white/70 hover:border-white/5"
-                    }`}
-                    style={{
-                      background: active ? `${accent}0c` : "transparent",
-                      borderColor: active ? `${accent}35` : "transparent",
-                    }}
-                  >
-                    <TabIcon size={12} style={{ color: active ? accent : "currentColor" }} />
-                    <span className="truncate">{pillar.title}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Carousel Active Viewport Card */}
-            <div
-              className="relative rounded-3xl p-6 sm:p-10 flex flex-col justify-between overflow-hidden border transition-all duration-500 min-h-[340px]"
-              style={{
-                background: "rgba(8, 9, 13, 0.65)",
-                backdropFilter: "blur(20px)",
-                WebkitBackdropFilter: "blur(20px)",
-                borderColor: `${activeAccent}35`,
-                boxShadow: `0 15px 45px rgba(0,0,0,0.5), 0 0 35px ${activeAccent}08`,
-              }}
-            >
-              {/* Backlit Glow Aura */}
-              <div 
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[100px] pointer-events-none transition-all duration-1000"
-                style={{
-                  background: `${activeAccent}0a`,
-                }}
-              />
-
-              {/* Technical Grid Pattern Accents */}
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.005)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.005)_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
-
-              {/* Corner tech lines */}
-              <div 
-                className="absolute top-0 right-0 w-24 h-24 pointer-events-none opacity-30 border-t border-r rounded-tr-3xl transition-colors duration-500" 
-                style={{ borderColor: activeAccent }}
-              />
-
-              {/* Console Header Bar */}
-              <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/[0.04] relative z-10">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full animate-ping" style={{ backgroundColor: activeAccent }} />
-                  <span
-                    className="text-[9px] font-mono font-bold tracking-widest uppercase transition-colors duration-500"
-                    style={{ color: activeAccent }}
-                  >
-                    SYSTEM SECURITY SHELL ACTIVE
-                  </span>
-                </div>
-                <span className="text-[9px] font-mono text-[#5e5e66]">VER 2.4.9 // CLUSTER.NODE_{activePillar + 1}</span>
-              </div>
-
-              {/* Slide Content Display */}
-              <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start sm:items-center relative z-10 flex-grow py-4">
-                
-                {/* Large animated floating node icon */}
-                <div
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-500"
+          {/* Compact Grid of 4 Pillars */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {copy.pillars.map((pillar, idx) => {
+              const Icon = PILLAR_ICONS[idx];
+              const accent = ACCENT_COLORS[idx];
+              return (
+                <button
+                  key={idx}
+                  onClick={() => setSelectedPillar(idx)}
+                  className="group relative flex flex-col items-center justify-between p-5 rounded-2xl border text-center transition-all duration-300 min-h-[160px] hover:-translate-y-1 cursor-pointer"
                   style={{
-                    background: `${activeAccent}0c`,
-                    border: `1px solid ${activeAccent}35`,
-                    boxShadow: `0 0 25px ${activeAccent}15`,
+                    background: "rgba(10, 11, 15, 0.45)",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                    borderColor: "rgba(255,255,255,0.04)",
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.borderColor = `${accent}35`;
+                    el.style.background = "rgba(14, 16, 23, 0.7)";
+                    el.style.boxShadow = `0 10px 25px ${accent}0c, 0 4px 20px rgba(0,0,0,0.25)`;
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.borderColor = "rgba(255,255,255,0.04)";
+                    el.style.background = "rgba(10, 11, 15, 0.45)";
+                    el.style.boxShadow = "0 4px 20px rgba(0,0,0,0.15)";
                   }}
                 >
-                  <ActivePillarIcon size={28} style={{ color: activeAccent }} className="animate-pulse" />
-                </div>
+                  {/* Glowing Box Icon */}
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110"
+                    style={{
+                      background: `${accent}0c`,
+                      border: `1px solid ${accent}20`,
+                    }}
+                  >
+                    <Icon size={16} style={{ color: accent }} />
+                  </div>
 
-                {/* Technical Descriptions */}
-                <div className="space-y-3 flex-grow">
-                  <h4 className="font-display font-extrabold text-lg sm:text-2xl text-white tracking-tight uppercase">
-                    {activePillarData.title}
-                  </h4>
-                  <p className="text-[#a1a1a6] text-sm sm:text-base leading-relaxed max-w-2xl">
-                    {activePillarData.desc}
-                  </p>
-                </div>
+                  <div className="space-y-1 flex-grow flex flex-col justify-center">
+                    <h4 className="font-display font-bold text-xs uppercase tracking-wide text-[#e5e5e5] group-hover:text-white transition-colors">
+                      {pillar.title}
+                    </h4>
+                    <span 
+                      className="text-[8px] font-mono font-bold tracking-widest uppercase transition-opacity duration-300 opacity-60 group-hover:opacity-100"
+                      style={{ color: accent }}
+                    >
+                      {idx === 0 ? "Razonamiento" : idx === 1 ? "Integraciones" : idx === 2 ? "Failsafe" : "Memoria RAG"}
+                    </span>
+                  </div>
 
-              </div>
-
-              {/* Diagnostic Live Telemetry footer */}
-              <div className="mt-8 pt-4 border-t border-white/[0.04] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-[9px] font-mono relative z-10 text-[#5e5e66]">
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    {telemetry.primary}
+                  {/* Micro tag link */}
+                  <span className="text-[9px] font-mono text-[#5e5e66] group-hover:text-[#9e9e9e] transition-colors mt-3 flex items-center gap-1">
+                    Ver specs <ArrowRight size={10} className="group-hover:translate-x-0.5 transition-transform" />
                   </span>
-                  <span className="text-white/20">|</span>
-                  <span>{telemetry.secondary}</span>
-                </div>
-                <span style={{ color: activeAccent }}>{telemetry.accentVal}</span>
-              </div>
-
-              {/* Overlay Navigation Arrows (Floating) */}
-              <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-3 z-20">
-                <button
-                  onClick={handlePrev}
-                  className="w-10 h-10 rounded-full border border-white/5 bg-[#0a0a0f]/80 backdrop-blur-sm flex items-center justify-center text-[#5e5e66] hover:text-white hover:border-white/15 hover:bg-[#12121a] hover:scale-105 transition-all"
-                  aria-label="Previous slide"
-                >
-                  <ChevronLeft size={18} />
                 </button>
-                <button
-                  onClick={handleNext}
-                  className="w-10 h-10 rounded-full border border-white/5 bg-[#0a0a0f]/80 backdrop-blur-sm flex items-center justify-center text-[#5e5e66] hover:text-white hover:border-white/15 hover:bg-[#12121a] hover:scale-105 transition-all"
-                  aria-label="Next slide"
-                >
-                  <ChevronRight size={18} />
-                </button>
-              </div>
-
-            </div>
-
-            {/* Bottom Dots & Touch Controls for Mobile/Manual flow */}
-            <div className="flex items-center justify-between sm:justify-center gap-4 mt-2 px-2">
-              <button
-                onClick={handlePrev}
-                className="flex sm:hidden w-8 h-8 rounded-full border border-white/5 bg-[#0a0a0f]/80 flex items-center justify-center text-[#5e5e66]"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              
-              {/* Dot Indicators */}
-              <div className="flex items-center gap-2.5">
-                {[0, 1, 2, 3].map((idx) => {
-                  const active = activePillar === idx;
-                  const accent = ACCENT_COLORS[idx];
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => handlePillarSelect(idx)}
-                      className="group relative h-2.5 transition-all duration-500 rounded-full"
-                      style={{
-                        width: active ? "32px" : "10px",
-                        background: active ? accent : "rgba(255,255,255,0.1)",
-                        boxShadow: active ? `0 0 10px ${accent}` : "none",
-                      }}
-                      title={`Slide ${idx + 1}`}
-                    />
-                  );
-                })}
-              </div>
-
-              <button
-                onClick={handleNext}
-                className="flex sm:hidden w-8 h-8 rounded-full border border-white/5 bg-[#0a0a0f]/80 flex items-center justify-center text-[#5e5e66]"
-                aria-label="Next slide"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
-
+              );
+            })}
           </div>
         </div>
 
@@ -484,6 +329,113 @@ export default function CasosDeUso() {
         </div>
 
       </div>
+
+      {/* ── Futuristic Tech Specs Modal Popup ── */}
+      {selectedPillar !== null && (() => {
+        const pillar = copy.pillars[selectedPillar];
+        const Icon = PILLAR_ICONS[selectedPillar];
+        const accent = ACCENT_COLORS[selectedPillar];
+        const telemetry = getTelemetryData(selectedPillar);
+
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Dark blur backdrop */}
+            <div 
+              className="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity duration-300"
+              onClick={() => setSelectedPillar(null)}
+            />
+
+            {/* Modal Box */}
+            <div
+              className="relative w-full max-w-lg rounded-3xl p-6 sm:p-8 overflow-hidden border transition-all duration-300"
+              style={{
+                background: "rgba(8, 9, 13, 0.95)",
+                borderColor: `${accent}40`,
+                boxShadow: `0 25px 60px rgba(0,0,0,0.8), 0 0 40px ${accent}12`,
+              }}
+            >
+              {/* Backlit Glow Aura */}
+              <div 
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[100px] pointer-events-none"
+                style={{ background: `${accent}08` }}
+              />
+
+              {/* Corner tech lines */}
+              <div 
+                className="absolute top-0 right-0 w-24 h-24 pointer-events-none opacity-40 border-t border-r rounded-tr-3xl" 
+                style={{ borderColor: accent }}
+              />
+
+              {/* Modal Console Header */}
+              <div className="flex items-center justify-between mb-6 pb-3 border-b border-white/[0.04] relative z-10">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full animate-ping" style={{ backgroundColor: accent }} />
+                  <span
+                    className="text-[9px] font-mono font-bold tracking-widest uppercase"
+                    style={{ color: accent }}
+                  >
+                    SYSTEM SECURITY SHELL ACTIVE
+                  </span>
+                </div>
+                <button 
+                  onClick={() => setSelectedPillar(null)}
+                  className="w-6 h-6 rounded-full flex items-center justify-center border border-white/5 bg-[#0a0a0f] text-[#5e5e66] hover:text-white transition-colors cursor-pointer"
+                >
+                  <X size={12} />
+                </button>
+              </div>
+
+              {/* Modal Content */}
+              <div className="flex flex-col sm:flex-row gap-5 sm:gap-6 items-start sm:items-center relative z-10 py-3">
+                <div
+                  className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{
+                    background: `${accent}0c`,
+                    border: `1px solid ${accent}30`,
+                    boxShadow: `0 0 20px ${accent}10`,
+                  }}
+                >
+                  <Icon size={24} style={{ color: accent }} className="animate-pulse" />
+                </div>
+
+                <div className="space-y-2">
+                  <h4 className="font-display font-extrabold text-lg sm:text-xl text-white tracking-tight uppercase">
+                    {pillar.title}
+                  </h4>
+                  <p className="text-[#a1a1a6] text-xs sm:text-sm leading-relaxed">
+                    {pillar.desc}
+                  </p>
+                </div>
+              </div>
+
+              {/* Telemetry data */}
+              <div className="mt-8 pt-4 border-t border-white/[0.04] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-[9px] font-mono relative z-10 text-[#5e5e66]">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    {telemetry.primary}
+                  </span>
+                  <span className="text-white/20">|</span>
+                  <span>{telemetry.secondary}</span>
+                </div>
+                <span style={{ color: accent }}>{telemetry.accentVal}</span>
+              </div>
+
+              {/* Bottom controller button */}
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={() => setSelectedPillar(null)}
+                  className="px-5 py-2.5 rounded-xl text-[10px] font-mono uppercase tracking-wider font-extrabold text-black transition-all hover:scale-105 cursor-pointer"
+                  style={{ background: accent }}
+                >
+                  Cerrar Specs
+                </button>
+              </div>
+
+            </div>
+          </div>
+        );
+      })()}
     </section>
   );
 }
