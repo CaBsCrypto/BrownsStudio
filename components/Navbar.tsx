@@ -16,9 +16,10 @@ interface NavTranslation {
   formacion?: string;
   solutions?: string;
   solutionsList?: Record<string, string>;
+  auditor?: string;
 }
 
-const allSectionIds = ["inicio", "sobre-mi", "servicios", "portfolio", "precios", "testimonios", "faq", "contacto"];
+const allSectionIds = ["inicio", "sobre-mi", "servicios", "auditor", "portfolio", "precios", "testimonios", "faq", "contacto"];
 
 export default function Navbar() {
   const { t, lang, toggle } = useLang();
@@ -33,6 +34,7 @@ export default function Navbar() {
 
   const navLinks = [
     { label: nav.services, href: "#servicios", id: "servicios", page: false },
+    { label: nav.auditor ?? "Auditor", href: "#auditor", id: "auditor", page: false },
     { label: nav.portfolio, href: "#portfolio", id: "portfolio", page: false },
     { label: nav.pricing,  href: "#precios",   id: "precios",   page: false },
     { label: nav.faq,      href: "#faq",       id: "faq",       page: false },

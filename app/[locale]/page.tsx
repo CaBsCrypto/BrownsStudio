@@ -4,6 +4,7 @@ import SobreMi from "@/components/SobreMi";
 import Pricing from "@/components/Pricing";
 import Portfolio from "@/components/Portfolio";
 import CasosDeUso from "@/components/CasosDeUso";
+import ProcessAuditor from "@/components/ProcessAuditor";
 import Testimonios from "@/components/Testimonios";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
@@ -32,6 +33,7 @@ export default async function LocalePage({
         <Navbar />
         <Hero />
         <CasosDeUso />
+        <ProcessAuditor />
         <Portfolio />
         <Pricing />
         {/* <Proceso /> */}

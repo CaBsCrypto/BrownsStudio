@@ -16,14 +16,15 @@ export const translations = {
         "clases-privadas": "Private Academies",
         propiedades: "Real Estate"
       },
+      auditor: "Process Auditor",
       cta: "Get a Quote",
     },
     hero: {
       badge: "SALES & OPERATIONAL OPTIMIZATION",
-      line1: "Never keep customers waiting:",
-      line2: "book, qualify, and sell",
+      line1: "Turn Conversations Into Revenue:",
+      line2: "qualify, book, and close",
       line3: "on autopilot 24/7.",
-      sub: "Custom-built agents that answer, filter, and book 24/7, freeing your team to close more deals.",
+      sub: "Custom AI Agents integrated directly with your real systems to answer in seconds, pre-qualify leads instantly, and maximize booking rates without letting hot leads go cold.",
       cta1: "Free consultation",
       cta2: "View value solutions",
       stat1: "Clients",
@@ -38,7 +39,7 @@ export const translations = {
           hudStatus: "Appointment Booked",
           hudValue: "$140,000",
           prospect: "Hi! I'm interested in your clear aligners treatment. Could you tell me the approximate price and if you have slots available on Thursday afternoons? That's my only free day.",
-          agent1: "Hi there! Great question 😊 Our diagnostic consultation and 3D study starts from $140,000 (final quote subject to clinical assessment). Thursday afternoons sound perfect — let me pull up what we have available for you...",
+          agent1: "Hi there! Great question 😊 Our diagnostic consultation and 3D study starts from $140,000 (subject to evaluation). Thursday afternoons sound perfect — let me pull up what we have available for you...",
           tool1: "⚙️ Querying clinic schedule...",
           tool1Success: "✓ Open slots found for Thursday",
           agent2: "We have Dr. Silva available this Thursday at 4:30 PM or 6:00 PM. Which one suits you best?",
@@ -54,7 +55,7 @@ export const translations = {
           hudStatus: "Assessment Booked",
           hudValue: "$120,000",
           prospect: "Hi, I wanted to ask about the facial rejuvenation treatment with Botox and fillers. How much does it cost and do you have slots this week?",
-          agent1: "Hi! Botox and fillers are a great combo for natural rejuvenation 😊 The facial assessment starts from $120,000 (final quote subject to your clinical evaluation). Do you have a preference for morning or afternoon this week? Let me check Dr. Rossi’s availability...",
+          agent1: "Hi! Botox and fillers are a great combo for natural rejuvenation 😊 The facial assessment starts from $120,000 (subject to evaluation). Do you have a preference for morning or afternoon this week? Let me check Dr. Rossi’s availability...",
           tool1: "⚙️ Verifying dermatology schedule...",
           tool1Success: "✓ VIP slots available in calendar",
           agent2: "Dr. Rossi has openings this Friday at 11:00 AM or 3:30 PM. Which one feels right for you?",
@@ -70,7 +71,7 @@ export const translations = {
           hudStatus: "Consult Booked",
           hudValue: "High Priority",
           prospect: "Hello, I need urgent legal advice to structure a high-value commercial contract. What is the process and do you have a partner available to review my case today?",
-          agent1: "Hello! I understand the urgency, and we’re here to help 🤝 For this type of corporate matter, we first assess the case to assign the right senior partner (project quote delivered after the strategic session). Would you prefer a morning or afternoon slot? Let me check Mr. Mendoza’s availability...",
+          agent1: "Hello! I understand the urgency, and we’re here to help 🤝 For this type of corporate matter, we first assess the case to assign the right senior partner (subject to evaluation). Would you prefer a morning or afternoon slot? Let me check Mr. Mendoza’s availability...",
           tool1: "⚙️ Filtering case by matter & valuation...",
           tool1Success: "✓ Case qualified for Senior Partner",
           agent2: "Great news — Mr. Mendoza has openings this Monday at 9:00 AM or 11:30 AM. Which one works better for you?",
@@ -86,7 +87,7 @@ export const translations = {
           hudStatus: "Class Booked",
           hudValue: "$95,000",
           prospect: "Hi, I'm looking for intensive tutoring to prepare for the advanced calculus college entry exam. What is the cost of the course and do you have tutors available?",
-          agent1: "Hi! Great that you’re preparing — we love that commitment 💪 The diagnostic and study plan cycle starts from $95,000 (final price subject to hours needed). Do you prefer weekday afternoons or weekends for your sessions? Let me find the right tutor for you...",
+          agent1: "Hi! Great that you’re preparing — we love that commitment 💪 The diagnostic and study plan cycle starts from $95,000 (subject to evaluation). Do you prefer weekday afternoons or weekends for your sessions? Let me find the right tutor for you...",
           tool1: "⚙️ Searching tutors specialized in Calculus...",
           tool1Success: "✓ 2 senior tutors with open slots",
           agent2: "We have a senior tutor available this Wednesday at 5:00 PM or Saturday at 10:00 AM. Which one fits your schedule?",
@@ -102,7 +103,7 @@ export const translations = {
           hudStatus: "Checkup Booked",
           hudValue: "$115,000",
           prospect: "Hello, I wanted to quote and book the comprehensive one-day executive health checkup. What is the cost and when do you have openings?",
-          agent1: "Hi! That’s a great decision 🙌 Our Executive Premium checkup starts from $115,000 (final price subject to medical history confirmation). Do you have a preference between this week or next? Let me check clinical availability...",
+          agent1: "Hi! That’s a great decision 🙌 Our Executive Premium checkup starts from $115,000 (subject to evaluation). Do you have a preference between this week or next? Let me check clinical availability...",
           tool1: "⚙️ Checking lab & specialist openings...",
           tool1Success: "✓ Fasting slots available in schedule",
           agent2: "We have fasting slots available this Tuesday or next Thursday at 7:30 AM. Any preference?",
@@ -450,6 +451,80 @@ export const translations = {
       cta: "Tell us your process",
       bottomNote: "Not sure which tier fits? ",
       bottomLink: "Book a free 45-min process audit.",
+    },
+    processAuditor: {
+      eyebrow: "OPERATIONAL AUDIT",
+      title: "Audit your processes & calculate your ROI",
+      sub: "Select your industry, adjust your monthly metrics, and discover the real financial impact of automating your operations with a BrownsOS AI Agent.",
+      industryLabel: "Select your Industry",
+      leadsLabel: "Monthly Leads / Convs",
+      valueLabel: "Average Deal Value",
+      delayLabel: "Human Response Delay",
+      delayOptions: {
+        instant: "Instant (< 1 min) - Max retention",
+        moderate: "Moderate (15 min - 1 hr) - 15% leakage",
+        slow: "Slow (1 - 4 hrs) - 35% leakage",
+        nextDay: "Next Day (> 12 hrs) - 60% leakage"
+      },
+      industries: {
+        dental: "Dental Clinics",
+        aesthetic: "Aesthetic Spas",
+        legal: "Law Firms",
+        realEstate: "Real Estate",
+        ecommerce: "E-Commerce / Retail",
+        b2b: "Consulting / B2B"
+      },
+      workflowTitle: "Proposed Agentic Workflow",
+      workflowSteps: {
+        dental: [
+          "Instant Triage: AI Agent responds to the lead in less than 45 seconds.",
+          "RAG Qualification: Identifies dental treatment of interest and urgency level.",
+          "Direct Scheduling: Finds open slots and schedules directly into clinic CRM/Calendar.",
+          "Nurturing & Prep: Sends prep instructions and radiograph reminders via WhatsApp."
+        ],
+        aesthetic: [
+          "Instant Support: Answers rejuvenation and botox inquiries 24/7.",
+          "Aesthetic Triage: Filters doctor preferences and initial budget.",
+          "VIP Booking: Dynamically schedules the evaluation and reserves the physical room.",
+          "Pre-Care Nurture: Sends WhatsApp prep recommendations and consent forms."
+        ],
+        legal: [
+          "Case Ingestion: Automated admission agent filters legal domain (civil, corporate, etc.) and case size.",
+          "High-Priority Triage: Flags high-value corporate clients and requests core details.",
+          "Senior Partner Booking: Schedules consultation with Senior Partner and spawns secure Zoom room.",
+          "NDA Despatch: Autogenerates and fires a preliminary NDA directly to email."
+        ],
+        realEstate: [
+          "Instant Capture: Responds immediately to portal property listings.",
+          "Pre-Qualification: Validates minimum requirements (income, background check) in a friendly tone.",
+          "Viewing Coordination: Schedules viewing appointment with the assigned broker autonomously.",
+          "Document Folder: Requests and organizes initial tenant papers prior to viewing."
+        ],
+        ecommerce: [
+          "Shopping Assistant: Guides customers on size, colors, or inventory stock.",
+          "Cart Recovery: Proactively messages abandoned shopping carts with gentle discounts.",
+          "Post-Purchase: Instantly answers shipping status, returns, and delivery FAQs.",
+          "AI Loyalty: Recommends cross-sell items based on purchase history."
+        ],
+        b2b: [
+          "Enterprise Qualification: Filters companies by size, industry, budget, and operational pain points.",
+          "Express Diagnostics: Queries current tech stack (CRM, ERP, DB) for compatibility.",
+          "Consultation Booking: Reserves a slot for high-touch strategic audit and logs into CRM.",
+          "Commercial Follow-up: Instantly fires BrownsOS executive presentation after simulation."
+        ]
+      },
+      resultsTitle: "Financial Audit & Impact",
+      lostRevenue: "Lost Revenue due to Delays",
+      lostRevenueNote: "Projected annual leakage due to team latency in responding and qualifying.",
+      recoveredRevenue: "Monthly Recovered Revenue",
+      recoveredRevenueNote: "Estimated monthly revenue captured by the AI Agent responding 24/7 in 45 seconds.",
+      hoursSaved: "Operational Hours Freed",
+      hoursSavedNote: "Client qualification and booking delegated 100% to the BrownsOS Agent.",
+      roiTitle: "Return on Investment (ROI)",
+      roiNote: "Estimated financial multiplier against the setup and maintenance cost.",
+      efficiencyLabel: "Operational Efficiency",
+      ctaBtn: "Get my Custom Blueprint & IA Code",
+      whatsappTemplate: "Hi Cristian, I just finished the process audit for my {industry}. My estimated metrics are {leads} leads/month with an average ticket of {value}. Our current response time is {delay} and the simulator estimates we can recover {recovered}/month. Let's build the agent!"
     }
   },
 
@@ -470,14 +545,15 @@ export const translations = {
         "clases-privadas": "Academias y Clases",
         propiedades: "Inmobiliarias"
       },
+      auditor: "Auditor de Procesos",
       cta: "Cotizar Proyecto",
     },
     hero: {
       badge: "OPTIMIZACIÓN DE VENTAS Y OPERACIONES",
-      line1: "No dejes clientes esperando:",
-      line2: "agenda, califica y vende",
+      line1: "Transforma conversaciones en ingresos:",
+      line2: "califica, agenda y vende",
       line3: "en piloto automático 24/7.",
-      sub: "Agentes personalizados que atienden, filtran y agendan 24/7, liberando a tu equipo para cerrar más tratos.",
+      sub: "Agentes de Inteligencia Artificial que se integran a tus sistemas para responder en segundos, calificar leads de inmediato y cerrar agendamientos sin perder clientes por demora.",
       cta1: "Consulta gratis",
       cta2: "Ver soluciones de valor",
       stat1: "Clientes",
@@ -492,7 +568,7 @@ export const translations = {
           hudStatus: "Cita Reservada",
           hudValue: "$140.000",
           prospect: "¡Hola! Me interesa el tratamiento de ortodoncia invisible. ¿Qué precio aproximado tiene y si tienen cupos disponibles los jueves por la tarde? Es el único momento en el que puedo asistir.",
-          agent1: "¡Hola, qué bueno que nos escribiste! 😊 La consulta diagnóstica y estudio 3D inicia desde $140.000 (presupuesto final sujeto a evaluación clínica). Vi que los jueves por la tarde te quedan bien — déjame ver exactamente qué horarios tenemos para ese día...",
+          agent1: "¡Hola, qué bueno que nos escribiste! 😊 La consulta diagnóstica y estudio 3D inicia desde $140.000 (sujeto a evaluación). Vi que los jueves por la tarde te quedan bien — déjame ver exactamente qué horarios tenemos para ese día...",
           tool1: "⚙️ Consultando agenda clínica...",
           tool1Success: "✓ Horarios libres encontrados para Jueves",
           agent2: "Tengo disponible este Jueves a las 4:30 PM o a las 6:00 PM con la Dra. Silva. ¿Cuál de los dos te queda mejor?",
@@ -508,7 +584,7 @@ export const translations = {
           hudStatus: "Evaluación Agendada",
           hudValue: "$120.000",
           prospect: "Buenas, quería consultar por el tratamiento de rejuvenecimiento facial con bótox y ácido hialurónico. ¿Qué costo tiene y si tienen disponibilidad esta semana?",
-          agent1: "¡Hola, qué bueno! El bótox con ácido hialurónico es un combo increíble 😊 La sesión de evaluación estética inicia desde $120.000 (presupuesto y plan personalizado sujetos a evaluación). ¿Te acomoda más la mañana o la tarde esta semana? Dejáme ver los cupos del Dr. Rossi...",
+          agent1: "¡Hola, qué bueno! El bótox con ácido hialurónico es un combo increíble 😊 La sesión de evaluación estética inicia desde $120.000 (sujeto a evaluación). ¿Te acomoda más la mañana o la tarde esta semana? Dejáme ver los cupos del Dr. Rossi...",
           tool1: "⚙️ Verificando agenda dermatológica...",
           tool1Success: "✓ Slots VIP disponibles en agenda",
           agent2: "El Dr. Rossi tiene disponible este Viernes a las 11:00 AM o a las 3:30 PM. ¿Cuál de los dos prefieres?",
@@ -524,7 +600,7 @@ export const translations = {
           hudStatus: "Asesoría Confirmada",
           hudValue: "Prioridad Alta",
           prospect: "Hola, necesito asesoría urgente para redactar un contrato de compraventa inmobiliaria de alto valor. ¿Cuánto cuesta la consulta estratégica y si tienen algún socio disponible?",
-          agent1: "¡Hola! Entiendo la urgencia, estamos para ayudarte 🤝 Para este tipo de operaciones, clasificamos el caso y asignamos al socio especialista adecuado (presupuesto entregado tras la sesión estratégica). ¿Tienes preferencia de horario, mañana o tarde? Consulto la disponibilidad del Lic. Mendoza...",
+          agent1: "¡Hola! Entiendo la urgencia, estamos para ayudarte 🤝 Para este tipo de operaciones, clasificamos el caso y asignamos al socio especialista adecuado (sujeto a evaluación). ¿Tienes preferencia de horario, mañana o tarde? Consulto la disponibilidad del Lic. Mendoza...",
           tool1: "⚙️ Filtrando caso por materia y cuantía...",
           tool1Success: "✓ Caso calificado para Socio Senior",
           agent2: "Buenas noticias — el Lic. Mendoza tiene libre el Lunes a las 9:00 AM o a las 11:30 AM. ¿Cuál te acomoda mejor?",
@@ -540,7 +616,7 @@ export const translations = {
           hudStatus: "Clase Agendada",
           hudValue: "$95.000",
           prospect: "Hola, busco clases de preparación intensiva para el examen de ingreso de cálculo avanzado. ¿Qué valor tiene el ciclo y si tienen tutores disponibles?",
-          agent1: "¡Hola! Me alegra que estés preparando ese examen 💪 El ciclo de diagnóstico y plan de estudio inicia desde $95.000 (valor final sujeto a evaluación de horas). ¿Qué días te quedan mejor: entre semana o fin de semana? Déjame ver qué tutores tenemos disponibles...",
+          agent1: "¡Hola! Me alegra que estés preparando ese examen 💪 El ciclo de diagnóstico y plan de estudio inicia desde $95.000 (sujeto a evaluación). ¿Qué días te quedan mejor: entre semana o fin de semana? Déjame ver qué tutores tenemos disponibles...",
           tool1: "⚙️ Buscando tutores expertos en Cálculo...",
           tool1Success: "✓ 2 tutores senior con cupos disponibles",
           agent2: "Tenemos un tutor senior disponible este Miércoles a las 5:00 PM o el Sábado a las 10:00 AM. ¿Cuál te viene mejor?",
@@ -556,7 +632,7 @@ export const translations = {
           hudStatus: "Chequeo Reservado",
           hudValue: "$115.000",
           prospect: "Hola, quería cotizar y agendar el programa de chequeo médico ejecutivo integral de un día. ¿Qué valor tiene y cuándo tienen vacantes?",
-          agent1: "¡Hola! Qué excelente decisión cuidar tu salud preventivamente 🙌 Nuestro programa de chequeo ejecutivo tiene un valor referencial desde $115.000 (presupuesto definitivo sujeto a confirmación de antecedentes médicos). ¿Tienes alguna preferencia de día o te acomoda cualquiera de esta semana? Déjame revisar el cupo clínico...",
+          agent1: "¡Hola! Qué excelente decisión cuidar tu salud preventivamente 🙌 Nuestro programa de chequeo ejecutivo tiene un valor referencial desde $115.000 (sujeto a evaluación). ¿Tienes alguna preferencia de día o te acomoda cualquiera de esta semana? Déjame revisar el cupo clínico...",
           tool1: "⚙️ Consultando disponibilidad de laboratorios...",
           tool1Success: "✓ Slots integrales disponibles para ayuno",
           agent2: "Tenemos vacantes este Martes o el próximo Jueves a las 7:30 AM (se requiere ayuno previo). ¿Cuál te acomoda?",
@@ -904,6 +980,80 @@ export const translations = {
       cta: "Cuéntanos tu proceso",
       bottomNote: "¿No sabes qué plan necesitas? ",
       bottomLink: "Agenda una auditoría gratuita de 45 min.",
+    },
+    processAuditor: {
+      eyebrow: "AUDITORÍA OPERATIVA",
+      title: "Audita tus procesos y calcula tu ROI",
+      sub: "Selecciona tu industria, ajusta tus métricas mensuales y descubre el impacto real de automatizar tus operaciones con un Agente IA de BrownsOS.",
+      industryLabel: "Selecciona tu Industria",
+      leadsLabel: "Prospectos (Leads) Mensuales",
+      valueLabel: "Valor Promedio por Cliente",
+      delayLabel: "Tiempo de Respuesta Humana",
+      delayOptions: {
+        instant: "Inmediato (< 1 min) - Excelente retención",
+        moderate: "Moderado (15 min - 1 hr) - 15% de fuga",
+        slow: "Lento (1 - 4 hrs) - 35% de fuga",
+        nextDay: "Día Siguiente (> 12 hrs) - 60% de fuga"
+      },
+      industries: {
+        dental: "Clínicas Dentales",
+        aesthetic: "Clínicas Estéticas",
+        legal: "Estudios Jurídicos",
+        realEstate: "Inmobiliarias",
+        ecommerce: "E-Commerce / Retail",
+        b2b: "Consultorías / B2B"
+      },
+      workflowTitle: "Flujo Agéntico Propuesto",
+      workflowSteps: {
+        dental: [
+          "Atención Instantánea: El Agente IA responde al prospecto en menos de 45 segundos.",
+          "Calificación RAG: Filtra el tipo de tratamiento dental de interés e identifica el nivel de urgencia.",
+          "Agendamiento Directo: Consulta horarios libres e integra la cita en el CRM y agenda de la clínica.",
+          "Nurturing & Prep: Envía por WhatsApp instrucciones de preparación y recordatorios de ayuno/radiografía."
+        ],
+        aesthetic: [
+          "Atención Instantánea: Responde consultas de tratamientos de rejuvenecimiento facial y bótox.",
+          "Triage Estético: Filtra preferencias de doctor y presupuesto inicial.",
+          "Reserva VIP: Agenda evaluación directamente y bloquea el box clínico en tiempo real.",
+          "Pre-atención: Envía consejos de cuidado previo y consentimiento informado por correo/WhatsApp."
+        ],
+        legal: [
+          "Filtro de Caso: El Agente de Admisión evalúa la materia jurídica (civil, comercial, penal) y cuantía.",
+          "Clasificación Premium: Identifica casos de alta prioridad y requiere datos clave del cliente.",
+          "Agendamiento Senior: Reserva espacio en la agenda de un Socio Senior y crea sala Zoom.",
+          "Seguridad NDA: Despacha acuerdo preliminar de confidencialidad de manera automática."
+        ],
+        realEstate: [
+          "Captura de Lead: Responde inmediatamente consultas por propiedades de portales inmobiliarios.",
+          "Pre-Calificación: Valida requisitos mínimos (ingresos, aval, DICOM) en lenguaje amable.",
+          "Coordinación de Visita: Agenda recorrido con el corredor asignado de forma autónoma.",
+          "Envío de Carpeta: Solicita y organiza documentación inicial del cliente antes de la cita."
+        ],
+        ecommerce: [
+          "Asistente de Compra: Guía al cliente en la selección de productos según tallas, colores o stock.",
+          "Recuperación de Carrito: Escribe de forma proactiva a carritos abandonados con incentivos suaves.",
+          "Soporte Post-Venta: Resuelve estados de envío, reembolsos y preguntas frecuentes de despacho.",
+          "Fidelización IA: Ofrece cupones y productos cruzados basados en historial de compra."
+        ],
+        b2b: [
+          "Calificación Ejecutiva: Filtra empresas por tamaño, industria, presupuesto y dolor operativo.",
+          "Diagnóstico Express: Solicita información sobre herramientas actuales (CRM, ERP, bases de datos).",
+          "Reunión de Consultoría: Reserva fecha de auditoría estratégica e inyecta al CRM corporativo.",
+          "Seguimiento Comercial: Envía presentación ejecutiva de BrownsOS posterior a la simulación."
+        ]
+      },
+      resultsTitle: "Auditoría Financiera e Impacto",
+      lostRevenue: "Ingreso Perdido por Demoras",
+      lostRevenueNote: "Fuga anual proyectada debido a la lentitud en calificar y responder.",
+      recoveredRevenue: "Ingreso Recuperado Mensual",
+      recoveredRevenueNote: "Ingresos adicionales asegurados por la velocidad de respuesta 24/7 del Agente IA.",
+      hoursSaved: "Horas de Trabajo Liberadas",
+      hoursSavedNote: "Tiempo de atención al cliente delegado por completo al Agente de BrownsOS.",
+      roiTitle: "Retorno de Inversión (ROI)",
+      roiNote: "Multiplicador estimado de retribución financiera contra el costo de implementación.",
+      efficiencyLabel: "Eficiencia Operativa",
+      ctaBtn: "Obtener mi Blueprint y Código de IA",
+      whatsappTemplate: "Hola Cristian, acabo de realizar la auditoría de procesos para mi {industry}. Mis métricas estimadas son {leads} prospectos/mes con un ticket promedio de {value}. Mi tiempo de respuesta actual es {delay} y el auditor estima que puedo recuperar {recovered}/mes. ¡Quiero estructurar el blueprint de mi agente!"
     }
   },
 
@@ -924,14 +1074,15 @@ export const translations = {
         "clases-privadas": "Academias e Aulas",
         propiedades: "Imobiliárias"
       },
+      auditor: "Auditor de Processos",
       cta: "Orçar Projeto",
     },
     hero: {
       badge: "OTIMIZAÇÃO DE VENDAS E OPERAÇÕES",
-      line1: "Não deixe clientes esperando:",
-      line2: "agende, qualifique e venda",
+      line1: "Transforme conversas em receita:",
+      line2: "qualifique, agende e venda",
       line3: "no piloto automático 24/7.",
-      sub: "Agentes personalizados que atendem, filtram e agendam 24/7, liberando sua equipe para fechar mais negócios.",
+      sub: "Agentes de Inteligência Artificial que se integram aos seus sistemas reais para responder em segundos, pré-qualificar leads imediatamente e maximizar agendamentos sem perder clientes por demora.",
       cta1: "Consulta grátis",
       cta2: "Ver soluções de valor",
       stat1: "Clientes",
@@ -946,7 +1097,7 @@ export const translations = {
           hudStatus: "Consulta Reservada",
           hudValue: "$140.000",
           prospect: "Olá! Tenho interesse no tratamento de alinhadores invisíveis. Qual é o valor aproximado e se vocês têm horários livres nas quintas-feiras à tarde? É o meu único período disponível.",
-          agent1: "Olá, que ótimo que entrou em contato! 😊 A consulta diagnóstica e estudo 3D inicia a partir de $140.000 (orçamento final sujeito à avaliação clínica). Entendido que as quintas-feiras à tarde são o melhor horário para você — deixe-me ver o que temos disponível nesse dia...",
+          agent1: "Olá, que ótimo que entrou em contato! 😊 A consulta diagnóstica e estudo 3D inicia a partir de $140.000 (sujeito à avaliação). Entendido que as quintas-feiras à tarde são o melhor horário para você — deixe-me ver o que temos disponível nesse dia...",
           tool1: "⚙️ Consultando agenda da clínica...",
           tool1Success: "✓ Horários livres encontrados para Quinta-feira",
           agent2: "Temos a Dra. Silva disponível nesta Quinta-feira às 16h30 ou às 18h00. Qual desses horários funciona melhor para você?",
@@ -962,7 +1113,7 @@ export const translations = {
           hudStatus: "Avaliação Agendada",
           hudValue: "$120.000",
           prospect: "Olá, gostaria de saber sobre o tratamento de rejuvenescimento facial com botox e preenchimento. Quanto custa e vocês têm horários esta semana?",
-          agent1: "Olá! Botox e preenchimento são uma ótima combinação para um resultado natural 😊 A sessão de avaliação estética inicia a partir de $120.000 (orçamento e plano personalizados sujeitos à avaliação). Você tem preferência por manhã ou tarde esta semana? Deixe-me consultar a agenda do Dr. Rossi...",
+          agent1: "Olá! Botox e preenchimento são uma ótima combinação para um resultado natural 😊 A sessão de avaliação estética inicia a partir de $120.000 (sujeito à avaliação). Você tem preferência por manhã ou tarde esta semana? Deixe-me consultar a agenda do Dr. Rossi...",
           tool1: "⚙️ Verificando agenda dermatológica...",
           tool1Success: "✓ Vagas VIP disponíveis no calendário",
           agent2: "O Dr. Rossi tem horários disponíveis nesta Sexta-feira às 11h00 ou às 15h30. Qual prefere?",
@@ -994,7 +1145,7 @@ export const translations = {
           hudStatus: "Aula Agendada",
           hudValue: "$95.000",
           prospect: "Olá, procuro aulas de preparação intensiva para o exame de admissão de cálculo avançado. Qual é o valor do ciclo e vocês têm tutores disponíveis?",
-          agent1: "Olá! Que ótimo que você está se preparando para esse exame 💪 O ciclo de diagnóstico e plano de estudo inicia a partir de $95.000 (valor final sujeito à avaliação de horas). Você prefere aulas durante a semana ou nos fins de semana? Deixe-me encontrar o tutor certo para você...",
+          agent1: "Olá! Que ótimo que você está se preparando para esse exame 💪 O ciclo de diagnóstico e plano de estudo inicia a partir de $95.000 (sujeito à avaliação). Você prefere aulas durante a semana ou nos fins de semana? Deixe-me encontrar o tutor certo para você...",
           tool1: "⚙️ Buscando tutores experientes em Cálculo...",
           tool1Success: "✓ 2 tutores sêniores com horários livres",
           agent2: "Temos um tutor sênior disponível nesta Quarta às 17h00 ou no Sábado às 10h00. Qual fica melhor para você?",
@@ -1010,7 +1161,7 @@ export const translations = {
           hudStatus: "Checkup Confirmado",
           hudValue: "$115.000",
           prospect: "Olá, gostaria de cotar e agendar o programa de checkup médico executivo integral de um dia. Qual é o valor e quando há vagas?",
-          agent1: "Olá! Que ótima decisão cuidar da saúde de forma preventiva 🙌 Nosso programa de checkup executivo custa a partir de $115.000 (orçamento definitivo sujeito à triagem médica inicial). Você tem alguma preferência de dia ou qualquer dia desta semana funciona? Deixe-me consultar a agenda clínica...",
+          agent1: "Olá! Que ótima decisão cuidar da saúde de forma preventiva 🙌 Nosso programa de checkup executivo custa a partir de $115.000 (sujeito à avaliação). Você tem alguma preferência de dia ou qualquer dia desta semana funciona? Deixe-me consultar a agenda clínica...",
           tool1: "⚙️ Consultando exames e especialistas...",
           tool1Success: "✓ Vagas com preparo de jejum disponíveis",
           agent2: "Temos vagas disponíveis para esta Terça ou na próxima Quinta às 7h30 (requer jejum prévio). Qual dia prefere?",
@@ -1353,6 +1504,80 @@ export const translations = {
       cta: "Conte-nos seu processo",
       bottomNote: "Não sabe qual plano precisa? ",
       bottomLink: "Agende uma auditoria gratuita de 45 min.",
+    },
+    processAuditor: {
+      eyebrow: "AUDITORIA OPERACIONAL",
+      title: "Audite seus processos e calcule seu ROI",
+      sub: "Selecione sua indústria, ajuste suas métricas mensais e descubra o impacto financeiro real de automatizar suas operações com um Agente de IA da BrownsOS.",
+      industryLabel: "Selecione sua Indústria",
+      leadsLabel: "Leads Mensais / Convs",
+      valueLabel: "Valor Médio por Cliente",
+      delayLabel: "Tempo de Resposta Humana",
+      delayOptions: {
+        instant: "Imediato (< 1 min) - Excelente retenção",
+        moderate: "Moderado (15 min - 1 hr) - 15% de perda",
+        slow: "Lento (1 - 4 hrs) - 35% de perda",
+        nextDay: "Dia Seguinte (> 12 hrs) - 60% de perda"
+      },
+      industries: {
+        dental: "Clínicas Odontológicas",
+        aesthetic: "Estéticas & Spas",
+        legal: "Escritórios de Advocacia",
+        realEstate: "Imobiliárias",
+        ecommerce: "E-Commerce / Varejo",
+        b2b: "Consultorias / B2B"
+      },
+      workflowTitle: "Fluxo Agêntico Proposto",
+      workflowSteps: {
+        dental: [
+          "Atendimento Imediato: O Agente de IA responde ao lead em menos de 45 segundos.",
+          "Qualificação RAG: Identifica o tratamento odontológico de interesse e o nível de urgência.",
+          "Agendamento Direto: Consulta horários livres e reserva a consulta no CRM/agenda da clínica.",
+          "Nurturing & Prep: Envia por WhatsApp instruções de preparação e lembretes de exames."
+        ],
+        aesthetic: [
+          "Atendimento Imediato: Responde dúvidas de rejuvenescimento e toxina botulínica 24/7.",
+          "Triagem Estética: Filtra preferências de médico e orçamento inicial.",
+          "Reserva VIP: Agenda a avaliação diretamente e bloqueia a sala clínica em tempo real.",
+          "Pré-Procedimento: Envia recomendações pré-triagem e formulários de consentimento."
+        ],
+        legal: [
+          "Filtro de Caso: O Agente de Admissão avalia a área do direito (civil, empresarial, etc.) e o valor da causa.",
+          "Classificação Premium: Identifica casos corporativos de alta prioridade e solicita dados cruciais.",
+          "Agendamento com Sócio: Reserva horário com um Sócio Senior e cria sala segura do Zoom.",
+          "NDA Automático: Gera e despacha um acordo preliminar de confidencialidade ao e-mail do cliente."
+        ],
+        realEstate: [
+          "Captura de Lead: Responde imediatamente a consultas sobre imóveis em portais imobiliários.",
+          "Pré-Qualificação: Valida requisitos mínimos (renda, fiador, histórico) de forma muito amigável.",
+          "Visita Automatizada: Agenda a visita ao imóvel com o corretor responsável de forma autônoma.",
+          "Documentação: Solicita e organiza os documentos iniciais do cliente antes da visita."
+        ],
+        ecommerce: [
+          "Assistente de Compras: Guia o cliente na escolha de produtos segundo tamanho, cores ou estoque.",
+          "Recuperação de Carrinho: Envia mensagens proativas a carrinhos abandonados com cupons suaves.",
+          "Suporte Pós-Venda: Esclarece status de entrega, trocas e perguntas frequentes sobre frete.",
+          "Fidelização IA: Recomenda produtos cruzados com base no histórico de compras do cliente."
+        ],
+        b2b: [
+          "Qualificação Executiva: Filtra empresas por tamanho, setor, orçamento e dor operacional.",
+          "Diagnóstico Rápido: Pergunta sobre ferramentas atuais (CRM, ERP, BD) para checar compatibilidade.",
+          "Reunião de Consultoria: Reserva vaga para auditoria estratégica e registra no CRM corporativo.",
+          "Acompanhamento: Envia apresentação executiva da BrownsOS logo após a simulação."
+        ]
+      },
+      resultsTitle: "Auditoria Financeira e Impacto",
+      lostRevenue: "Receita Perdida por Atrasos",
+      lostRevenueNote: "Perda anual projetada devido à lentidão da equipe em responder e qualificar.",
+      recoveredRevenue: "Receita Recuperada Mensal",
+      recoveredRevenueNote: "Média de receita mensal capturada pelo Agente IA respondendo 24/7 em 45 segundos.",
+      hoursSaved: "Horas de Trabalho Liberadas",
+      hoursSavedNote: "Qualificação e agendamento de clientes totalmente delegados ao Agente BrownsOS.",
+      roiTitle: "Retorno do Investimento (ROI)",
+      roiNote: "Multiplicador financeiro estimado contra o custo de implantação.",
+      efficiencyLabel: "Eficiência Operacional",
+      ctaBtn: "Obter meu Blueprint & Código IA",
+      whatsappTemplate: "Olá Cristian, acabei de realizar a auditoria de processos para minha {industry}. Minhas métricas são {leads} leads/mês com valor médio de {value}. Nosso tempo de resposta é {delay} e o auditor estima que podemos recuperar {recovered}/mês. Quero estruturar o blueprint do meu agente!"
     }
   },
 } as const;
