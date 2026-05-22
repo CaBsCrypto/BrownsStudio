@@ -126,9 +126,9 @@ export default function CasosDeUso() {
         </div>
 
         {/* ── TOP SECTION: Business Use Cases (Full Width Grid) ── */}
-        <div className="mb-24">
-          <div className="reveal flex flex-col items-center gap-1.5 mb-10 text-center">
-            <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-[#e5e5e5]" style={{ letterSpacing: "-0.02em" }}>
+        <div className="mb-10">
+          <div className="reveal flex flex-col items-center gap-1.5 mb-6 text-center">
+            <h3 className="font-display font-extrabold text-xl sm:text-2xl text-[#e5e5e5]" style={{ letterSpacing: "-0.02em" }}>
               {copy.sectionTitleLeft}
             </h3>
             <p className="text-[#555558] text-[10px] sm:text-xs font-mono uppercase tracking-widest">
@@ -214,9 +214,9 @@ export default function CasosDeUso() {
         </div>
 
         {/* ── BOTTOM SECTION: Engineering Guarantees (Compact Grid with Modals) ── */}
-        <div className="mb-20 max-w-4xl mx-auto">
-          <div className="reveal flex flex-col items-center gap-1.5 mb-10 text-center">
-            <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-[#e5e5e5]" style={{ letterSpacing: "-0.02em" }}>
+        <div className="mb-12 max-w-4xl mx-auto">
+          <div className="reveal flex flex-col items-center gap-1.5 mb-6 text-center">
+            <h3 className="font-display font-extrabold text-xl sm:text-2xl text-[#e5e5e5]" style={{ letterSpacing: "-0.02em" }}>
               {copy.sectionTitleRight}
             </h3>
             <p className="text-[#555558] text-[10px] sm:text-xs font-mono uppercase tracking-widest">
@@ -233,7 +233,7 @@ export default function CasosDeUso() {
                 <button
                   key={idx}
                   onClick={() => setSelectedPillar(idx)}
-                  className="group relative flex flex-col items-center justify-between p-5 rounded-2xl border text-center transition-all duration-300 min-h-[160px] hover:-translate-y-1 cursor-pointer"
+                  className="group relative flex flex-col items-center justify-between p-4 rounded-2xl border text-center transition-all duration-300 min-h-[135px] hover:-translate-y-1 cursor-pointer"
                   style={{
                     background: "rgba(10, 11, 15, 0.45)",
                     backdropFilter: "blur(12px)",
@@ -256,7 +256,7 @@ export default function CasosDeUso() {
                 >
                   {/* Glowing Box Icon */}
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110"
+                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-2 transition-transform duration-300 group-hover:scale-110"
                     style={{
                       background: `${accent}0c`,
                       border: `1px solid ${accent}20`,
@@ -278,7 +278,7 @@ export default function CasosDeUso() {
                   </div>
 
                   {/* Micro tag link */}
-                  <span className="text-[9px] font-mono text-[#5e5e66] group-hover:text-[#9e9e9e] transition-colors mt-3 flex items-center gap-1">
+                  <span className="text-[9px] font-mono text-[#5e5e66] group-hover:text-[#9e9e9e] transition-colors mt-2 flex items-center gap-1">
                     Ver specs <ArrowRight size={10} className="group-hover:translate-x-0.5 transition-transform" />
                   </span>
                 </button>
