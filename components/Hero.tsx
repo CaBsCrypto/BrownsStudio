@@ -74,7 +74,9 @@ export default function Hero() {
   const [chatStep, setChatStep] = useState(1);
   const [isTyping, setIsTyping] = useState(false);
   const [typingSender, setTypingSender] = useState<"prospect" | "agent">("prospect");
-
+  const [isHovered, setIsHovered] = useState(false);
+  
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const currentSim = t.hero.chatSims[selectedNiche];
 
   useEffect(() => {
@@ -113,6 +115,8 @@ export default function Hero() {
 
   // Chat simulation state machine loop (humanized pacing)
   useEffect(() => {
+    if (isHovered) return; // Freezes simulation progression entirely while inspecting/hovering
+    
     let timer: NodeJS.Timeout;
     
     if (chatStep === 1) {
@@ -165,13 +169,23 @@ export default function Hero() {
           setChatStep(1);
           setIsTyping(false);
         } else {
-          setChatStep(1);
+          // Stay fully completed (step 8) indefinitely to allow manual reading/scrolling
         }
       }, 8000); // 8s pause at the very end to read everything before cycling
     }
 
     return () => clearTimeout(timer);
-  }, [chatStep, isAutoCycle, t.hero.chatSims.length]);
+  }, [chatStep, isAutoCycle, isHovered, t.hero.chatSims.length]);
+
+  // Auto-scroll to bottom on chat steps or typing state changes
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [chatStep, isTyping]);
 
   const statLabels = [t.hero.stat1, t.hero.stat2, t.hero.stat3];
 
@@ -341,7 +355,23 @@ export default function Hero() {
               {/* Phone Frame Glass Chassis */}
               <div className="w-full rounded-3xl border border-white/10 bg-[#060609]/90 backdrop-blur-2xl p-1 relative shadow-2xl shadow-tertiary/5 overflow-hidden">
                 
-                {/* Tech Status Tag */}
+                {/* Autoplay Control Badge — left, symmetrical to hudActive tag on right */}
+                <button
+                  onClick={() => setIsAutoCycle((prev) => !prev)}
+                  className={`absolute top-0 left-12 border-b border-x px-3.5 py-1 rounded-b-xl text-[9px] font-mono uppercase tracking-widest flex items-center gap-1.5 z-30 transition-all duration-300 ${
+                    isHovered
+                      ? "bg-amber-500/10 border-amber-500/20 text-amber-400"
+                      : isAutoCycle
+                      ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20"
+                      : "bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20"
+                  }`}
+                  title={isHovered ? "Mouse sobre el chat: pausado" : isAutoCycle ? "Click para desactivar autoplay" : "Click para activar autoplay"}
+                >
+                  <span className={`w-1.5 h-1.5 rounded-full ${isHovered ? "bg-amber-400 animate-ping" : isAutoCycle ? "bg-emerald-400 animate-ping" : "bg-red-400"}`} />
+                  {isHovered ? "PAUSADO" : isAutoCycle ? "AUTO: ON" : "AUTO: OFF"}
+                </button>
+
+                {/* Tech Status Tag — right */}
                 <div className="absolute top-0 right-12 bg-tertiary/10 border-b border-x border-tertiary/20 px-3.5 py-1 rounded-b-xl text-[9px] font-mono text-tertiary uppercase tracking-widest flex items-center gap-1.5 z-20">
                   <Activity size={9} className="animate-pulse" />
                   {currentSim.hudActive}
@@ -376,11 +406,16 @@ export default function Hero() {
                 </div>
 
                 {/* Simulated CRM & Chat Area */}
-                <div className="p-4 h-[460px] overflow-y-auto space-y-4 no-scrollbar flex flex-col justify-end text-[11px] relative z-10">
+                <div
+                  ref={messagesContainerRef}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  className="p-4 h-[460px] overflow-y-auto space-y-4 flex flex-col text-[11px] relative z-10 pr-2"
+                >
                   
                   {/* Step 1+: Prospect Msg 1 */}
                   {chatStep >= 1 && (
-                    <div className="flex justify-start animate-in fade-in slide-in-from-left-4 duration-300 max-w-[85%]">
+                    <div className="flex justify-start mt-auto animate-in fade-in slide-in-from-left-4 duration-300 max-w-[85%]">
                       <div className="bg-[#181822] text-[#e5e5e5] rounded-2xl rounded-tl-none p-3.5 border border-white/5 relative">
                         <span className="text-[9px] text-white/40 block mb-1 font-semibold uppercase tracking-wider">Prospecto (Cliente)</span>
                         {currentSim.prospect}
