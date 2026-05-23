@@ -11,7 +11,6 @@ import {
   ArrowRight, 
   TrendingUp, 
   Clock, 
-  CheckCircle, 
   DollarSign 
 } from "lucide-react";
 import { useLang } from "@/lib/i18n/LanguageContext";
@@ -112,10 +111,36 @@ export default function ProcessAuditor() {
     }
   };
 
+  // Parser to extract Title, Time Range, and Leakage info from localized strings
+  const parseDelayOption = (text: string, dKey: DelayType) => {
+    const defaultTitles = {
+      instant: lang === "en" ? "Instant" : lang === "pt" ? "Imediato" : "Inmediato",
+      moderate: lang === "en" ? "Moderate" : lang === "pt" ? "Moderado" : "Moderado",
+      slow: lang === "en" ? "Slow" : lang === "pt" ? "Lento" : "Lento",
+      nextDay: lang === "en" ? "Next Day" : lang === "pt" ? "Dia Seguinte" : "Siguiente Día",
+    };
+
+    try {
+      const timeMatch = text.match(/\(([^)]+)\)/);
+      const time = timeMatch ? timeMatch[1].trim() : "";
+
+      let title = text.split("(")[0].trim();
+      if (!title) title = defaultTitles[dKey];
+
+      const lastHyphenIndex = text.lastIndexOf("-");
+      let subtitle = lastHyphenIndex !== -1 ? text.substring(lastHyphenIndex + 1).trim() : "";
+
+      return { title, time, subtitle };
+    } catch (e) {
+      return { title: defaultTitles[dKey], time: "", subtitle: text };
+    }
+  };
+
   // Generate hyper-personalized WhatsApp Link
   const getWhatsAppLink = () => {
     const industryName = copy.industries[industry];
-    const delayLabelText = delay === "instant" ? "Inmediato" : delay === "moderate" ? "Moderado" : delay === "slow" ? "Lento" : "Siguiente Día";
+    const parsedOption = parseDelayOption(copy.delayOptions[delay], delay);
+    const delayLabelText = `${parsedOption.title} (${parsedOption.time})`;
     
     // Replace template values manually
     let message = copy.whatsappTemplate
@@ -130,11 +155,37 @@ export default function ProcessAuditor() {
 
   const efficiency = getEfficiencyRating(delay);
 
+  // Minimalist colors by delay state
+  const SEVERITY_COLORS = {
+    instant: {
+      color: "#10b981", // Emerald
+      dotBg: "bg-emerald-400",
+      textClass: "text-emerald-400",
+    },
+    moderate: {
+      color: "#00f0ff", // Brand Cyan
+      dotBg: "bg-[#00f0ff]",
+      textClass: "text-tertiary",
+    },
+    slow: {
+      color: "#f59e0b", // Amber
+      dotBg: "bg-amber-400",
+      textClass: "text-amber-400",
+    },
+    nextDay: {
+      color: "#ef4444", // Red
+      dotBg: "bg-red-400",
+      textClass: "text-red-400",
+    },
+  };
+
+  const activeColor = SEVERITY_COLORS[delay].color;
+
   return (
     <section id="auditor" className="py-24 relative overflow-hidden bg-transparent border-t border-b border-white/[0.03]">
-      {/* Glow Effects */}
-      <div className="absolute top-[20%] left-[-15%] w-[500px] h-[500px] rounded-full filter blur-[150px] opacity-[0.05] pointer-events-none bg-[#00f0ff] animate-pulse-slow" />
-      <div className="absolute bottom-[20%] right-[-15%] w-[400px] h-[400px] rounded-full filter blur-[120px] opacity-[0.03] pointer-events-none bg-[#c084fc] animate-pulse" />
+      {/* Subtle Ambient Background Gradients */}
+      <div className="absolute top-[25%] left-[-10%] w-[350px] h-[350px] rounded-full filter blur-[130px] opacity-[0.03] pointer-events-none bg-[#00f0ff]" />
+      <div className="absolute bottom-[25%] right-[-10%] w-[300px] h-[300px] rounded-full filter blur-[110px] opacity-[0.02] pointer-events-none bg-[#c084fc]" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         
@@ -143,11 +194,10 @@ export default function ProcessAuditor() {
           <div
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-widest mb-4 border"
             style={{
-              borderColor: "rgba(0,240,255,0.25)",
-              background: "rgba(0,240,255,0.05)",
+              borderColor: "rgba(0,240,255,0.2)",
+              background: "rgba(0,240,255,0.03)",
               color: "#00f0ff",
               fontFamily: "var(--font-jet-brains-mono), monospace",
-              boxShadow: "0 0 15px rgba(0,240,255,0.1)"
             }}
           >
             <Sparkles size={11} className="animate-pulse" />
@@ -185,16 +235,11 @@ export default function ProcessAuditor() {
           
           {/* LEFT PANEL: Sliders & Industry Selector (Col Span 7) */}
           <div className="lg:col-span-7 flex flex-col justify-between p-6 sm:p-8 rounded-3xl border border-white/5 bg-[#0a0a0f]/80 backdrop-blur-2xl relative shadow-2xl">
-            {/* Tech Corner Accents */}
-            <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-[#00f0ff]/30" />
-            <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-[#00f0ff]/30" />
-            <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-[#00f0ff]/30" />
-            <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#00f0ff]/30" />
-
+            
             <div className="space-y-8">
               {/* Industry Selector Tabs */}
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-[#9e9e9e] mb-4 font-bold">
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#727278] mb-4 font-semibold">
                   {copy.industryLabel}
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
@@ -207,11 +252,11 @@ export default function ProcessAuditor() {
                         onClick={() => setIndustry(indKey)}
                         className={`flex items-center gap-2 px-3 py-3 rounded-xl border text-[11px] font-semibold transition-all duration-300 ${
                           active
-                            ? "bg-tertiary/10 border-tertiary/40 text-white shadow-[0_0_15px_rgba(0,240,255,0.12)]"
-                            : "bg-[#12121a]/40 border-white/5 text-[#5e5e66] hover:border-white/10 hover:text-white/70"
+                            ? "bg-tertiary/10 border-tertiary/30 text-white shadow-[0_4px_12px_rgba(0,240,255,0.05)]"
+                            : "bg-[#12121a]/30 border-white/5 text-[#5e5e66] hover:border-white/10 hover:text-white/70"
                         }`}
                       >
-                        <Icon size={14} className={active ? "text-tertiary animate-pulse" : "text-current"} />
+                        <Icon size={13} className={active ? "text-tertiary" : "text-current"} />
                         <span className="truncate">{copy.industries[indKey]}</span>
                       </button>
                     );
@@ -222,8 +267,8 @@ export default function ProcessAuditor() {
               {/* Slider 1: Leads */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center text-xs font-mono">
-                  <span className="uppercase tracking-wider text-[#9e9e9e] font-bold">{copy.leadsLabel}</span>
-                  <span className="text-white font-extrabold bg-[#12121a] px-3 py-1 rounded-lg border border-white/5">
+                  <span className="uppercase tracking-wider text-[#9e9e9e] font-semibold">{copy.leadsLabel}</span>
+                  <span className="text-white font-extrabold bg-[#12121a]/60 px-3 py-1 rounded-lg border border-white/5">
                     {leads}
                   </span>
                 </div>
@@ -244,8 +289,8 @@ export default function ProcessAuditor() {
               {/* Slider 2: Average Deal Value */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center text-xs font-mono">
-                  <span className="uppercase tracking-wider text-[#9e9e9e] font-bold">{copy.valueLabel}</span>
-                  <span className="text-white font-extrabold bg-[#12121a] px-3 py-1 rounded-lg border border-white/5">
+                  <span className="uppercase tracking-wider text-[#9e9e9e] font-semibold">{copy.valueLabel}</span>
+                  <span className="text-white font-extrabold bg-[#12121a]/60 px-3 py-1 rounded-lg border border-white/5">
                     {formatCurrency(value)}
                   </span>
                 </div>
@@ -263,44 +308,47 @@ export default function ProcessAuditor() {
                 />
               </div>
 
-              {/* Selector 3: Delay Options */}
+              {/* Selector 3: Delay Options (Minimalist 2x2 Grid) */}
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-[#9e9e9e] mb-3 font-bold">
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#727278] mb-3 font-semibold">
                   {copy.delayLabel}
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {(Object.keys(copy.delayOptions) as DelayType[]).map((dKey) => {
                     const active = delay === dKey;
-                    let colorClass = "text-[#5e5e66]";
-                    if (active) {
-                      if (dKey === "instant") colorClass = "text-emerald-400";
-                      else if (dKey === "moderate") colorClass = "text-[#00f0ff]";
-                      else if (dKey === "slow") colorClass = "text-amber-400";
-                      else colorClass = "text-red-400";
-                    }
+                    const parsed = parseDelayOption(copy.delayOptions[dKey], dKey);
+                    const colorStyle = SEVERITY_COLORS[dKey];
 
                     return (
                       <button
                         key={dKey}
                         onClick={() => setDelay(dKey)}
-                        className={`flex flex-col text-left p-3.5 rounded-xl border transition-all duration-300 ${
+                        className={`flex flex-col text-left p-4 rounded-2xl border transition-all duration-300 bg-[#12121a]/30 ${
                           active
-                            ? "bg-[#12121a] shadow-[0_0_15px_rgba(0,0,0,0.4)]"
-                            : "bg-[#12121a]/20 border-white/5 hover:border-white/10"
+                            ? "border-white/15 bg-[#12121a]/70"
+                            : "border-white/5 hover:border-white/10"
                         }`}
                         style={{
-                          borderColor: active 
-                            ? dKey === "instant" ? "rgba(16,185,129,0.3)" : dKey === "moderate" ? "rgba(0,240,255,0.3)" : dKey === "slow" ? "rgba(245,158,11,0.3)" : "rgba(239,68,68,0.3)"
-                            : "rgba(255,255,255,0.05)"
+                          borderLeftWidth: active ? "3px" : "1px",
+                          borderLeftColor: active ? colorStyle.color : undefined
                         }}
                       >
-                        <span className={`text-[10px] font-mono uppercase tracking-wider font-extrabold ${colorClass} mb-1 flex items-center gap-1.5`}>
-                          <span className={`w-1.5 h-1.5 rounded-full ${
-                            dKey === "instant" ? "bg-emerald-400" : dKey === "moderate" ? "bg-[#00f0ff]" : dKey === "slow" ? "bg-amber-400" : "bg-red-400"
-                          } ${active ? "animate-pulse" : ""}`} />
-                          {dKey === "instant" ? "Instant" : dKey === "moderate" ? "Moderate" : dKey === "slow" ? "Slow" : "Next Day"}
+                        <div className="flex justify-between items-center w-full mb-1">
+                          <span className={`text-xs font-display font-extrabold uppercase tracking-wide flex items-center gap-1.5 ${
+                            active ? colorStyle.textClass : "text-[#9e9e9e]"
+                          }`}>
+                            <span className={`w-1.5 h-1.5 rounded-full ${colorStyle.dotBg} ${active ? "animate-pulse" : "opacity-40"}`} />
+                            {parsed.title}
+                          </span>
+                          {parsed.time && (
+                            <span className="text-[9px] font-mono text-[#5e5e66]">
+                              {parsed.time}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[10px] text-[#5e5e66] leading-relaxed">
+                          {parsed.subtitle}
                         </span>
-                        <span className="text-[10px] text-[#727278]">{copy.delayOptions[dKey].split("-")[1]?.trim() || copy.delayOptions[dKey]}</span>
                       </button>
                     );
                   })}
@@ -308,26 +356,39 @@ export default function ProcessAuditor() {
               </div>
             </div>
 
-            {/* Dynamic Interactive Node Diagram */}
-            <div className="mt-10 p-5 rounded-2xl border border-white/5 bg-[#12121a]/40">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-[#9e9e9e] mb-4 font-bold flex items-center gap-2">
+            {/* Timeline Vertical Workflow */}
+            <div className="mt-10 p-5 rounded-2xl border border-white/5 bg-[#12121a]/15">
+              <h4 className="text-xs font-mono uppercase tracking-wider text-[#727278] mb-4 font-semibold flex items-center gap-2">
                 <Clock size={12} className="text-tertiary" />
                 {copy.workflowTitle}
               </h4>
-              <div className="space-y-3 relative">
+              <div className="space-y-4 relative pl-3">
                 {/* Node Line */}
-                <div className="absolute left-3.5 top-2.5 bottom-2.5 w-px bg-gradient-to-b from-tertiary via-tertiary/20 to-transparent pointer-events-none" />
+                <div className="absolute left-6 top-3 bottom-3 w-px bg-white/5 pointer-events-none" />
                 
-                {copy.workflowSteps[industry].map((step: string, idx: number) => (
-                  <div key={idx} className="flex gap-4 relative z-10 items-start">
-                    <div className="w-7 h-7 rounded-full bg-[#0a0a0f] border border-tertiary/30 flex items-center justify-center flex-shrink-0 text-[10px] font-mono font-bold text-tertiary">
-                      {idx + 1}
+                {copy.workflowSteps[industry].map((step: string, idx: number) => {
+                  const stepParts = step.split(":");
+                  const stepTitle = stepParts[0];
+                  const stepDesc = stepParts.slice(1).join(":");
+
+                  return (
+                    <div key={idx} className="flex gap-4 relative z-10 items-start">
+                      <div className="w-6 h-6 rounded-full bg-[#0a0a0f] border border-white/10 flex items-center justify-center flex-shrink-0 text-[10px] font-mono text-[#727278]">
+                        {idx + 1}
+                      </div>
+                      <div className="pt-0.5">
+                        {stepTitle && (
+                          <h5 className="text-[10px] font-mono font-bold uppercase tracking-wider text-white mb-0.5">
+                            {stepTitle}
+                          </h5>
+                        )}
+                        <p className="text-[10px] leading-relaxed text-[#727278]">
+                          {stepDesc ? stepDesc.trim() : step}
+                        </p>
+                      </div>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] leading-relaxed text-[#9e9e9e] pt-1">
-                      {step}
-                    </p>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
@@ -335,53 +396,43 @@ export default function ProcessAuditor() {
 
           {/* RIGHT PANEL: Financial Audit Results & ROI (Col Span 5) */}
           <div className="lg:col-span-5 flex flex-col justify-between p-6 sm:p-8 rounded-3xl border border-white/5 bg-[#0a0a0f]/80 backdrop-blur-2xl relative shadow-2xl">
-            {/* Tech Corner Accents */}
-            <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-[#00f0ff]/30" />
-            <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-[#00f0ff]/30" />
-            <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-[#00f0ff]/30" />
-            <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#00f0ff]/30" />
-
+            
             <div className="space-y-8">
-              <h3 className="text-sm font-mono uppercase tracking-wider text-[#9e9e9e] font-bold border-b border-white/[0.04] pb-4 flex items-center gap-2">
+              <h3 className="text-sm font-mono uppercase tracking-wider text-[#727278] font-semibold border-b border-white/[0.04] pb-4 flex items-center gap-2">
                 <TrendingUp size={14} className="text-tertiary" />
                 {copy.resultsTitle}
               </h3>
 
-              {/* Dynamic SVG Circular Efficiency Gauge */}
-              <div className="flex flex-col items-center justify-center py-4">
+              {/* Minimalist Circular Efficiency Gauge */}
+              <div className="flex flex-col items-center justify-center py-2">
                 <div className="relative w-36 h-36 flex items-center justify-center">
                   <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                    {/* Background Track */}
                     <circle
                       cx="50"
                       cy="50"
                       r="40"
                       fill="transparent"
                       stroke="rgba(255,255,255,0.02)"
-                      strokeWidth="8"
+                      strokeWidth="7"
                     />
-                    {/* Foreground Glow */}
                     <circle
                       cx="50"
                       cy="50"
                       r="40"
                       fill="transparent"
-                      stroke={delay === "instant" ? "#10b981" : delay === "moderate" ? "#00f0ff" : delay === "slow" ? "#f59e0b" : "#ef4444"}
-                      strokeWidth="8"
+                      stroke={activeColor}
+                      strokeWidth="7"
                       strokeDasharray={251.2}
                       strokeDashoffset={251.2 - (251.2 * efficiency) / 100}
                       strokeLinecap="round"
                       className="transition-all duration-1000 ease-out"
-                      style={{
-                        filter: "drop-shadow(0 0 8px currentColor)"
-                      }}
                     />
                   </svg>
                   <div className="absolute flex flex-col items-center justify-center">
-                    <span className="text-2xl font-display font-extrabold text-white">
+                    <span className="text-3xl font-display font-extrabold text-white">
                       {efficiency}%
                     </span>
-                    <span className="text-[8px] font-mono uppercase tracking-wider text-[#727278] font-bold">
+                    <span className="text-[9px] font-mono uppercase tracking-widest text-[#727278] font-bold mt-1">
                       {copy.efficiencyLabel}
                     </span>
                   </div>
@@ -390,18 +441,18 @@ export default function ProcessAuditor() {
 
               {/* Result Block 1: Lost Revenue */}
               {delay !== "instant" && (
-                <div className="p-4 rounded-2xl border border-red-500/10 bg-red-500/[0.02] flex items-start gap-4">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-red-500/10 border border-red-500/20 text-red-400 flex-shrink-0">
-                    <DollarSign size={16} />
+                <div className="p-4 rounded-2xl border border-white/5 bg-[#12121a]/20 flex items-start gap-4">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-red-500/[0.04] border border-red-500/10 text-red-400 flex-shrink-0 mt-0.5">
+                    <DollarSign size={15} />
                   </div>
                   <div>
-                    <h4 className="text-[11px] font-mono uppercase tracking-wider text-red-400 font-bold mb-1">
+                    <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#727278] font-semibold mb-0.5">
                       {copy.lostRevenue}
                     </h4>
-                    <p className="text-xl sm:text-2xl font-display font-extrabold text-white mb-1">
-                      {formatCurrency(lostRevenue * 12)} <span className="text-[10px] text-[#727278] font-mono">/ {lang === "en" ? "yr" : "año"}</span>
+                    <p className="text-xl sm:text-2xl font-display font-extrabold text-white mb-0.5">
+                      {formatCurrency(lostRevenue * 12)} <span className="text-[10px] text-[#5e5e66] font-mono">/ {lang === "en" ? "yr" : "año"}</span>
                     </p>
-                    <p className="text-[9px] text-[#727278] leading-normal">
+                    <p className="text-[9px] text-[#5e5e66] leading-normal">
                       {copy.lostRevenueNote}
                     </p>
                   </div>
@@ -409,71 +460,71 @@ export default function ProcessAuditor() {
               )}
 
               {/* Result Block 2: Recovered Revenue */}
-              <div className="p-4 rounded-2xl border border-[#10b981]/20 bg-[#10b981]/[0.02] flex items-start gap-4 shadow-[0_0_20px_rgba(16,185,129,0.03)]">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#10b981]/10 border border-[#10b981]/20 text-[#10b981] flex-shrink-0">
-                  <TrendingUp size={16} className="animate-pulse" />
+              <div className="p-4 rounded-2xl border border-white/5 bg-[#12121a]/20 flex items-start gap-4">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-emerald-500/[0.04] border border-emerald-500/10 text-emerald-400 flex-shrink-0 mt-0.5">
+                  <TrendingUp size={15} />
                 </div>
                 <div>
-                  <h4 className="text-[11px] font-mono uppercase tracking-wider text-[#10b981] font-bold mb-1">
+                  <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#727278] font-semibold mb-0.5">
                     {copy.recoveredRevenue}
                   </h4>
-                  <p className="text-xl sm:text-2xl font-display font-extrabold text-[#10b981] mb-1" style={{ textShadow: "0 0 15px rgba(16,185,129,0.2)" }}>
-                    {formatCurrency(recoveredRevenue)} <span className="text-[10px] text-[#727278] font-mono">/ {lang === "en" ? "mo" : "mes"}</span>
+                  <p className="text-xl sm:text-2xl font-display font-extrabold text-[#10b981] mb-0.5">
+                    {formatCurrency(recoveredRevenue)} <span className="text-[10px] text-[#5e5e66] font-mono">/ {lang === "en" ? "mo" : "mes"}</span>
                   </p>
-                  <p className="text-[9px] text-[#727278] leading-normal">
+                  <p className="text-[9px] text-[#5e5e66] leading-normal">
                     {copy.recoveredRevenueNote}
                   </p>
                 </div>
               </div>
 
-              {/* Dynamic KPI Stats Grid */}
+              {/* KPI Stats Grid */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl border border-white/5 bg-[#12121a]/60 text-center">
-                  <h5 className="text-[9px] font-mono uppercase tracking-wider text-[#727278] mb-1 font-bold">
+                <div className="p-4 rounded-2xl border border-white/5 bg-[#12121a]/20 text-center">
+                  <h5 className="text-[9px] font-mono uppercase tracking-wider text-[#727278] mb-1 font-semibold">
                     {copy.hoursSaved}
                   </h5>
                   <p className="text-xl font-display font-extrabold text-white">
                     {hoursSaved}h
                   </p>
-                  <p className="text-[8px] text-[#5e5e66] mt-0.5">{copy.hoursSavedNote}</p>
+                  <p className="text-[8px] text-[#5e5e66] mt-0.5 leading-tight">{copy.hoursSavedNote}</p>
                 </div>
-                <div className="p-4 rounded-2xl border border-tertiary/20 bg-tertiary/[0.02] text-center shadow-[0_0_15px_rgba(0,240,255,0.02)]">
-                  <h5 className="text-[9px] font-mono uppercase tracking-wider text-[#727278] mb-1 font-bold">
+                <div className="p-4 rounded-2xl border border-white/5 bg-[#12121a]/20 text-center">
+                  <h5 className="text-[9px] font-mono uppercase tracking-wider text-[#727278] mb-1 font-semibold">
                     {copy.roiTitle}
                   </h5>
-                  <p className="text-xl font-display font-extrabold text-tertiary" style={{ textShadow: "0 0 10px rgba(0,240,255,0.2)" }}>
+                  <p className="text-xl font-display font-extrabold text-[#00f0ff]">
                     {roiMultiplier}x
                   </p>
-                  <p className="text-[8px] text-[#5e5e66] mt-0.5">{copy.roiNote}</p>
+                  <p className="text-[8px] text-[#5e5e66] mt-0.5 leading-tight">{copy.roiNote}</p>
                 </div>
               </div>
             </div>
 
-            {/* Hyper-personalized Call to Action */}
+            {/* Hyper-personalized Call to Action (Solid Cyan Button) */}
             <div className="mt-8 pt-4 border-t border-white/[0.04]">
               {isClient ? (
                 <a
                   href={getWhatsAppLink()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center gap-2.5 w-full py-4 rounded-2xl font-bold text-sm text-black transition-all duration-300 relative overflow-hidden"
+                  className="group flex items-center justify-center gap-2.5 w-full py-4 rounded-2xl font-bold text-sm text-black transition-all duration-300 hover:brightness-105 active:scale-[0.99] relative overflow-hidden"
                   style={{
-                    background: "linear-gradient(135deg, #00f0ff, #00c8d8)",
-                    boxShadow: "0 0 25px rgba(0, 240, 255, 0.25)",
+                    backgroundColor: "#00f0ff",
+                    boxShadow: "0 4px 20px rgba(0, 240, 255, 0.15)",
                   }}
                 >
-                  {copy.ctaBtn}
-                  <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform" />
+                  <span>{copy.ctaBtn}</span>
+                  <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
                 </a>
               ) : (
                 <button
                   className="group flex items-center justify-center gap-2.5 w-full py-4 rounded-2xl font-bold text-sm text-black transition-all duration-300 relative overflow-hidden"
                   style={{
-                    background: "linear-gradient(135deg, #00f0ff, #00c8d8)",
+                    backgroundColor: "#00f0ff",
                   }}
                 >
                   {copy.ctaBtn}
-                  <ArrowRight size={16} />
+                  <ArrowRight size={15} />
                 </button>
               )}
             </div>

@@ -44,7 +44,7 @@ export default function CTA() {
       ref={sectionRef}
       id="contacto"
       className="relative overflow-hidden pt-8 pb-4 md:pt-12 md:pb-6 bg-transparent"
-      style={{ background: "transparent" }}
+      style={{ background: "transparent", paddingBottom: "10%" }}
     >
       {/* Subtle cyan glow behind content */}
       <div
