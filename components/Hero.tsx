@@ -246,12 +246,20 @@ export default function Hero() {
               className="reveal reveal-delay-1 font-display font-extrabold text-[2.6rem] sm:text-5xl md:text-6xl text-[#f3f4f6] mb-6 leading-[1.05] tracking-tight"
             >
               {t.hero.line1}
-              <br />
-              <span className="bg-gradient-to-r from-[#00f0ff] via-[#818cf8] to-[#c084fc] bg-clip-text text-transparent bg-size-200 animate-shimmer">
-                {t.hero.line2}
-              </span>
-              <br />
-              {t.hero.line3}
+              {t.hero.line2 && (
+                <>
+                  <br />
+                  <span className="bg-gradient-to-r from-[#00f0ff] via-[#818cf8] to-[#c084fc] bg-clip-text text-transparent bg-size-200 animate-shimmer">
+                    {t.hero.line2}
+                  </span>
+                </>
+              )}
+              {t.hero.line3 && (
+                <>
+                  <br />
+                  {t.hero.line3}
+                </>
+              )}
             </h1>
 
             {/* Value-oriented Subtext */}
