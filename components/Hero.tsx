@@ -70,11 +70,21 @@ export default function Hero() {
 
   // Chat Simulator State Engine
   const [selectedNiche, setSelectedNiche] = useState(0);
+  const [activeGroup, setActiveGroup] = useState<"sales" | "training">("sales");
   const [isAutoCycle, setIsAutoCycle] = useState(true);
   const [chatStep, setChatStep] = useState(1);
   const [isTyping, setIsTyping] = useState(false);
   const [typingSender, setTypingSender] = useState<"prospect" | "agent">("prospect");
   const [isHovered, setIsHovered] = useState(false);
+
+  // Synchronize activeGroup with selectedNiche (vital for autoplay loop sync)
+  useEffect(() => {
+    if (selectedNiche < 3) {
+      setActiveGroup("sales");
+    } else {
+      setActiveGroup("training");
+    }
+  }, [selectedNiche]);
   
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const currentSim = t.hero.chatSims[selectedNiche];
@@ -454,65 +464,66 @@ export default function Hero() {
             {/* Ambient behind light border */}
             <div className="w-full max-w-md relative select-none animate-float">
               
-              {/* Carousel Tabs - Structured as 3 and 3 */}
-              <div className="flex flex-col gap-3.5 mb-5 relative z-30 text-center">
-                {/* Categoría: Atención & Ventas */}
-                <div className="flex flex-col gap-1.5">
-                  <span className="text-[7.5px] sm:text-[8px] tracking-[0.2em] font-mono text-zinc-500 uppercase font-bold">
-                    {lang === 'en' ? 'Sales & Booking Automation (Clients)' : lang === 'pt' ? 'Automação de Vendas & Agendamento (Clientes)' : 'Automatización de Ventas & Citas (Clientes)'}
-                  </span>
-                  <div className="flex justify-center gap-1.5 flex-wrap">
-                    {t.hero.chatSims.slice(0, 3).map((sim, idx) => {
-                      const realIdx = idx;
-                      return (
-                        <button
-                          key={realIdx}
-                          onClick={() => {
-                            setSelectedNiche(realIdx);
-                            setChatStep(1);
-                            setIsTyping(false);
-                          }}
-                          className={`px-3 py-1.5 rounded-full text-[9px] sm:text-[10px] font-semibold transition-all backdrop-blur-md border ${
-                            selectedNiche === realIdx
-                              ? "bg-tertiary/20 border-tertiary/50 text-white shadow-[0_0_10px_rgba(0,240,255,0.2)]"
-                              : "bg-[#181822]/50 border-white/5 text-white/40 hover:text-white/80 hover:bg-[#181822]"
-                          }`}
-                        >
-                          {sim.tabName}
-                        </button>
-                      );
-                    })}
-                  </div>
+              {/* Segmented Switcher for 3 & 3 stack */}
+              <div className="flex justify-center mb-4 relative z-30">
+                <div className="inline-flex rounded-full bg-[#181822]/80 p-1 border border-white/5 shadow-2xl relative">
+                  <button
+                    onClick={() => {
+                      setActiveGroup("sales");
+                      setSelectedNiche(0); // Select first Sales niche (Dental)
+                      setChatStep(1);
+                      setIsTyping(false);
+                    }}
+                    className={`px-4 py-2 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-widest transition-all duration-300 ${
+                      activeGroup === "sales"
+                        ? "bg-tertiary text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]"
+                        : "text-white/40 hover:text-white/80"
+                    }`}
+                  >
+                    {lang === 'en' ? 'Sales 24/7 (Clients)' : lang === 'pt' ? 'Vendas 24/7 (Clientes)' : 'Ventas 24/7 (Clientes)'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveGroup("training");
+                      setSelectedNiche(3); // Select first Training niche (Inducción Técnica)
+                      setChatStep(1);
+                      setIsTyping(false);
+                    }}
+                    className={`px-4 py-2 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-widest transition-all duration-300 ${
+                      activeGroup === "training"
+                        ? "bg-[#8b5cf6] text-white shadow-[0_0_15px_rgba(139,92,246,0.4)]"
+                        : "text-white/40 hover:text-white/80"
+                    }`}
+                  >
+                    {lang === 'en' ? 'Internal Ops (Staff)' : lang === 'pt' ? 'Processos (Equipe)' : 'Procesos (Equipo)'}
+                  </button>
                 </div>
+              </div>
 
-                {/* Categoría: Capacitación & Procesos */}
-                <div className="flex flex-col gap-1.5">
-                  <span className="text-[7.5px] sm:text-[8px] tracking-[0.2em] font-mono text-[#a78bfa]/70 uppercase font-bold">
-                    {lang === 'en' ? 'Internal Operations & Training (Staff)' : lang === 'pt' ? 'Operações Internas & Treinamento (Equipe)' : 'Operaciones Internas & Capacitación (Equipo)'}
-                  </span>
-                  <div className="flex justify-center gap-1.5 flex-wrap">
-                    {t.hero.chatSims.slice(3, 6).map((sim, idx) => {
-                      const realIdx = idx + 3;
-                      return (
-                        <button
-                          key={realIdx}
-                          onClick={() => {
-                            setSelectedNiche(realIdx);
-                            setChatStep(1);
-                            setIsTyping(false);
-                          }}
-                          className={`px-3 py-1.5 rounded-full text-[9px] sm:text-[10px] font-semibold transition-all backdrop-blur-md border ${
-                            selectedNiche === realIdx
-                              ? "bg-[#8b5cf6]/20 border-[#8b5cf6]/50 text-white shadow-[0_0_10px_rgba(139,92,246,0.2)]"
-                              : "bg-[#181822]/50 border-white/5 text-white/40 hover:text-white/80 hover:bg-[#181822]"
-                          }`}
-                        >
-                          {sim.tabName}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
+              {/* Niche selector pills within active group */}
+              <div className="flex justify-center gap-2 mb-5 relative z-30 flex-wrap">
+                {t.hero.chatSims
+                  .map((sim, idx) => ({ sim, idx }))
+                  .filter(({ idx }) => (activeGroup === "sales" ? idx < 3 : idx >= 3))
+                  .map(({ sim, idx }) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        setSelectedNiche(idx);
+                        setChatStep(1);
+                        setIsTyping(false);
+                      }}
+                      className={`px-3.5 py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold transition-all border duration-300 ${
+                        selectedNiche === idx
+                          ? activeGroup === "sales"
+                            ? "bg-tertiary/20 border-tertiary/50 text-white shadow-[0_0_10px_rgba(0,240,255,0.25)]"
+                            : "bg-[#8b5cf6]/20 border-[#8b5cf6]/50 text-white shadow-[0_0_10px_rgba(139,92,246,0.25)]"
+                          : "bg-[#181822]/40 border-white/5 text-white/40 hover:text-white/80 hover:bg-[#181822]"
+                      }`}
+                    >
+                      {sim.tabName}
+                    </button>
+                  ))}
               </div>
 
               {/* Phone Frame Glass Chassis */}
