@@ -454,25 +454,65 @@ export default function Hero() {
             {/* Ambient behind light border */}
             <div className="w-full max-w-md relative select-none animate-float">
               
-              {/* Carousel Tabs */}
-              <div className="flex flex-wrap justify-center gap-2 mb-4 relative z-30">
-                {t.hero.chatSims.map((sim, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      setSelectedNiche(idx);
-                      setChatStep(1);
-                      setIsTyping(false);
-                    }}
-                    className={`px-3 py-1.5 rounded-full text-[10px] font-semibold transition-all backdrop-blur-md border ${
-                      selectedNiche === idx
-                        ? "bg-tertiary/20 border-tertiary/50 text-white shadow-[0_0_10px_rgba(0,240,255,0.2)]"
-                        : "bg-[#181822]/50 border-white/5 text-white/40 hover:text-white/80 hover:bg-[#181822]"
-                    }`}
-                  >
-                    {sim.tabName}
-                  </button>
-                ))}
+              {/* Carousel Tabs - Structured as 3 and 3 */}
+              <div className="flex flex-col gap-3.5 mb-5 relative z-30 text-center">
+                {/* Categoría: Atención & Ventas */}
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-[7.5px] sm:text-[8px] tracking-[0.2em] font-mono text-zinc-500 uppercase font-bold">
+                    {lang === 'en' ? 'Sales & Booking Automation (Clients)' : lang === 'pt' ? 'Automação de Vendas & Agendamento (Clientes)' : 'Automatización de Ventas & Citas (Clientes)'}
+                  </span>
+                  <div className="flex justify-center gap-1.5 flex-wrap">
+                    {t.hero.chatSims.slice(0, 3).map((sim, idx) => {
+                      const realIdx = idx;
+                      return (
+                        <button
+                          key={realIdx}
+                          onClick={() => {
+                            setSelectedNiche(realIdx);
+                            setChatStep(1);
+                            setIsTyping(false);
+                          }}
+                          className={`px-3 py-1.5 rounded-full text-[9px] sm:text-[10px] font-semibold transition-all backdrop-blur-md border ${
+                            selectedNiche === realIdx
+                              ? "bg-tertiary/20 border-tertiary/50 text-white shadow-[0_0_10px_rgba(0,240,255,0.2)]"
+                              : "bg-[#181822]/50 border-white/5 text-white/40 hover:text-white/80 hover:bg-[#181822]"
+                          }`}
+                        >
+                          {sim.tabName}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Categoría: Capacitación & Procesos */}
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-[7.5px] sm:text-[8px] tracking-[0.2em] font-mono text-[#a78bfa]/70 uppercase font-bold">
+                    {lang === 'en' ? 'Internal Operations & Training (Staff)' : lang === 'pt' ? 'Operações Internas & Treinamento (Equipe)' : 'Operaciones Internas & Capacitación (Equipo)'}
+                  </span>
+                  <div className="flex justify-center gap-1.5 flex-wrap">
+                    {t.hero.chatSims.slice(3, 6).map((sim, idx) => {
+                      const realIdx = idx + 3;
+                      return (
+                        <button
+                          key={realIdx}
+                          onClick={() => {
+                            setSelectedNiche(realIdx);
+                            setChatStep(1);
+                            setIsTyping(false);
+                          }}
+                          className={`px-3 py-1.5 rounded-full text-[9px] sm:text-[10px] font-semibold transition-all backdrop-blur-md border ${
+                            selectedNiche === realIdx
+                              ? "bg-[#8b5cf6]/20 border-[#8b5cf6]/50 text-white shadow-[0_0_10px_rgba(139,92,246,0.2)]"
+                              : "bg-[#181822]/50 border-white/5 text-white/40 hover:text-white/80 hover:bg-[#181822]"
+                          }`}
+                        >
+                          {sim.tabName}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
 
               {/* Phone Frame Glass Chassis */}
