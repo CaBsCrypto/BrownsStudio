@@ -79,6 +79,112 @@ export default function Hero() {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const currentSim = t.hero.chatSims[selectedNiche];
 
+  const getProspectLabel = () => {
+    if ((currentSim as any).prospectLabel) return (currentSim as any).prospectLabel;
+    if (lang === "en") return "Operator (Floor)";
+    if (lang === "pt") return "Operador (Equipe)";
+    return "Prospecto (Cliente)";
+  };
+
+  const getAgentLabel = () => {
+    if ((currentSim as any).agentLabel) return (currentSim as any).agentLabel;
+    if (lang === "en") return "Training AI";
+    if (lang === "pt") return "Treinamento IA";
+    return "Agente BrownsOS";
+  };
+
+  const renderMessageContent = (text: string) => {
+    if (!text) return null;
+    const isAudio = text.startsWith("🎤 [");
+    const isPhoto = text.startsWith("📸 [");
+
+    if (isAudio) {
+      const cleanText = text.replace(/^🎤\s*\[[^\]]+\]\s*/, "");
+      const duration = text.match(/\[Audio\s*-\s*([^\]]+)\]/i)?.[1] || 
+                       text.match(/\[Áudio\s*-\s*([^\]]+)\]/i)?.[1] || "14s";
+      return (
+        <div className="flex flex-col gap-2.5 w-full min-w-[200px]">
+          {/* Simulated WhatsApp voice message player */}
+          <div className="flex items-center gap-2.5 bg-black/40 rounded-xl p-2.5 border border-white/5 shadow-inner">
+            <button className="w-8 h-8 flex-shrink-0 rounded-full bg-tertiary flex items-center justify-center text-black hover:scale-105 active:scale-95 transition-all">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 pl-0.5 text-black">
+                <path d="M8 5.14v14c0 .86.94 1.39 1.66.9l10-7c.61-.43.61-1.37 0-1.8l-10-7A1 1 0 0 0 8 5.14z" />
+              </svg>
+            </button>
+            <div className="flex items-end gap-[2px] h-6 flex-grow">
+              {[2, 4, 3, 5, 2, 6, 4, 7, 5, 3, 6, 2, 4, 5, 3, 6, 4, 2, 5, 3].map((val, idx) => (
+                <span 
+                  key={idx} 
+                  className="w-[2px] bg-tertiary/60 rounded-full transition-all duration-300 hover:bg-tertiary"
+                  style={{ 
+                    height: `${val * 13}%`,
+                    animation: `bounce-slow 1.5s ease-in-out infinite ${idx * 0.05}s`
+                  }}
+                />
+              ))}
+            </div>
+            <span className="text-[9px] font-mono text-white/50 whitespace-nowrap">{duration}</span>
+          </div>
+          <p className="text-[11px] italic text-[#e5e5e5]/80 pl-1 leading-relaxed border-l border-tertiary/30">
+            "{cleanText}"
+          </p>
+        </div>
+      );
+    }
+
+    if (isPhoto) {
+      const cleanText = text.replace(/^📸\s*\[[^\]]+\]\s*/, "");
+      return (
+        <div className="flex flex-col gap-2 w-full">
+          {/* Scanning mechanical lathe part frame representation */}
+          <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden border border-tertiary/20 bg-[#09090d] shadow-lg flex items-center justify-center group">
+            {/* High-tech Grid overlay */}
+            <div 
+              className="absolute inset-0 opacity-[0.25]"
+              style={{
+                backgroundImage: "radial-gradient(rgba(0, 240, 255, 0.3) 1px, transparent 1px)",
+                backgroundSize: "12px 12px"
+              }}
+            />
+            
+            {/* Industrial lathe spindle SVG tool wireframe */}
+            <svg className="w-24 h-24 text-tertiary/30 transition-all group-hover:scale-105 duration-700" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.2">
+              <line x1="50" y1="10" x2="50" y2="40" stroke="#00f0ff" strokeWidth="2" />
+              <rect x="38" y="40" width="24" height="15" fill="#09090d" stroke="#00f0ff" strokeWidth="1.5" />
+              <path d="M42,55 L34,75 L66,75 L58,55 Z" stroke="#00f0ff" strokeWidth="1.5" fill="rgba(0,240,255,0.05)" />
+              <circle cx="50" cy="48" r="22" stroke="#00f0ff" strokeWidth="0.75" strokeDasharray="3 5" className="animate-spin-slow" style={{ transformOrigin: '50px 48px' }} />
+              {/* Target lines */}
+              <path d="M20,48 L80,48 M50,18 L50,78" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
+            </svg>
+
+            {/* Vertically sweeping scanner laser bar */}
+            <div 
+              className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-tertiary to-transparent shadow-[0_0_10px_rgba(0,240,255,0.8)] z-10"
+              style={{
+                animation: "laser-scan 3s ease-in-out infinite"
+              }}
+            />
+
+            {/* Vision HUD metrics */}
+            <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/85 border border-tertiary/30 text-[8px] font-mono text-tertiary uppercase flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping" />
+              CV SCAN: WEAR_ABR_0.45MM
+            </div>
+
+            <div className="absolute bottom-2 right-2 px-1.5 py-0.5 rounded bg-[#10b981]/80 border border-emerald-500/30 text-[8px] font-mono text-[#10b981] uppercase font-semibold">
+              CONFIDENCE: 98.4%
+            </div>
+          </div>
+          <p className="text-[11px] text-[#e5e5e5] leading-relaxed">
+            {cleanText}
+          </p>
+        </div>
+      );
+    }
+
+    return <span>{text}</span>;
+  };
+
   useEffect(() => {
     setChatStep(1);
     setIsTyping(false);
@@ -195,6 +301,16 @@ export default function Hero() {
       id="inicio"
       className="relative min-h-screen flex items-center overflow-hidden bg-transparent pt-24 pb-12 lg:py-0"
     >
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes laser-scan {
+          0%, 100% { top: 5%; }
+          50% { top: 95%; }
+        }
+        @keyframes bounce-slow {
+          0%, 100% { transform: scaleY(0.7); }
+          50% { transform: scaleY(1.3); }
+        }
+      `}} />
       {/* ── Immersive Cyber Grid & Ambient Vignette ─────────────────────── */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div 
@@ -424,8 +540,8 @@ export default function Hero() {
                   {chatStep >= 1 && (
                     <div className="flex justify-start mt-auto animate-in fade-in slide-in-from-left-4 duration-300 max-w-[85%]">
                       <div className="bg-[#181822] text-[#e5e5e5] rounded-2xl rounded-tl-none p-3.5 border border-white/5 relative">
-                        <span className="text-[9px] text-white/40 block mb-1 font-semibold uppercase tracking-wider">Prospecto (Cliente)</span>
-                        {currentSim.prospect}
+                        <span className="text-[9px] text-white/40 block mb-1 font-semibold uppercase tracking-wider">{getProspectLabel()}</span>
+                        {renderMessageContent(currentSim.prospect)}
                       </div>
                     </div>
                   )}
@@ -434,8 +550,8 @@ export default function Hero() {
                   {chatStep >= 2 && (
                     <div className="flex justify-end animate-in fade-in slide-in-from-right-4 duration-300 max-w-[85%] ml-auto">
                       <div className="bg-tertiary/10 text-white rounded-2xl rounded-tr-none p-3.5 border border-tertiary/20 relative shadow-[0_0_15px_rgba(0,240,255,0.03)]">
-                        <span className="text-[9px] text-tertiary block mb-1 font-semibold uppercase tracking-wider">Agente BrownsOS</span>
-                        {currentSim.agent1}
+                        <span className="text-[9px] text-tertiary block mb-1 font-semibold uppercase tracking-wider">{getAgentLabel()}</span>
+                        {renderMessageContent(currentSim.agent1)}
                       </div>
                     </div>
                   )}
@@ -463,7 +579,7 @@ export default function Hero() {
                   {chatStep >= 4 && (
                     <div className="flex justify-end animate-in fade-in slide-in-from-right-4 duration-300 max-w-[85%] ml-auto">
                       <div className="bg-tertiary/10 text-white rounded-2xl rounded-tr-none p-3.5 border border-tertiary/20 relative">
-                        {currentSim.agent2}
+                        {renderMessageContent(currentSim.agent2)}
                       </div>
                     </div>
                   )}
@@ -472,8 +588,8 @@ export default function Hero() {
                   {chatStep >= 5 && (
                     <div className="flex justify-start animate-in fade-in slide-in-from-left-4 duration-300 max-w-[85%]">
                       <div className="bg-[#181822] text-[#e5e5e5] rounded-2xl rounded-tl-none p-3.5 border border-white/5 relative">
-                        <span className="text-[9px] text-white/40 block mb-1 font-semibold uppercase tracking-wider">Prospecto (Cliente)</span>
-                        {currentSim.prospect2}
+                        <span className="text-[9px] text-white/40 block mb-1 font-semibold uppercase tracking-wider">{getProspectLabel()}</span>
+                        {renderMessageContent(currentSim.prospect2)}
                       </div>
                     </div>
                   )}
@@ -501,8 +617,8 @@ export default function Hero() {
                   {chatStep >= 8 && (
                     <div className="flex justify-end animate-in fade-in slide-in-from-right-4 duration-300 max-w-[85%] ml-auto">
                       <div className="bg-tertiary/10 text-white rounded-2xl rounded-tr-none p-3.5 border border-tertiary/20 relative shadow-[0_0_15px_rgba(0,240,255,0.03)]">
-                        <span className="text-[9px] text-tertiary block mb-1 font-semibold uppercase tracking-wider">Agente BrownsOS</span>
-                        {currentSim.agent3}
+                        <span className="text-[9px] text-tertiary block mb-1 font-semibold uppercase tracking-wider">{getAgentLabel()}</span>
+                        {renderMessageContent(currentSim.agent3)}
                       </div>
                     </div>
                   )}

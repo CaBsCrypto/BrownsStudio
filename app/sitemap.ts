@@ -33,6 +33,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.8,
+      alternates: {
+        languages: {
+          es: `${base}/es/soluciones/${nicho}`,
+          en: `${base}/en/soluciones/${nicho}`,
+          pt: `${base}/pt/soluciones/${nicho}`,
+          "x-default": `${base}/es/soluciones/${nicho}`,
+        },
+      },
     }))
   );
 
@@ -42,6 +50,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.6,
+    alternates: {
+      languages: {
+        es: `${base}/es/formacion`,
+        en: `${base}/en/formacion`,
+        pt: `${base}/pt/formacion`,
+        "x-default": `${base}/es/formacion`,
+      },
+    },
   }));
 
   // Case studies (/[locale]/proyecto/[slug])
@@ -51,6 +67,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.7,
+      alternates: {
+        languages: {
+          es: `${base}/es/proyecto/${p.slug}`,
+          en: `${base}/en/proyecto/${p.slug}`,
+          pt: `${base}/pt/proyecto/${p.slug}`,
+          "x-default": `${base}/es/proyecto/${p.slug}`,
+        },
+      },
     }))
   );
 

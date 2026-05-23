@@ -6,7 +6,7 @@ import { getWhatsAppWithPackage, WHATSAPP_URL } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 export default function Pricing() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const [activeTab, setActiveTab] = useState<'web' | 'training'>('web');
   const [isRevealed, setIsRevealed] = useState(false);
@@ -82,88 +82,129 @@ export default function Pricing() {
             : (t.pricing as any).trainingPlans.length;
           return (
             <div className={`grid grid-cols-1 md:grid-cols-2 ${plansCount >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6 max-w-7xl mx-auto`}>
-              {((activeTab === 'web' ? (t.pricing as any).plans : (t.pricing as any).trainingPlans) as any[]).map((plan) => (
-            <div
-              key={plan.name}
-              className={`reveal relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full ${isRevealed ? 'visible' : ''} ${
-                plan.popular ? "lg:-mt-4 lg:mb-4 lg:my-0 mt-0 mb-6" : ""
-              }`}
-              style={{
-                background: plan.popular ? "rgba(15, 20, 35, 0.65)" : "rgba(12, 13, 12, 0.5)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
-                border: plan.popular
-                  ? "1px solid rgba(0,240,255,0.4)"
-                  : "1px solid rgba(255,255,255,0.08)",
-                boxShadow: plan.popular ? "0 0 40px rgba(0,240,255,0.12)" : "none",
-              }}
-            >
-              {plan.popular && (
-                <div
-                  className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1 rounded-full text-xs font-bold text-black"
-                  style={{ background: "linear-gradient(135deg, #00f0ff, #0070ff)", boxShadow: "0 0 15px rgba(0,240,255,0.4)" }}
-                >
-                  <Zap size={11} fill="currentColor" />
-                  {t.pricing.popular}
-                </div>
-              )}
-
-              <div className="mb-6">
-                <h3 className="font-display font-bold text-xl text-[#e5e5e5] mb-1">{plan.name}</h3>
-                <p className="text-[#9e9e9e] text-xs mb-auto h-8 line-clamp-2">{plan.desc}</p>
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span 
-                    className={`font-display font-bold ${
-                      plan.price.length > 8 ? 'text-2xl' : 'text-3xl sm:text-4xl'
+              {((activeTab === 'web' ? (t.pricing as any).plans : (t.pricing as any).trainingPlans) as any[]).map((plan) => {
+                const isOnboarding = plan.name.toLowerCase().includes("onboarding") || plan.name.toLowerCase().includes("inducción") || plan.name.toLowerCase().includes("induc");
+                return (
+                  <div
+                    key={plan.name}
+                    className={`reveal relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full ${isRevealed ? 'visible' : ''} ${
+                      plan.popular ? "lg:-mt-4 lg:mb-4 lg:my-0 mt-0 mb-6" : ""
                     }`}
-                    style={{ color: "#00f0ff", textShadow: "0 0 15px rgba(0,240,255,0.3)" }}
+                    style={{
+                      background: isOnboarding 
+                        ? "rgba(22, 18, 38, 0.65)" 
+                        : plan.popular 
+                        ? "rgba(15, 20, 35, 0.65)" 
+                        : "rgba(12, 13, 12, 0.5)",
+                      backdropFilter: "blur(16px)",
+                      WebkitBackdropFilter: "blur(16px)",
+                      border: isOnboarding
+                        ? "1px solid rgba(139, 92, 246, 0.35)"
+                        : plan.popular
+                        ? "1px solid rgba(0,240,255,0.4)"
+                        : "1px solid rgba(255,255,255,0.08)",
+                      boxShadow: isOnboarding
+                        ? "0 0 40px rgba(139, 92, 246, 0.08)"
+                        : plan.popular
+                        ? "0 0 40px rgba(0,240,255,0.12)"
+                        : "none",
+                    }}
                   >
-                    {plan.price}
-                  </span>
-                  {plan.priceSuffix ? (
-                    <span className="text-[#9e9e9e] text-xs">{plan.priceSuffix}</span>
-                  ) : (
-                    !plan.price.toLowerCase().includes('talk') && !plan.price.toLowerCase().includes('convers') && (
-                      <span className="text-[#9e9e9e] text-xs">CLP</span>
-                    )
-                  )}
-                </div>
-              </div>
+                    {plan.popular && (
+                      <div
+                        className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1 rounded-full text-xs font-bold text-black"
+                        style={{ background: "linear-gradient(135deg, #00f0ff, #0070ff)", boxShadow: "0 0 15px rgba(0,240,255,0.4)" }}
+                      >
+                        <Zap size={11} fill="currentColor" />
+                        {t.pricing.popular}
+                      </div>
+                    )}
 
-              <ul className="space-y-3 mb-8 flex-grow">
-                {plan.features.map((feature: string) => (
-                  <li key={feature} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
-                    <Check size={15} className="flex-shrink-0 mt-0.5" style={{ color: "#00f0ff" }} />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+                    {isOnboarding && (
+                      <div
+                        className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1 rounded-full text-xs font-bold text-white border border-[#8b5cf6]/30"
+                        style={{ background: "linear-gradient(135deg, #8b5cf6, #6366f1)", boxShadow: "0 0 15px rgba(139,92,246,0.3)" }}
+                      >
+                        <GraduationCap size={11} className="text-white animate-pulse" />
+                        {lang === 'en' ? 'INTERNAL OPS' : lang === 'pt' ? 'OPERAÇÕES INTERNAS' : 'OPERACIONES INTERNAS'}
+                      </div>
+                    )}
 
-              <a
-                href={getWhatsAppWithPackage(plan.name)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full text-center py-3 rounded-xl text-sm font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
-                style={
-                  plan.popular
-                    ? { background: "linear-gradient(135deg, #00f0ff, #0070ff)", color: "#000", boxShadow: "0 0 20px rgba(0,240,255,0.2)" }
-                    : { border: "1px solid rgba(0,240,255,0.3)", color: "#00f0ff" }
-                }
-                onMouseEnter={(e) => {
-                  if (!plan.popular) {
-                    (e.currentTarget as HTMLElement).style.background = "rgba(0,240,255,0.05)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!plan.popular) {
-                    (e.currentTarget as HTMLElement).style.background = "transparent";
-                  }
-                }}
-              >
-                {t.pricing.ctaBtn} {plan.name}
-              </a>
-            </div>
-          ))}
+                    <div className="mb-6">
+                      <h3 className="font-display font-bold text-xl text-[#e5e5e5] mb-1">{plan.name}</h3>
+                      <p className="text-[#9e9e9e] text-xs mb-auto h-8 line-clamp-2">{plan.desc}</p>
+                      <div className="mt-4 flex items-baseline gap-1">
+                        <span 
+                          className={`font-display font-bold ${
+                            plan.price.length > 8 ? 'text-2xl' : 'text-3xl sm:text-4xl'
+                          }`}
+                          style={{ 
+                            color: isOnboarding ? "#c084fc" : "#00f0ff", 
+                            textShadow: isOnboarding ? "0 0 15px rgba(192,132,252,0.3)" : "0 0 15px rgba(0,240,255,0.3)" 
+                          }}
+                        >
+                          {plan.price}
+                        </span>
+                        {plan.priceSuffix ? (
+                          <span className="text-[#9e9e9e] text-xs">{plan.priceSuffix}</span>
+                        ) : (
+                          !plan.price.toLowerCase().includes('talk') && !plan.price.toLowerCase().includes('convers') && (
+                            <span className="text-[#9e9e9e] text-xs">CLP</span>
+                          )
+                        )}
+                      </div>
+                    </div>
+
+                    <ul className="space-y-3 mb-8 flex-grow">
+                      {plan.features.map((feature: string) => (
+                        <li key={feature} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
+                          <Check size={15} className="flex-shrink-0 mt-0.5" style={{ color: isOnboarding ? "#a78bfa" : "#00f0ff" }} />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {isOnboarding && (
+                      <div className="mb-6 pt-3 border-t border-white/5">
+                        <div className="flex flex-col gap-1.5">
+                          <span className="text-[9px] text-[#9e9e9e]/60 uppercase tracking-widest font-mono font-bold">Compatible Channels:</span>
+                          <div className="flex gap-1.5 flex-wrap">
+                            <span className="px-2 py-0.5 rounded text-[9px] font-semibold bg-[#E01E5A]/10 border border-[#E01E5A]/20 text-[#E01E5A]">Slack</span>
+                            <span className="px-2 py-0.5 rounded text-[9px] font-semibold bg-[#6264A7]/10 border border-[#6264A7]/20 text-[#6264A7]">MS Teams</span>
+                            <span className="px-2 py-0.5 rounded text-[9px] font-semibold bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366]">WhatsApp</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <a
+                      href={getWhatsAppWithPackage(plan.name)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full text-center py-3 rounded-xl text-sm font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                      style={
+                        plan.popular
+                          ? { background: "linear-gradient(135deg, #00f0ff, #0070ff)", color: "#000", boxShadow: "0 0 20px rgba(0,240,255,0.2)" }
+                          : isOnboarding
+                          ? { border: "1px solid rgba(139, 92, 246, 0.4)", color: "#c084fc", boxShadow: "0 0 15px rgba(139, 92, 246, 0.05)" }
+                          : { border: "1px solid rgba(0,240,255,0.3)", color: "#00f0ff" }
+                      }
+                      onMouseEnter={(e) => {
+                        if (!plan.popular) {
+                          (e.currentTarget as HTMLElement).style.background = isOnboarding ? "rgba(139, 92, 246, 0.08)" : "rgba(0,240,255,0.05)";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!plan.popular) {
+                          (e.currentTarget as HTMLElement).style.background = "transparent";
+                        }
+                      }}
+                    >
+                      {t.pricing.ctaBtn} {plan.name}
+                    </a>
+                  </div>
+                );
+              })}
             </div>
           );
         })()}

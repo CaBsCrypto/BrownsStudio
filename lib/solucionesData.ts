@@ -887,6 +887,149 @@ export const solucionesData: Record<string, NicheData> = {
           maxMultiplier: 20
         }
       }
+    },
+  },
+  onboarding: {
+      en: {
+        emoji: "🤖",
+        industria: "Employee Onboarding & HR",
+        hasProfiles: true,
+        profiles: {
+          estandar: {
+            name: "SOP & Handbook Assistant",
+            headline: "Automate Employee FAQs and SOP Training 24/7.",
+            sub: "Trained on your actual manuals, PDFs, and video links, your digital trainer answers new hire questions instantly. Stop repeating where tools are, how software is structured, or how systems work.",
+            estadistica: "Reduce new hire ramp-up time by 45% and save 15+ hours of senior trainer time monthly.",
+            roiLabel: "Cost per hour of senior trainer/manager",
+            defaultRoiValue: 25000,
+            roiMultiplierLabel: "Hours of manager training time saved per month",
+            defaultRoiMultiplier: 20,
+            calcResultLabel: "Estimated Monthly Manager Cost Saved",
+            ctaMsg: "Hi! I want to automate our handbook and onboarding FAQs for our team.",
+            beneficios: [
+              "24/7 instant Q&A trained strictly on your brand guidelines, tutorials and files",
+              "Instant retraining: if you upload a new manual or standard procedure, the AI learns immediately",
+              "Interactive structure of training plans and company milestones",
+              "Escalates complex queries directly to the HR director with full chat context"
+            ],
+            maxTicket: 250000,
+            maxMultiplier: 100
+          },
+          premium: {
+            name: "Enterprise Integration & Quizzes",
+            headline: "Full Interactive Employee Training & Automated Compliance Quizzes.",
+            sub: "We build custom learning paths, track progress, generate automatic compliance quizzes, and integrate the AI agent natively into Slack, Microsoft Teams, or WhatsApp.",
+            estadistica: "Achieve 100% onboarding compliance and eliminate manual tracking spreadsheets.",
+            roiLabel: "Average cost of employee turnover due to poor onboarding",
+            defaultRoiValue: 1200000,
+            roiMultiplierLabel: "New hires integrated successfully per year",
+            defaultRoiMultiplier: 10,
+            calcResultLabel: "Projected Annual Retained Talent Value",
+            ctaMsg: "Hi! I want to implement the enterprise AI onboarding and compliance system for our team.",
+            beneficios: [
+              "Native workspace integration (Slack, Microsoft Teams, Discord or WhatsApp API)",
+              "Automatic tracking and compliance quizzes to verify learning milestones",
+              "Deep integration with your payroll or HR database to automatically invite new hires",
+              "Encrypted, fully private corporate knowledge base with strict enterprise security standard"
+            ],
+            maxTicket: 5000000,
+            maxMultiplier: 50
+          }
+        }
+      },
+      es: {
+        emoji: "🤖",
+        industria: "Recursos Humanos y Capacitación",
+        hasProfiles: true,
+        profiles: {
+          estandar: {
+            name: "Manuales y Preguntas Frecuentes",
+            headline: "Ahorra horas de jefatura: automatiza dudas de manuales y procesos 24/7.",
+            sub: "Entrenado con tus manuales reales, PDFs, y enlaces de videos, tu capacitador digital responde dudas de nuevos ingresos en 3 segundos. Deja de repetir dónde están las herramientas, cómo se instala el software o qué dice el reglamento.",
+            estadistica: "Reduce el tiempo de adaptación de nuevos empleados en un 45% y libera 15+ horas mensuales de tu equipo.",
+            roiLabel: "Costo por hora de tu jefe de equipo o mentor senior",
+            defaultRoiValue: 25000,
+            roiMultiplierLabel: "Horas de inducción manual ahorradas al mes",
+            defaultRoiMultiplier: 20,
+            calcResultLabel: "Ahorro Mensual Estimado en Costos de Capacitación",
+            ctaMsg: "¡Hola! Quiero automatizar la inducción de nuevos empleados y dudas de manuales con IA.",
+            beneficios: [
+              "Respuestas instantáneas 24/7 basadas estrictamente en tus políticas de marca y tutoriales",
+              "Re-entrenamiento instantáneo: si editas un manual o grabas un video, la IA aprende de inmediato",
+              "Estructura interactiva de planes y etapas de inducción",
+              "Derivación automática al mentor humano en temas complejos con contexto completo del chat"
+            ],
+            maxTicket: 250000,
+            maxMultiplier: 100
+          },
+          premium: {
+            name: "Inducción Corporativa Interactiva",
+            headline: "Estructura planes de formación corporativa y evaluaciones automatizadas con IA.",
+            sub: "Creamos rutas de aprendizaje interactivas para tu equipo, diseñamos evaluaciones automáticas y encuestas de cumplimiento regulatorio, y conectamos la IA de forma nativa a tus chats corporativos.",
+            estadistica: "Logra el 100% de cumplimiento en capacitación e inducción sin planillas de seguimiento.",
+            roiLabel: "Costo estimado de rotación por empleado debido a mala inducción",
+            defaultRoiValue: 1200000,
+            roiMultiplierLabel: "Nuevos colaboradores integrados con éxito al año",
+            defaultRoiMultiplier: 10,
+            calcResultLabel: "Valor de Talento Retenido y Productivo Anual",
+            ctaMsg: "¡Hola! Quiero implementar el sistema corporativo de onboarding y quizzes con IA para nuestra empresa.",
+            beneficios: [
+              "Integración nativa con canales internos de trabajo (Slack, Microsoft Teams o WhatsApp Enterprise)",
+              "Evaluaciones automáticas con quizzes para validar el aprendizaje del colaborador",
+              "Sincronización con tu sistema de nómina o recursos humanos para dar de alta automáticamente",
+              "Base de conocimientos cifrada y privada con estrictas normas de seguridad corporativa"
+            ],
+            maxTicket: 5000000,
+            maxMultiplier: 50
+          }
+        }
+      },
+      pt: {
+        emoji: "🤖",
+        industria: "Recursos Humanos e Integração",
+        hasProfiles: true,
+        profiles: {
+          estandar: {
+            name: "Manuais e FAQ de Integração",
+            headline: "Poupe tempo da gerência: automatize dúvidas de manuais e processos 24/7.",
+            sub: "Treinado com seus manuais, PDFs e vídeos reais, seu treinador digital responde dúvidas de novos contratados em 3 segundos. Pare de repetir onde estão os acessos, como instalar softwares ou regras internas.",
+            estadistica: "Reduza o tempo de ramp-up em 45% e libere mais de 15 horas mensais dos gerentes.",
+            roiLabel: "Custo por hora do gerente de equipe ou mentor senior",
+            defaultRoiValue: 25000,
+            roiMultiplierLabel: "Horas de integração manual economizadas por mês",
+            defaultRoiMultiplier: 20,
+            calcResultLabel: "Economia Mensal Estimada em Custos de Treinamento",
+            ctaMsg: "Olá! Quero automatizar o onboarding de novos funcionários e manuais com IA.",
+            beneficios: [
+              "Respostas imediatas 24/7 baseadas estritamente nas políticas e manuais da empresa",
+              "Treinamento instantâneo: se você atualizar um manual ou vídeo, a IA aprende na hora",
+              "Estrutura interativa de planos e marcos de integração para o time",
+              "Encaminhamento automático para o gestor em caso de dúvidas complexas com contexto"
+            ],
+            maxTicket: 250000,
+            maxMultiplier: 100
+          },
+          premium: {
+            name: "Integração Corporativa Interativa",
+            headline: "Estruture planos de treinamento corporativo e testes de conformidade com IA.",
+            sub: "Criamos jornadas de aprendizado interativas para sua equipe, geramos testes automáticos para validar o conhecimento e integramos a IA de forma nativa aos seus canais corporativos.",
+            estadistica: "Garanta 100% de conformidade nos treinamentos de novos funcionários sem planilhas manuais.",
+            roiLabel: "Custo médio de turnover por funcionário devido a onboarding deficiente",
+            defaultRoiValue: 1200000,
+            roiMultiplierLabel: "Novos colaboradores integrados com sucesso por ano",
+            defaultRoiMultiplier: 10,
+            calcResultLabel: "Valor do Talento Produtivo Retido Anualmente",
+            ctaMsg: "Olá! Quero implementar o sistema corporativo de onboarding e testes com IA na nossa empresa.",
+            beneficios: [
+              "Integração nativa com ferramentas internas (Slack, Microsoft Teams ou WhatsApp Enterprise)",
+              "Testes automáticos e quizzes interativos para avaliar o aprendizado do colaborador",
+              "Integração com seu sistema de RH para cadastrar novos funcionários automaticamente",
+              "Base de conhecimento corporativa totalmente privada e criptografada com segurança máxima"
+            ],
+            maxTicket: 5000000,
+            maxMultiplier: 50
+          }
+        }
+      }
     }
-  }
 };
