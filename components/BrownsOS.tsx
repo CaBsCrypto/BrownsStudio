@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 export default function BrownsOS() {
   const blob1Ref  = useRef<HTMLDivElement>(null);
@@ -9,7 +9,11 @@ export default function BrownsOS() {
   const mTgt      = useRef({ x: 0.5, y: 0.5 });
   const b1Pos     = useRef({ x: 0, y: 0 });
   const scrollS   = useRef(0); // 0→1 scroll progress
-  const isMobile  = typeof window !== "undefined" && window.innerWidth < 768;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   // Scroll path keyframes — orb drifts and returns like a planet in orbit
   const KEYFRAMES = [

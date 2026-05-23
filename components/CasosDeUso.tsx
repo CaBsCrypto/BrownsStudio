@@ -13,7 +13,7 @@ import {
   Zap,
   X
 } from "lucide-react";
-import { WHATSAPP_URL } from "@/lib/config";
+import { WHATSAPP_URL, getWhatsAppLink } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 const USE_CASE_ICONS = [ShoppingCart, Settings2, Users2, Layers3];
@@ -290,13 +290,13 @@ export default function CasosDeUso() {
         {/* ── Main Dynamic CTA ── */}
         <div className="reveal text-center mt-12 flex flex-col items-center gap-4">
           <a
-            href={`${WHATSAPP_URL}&text=${encodeURIComponent(
+            href={getWhatsAppLink(
               lang === "es"
                 ? "¡Hola! Me interesa hablar sobre automatizar un proceso con un agente de IA."
                 : lang === "pt"
-                ? "Olá! Tenho interesse em automatizar um proceso com um agente de IA."
+                ? "Olá! Tenho interesse em automatizar um processo com um agente de IA."
                 : "Hi! I'm interested in automating a process with an AI agent."
-            )}`}
+            )}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 px-9 py-4 rounded-full font-bold text-xs uppercase tracking-widest text-black transition-all duration-300 hover:scale-105 cursor-pointer shadow-[0_0_30px_rgba(0,240,255,0.15)]"
@@ -312,13 +312,13 @@ export default function CasosDeUso() {
           <p className="text-[#555558] text-xs mt-2">
             {copy.bottomNote}
             <a
-              href={`${WHATSAPP_URL}&text=${encodeURIComponent(
+              href={getWhatsAppLink(
                 lang === "es"
                   ? "Hola, quiero agendar una auditoría gratuita de procesos."
                   : lang === "pt"
                   ? "Olá, quero agendar uma auditoria gratuita de processos."
                   : "Hi, I'd like to book a free process audit."
-              )}`}
+              )}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#98989c] hover:text-[#00f0ff] underline transition-colors duration-200 ml-1"

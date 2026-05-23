@@ -63,7 +63,7 @@ export default function Pricing() {
                   className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300"
                   style={{ 
                     background: activeTab === tab.id ? "rgba(0,240,255,0.15)" : "transparent",
-                    color: activeTab === tab.id ? "#00f0ff" : "#5a5a5a",
+                    color: activeTab === tab.id ? "#00f0ff" : "#9e9e9e",
                     border: activeTab === tab.id ? "1px solid rgba(0,240,255,0.3)" : "1px solid transparent"
                   }}
                 >
@@ -85,7 +85,9 @@ export default function Pricing() {
               {((activeTab === 'web' ? (t.pricing as any).plans : (t.pricing as any).trainingPlans) as any[]).map((plan) => (
             <div
               key={plan.name}
-              className={`reveal relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full ${isRevealed ? 'visible' : ''}`}
+              className={`reveal relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col h-full ${isRevealed ? 'visible' : ''} ${
+                plan.popular ? "lg:-mt-4 lg:mb-4 lg:my-0 mt-0 mb-6" : ""
+              }`}
               style={{
                 background: plan.popular ? "rgba(15, 20, 35, 0.65)" : "rgba(12, 13, 12, 0.5)",
                 backdropFilter: "blur(16px)",
@@ -93,7 +95,7 @@ export default function Pricing() {
                 border: plan.popular
                   ? "1px solid rgba(0,240,255,0.4)"
                   : "1px solid rgba(255,255,255,0.08)",
-                ...(plan.popular ? { marginTop: "-1rem", marginBottom: "1rem", boxShadow: "0 0 40px rgba(0,240,255,0.12)" } : {}),
+                boxShadow: plan.popular ? "0 0 40px rgba(0,240,255,0.12)" : "none",
               }}
             >
               {plan.popular && (
@@ -108,7 +110,7 @@ export default function Pricing() {
 
               <div className="mb-6">
                 <h3 className="font-display font-bold text-xl text-[#e5e5e5] mb-1">{plan.name}</h3>
-                <p className="text-[#5a5a5a] text-xs mb-auto h-8 line-clamp-2">{plan.desc}</p>
+                <p className="text-[#9e9e9e] text-xs mb-auto h-8 line-clamp-2">{plan.desc}</p>
                 <div className="mt-4 flex items-baseline gap-1">
                   <span 
                     className={`font-display font-bold ${
@@ -119,10 +121,10 @@ export default function Pricing() {
                     {plan.price}
                   </span>
                   {plan.priceSuffix ? (
-                    <span className="text-[#5a5a5a] text-xs">{plan.priceSuffix}</span>
+                    <span className="text-[#9e9e9e] text-xs">{plan.priceSuffix}</span>
                   ) : (
                     !plan.price.toLowerCase().includes('talk') && !plan.price.toLowerCase().includes('convers') && (
-                      <span className="text-[#5a5a5a] text-xs">CLP</span>
+                      <span className="text-[#9e9e9e] text-xs">CLP</span>
                     )
                   )}
                 </div>
@@ -141,7 +143,7 @@ export default function Pricing() {
                 href={getWhatsAppWithPackage(plan.name)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full text-center py-3 rounded-xl text-sm font-semibold transition-all duration-300"
+                className="block w-full text-center py-3 rounded-xl text-sm font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
                 style={
                   plan.popular
                     ? { background: "linear-gradient(135deg, #00f0ff, #0070ff)", color: "#000", boxShadow: "0 0 20px rgba(0,240,255,0.2)" }
@@ -204,7 +206,7 @@ export default function Pricing() {
         )}
 
         {/* Bottom note */}
-        <p className="reveal text-center text-[#5a5a5a] text-sm mt-8">
+        <p className="reveal text-center text-[#9e9e9e] text-sm mt-8">
           <a
             href={WHATSAPP_URL}
             target="_blank"

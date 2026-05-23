@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { BookOpen, Play, ArrowLeft } from "lucide-react";
+import { getWhatsAppLink } from "@/lib/config";
 
 const content = {
   en: {
@@ -34,7 +35,6 @@ const content = {
   },
 };
 
-const WHATSAPP_BASE = "https://wa.me/51931054302?text=";
 
 export default function FormacionPage() {
   const params = useParams();
@@ -113,7 +113,7 @@ export default function FormacionPage() {
         {/* CTA */}
         <div>
           <a
-            href={`${WHATSAPP_BASE}${encodeURIComponent(t.msg)}`}
+            href={getWhatsAppLink(t.msg)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm text-black hover:scale-105 transition-all duration-300"

@@ -167,7 +167,7 @@ export default function SobreMi() {
               >
                 <div className="text-center flex-shrink-0">
                   <p className="font-display font-bold text-4xl text-[#47c4ff] leading-none">7</p>
-                  <p className="text-[#47c4ff]/50 text-xs mt-0.5">{t.about.certs}</p>
+                  <p className="text-[#47c4ff]/75 text-xs mt-0.5">{t.about.certs}</p>
                 </div>
                 <div>
                   <p className="text-[#e5e5e5] text-sm font-semibold leading-tight mb-0.5">
@@ -248,7 +248,7 @@ export default function SobreMi() {
                 </div>
               </div>
 
-              <p className="text-[#3a3a3a] text-xs italic mb-8">
+              <p className="text-[#7c7c7c] text-xs italic mb-8">
                 {t.about.certNote}
               </p>
             </div>
@@ -259,7 +259,7 @@ export default function SobreMi() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-black font-semibold text-sm hover:scale-105 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-black font-semibold text-sm hover:scale-105 active:scale-[0.97] transition-all duration-300"
                 style={{
                   background: "linear-gradient(135deg, #c6c6c7, #939eb5)",
                   boxShadow: "0 0 24px rgba(198,198,199,0.15)",

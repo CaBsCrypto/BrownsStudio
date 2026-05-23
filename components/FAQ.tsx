@@ -72,7 +72,7 @@ export default function FAQ() {
                 >
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : i)}
-                    className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left cursor-pointer"
+                    className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left cursor-pointer hover:bg-white/[0.02] transition-colors"
                     aria-expanded={isOpen}
                   >
                     <span
@@ -85,7 +85,7 @@ export default function FAQ() {
                       size={18}
                       className="flex-shrink-0 transition-transform duration-300"
                       style={{
-                        color: isOpen ? "#47c4ff" : "#484848",
+                        color: isOpen ? "#47c4ff" : "#9e9e9e",
                         transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
                       }}
                     />

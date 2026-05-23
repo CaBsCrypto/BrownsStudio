@@ -20,13 +20,13 @@ export const translations = {
       cta: "Get a Quote",
     },
     hero: {
-      badge: "SALES & OPERATIONAL OPTIMIZATION",
-      line1: "Turn Conversations Into Revenue:",
-      line2: "qualify, book, and close",
-      line3: "on autopilot 24/7.",
-      sub: "Custom AI Agents integrated directly with your real systems to answer in seconds, pre-qualify leads instantly, and maximize booking rates without letting hot leads go cold.",
-      cta1: "Free consultation",
-      cta2: "View value solutions",
+      badge: "AGENTIC SYSTEMS & TEAM INTEGRATION",
+      line1: "Automate WhatsApp Sales,",
+      line2: "Empower Your Team with AI:",
+      line3: "Operational Efficiency on Autopilot.",
+      sub: "We engineer custom conversational AI agents that automate sales and bookings 24/7, while mentoring and upskilling your workforce to master agentic engineering and achieve superior operational leverage.",
+      cta1: "Automate & Upskill My Business →",
+      cta2: "Explore Systems & Mentoring",
       stat1: "Clients",
       stat2: "Google AI Certs",
       stat3: "Satisfaction",
@@ -526,7 +526,7 @@ export const translations = {
           "Commercial Follow-up: Instantly fires BrownsOS executive presentation after simulation."
         ]
       },
-      resultsTitle: "Financial Audit & Impact",
+      resultsTitle: "Financial Impact & Agentic Leverage Audit",
       lostRevenue: "Lost Revenue due to Delays",
       lostRevenueNote: "Projected annual leakage due to team latency in responding and qualifying.",
       recoveredRevenue: "Monthly Recovered Revenue",
@@ -536,7 +536,7 @@ export const translations = {
       roiTitle: "Return on Investment (ROI)",
       roiNote: "Estimated financial multiplier against the setup and maintenance cost.",
       efficiencyLabel: "Operational Efficiency",
-      ctaBtn: "Get my Custom Blueprint & IA Code",
+      ctaBtn: "Secure Execution & Upskilling Blueprint",
       whatsappTemplate: "Hi Cristian, I just finished the process audit for my {industry}. My estimated metrics are {leads} leads/month with an average ticket of {value}. Our current response time is {delay} and the simulator estimates we can recover {recovered}/month. Let's build the agent!"
     }
   },
@@ -562,13 +562,13 @@ export const translations = {
       cta: "Cotizar Proyecto",
     },
     hero: {
-      badge: "OPTIMIZACIÓN DE VENTAS Y OPERACIONES",
-      line1: "Transforma conversaciones en ingresos:",
-      line2: "califica, agenda y vende",
-      line3: "en piloto automático 24/7.",
-      sub: "Agentes de Inteligencia Artificial que se integran a tus sistemas para responder en segundos, calificar leads de inmediato y cerrar agendamientos sin perder clientes por demora.",
-      cta1: "Consulta gratis",
-      cta2: "Ver soluciones de valor",
+      badge: "SISTEMAS AGÉNTICOS E INTEGRACIÓN EN EQUIPOS",
+      line1: "Automatiza tus Ventas por WhatsApp,",
+      line2: "Capacita a tu Equipo con IA:",
+      line3: "Eficiencia Operativa en Piloto Automático.",
+      sub: "Diseñamos agentes de IA conversacionales a medida que automatizan tus ventas y agenda 24/7, mientras capacitamos y potenciamos a tu equipo humano para dominar la ingeniería agéntica y operar con velocidad matemática superior.",
+      cta1: "Automatizar y Capacitar mi Empresa →",
+      cta2: "Ver Sistemas y Mentorías",
       stat1: "Clientes",
       stat2: "Certs. Google IA",
       stat3: "Satisfacción",
@@ -720,8 +720,8 @@ export const translations = {
           priceSuffix: " setup + 175.000 CLP/mes mantenimiento",
           features: [
             "Auditoría de conversaciones (top 30 preguntas identificadas)",
-            "Knowledge base completo redactado en tu tono de marca",
-            "Configuración estratégica del agente y reglas de escalación",
+            "Knowledge base completa redactada en tu tono de marca",
+            "Configuración estratégica del agente y reglas de derivación a humano",
             "30+ conversaciones de prueba reales antes del lanzamiento",
             "Sesión de capacitación de 1 hora incluida",
           ],
@@ -748,8 +748,8 @@ export const translations = {
             "Agente programado a medida (sin plantillas)",
             "Integración en tiempo real con tus sistemas (Calendar, CRM, Sheets, Shopify)",
             "Calificación de leads, agendamiento y soporte 24/7",
-            "Knowledge base entrenado con tu lógica de negocio exacta",
-            "Escalación a humano con contexto completo de la conversación",
+            "Knowledge base entrenada con tu lógica de negocio exacta",
+            "Derivación a humano con contexto completo de la conversación",
           ],
           popular: true,
         },
@@ -763,7 +763,7 @@ export const translations = {
             "Agente de conocimiento interno para tu equipo",
             "Procesamiento de documentos y extracción de datos",
             "Múltiples integraciones de sistemas + CRM propio",
-            "Soporte de ingeniería prioritario por 60 dias",
+            "Soporte de ingeniería prioritario por 60 días",
           ],
         },
       ],
@@ -1068,7 +1068,7 @@ export const translations = {
           "Seguimiento Comercial: Envía presentación ejecutiva de BrownsOS posterior a la simulación."
         ]
       },
-      resultsTitle: "Auditoría Financiera e Impacto",
+      resultsTitle: "Auditoría de Impacto Financiero y Apalancamiento Agéntico",
       lostRevenue: "Ingreso Perdido por Demoras",
       lostRevenueNote: "Fuga anual proyectada debido a la lentitud en calificar y responder.",
       recoveredRevenue: "Ingreso Recuperado Mensual",
@@ -1078,7 +1078,7 @@ export const translations = {
       roiTitle: "Retorno de Inversión (ROI)",
       roiNote: "Multiplicador estimado de retribución financiera contra el costo de implementación.",
       efficiencyLabel: "Eficiencia Operativa",
-      ctaBtn: "Obtener mi Blueprint y Código de IA",
+      ctaBtn: "Obtener Plan de Ejecución y Capacitación",
       whatsappTemplate: "Hola Cristian, acabo de realizar la auditoría de procesos para mi {industry}. Mis métricas estimadas son {leads} prospectos/mes con un ticket promedio de {value}. Mi tiempo de respuesta actual es {delay} y el auditor estima que puedo recuperar {recovered}/mes. ¡Quiero estructurar el blueprint de mi agente!"
     }
   },
@@ -1104,13 +1104,13 @@ export const translations = {
       cta: "Orçar Projeto",
     },
     hero: {
-      badge: "OTIMIZAÇÃO DE VENDAS E OPERAÇÕES",
-      line1: "Transforme conversas em receita:",
-      line2: "qualifique, agende e venda",
-      line3: "no piloto automático 24/7.",
-      sub: "Agentes de Inteligência Artificial que se integram aos seus sistemas reais para responder em segundos, pré-qualificar leads imediatamente e maximizar agendamentos sem perder clientes por demora.",
-      cta1: "Consulta grátis",
-      cta2: "Ver soluções de valor",
+      badge: "SISTEMAS AGÊNTICOS E INTEGRAÇÃO DE EQUIPES",
+      line1: "Automatize Vendas por WhatsApp,",
+      line2: "Capacite sua Equipe com IA:",
+      line3: "Eficiência Operacional no Piloto Automático.",
+      sub: "Desenvolvemos agentes de IA conversacionais sob medida que automatizam suas vendas e agendamentos 24/7, enquanto capacitamos e mentoramos sua equipe para dominar a engenharia agêntica e operar com máxima eficiência.",
+      cta1: "Automatizar e Capacitar minha Empresa →",
+      cta2: "Ver Sistemas e Mentorias",
       stat1: "Clientes",
       stat2: "Certs. Google IA",
       stat3: "Satisfação",
@@ -1203,7 +1203,7 @@ export const translations = {
           hudStatus: "Visita Agendada",
           hudValue: "Aluguel Confirmado",
           prospect: "Olá, vi o anúncio do apartamento de 2 quartos no Brooklin. Ainda está disponível? Gostaria de visitar esta semana se possível.",
-          agent1: "Olá, que ótimo que se interessou! 😊 Sim, o apartamento ainda está disponível. 58 m², 2 quartos, 1 banheiro e vaga de garagem incluída. Aluguel: R$ 2.800/mês. Para organizar a visita, qual dia da semana fica melhor para você — durante a semana ou no fim de semana?",
+      agent1: "Olá, que ótimo que se interessou! 😊 Sim, o apartamento ainda está disponível. 58 m², 2 quartos, 1 banheiro e vaga de garagem incluída. Aluguel: R$ 2.800/mês. Para organizar a visita, qual dia da semana fica melhor para você — durante a semana ou no fim de semana?",
           tool1: "⚙️ Verificando disponibilidade de visitas...",
           tool1Success: "✓ Horários de visita disponíveis nesta semana",
           agent2: "Perfeito! Temos disponível nesta Quarta às 11h00 ou na Quinta às 18h00. Qual fica melhor para você?",
@@ -1259,11 +1259,11 @@ export const translations = {
           name: "Business AI Setup",
           desc: "Ative o agente nativo do WhatsApp para que seu negócio responda 24/7 sem contratar mais pessoal",
           price: "1.390.000 CLP",
-          priceSuffix: " setup + 175.000 CLP/mês manutenção",
+          priceSuffix: " setup + 175.000 CLP/mês de manutenção",
           features: [
             "Auditoria de conversas (top 30 perguntas identificadas)",
-            "Knowledge base completo escrito no tom da sua marca",
-            "Configuração estratégica do agente e regras de escalação",
+            "Knowledge base completa escrita no tom da sua marca",
+            "Configuração estratégica do agente e regras de encaminhamento",
             "30+ conversas de teste reais antes do lançamento",
             "Sessão de treinamento de 1 hora incluída",
           ],
@@ -1272,7 +1272,7 @@ export const translations = {
           name: "Agente de Onboarding & Conhecimento IA",
           desc: "Estruture o onboarding de novos funcionários e crie assistentes 24/7 treinados em seus manuais e tutoriais para resolver dúvidas instantaneamente",
           price: "1.850.000 CLP",
-          priceSuffix: " setup + 225.000 CLP/mês manutenção",
+          priceSuffix: " setup + 225.000 CLP/mês de manutenção",
           features: [
             "Estrutura interativa de planos e etapas de integração",
             "Assistente de Q&A 24/7 treinado com seus manuais e diretrizes de marca",
@@ -1285,13 +1285,13 @@ export const translations = {
           name: "Agente WhatsApp sob Medida",
           desc: "Um agente programado que se conecta aos seus sistemas reais e age — não só responde",
           price: "2.600.000+ CLP",
-          priceSuffix: " setup + 325.000 CLP/mês manutenção",
+          priceSuffix: " setup + 325.000 CLP/mês de manutenção",
           features: [
             "Agente programado sob medida (sem templates)",
             "Integração em tempo real com seus sistemas (Calendar, CRM, Sheets, Shopify)",
             "Qualificação de leads, agendamento e suporte 24/7",
-            "Knowledge base treinado com sua lógica de negócio exata",
-            "Escalação a humano com contexto completo da conversa",
+            "Knowledge base treinada com sua lógica de negócio exata",
+            "Encaminhamento para humano com contexto completo da conversa",
           ],
           popular: true,
         },
@@ -1299,7 +1299,7 @@ export const translations = {
           name: "Sistema Agêntico Empresarial",
           desc: "Arquitetura multi-agente para operações complexas — integrada com todo o seu negócio",
           price: "Sob Medida",
-          priceSuffix: " + 750.000+ CLP/mês manutenção",
+          priceSuffix: " + 750.000+ CLP/mês de manutenção",
           features: [
             "Sistema de orquestração multi-agente",
             "Agente de conhecimento interno para sua equipe",
@@ -1313,9 +1313,9 @@ export const translations = {
         {
           name: "Vibecoding 1-1 Intensivo",
           desc: "Mentoria personalizada para dominar a engenharia agêntica",
-          price: "A cotizar",
+          price: "Sob consulta",
           features: [
-            "4 assessorias 1-1 privadas (1.5h c/u)",
+            "4 mentorias 1-1 privadas (1.5h cada)",
             "Implementação direta em seus projetos reais",
             "Templates de engenharia de prompts de nível expert",
             "Gravação + código-fonte das sessões",
@@ -1325,7 +1325,7 @@ export const translations = {
         {
           name: "Mastery em Swarms Agênticos",
           desc: "Imersão profunda em sistemas multi-agentes autônomos",
-          price: "A cotizar",
+          price: "Sob consulta",
           features: [
             "8 sessões privadas em 4 semanas",
             "Construção de pipelines agênticos sob medida",
@@ -1336,7 +1336,7 @@ export const translations = {
         {
           name: "Estratégia IA Executiva",
           desc: "Roteiro de alto nível para o seu negócio",
-          price: "A cotizar",
+          price: "Sob consulta",
           features: [
             "90 min de imersão privada",
             "Auditoria de transformação e design de fluxos",
@@ -1347,7 +1347,7 @@ export const translations = {
         {
           name: "Workshops para Equipes",
           desc: "Treinamento IA sob medida para toda a sua equipe",
-          price: "A cotizar",
+          price: "Sob consulta",
           features: [
             "Roteiro para fluxos da equipe",
             "Sessões ao vivo (presencial ou remoto)",
@@ -1605,7 +1605,7 @@ export const translations = {
           "Acompanhamento: Envia apresentação executiva da BrownsOS logo após a simulação."
         ]
       },
-      resultsTitle: "Auditoria Financeira e Impacto",
+      resultsTitle: "Auditoria de Impacto Financeiro e Alavancagem Agêntica",
       lostRevenue: "Receita Perdida por Atrasos",
       lostRevenueNote: "Perda anual projetada devido à lentidão da equipe em responder e qualificar.",
       recoveredRevenue: "Receita Recuperada Mensal",
@@ -1615,7 +1615,7 @@ export const translations = {
       roiTitle: "Retorno do Investimento (ROI)",
       roiNote: "Multiplicador financeiro estimado contra o custo de implantação.",
       efficiencyLabel: "Eficiência Operacional",
-      ctaBtn: "Obter meu Blueprint & Código IA",
+      ctaBtn: "Obter Plano de Execução e Capacitação",
       whatsappTemplate: "Olá Cristian, acabei de realizar a auditoria de processos para minha {industry}. Minhas métricas são {leads} leads/mês com valor médio de {value}. Nosso tempo de resposta é {delay} e o auditor estima que podemos recuperar {recovered}/mês. Quero estruturar o blueprint do meu agente!"
     }
   },

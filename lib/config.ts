@@ -15,7 +15,13 @@ export const SITE_CONFIG = {
 
 export const WHATSAPP_URL = `https://wa.me/${SITE_CONFIG.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(SITE_CONFIG.whatsappMessage)}`;
 
+export function getWhatsAppLink(msg?: string): string {
+  const text = msg || SITE_CONFIG.whatsappMessage;
+  return `https://wa.me/${SITE_CONFIG.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;
+}
+
 export function getWhatsAppWithPackage(packageName: string): string {
   const msg = `Hola, vi su web y me interesa cotizar el paquete ${packageName}`;
   return `https://wa.me/${SITE_CONFIG.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(msg)}`;
 }
+

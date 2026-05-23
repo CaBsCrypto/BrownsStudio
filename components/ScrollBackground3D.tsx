@@ -1,1 +1,4 @@
-// Obsolete: This 3D canvas scroll component is orphaned and unused.
+// Deprecated: Unused 3D component. Removed as part of performance optimizations.
+export default function ScrollBackground3D() {
+  return null;
+}

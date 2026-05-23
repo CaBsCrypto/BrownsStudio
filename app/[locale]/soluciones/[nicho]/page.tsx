@@ -5,8 +5,9 @@ import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { ArrowLeft, CheckCircle, Calculator, Sparkles, MessageCircle, Briefcase, Award } from "lucide-react";
 import { solucionesData } from "@/lib/solucionesData";
+import { getWhatsAppLink } from "@/lib/config";
 
-const WHATSAPP_BASE = "https://wa.me/51931054302?text=";
+
 
 export default function SolucionNichePage() {
   const params = useParams();
@@ -254,9 +255,8 @@ export default function SolucionNichePage() {
               </div>
             </div>
 
-            {/* Action WhatsApp Button */}
             <a
-              href={`${WHATSAPP_BASE}${encodeURIComponent(activeProfile.ctaMsg)}`}
+              href={getWhatsAppLink(activeProfile.ctaMsg)}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2.5 py-4 px-6 rounded-xl font-bold text-sm text-black transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(0,240,255,0.3)] relative overflow-hidden group"

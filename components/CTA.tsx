@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Mail, ChevronDown, ExternalLink } from "lucide-react";
-import { SITE_CONFIG, WHATSAPP_URL, getWhatsAppWithPackage } from "@/lib/config";
+import { SITE_CONFIG, WHATSAPP_URL, getWhatsAppLink, getWhatsAppWithPackage } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 export default function CTA() {
@@ -62,11 +62,11 @@ export default function CTA() {
           {t.cta.title}
         </h2>
 
-        <p className="reveal reveal-delay-2 text-lg sm:text-xl mb-3 max-w-xl mx-auto leading-relaxed" style={{ color: "#7a7a7a" }}>
+        <p className="reveal reveal-delay-2 text-lg sm:text-xl mb-3 max-w-xl mx-auto leading-relaxed" style={{ color: "#9e9e9e" }}>
           {t.cta.sub}
         </p>
 
-        <p className="reveal reveal-delay-2 text-sm mb-4" style={{ color: "#3a3a3a" }}>
+        <p className="reveal reveal-delay-2 text-sm mb-4" style={{ color: "#7c7c7c" }}>
           {t.cta.note}
         </p>
 
@@ -75,7 +75,7 @@ export default function CTA() {
           <div className="relative w-full sm:w-auto" ref={dropdownRef}>
             <button
               onClick={() => setShowDropdown(!showDropdown)}
-              className="group flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-sm text-black hover:scale-105 transition-all duration-300 w-full sm:w-auto justify-center"
+              className="group flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-sm text-black hover:scale-105 active:scale-[0.97] transition-all duration-300 w-full sm:w-auto justify-center"
               style={{
                 background: "linear-gradient(135deg, #c6c6c7, #939eb5)",
                 boxShadow:  "0 0 28px rgba(198,198,199,0.12)",
@@ -92,7 +92,7 @@ export default function CTA() {
                 {t.cta.contactOptions.map((opt: { label: string; msg: string }, i: number) => (
                   <a
                     key={i}
-                    href={`${WHATSAPP_URL}&text=${encodeURIComponent(opt.msg)}`}
+                    href={getWhatsAppLink(opt.msg)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between gap-4 px-4 py-3 rounded-xl text-sm text-[#e5e5e5] hover:bg-white/5 transition-colors group/item"
@@ -107,7 +107,7 @@ export default function CTA() {
           </div>
           <a
             href={`mailto:${SITE_CONFIG.email}?subject=${encodeURIComponent(t.cta.emailSubject)}&body=${encodeURIComponent(t.cta.emailBody)}`}
-            className="group flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-sm transition-all duration-300 w-full sm:w-auto justify-center"
+            className="group flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-sm hover:scale-105 active:scale-[0.97] transition-all duration-300 w-full sm:w-auto justify-center"
             style={{ border: "1px solid rgba(0,240,255,0.18)", color: "rgba(0,240,255,0.7)" }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,240,255,0.45)";
@@ -126,7 +126,7 @@ export default function CTA() {
         {/* Trust signals */}
         <div
           className="reveal reveal-delay-4 flex flex-col sm:flex-row items-center justify-center gap-6 text-xs uppercase tracking-widest"
-          style={{ color: "rgba(0,240,255,0.25)", fontFamily: "var(--font-jet-brains-mono), monospace" }}
+          style={{ color: "rgba(0,240,255,0.48)", fontFamily: "var(--font-jet-brains-mono), monospace" }}
         >
           <span>{t.cta.check1}</span>
           <span>{t.cta.check2}</span>

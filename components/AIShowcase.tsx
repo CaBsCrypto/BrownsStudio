@@ -443,7 +443,7 @@ export default function AIShowcase() {
                     <h3 className="font-display font-semibold text-base mb-2" style={{ color: "#e5e5e5" }}>
                       {cat.title}
                     </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: "#6a6a6a" }}>
+                    <p className="text-sm leading-relaxed" style={{ color: "#9e9e9e" }}>
                       {cat.desc}
                     </p>
                   </div>

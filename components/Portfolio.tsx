@@ -241,7 +241,7 @@ export default function Portfolio() {
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 i === activeIndex
                   ? "w-6 bg-[#47c4ff]"
-                  : "w-1.5 bg-[#262626] hover:bg-[#484848]"
+                  : "w-1.5 bg-white/15 hover:bg-white/40"
               }`}
             />
           ))}
@@ -249,14 +249,14 @@ export default function Portfolio() {
 
         {/* Bottom CTA */}
         <div className="reveal text-center">
-          <p className="text-[#5a5a5a] text-sm mb-4">
+          <p className="text-[#9e9e9e] text-sm mb-4">
             {t.portfolio.cta}
           </p>
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-black font-semibold hover:scale-105 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-black font-semibold hover:scale-105 active:scale-[0.97] transition-all duration-300"
             style={{
               background: "linear-gradient(135deg, #c6c6c7, #939eb5)",
               boxShadow: "0 0 24px rgba(198,198,199,0.15)",

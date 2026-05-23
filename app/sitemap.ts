@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_CONFIG } from "@/lib/config";
 import { proyectos } from "@/data/proyectos";
+import { solucionesData } from "@/lib/solucionesData";
 
 const LOCALES = ["es", "en", "pt"] as const;
 
@@ -24,6 +25,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   }));
 
+  // Niche solutions (/[locale]/soluciones/[nicho])
+  const niches = Object.keys(solucionesData);
+  const solucionesRoutes: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
+    niches.map((nicho) => ({
+      url: `${base}/${locale}/soluciones/${nicho}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    }))
+  );
+
+  // Training pages (/[locale]/formacion)
+  const formacionRoutes: MetadataRoute.Sitemap = LOCALES.map((locale) => ({
+    url: `${base}/${locale}/formacion`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
   // Case studies (/[locale]/proyecto/[slug])
   const proyectoRoutes: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
     proyectos.map((p) => ({
@@ -34,5 +54,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
-  return [...localeRoutes, ...proyectoRoutes];
+  return [
+    ...localeRoutes,
+    ...solucionesRoutes,
+    ...formacionRoutes,
+    ...proyectoRoutes,
+  ];
 }

@@ -1,8 +1,4 @@
-"use client";
-import dynamic from "next/dynamic";
-
-const CubesBackground = dynamic(() => import("./CubesBackground"), { ssr: false });
-
+// Deprecated: Unused 3D component. Removed as part of performance optimizations.
 export default function CubesPortal() {
-  return <CubesBackground />;
+  return null;
 }

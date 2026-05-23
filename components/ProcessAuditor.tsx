@@ -14,7 +14,7 @@ import {
   DollarSign 
 } from "lucide-react";
 import { useLang } from "@/lib/i18n/LanguageContext";
-import { WHATSAPP_URL } from "@/lib/config";
+import { WHATSAPP_URL, getWhatsAppLink as getDynamicWhatsAppLink } from "@/lib/config";
 
 type IndustryType = "dental" | "aesthetic" | "legal" | "realEstate" | "ecommerce" | "b2b";
 type DelayType = "instant" | "moderate" | "slow" | "nextDay";
@@ -150,7 +150,7 @@ export default function ProcessAuditor() {
       .replace("{delay}", delayLabelText)
       .replace("{recovered}", formatCurrency(recoveredRevenue));
 
-    return `${WHATSAPP_URL}&text=${encodeURIComponent(message)}`;
+    return getDynamicWhatsAppLink(message);
   };
 
   const efficiency = getEfficiencyRating(delay);
@@ -239,7 +239,7 @@ export default function ProcessAuditor() {
             <div className="space-y-8">
               {/* Industry Selector Tabs */}
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-[#727278] mb-4 font-semibold">
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#9e9e9e] mb-4 font-semibold">
                   {copy.industryLabel}
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
@@ -253,7 +253,7 @@ export default function ProcessAuditor() {
                         className={`flex items-center gap-2 px-3 py-3 rounded-xl border text-[11px] font-semibold transition-all duration-300 ${
                           active
                             ? "bg-tertiary/10 border-tertiary/30 text-white shadow-[0_4px_12px_rgba(0,240,255,0.05)]"
-                            : "bg-[#12121a]/30 border-white/5 text-[#5e5e66] hover:border-white/10 hover:text-white/70"
+                            : "bg-[#12121a]/30 border-white/5 text-[#9e9e9e] hover:border-white/10 hover:text-white/70"
                         }`}
                       >
                         <Icon size={13} className={active ? "text-tertiary" : "text-current"} />
@@ -267,7 +267,7 @@ export default function ProcessAuditor() {
               {/* Slider 1: Leads */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center text-xs font-mono">
-                  <span className="uppercase tracking-wider text-[#9e9e9e] font-semibold">{copy.leadsLabel}</span>
+                  <span className="uppercase tracking-wider text-[#e5e5e5] font-semibold">{copy.leadsLabel}</span>
                   <span className="text-white font-extrabold bg-[#12121a]/60 px-3 py-1 rounded-lg border border-white/5">
                     {leads}
                   </span>
@@ -289,7 +289,7 @@ export default function ProcessAuditor() {
               {/* Slider 2: Average Deal Value */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center text-xs font-mono">
-                  <span className="uppercase tracking-wider text-[#9e9e9e] font-semibold">{copy.valueLabel}</span>
+                  <span className="uppercase tracking-wider text-[#e5e5e5] font-semibold">{copy.valueLabel}</span>
                   <span className="text-white font-extrabold bg-[#12121a]/60 px-3 py-1 rounded-lg border border-white/5">
                     {formatCurrency(value)}
                   </span>
@@ -310,7 +310,7 @@ export default function ProcessAuditor() {
 
               {/* Selector 3: Delay Options (Minimalist 2x2 Grid) */}
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-[#727278] mb-3 font-semibold">
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#9e9e9e] mb-3 font-semibold">
                   {copy.delayLabel}
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -341,12 +341,12 @@ export default function ProcessAuditor() {
                             {parsed.title}
                           </span>
                           {parsed.time && (
-                            <span className="text-[9px] font-mono text-[#5e5e66]">
+                            <span className="text-[9px] font-mono text-[#9e9e9e]">
                               {parsed.time}
                             </span>
                           )}
                         </div>
-                        <span className="text-[10px] text-[#5e5e66] leading-relaxed">
+                        <span className="text-[10px] text-[#9e9e9e] leading-relaxed">
                           {parsed.subtitle}
                         </span>
                       </button>
@@ -356,9 +356,9 @@ export default function ProcessAuditor() {
               </div>
             </div>
 
-            {/* Timeline Vertical Workflow */}
+            {/* Workflow block */}
             <div className="mt-10 p-5 rounded-2xl border border-white/5 bg-[#12121a]/15">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-[#727278] mb-4 font-semibold flex items-center gap-2">
+              <h4 className="text-xs font-mono uppercase tracking-wider text-[#9e9e9e] mb-4 font-semibold flex items-center gap-2">
                 <Clock size={12} className="text-tertiary" />
                 {copy.workflowTitle}
               </h4>
@@ -373,7 +373,7 @@ export default function ProcessAuditor() {
 
                   return (
                     <div key={idx} className="flex gap-4 relative z-10 items-start">
-                      <div className="w-6 h-6 rounded-full bg-[#0a0a0f] border border-white/10 flex items-center justify-center flex-shrink-0 text-[10px] font-mono text-[#727278]">
+                      <div className="w-6 h-6 rounded-full bg-[#0a0a0f] border border-white/10 flex items-center justify-center flex-shrink-0 text-[10px] font-mono text-[#9e9e9e]">
                         {idx + 1}
                       </div>
                       <div className="pt-0.5">
@@ -382,7 +382,7 @@ export default function ProcessAuditor() {
                             {stepTitle}
                           </h5>
                         )}
-                        <p className="text-[10px] leading-relaxed text-[#727278]">
+                        <p className="text-[10px] leading-relaxed text-[#9e9e9e]">
                           {stepDesc ? stepDesc.trim() : step}
                         </p>
                       </div>
@@ -398,7 +398,7 @@ export default function ProcessAuditor() {
           <div className="lg:col-span-5 flex flex-col justify-between p-6 sm:p-8 rounded-3xl border border-white/5 bg-[#0a0a0f]/80 backdrop-blur-2xl relative shadow-2xl">
             
             <div className="space-y-8">
-              <h3 className="text-sm font-mono uppercase tracking-wider text-[#727278] font-semibold border-b border-white/[0.04] pb-4 flex items-center gap-2">
+              <h3 className="text-sm font-mono uppercase tracking-wider text-[#9e9e9e] font-semibold border-b border-white/[0.04] pb-4 flex items-center gap-2">
                 <TrendingUp size={14} className="text-tertiary" />
                 {copy.resultsTitle}
               </h3>
@@ -432,7 +432,7 @@ export default function ProcessAuditor() {
                     <span className="text-3xl font-display font-extrabold text-white">
                       {efficiency}%
                     </span>
-                    <span className="text-[9px] font-mono uppercase tracking-widest text-[#727278] font-bold mt-1">
+                    <span className="text-[9px] font-mono uppercase tracking-widest text-[#9e9e9e] font-bold mt-1">
                       {copy.efficiencyLabel}
                     </span>
                   </div>
@@ -446,13 +446,13 @@ export default function ProcessAuditor() {
                     <DollarSign size={15} />
                   </div>
                   <div>
-                    <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#727278] font-semibold mb-0.5">
+                    <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#9e9e9e] font-semibold mb-0.5">
                       {copy.lostRevenue}
                     </h4>
                     <p className="text-xl sm:text-2xl font-display font-extrabold text-white mb-0.5">
-                      {formatCurrency(lostRevenue * 12)} <span className="text-[10px] text-[#5e5e66] font-mono">/ {lang === "en" ? "yr" : "año"}</span>
+                      {formatCurrency(lostRevenue * 12)} <span className="text-[10px] text-[#9e9e9e] font-mono">/ {lang === "en" ? "yr" : "año"}</span>
                     </p>
-                    <p className="text-[9px] text-[#5e5e66] leading-normal">
+                    <p className="text-[9px] text-[#9e9e9e] leading-normal">
                       {copy.lostRevenueNote}
                     </p>
                   </div>
@@ -465,13 +465,13 @@ export default function ProcessAuditor() {
                   <TrendingUp size={15} />
                 </div>
                 <div>
-                  <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#727278] font-semibold mb-0.5">
+                  <h4 className="text-[10px] font-mono uppercase tracking-wider text-[#9e9e9e] font-semibold mb-0.5">
                     {copy.recoveredRevenue}
                   </h4>
                   <p className="text-xl sm:text-2xl font-display font-extrabold text-[#10b981] mb-0.5">
-                    {formatCurrency(recoveredRevenue)} <span className="text-[10px] text-[#5e5e66] font-mono">/ {lang === "en" ? "mo" : "mes"}</span>
+                    {formatCurrency(recoveredRevenue)} <span className="text-[10px] text-[#9e9e9e] font-mono">/ {lang === "en" ? "mo" : "mes"}</span>
                   </p>
-                  <p className="text-[9px] text-[#5e5e66] leading-normal">
+                  <p className="text-[9px] text-[#9e9e9e] leading-normal">
                     {copy.recoveredRevenueNote}
                   </p>
                 </div>
@@ -480,22 +480,22 @@ export default function ProcessAuditor() {
               {/* KPI Stats Grid */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 rounded-2xl border border-white/5 bg-[#12121a]/20 text-center">
-                  <h5 className="text-[9px] font-mono uppercase tracking-wider text-[#727278] mb-1 font-semibold">
+                  <h5 className="text-[9px] font-mono uppercase tracking-wider text-[#9e9e9e] mb-1 font-semibold">
                     {copy.hoursSaved}
                   </h5>
                   <p className="text-xl font-display font-extrabold text-white">
                     {hoursSaved}h
                   </p>
-                  <p className="text-[8px] text-[#5e5e66] mt-0.5 leading-tight">{copy.hoursSavedNote}</p>
+                  <p className="text-[8px] text-[#9e9e9e] mt-0.5 leading-tight">{copy.hoursSavedNote}</p>
                 </div>
                 <div className="p-4 rounded-2xl border border-white/5 bg-[#12121a]/20 text-center">
-                  <h5 className="text-[9px] font-mono uppercase tracking-wider text-[#727278] mb-1 font-semibold">
+                  <h5 className="text-[9px] font-mono uppercase tracking-wider text-[#9e9e9e] mb-1 font-semibold">
                     {copy.roiTitle}
                   </h5>
                   <p className="text-xl font-display font-extrabold text-[#00f0ff]">
                     {roiMultiplier}x
                   </p>
-                  <p className="text-[8px] text-[#5e5e66] mt-0.5 leading-tight">{copy.roiNote}</p>
+                  <p className="text-[8px] text-[#9e9e9e] mt-0.5 leading-tight">{copy.roiNote}</p>
                 </div>
               </div>
             </div>

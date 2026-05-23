@@ -105,7 +105,7 @@ export default function Navbar() {
               <button
                 onClick={() => handleNavClick("#servicios")}
                 className={`relative text-xs font-medium uppercase tracking-widest transition-all duration-300 cursor-pointer group ${
-                  activeSection === "servicios" ? "text-[#e5e5e5]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+                  activeSection === "servicios" ? "text-[#e5e5e5]" : "text-zinc-400 hover:text-white"
                 }`}
               >
                 {t.nav.services}
@@ -118,17 +118,17 @@ export default function Navbar() {
 
               {/* Solutions Dropdown */}
               <div 
-                className="relative"
+                className="relative pb-2"
                 onMouseEnter={() => setDropdownOpen(true)}
                 onMouseLeave={() => setDropdownOpen(false)}
               >
                 <button
                   className={`flex items-center gap-1 text-xs font-medium uppercase tracking-widest transition-all duration-300 cursor-pointer group ${
-                    dropdownOpen || activeSection === "soluciones" ? "text-[#00f0ff]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+                    dropdownOpen || activeSection === "soluciones" ? "text-[#00f0ff]" : "text-zinc-400 hover:text-white"
                   }`}
                 >
                   {nav.solutions ?? "Soluciones"}
-                  <ChevronDown size={12} className={`transition-transform duration-300 ${dropdownOpen ? "rotate-180 text-[#00f0ff]" : "text-[#5a5a5a] group-hover:text-[#9e9e9e]"}`} />
+                  <ChevronDown size={12} className={`transition-transform duration-300 ${dropdownOpen ? "rotate-180 text-[#00f0ff]" : "text-zinc-400 group-hover:text-white"}`} />
                 </button>
                 
                 {/* Premium Glassmorphic Dropdown Menu */}
@@ -172,7 +172,7 @@ export default function Navbar() {
                       key={link.href}
                       href={link.href}
                       className={`relative text-xs font-medium uppercase tracking-widest transition-all duration-300 group ${
-                        isActive ? "text-[#e5e5e5]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+                        isActive ? "text-[#e5e5e5]" : "text-zinc-400 hover:text-white"
                       }`}
                     >
                       {link.label}
@@ -185,7 +185,7 @@ export default function Navbar() {
                     key={link.href}
                     onClick={() => handleNavClick(link.href)}
                     className={`relative text-xs font-medium uppercase tracking-widest transition-all duration-300 cursor-pointer group ${
-                      isActive ? "text-[#e5e5e5]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+                      isActive ? "text-[#e5e5e5]" : "text-zinc-400 hover:text-white"
                     }`}
                   >
                     {link.label}
@@ -214,14 +214,14 @@ export default function Navbar() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden sm:flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-black hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(198,198,199,0.15)]"
+                className="hidden sm:flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-black hover:scale-105 active:scale-[0.97] transition-all duration-300 shadow-[0_0_20px_rgba(198,198,199,0.15)]"
                 style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)" }}
               >
                 {t.nav.cta}
               </a>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden p-2 text-[#5a5a5a] hover:text-[#e5e5e5] transition-colors"
+                className="lg:hidden p-2 text-zinc-400 hover:text-[#e5e5e5] transition-colors"
                 aria-label="Open menu"
               >
                 {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -252,7 +252,7 @@ export default function Navbar() {
             <button
               onClick={() => handleNavClick("#servicios")}
               className={`text-left py-4 text-sm font-medium uppercase tracking-widest transition-colors duration-200 cursor-pointer ${
-                activeSection === "servicios" ? "text-[#00f0ff]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+                activeSection === "servicios" ? "text-[#00f0ff]" : "text-zinc-400 hover:text-white"
               }`}
               style={{ borderBottom: "1px solid rgba(72,72,72,0.12)" }}
             >
@@ -263,7 +263,7 @@ export default function Navbar() {
             <div className="py-2" style={{ borderBottom: "1px solid rgba(72,72,72,0.12)" }}>
               <button
                 onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
-                className="w-full flex items-center justify-between text-left py-2 text-sm font-medium uppercase tracking-widest text-[#5a5a5a] hover:text-[#e5e5e5] transition-colors"
+                className="w-full flex items-center justify-between text-left py-2 text-sm font-medium uppercase tracking-widest text-zinc-400 hover:text-[#e5e5e5] transition-colors"
               >
                 <span>{nav.solutions ?? "Soluciones"}</span>
                 <ChevronDown size={14} className={`transition-transform duration-300 ${mobileSolutionsOpen ? "rotate-180 text-[#00f0ff]" : ""}`} />
@@ -304,7 +304,7 @@ export default function Navbar() {
                     key={link.href}
                     href={link.href}
                     className={`text-left py-4 text-sm font-medium uppercase tracking-widest transition-colors duration-200 ${
-                      isActive ? "text-[#00f0ff]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+                      isActive ? "text-[#00f0ff]" : "text-zinc-400 hover:text-white"
                     }`}
                     style={{ borderBottom: "1px solid rgba(72,72,72,0.12)" }}
                     onClick={() => setMobileOpen(false)}
@@ -318,7 +318,7 @@ export default function Navbar() {
                   key={link.href}
                   onClick={() => handleNavClick(link.href)}
                   className={`text-left py-4 text-sm font-medium uppercase tracking-widest transition-colors duration-200 cursor-pointer ${
-                    isActive ? "text-[#00f0ff]" : "text-[#5a5a5a] hover:text-[#9e9e9e]"
+                    isActive ? "text-[#00f0ff]" : "text-zinc-400 hover:text-white"
                   }`}
                   style={{ borderBottom: "1px solid rgba(72,72,72,0.12)", animationDelay: `${(i + 1) * 0.05}s` }}
                 >
@@ -330,7 +330,7 @@ export default function Navbar() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 flex items-center justify-center gap-2 px-6 py-3 rounded-full text-black font-semibold text-sm hover:scale-105 transition-all duration-300"
+              className="mt-8 flex items-center justify-center gap-2 px-6 py-3 rounded-full text-black font-semibold text-sm hover:scale-105 active:scale-[0.97] transition-all duration-300"
               style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)" }}
               onClick={() => setMobileOpen(false)}
             >

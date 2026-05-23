@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Sparkles, ChevronDown, ExternalLink, Activity, CheckCircle } from "lucide-react";
-import { WHATSAPP_URL } from "@/lib/config";
+import { WHATSAPP_URL, getWhatsAppLink } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 const CLIENT_LOGOS = [
@@ -264,7 +264,7 @@ export default function Hero() {
               <div className="relative w-full sm:w-auto animate-in" ref={dropdownRef}>
                 <button
                   onClick={() => setShowDropdown(!showDropdown)}
-                  className="group flex items-center gap-2.5 px-8 py-4 rounded-full font-bold text-sm text-black transition-all duration-300 w-full sm:w-auto justify-center relative overflow-hidden"
+                  className="group flex items-center gap-2.5 px-8 py-4 rounded-full font-bold text-sm text-black transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] w-full sm:w-auto justify-center relative overflow-hidden"
                   style={{
                     background: "linear-gradient(135deg, #00f0ff, #00c8d8)",
                     boxShadow: "0 0 30px rgba(0, 240, 255, 0.35)",
@@ -281,7 +281,7 @@ export default function Hero() {
                     {t.cta.contactOptions.map((opt: { label: string; msg: string }, i: number) => (
                       <a
                         key={i}
-                        href={`${WHATSAPP_URL}&text=${encodeURIComponent(opt.msg)}`}
+                        href={getWhatsAppLink(opt.msg)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center justify-between gap-4 px-4 py-3.5 rounded-xl text-xs sm:text-sm text-[#e5e5e5] hover:bg-white/5 transition-colors group/item font-medium"
@@ -297,7 +297,7 @@ export default function Hero() {
 
               <button
                 onClick={() => document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth" })}
-                className="flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm transition-all duration-300 w-full sm:w-auto justify-center border border-white/10 text-[#9e9e9e] hover:border-tertiary/50 hover:text-white hover:bg-tertiary/5 hover:shadow-[0_0_20px_rgba(0,240,255,0.12)]"
+                className="flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full sm:w-auto justify-center border border-white/10 text-[#9e9e9e] hover:border-tertiary/50 hover:text-white hover:bg-tertiary/5 hover:shadow-[0_0_20px_rgba(0,240,255,0.12)]"
               >
                 {t.hero.cta2}
               </button>
@@ -390,7 +390,7 @@ export default function Hero() {
                     <div className="text-[8px] text-[#9e9e9e] uppercase tracking-wider font-bold mb-1">
                       {activeHudLabels.status}
                     </div>
-                    <div className={`text-[10px] font-extrabold font-mono transition-all duration-300 ${chatStep >= 4 ? 'text-tertiary shadow-[0_0_10px_rgba(0,240,255,0.2)]' : 'text-white/20'}`}>
+                    <div className={`text-[10px] font-extrabold font-mono transition-all duration-300 ${chatStep >= 4 ? 'text-tertiary shadow-[0_0_10px_rgba(0,240,255,0.2)]' : 'text-white/35'}`}>
                       {currentSim.hudStatus}
                     </div>
                   </div>
@@ -398,7 +398,7 @@ export default function Hero() {
                     <div className="text-[8px] text-[#9e9e9e] uppercase tracking-wider font-bold mb-1">
                       {activeHudLabels.value}
                     </div>
-                    <div className={`text-[10px] font-extrabold font-mono transition-all duration-300 ${chatStep >= 7 ? 'text-[#10b981] drop-shadow-[0_0_8px_rgba(16,185,129,0.3)] font-semibold' : 'text-white/20'}`}>
+                    <div className={`text-[10px] font-extrabold font-mono transition-all duration-300 ${chatStep >= 7 ? 'text-[#10b981] drop-shadow-[0_0_8px_rgba(16,185,129,0.3)] font-semibold' : 'text-white/35'}`}>
                       {currentSim.hudValue}
                     </div>
                   </div>

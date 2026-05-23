@@ -131,7 +131,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
         {proyecto.tecnologias.map((tech) => (
           <span
             key={tech}
-            className="px-2 py-0.5 rounded text-xs text-[#5a5a5a] group-hover:text-[#9e9e9e] transition-colors duration-300"
+            className="px-2 py-0.5 rounded text-xs text-[#9e9e9e] group-hover:text-[#e5e5e5] transition-colors duration-300"
             style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(72,72,72,0.12)" }}
           >
             {tech}
@@ -143,7 +143,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
       {!proyecto.comingSoon ? (
         <div className="pt-4" style={{ borderTop: "1px solid rgba(72,72,72,0.12)" }}>
           <Quote size={12} className="mb-1" style={{ color: "rgba(198,198,199,0.25)" }} fill="currentColor" />
-          <p className="text-[#5a5a5a] text-xs italic leading-relaxed mb-3">{proyecto.quote[lang]}</p>
+          <p className="text-[#9e9e9e] text-xs italic leading-relaxed mb-3">{proyecto.quote[lang]}</p>
           {/* Resultado metric chip */}
           <div
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold"
@@ -159,7 +159,7 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
         </div>
       ) : (
         <div className="pt-4" style={{ borderTop: "1px solid rgba(72,72,72,0.12)" }}>
-          <p className="text-[#5a5a5a] text-xs italic">{proyecto.resultado[lang]}</p>
+          <p className="text-[#9e9e9e] text-xs italic">{proyecto.resultado[lang]}</p>
         </div>
       )}
     </div>

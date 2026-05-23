@@ -1,16 +1,20 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import SobreMi from "@/components/SobreMi";
-import Pricing from "@/components/Pricing";
-import Portfolio from "@/components/Portfolio";
 import CasosDeUso from "@/components/CasosDeUso";
-import ProcessAuditor from "@/components/ProcessAuditor";
-import Testimonios from "@/components/Testimonios";
-import FAQ from "@/components/FAQ";
-import CTA from "@/components/CTA";
+import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import BrownsOSLoader from "@/components/BrownsOSLoader";
 import { notFound } from "next/navigation";
+import dynamic from "next/dynamic";
+
+// Below-the-fold components are loaded dynamically with server-side pre-rendering (ssr: true)
+const ProcessAuditor = dynamic(() => import("@/components/ProcessAuditor"), { ssr: true });
+const Portfolio = dynamic(() => import("@/components/Portfolio"), { ssr: true });
+const Pricing = dynamic(() => import("@/components/Pricing"), { ssr: true });
+const Testimonios = dynamic(() => import("@/components/Testimonios"), { ssr: true });
+const SobreMi = dynamic(() => import("@/components/SobreMi"), { ssr: true });
+const FAQ = dynamic(() => import("@/components/FAQ"), { ssr: true });
+const CTA = dynamic(() => import("@/components/CTA"), { ssr: true });
 
 const LOCALES = ["en", "es", "pt"] as const;
 
@@ -42,6 +46,7 @@ export default async function LocalePage({
         <SobreMi />
         <FAQ />
         <CTA />
+        <Footer />
         <WhatsAppButton />
       </div>
     </main>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { MessageCircle, X, ExternalLink, ChevronRight } from "lucide-react";
-import { WHATSAPP_URL } from "@/lib/config";
+import { WHATSAPP_URL, getWhatsAppLink } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 export default function WhatsAppButton() {
@@ -50,7 +50,7 @@ export default function WhatsAppButton() {
           {t.cta.contactOptions.map((opt, i) => (
             <a
               key={i}
-              href={`${WHATSAPP_URL}&text=${encodeURIComponent(opt.msg)}`}
+              href={getWhatsAppLink(opt.msg)}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}

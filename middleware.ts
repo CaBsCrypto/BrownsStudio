@@ -7,6 +7,15 @@ const DEFAULT_LOCALE = "es";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // ── Admin API protection ───────────────────────────────────────────────────
+  if (pathname.startsWith("/api/admin") && pathname !== "/api/admin/auth") {
+    const token = request.cookies.get("admin_token")?.value;
+    const expected = process.env.ADMIN_SECRET;
+    if (!token || !expected || token !== expected) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+  }
+
   // ── Admin protection ───────────────────────────────────────────────────────
   if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
     const token = request.cookies.get("admin_token")?.value;
@@ -49,5 +58,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/admin/:path*"],
+  matcher: ["/", "/admin/:path*", "/api/admin/:path*"],
 };
+
