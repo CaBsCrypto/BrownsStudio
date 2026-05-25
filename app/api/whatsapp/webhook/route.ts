@@ -1,6 +1,6 @@
 // ── Meta WhatsApp Webhook — GET (verification) + POST (incoming messages) ────
 import { after } from "next/server";
-import { verifyWebhookSignature } from "@/lib/whatsapp/verify";
+import { verifyWebhookSignature, verifyKapsoSignature } from "@/lib/whatsapp/verify";
 import { processMessage } from "@/lib/bot/handler";
 import { getBusinessByPhoneId, getBusinessConfig, getFallbackBusinessConfig } from "@/lib/db/businesses";
 import type { WhatsAppWebhookPayload } from "@/lib/whatsapp/types";
@@ -28,11 +28,20 @@ export async function GET(request: Request): Promise<Response> {
 export async function POST(request: Request): Promise<Response> {
   // Read raw body for signature verification (MUST happen before json())
   const rawBody = Buffer.from(await request.arrayBuffer());
-  const signature = request.headers.get("x-hub-signature-256");
+  
+  const metaSignature = request.headers.get("x-hub-signature-256");
+  const kapsoSignature = request.headers.get("x-webhook-signature");
 
-  // Verify Meta signature
-  if (!verifyWebhookSignature(rawBody, signature)) {
-    console.warn("[WhatsApp Webhook] Invalid signature");
+  // Verify signature (supports direct Meta or forwarded Kapso)
+  let isAuthorized = false;
+  if (kapsoSignature) {
+    isAuthorized = verifyKapsoSignature(rawBody, kapsoSignature);
+  } else if (metaSignature) {
+    isAuthorized = verifyWebhookSignature(rawBody, metaSignature);
+  }
+
+  if (!isAuthorized) {
+    console.warn("[WhatsApp Webhook] Invalid signature (Meta or Kapso)");
     return new Response("Forbidden", { status: 403 });
   }
 
