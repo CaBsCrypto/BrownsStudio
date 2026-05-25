@@ -49,20 +49,20 @@ export const translations = {
           agent3: "Amazing! 🚀 You’re all set for this Thursday at 4:30 PM with Dr. Silva. I’ve sent the confirmation and all details to your email and WhatsApp. Looking forward to seeing you!"
         },
         {
-          tabName: "Aesthetic",
-          hudActive: "Dermo AI",
-          hudLead: "VIP Client",
-          hudStatus: "Assessment Booked",
-          hudValue: "$120,000",
-          prospect: "Hi, I wanted to ask about the facial rejuvenation treatment with Botox and fillers. How much does it cost and do you have slots this week?",
-          agent1: "Hi! Botox and fillers are a great combo for natural rejuvenation 😊 The facial assessment starts from $120,000 (subject to evaluation). Do you have a preference for morning or afternoon this week? Let me check Dr. Rossi’s availability...",
-          tool1: "⚙️ Verifying dermatology schedule...",
-          tool1Success: "✓ VIP slots available in calendar",
-          agent2: "Dr. Rossi has openings this Friday at 11:00 AM or 3:30 PM. Which one feels right for you?",
-          prospect2: "3:30 PM works perfectly for me.",
-          tool2: "⚙️ Blocking VIP slot & sending prep guide...",
-          tool2Success: "✓ Session reserved (Ref. $120,000) & SMS sent",
-          agent3: "You’re confirmed! ✨ This Friday at 3:30 PM with Dr. Rossi. I’ve already sent your preparation guide via WhatsApp. We’re looking forward to seeing you!"
+          tabName: "Legal",
+          hudActive: "Legal AI",
+          hudLead: "Potential Client",
+          hudStatus: "Consultation Scheduled",
+          hudValue: "$200,000",
+          prospect: "Hi, I need assistance setting up a new company and understanding the legal requirements. Can we schedule a consultation this week?",
+          agent1: "Absolutely! I can guide you through the company formation process. Let me check our lawyers' availability for a meeting.",
+          tool1: "⚙️ Checking lawyer schedule...",
+          tool1Success: "✓ Available slots found for Thursday",
+          agent2: "We have a slot on Thursday at 10:00 AM with our senior counsel. Does that work for you?",
+          prospect2: "Yes, Thursday 10 AM works.",
+          tool2: "⚙️ Booking consultation & sending brief...",
+          tool2Success: "✓ Consultation booked and brief sent",
+          agent3: "Your consultation is confirmed for Thursday at 10 AM. I've sent the meeting details and a preparation brief to your email. Looking forward to assisting you!"
         },
         {
           tabName: "Real Estate",
@@ -191,8 +191,8 @@ export const translations = {
           ],
         },
         {
-          name: "El Capacitador IA (AI Onboarding & Process Agent)",
-          desc: "WhatsApp team onboarding and operational process agent. Resolves internal queries in text, image, and voice using an Obsidian-style structured wiki and supervisor escalation.",
+          name: "El Capacitador IA",
+          desc: "WhatsApp team onboarding and operational process agent. Resolves queries in text, image, and voice using an Obsidian-style structured wiki.",
           price: "1,850,000 CLP",
           priceSuffix: " setup + 225,000 CLP/mo maintenance",
           features: [
@@ -597,20 +597,20 @@ export const translations = {
           agent3: "¡Perfecto, estás agendado! 🚀 Cita confirmada para este Jueves a las 4:30 PM con la Dra. Silva. Acabo de enviarte la confirmación por correo y WhatsApp con todas las indicaciones. ¡Nos vemos!"
         },
         {
-          tabName: "Estética",
-          hudActive: "Dermo AI",
-          hudLead: "Cliente VIP",
-          hudStatus: "Evaluación Agendada",
-          hudValue: "$120.000",
-          prospect: "Buenas, quería consultar por el tratamiento de rejuvenecimiento facial con bótox y ácido hialurónico. ¿Qué costo tiene y si tienen disponibilidad esta semana?",
-          agent1: "¡Hola, qué bueno! El bótox con ácido hialurónico es un combo increíble 😊 La sesión de evaluación estética inicia desde $120.000 (sujeto a evaluación). ¿Te acomoda más la mañana o la tarde esta semana? Dejáme ver los cupos del Dr. Rossi...",
-          tool1: "⚙️ Verificando agenda dermatológica...",
-          tool1Success: "✓ Slots VIP disponibles en agenda",
-          agent2: "El Dr. Rossi tiene disponible este Viernes a las 11:00 AM o a las 3:30 PM. ¿Cuál de los dos prefieres?",
-          prospect2: "El de las 3:30 PM está excelente.",
-          tool2: "⚙️ Bloqueando slot VIP y enviando links de preparación...",
-          tool2Success: "✓ Evaluación reservada (Ref. $120.000) & SMS enviado",
-          agent3: "¡Confirmado! ✨ Tu evaluación estética quedó reservada para este Viernes a las 3:30 PM con el Dr. Rossi. Ya te envié por WhatsApp las recomendaciones previas al tratamiento. ¡Te esperamos con todo!"
+          tabName: "Legal",
+          hudActive: "Legal IA",
+          hudLead: "Cliente Potencial",
+          hudStatus: "Consulta Programada",
+          hudValue: "$200.000",
+          prospect: "Hola, necesito ayuda para crear una nueva empresa y entender los requisitos legales. ¿Podemos programar una consulta esta semana?",
+          agent1: "¡Claro! Puedo guiarte en el proceso de constitución de la empresa. Déjame verificar la disponibilidad de nuestros abogados para una reunión.",
+          tool1: "⚙️ Verificando agenda de abogados...",
+          tool1Success: "✓ Horarios disponibles encontrados para el jueves",
+          agent2: "Tenemos una cita el jueves a las 10:00 con nuestro socio senior. ¿Te sirve?",
+          prospect2: "Sí, el jueves a las 10 AM funciona.",
+          tool2: "⚙️ Reservando consulta y enviando brief...",
+          tool2Success: "✓ Consulta reservada y brief enviado",
+          agent3: "Tu consulta está confirmada para el jueves a las 10 AM. He enviado los detalles de la reunión y un brief de preparación a tu correo. ¡Esperamos poder asistirte!"
         },
         {
           tabName: "Inmobiliaria",
@@ -665,22 +665,22 @@ export const translations = {
           agent3: "¡Hecho! Cotización formal **#COT-8849** generada y enviada a tu correo corporativo. También te la dejé lista en tu WhatsApp. ¡Mucho éxito con ese cierre de venta corporativa! 🚀"
         },
         {
-          tabName: "Protocolo Médico",
-          hudActive: "Salud Ops AI",
-          hudLead: "Equipo Recepción",
-          hudStatus: "Código Rojo Activo",
-          hudValue: "Médico Alertado",
-          prospectLabel: "Recepcionista (Equipo)",
+          tabName: "Soporte de Manuales",
+          hudActive: "Support AI",
+          hudLead: "Equipo de Soporte",
+          hudStatus: "Consulta en Progreso",
+          hudValue: "Manual Referenciado",
+          prospectLabel: "Operario (Soporte)",
           agentLabel: "Capacitador IA",
-          prospect: "🎤 [Audio - 12s] Hola, acabo de recibir un paciente con dolor torácico agudo pero no tiene cita agendada y todas las consultas están llenas. ¿Qué protocolo de emergencia debo activar según el manual?",
-          agent1: "¡Hola, Matías! Alerta de seguridad. ⚠️ **Dolor torácico agudo es Código Rojo.** Según el protocolo de triage médico de la clínica, debes derivar al paciente de inmediato al box de reanimación y alertar al cardiólogo de turno. Consultando el médico asignado de hoy...",
-          tool1: "⚙️ Consultando rol de turnos médicos en el ERP...",
-          tool1Success: "✓ Cardiólogo de turno identificado: Dr. Silva (Piso 1, Box 4)",
-          agent2: "El cardiólogo de turno es el **Dr. Silva**. Ya le envié una alerta prioritaria automática a su celular. Por favor, acompaña al paciente al **Box de Reanimación 2** (Piso 1) de inmediato. ¿Deseas que notifique al supervisor de recepción para que te apoye físicamente?",
-          prospect2: "¡Sí, por favor! Avísale a la supervisora Ana para que me ayude a recibirlo.",
-          tool2: "⚙️ Enviando alerta urgente a Supervisora Ana...",
-          tool2Success: "✓ Alerta urgente enviada a Supervisora Ana & Protocolo activado",
-          agent3: "¡Listo! La supervisora Ana ya va en camino a apoyarte en recepción. El Dr. Silva ya está alertado en el Box. Hiciste un excelente trabajo siguiendo el protocolo de Código Rojo. ¡Mantén la calma! 🛡️"
+          prospect: "🎤 [Audio - 12s] Tengo problemas para seguir el procedimiento de calibración del CNC‑800. El manual dice que debo ajustar la velocidad, pero no sé cuál es el valor correcto. ¿Podrías indicarme el paso exacto?",
+          agent1: "¡Claro! Revisemos el manual de calibración del CNC‑800. El paso 3 indica que la velocidad debe estar en **1800 RPM** para material metálico. Confirmo que el software está configurado en esa velocidad.",
+          tool1: "⚙️ Accediendo al repositorio de manuales...",
+          tool1Success: "✓ Manual de calibración encontrado y valor de velocidad extraído",
+          agent2: "He actualizado la configuración del CNC‑800 a 1800 RPM. ¿Necesitas que registre este ajuste en el ERP o que genere un ticket de cambio?",
+          prospect2: "Por favor, genera el ticket de cambio para dejar registro.",
+          tool2: "⚙️ Creando ticket de cambio en el ERP...",
+          tool2Success: "✓ Ticket de cambio creado: ID #CNC‑800‑2026‑001",
+          agent3: "Listo, el ticket está creado y el ajuste guardado. El operador puede continuar con la producción. Si surge otra duda, avísame."
         }
       ]
     },
@@ -739,8 +739,8 @@ export const translations = {
           ],
         },
         {
-          name: "El Capacitador IA (Agente de Procesos y Onboarding)",
-          desc: "Agente de WhatsApp para onboarding y procesos. Resuelve dudas de tu equipo en texto, imagen y voz usando tu base de conocimientos estilo Obsidian y alertas a supervisor.",
+          name: "El Capacitador IA",
+          desc: "Agente de WhatsApp para onboarding y procesos. Resuelve dudas de tu equipo en texto, imagen y voz usando Obsidian.",
           price: "1.850.000 CLP",
           priceSuffix: " setup + 225.000 CLP/mes mantenimiento",
           features: [
@@ -1335,8 +1335,8 @@ export const translations = {
           ],
         },
         {
-          name: "O Capacitador IA (Agente de Processos e Onboarding)",
-          desc: "Agente de WhatsApp para onboarding e processos. Resolve dúvidas da equipe em texto, imagem e voz com sua base de conhecimentos estilo Obsidian e alertas de escalonamento.",
+          name: "O Capacitador IA",
+          desc: "Agente de WhatsApp para onboarding e processos. Resolve dúvidas em texto, imagem e voz com sua base Obsidian.",
           price: "1.850.000 CLP",
           priceSuffix: " setup + 225.000 CLP/mês de manutenção",
           features: [

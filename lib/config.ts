@@ -3,8 +3,8 @@ export const SITE_CONFIG = {
   tagline: "Diseño Web Premium + IA para Negocios en LATAM",
   description:
     "Browns Studio crea presencias digitales de alto impacto con diseño web profesional e inteligencia artificial. Chatbots, automatizaciones y webs que convierten para clínicas, restaurantes y negocios en LATAM.",
-  whatsapp: "+56 9 61857682",
-  whatsappMessage: "Hola, vi su web y me interesa cotizar un proyecto",
+  whatsapp: "+1 202-880-8642",
+  whatsappMessage: "Hola, me interesa agendar la Auditoría de Procesos Gratuita de 45 minutos para mi negocio.",
   email: "contacto@brownsstudio.dev",
   instagram: "https://instagram.com/brownsstudio",
   linkedin: "https://linkedin.com/company/brownsstudio",

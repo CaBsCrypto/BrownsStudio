@@ -126,31 +126,58 @@ export default function Pricing() {
                         style={{ background: "linear-gradient(135deg, #8b5cf6, #6366f1)", boxShadow: "0 0 15px rgba(139,92,246,0.3)" }}
                       >
                         <GraduationCap size={11} className="text-white animate-pulse" />
-                        {lang === 'en' ? 'INTERNAL OPS' : lang === 'pt' ? 'OPERAÇÕES INTERNAS' : 'OPERACIONES INTERNAS'}
                       </div>
                     )}
 
                     <div className="mb-6">
                       <h3 className="font-display font-bold text-xl text-[#e5e5e5] mb-1">{plan.name}</h3>
-                      <p className="text-[#9e9e9e] text-xs mb-auto h-8 line-clamp-2">{plan.desc}</p>
-                      <div className="mt-4 flex items-baseline gap-1">
-                        <span 
-                          className={`font-display font-bold ${
-                            plan.price.length > 8 ? 'text-2xl' : 'text-3xl sm:text-4xl'
-                          }`}
-                          style={{ 
-                            color: isOnboarding ? "#c084fc" : "#00f0ff", 
-                            textShadow: isOnboarding ? "0 0 15px rgba(192,132,252,0.3)" : "0 0 15px rgba(0,240,255,0.3)" 
-                          }}
-                        >
-                          {plan.price}
-                        </span>
-                        {plan.priceSuffix ? (
-                          <span className="text-[#9e9e9e] text-xs">{plan.priceSuffix}</span>
-                        ) : (
-                          !plan.price.toLowerCase().includes('talk') && !plan.price.toLowerCase().includes('convers') && (
-                            <span className="text-[#9e9e9e] text-xs">CLP</span>
-                          )
+                      <p className="text-[#9e9e9e] text-xs leading-relaxed mb-auto min-h-[40px] flex items-center">{plan.desc}</p>
+                      
+                      {/* Price Section */}
+                      <div className="mt-5 mb-6 flex flex-col gap-2">
+                        {/* Setup Price */}
+                        <div className="flex items-baseline gap-1.5 flex-wrap">
+                          <span 
+                            className={`font-display font-black tracking-tight ${
+                              plan.price.length > 12 
+                                ? 'text-2xl' 
+                                : plan.price.length > 8 
+                                ? 'text-3xl' 
+                                : 'text-3xl sm:text-4xl'
+                            }`}
+                            style={{ 
+                              color: isOnboarding ? "#c084fc" : plan.popular ? "#00f0ff" : "#e5e5e5", 
+                              textShadow: isOnboarding 
+                                ? "0 0 15px rgba(192,132,252,0.25)" 
+                                : plan.popular 
+                                ? "0 0 15px rgba(0,240,255,0.25)" 
+                                : "none" 
+                            }}
+                          >
+                            {plan.price.replace(" CLP", "")}
+                          </span>
+                          {!plan.price.toLowerCase().includes("cotizar") && 
+                           !plan.price.toLowerCase().includes("quote") && 
+                           !plan.price.toLowerCase().includes("medida") && 
+                           !plan.price.toLowerCase().includes("talk") && 
+                           !plan.price.toLowerCase().includes("convers") && (
+                            <span className="text-[#9e9e9e] text-[10px] font-bold uppercase tracking-widest font-mono bg-white/5 border border-white/10 rounded px-1.5 py-0.5">
+                              CLP Setup
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Maintenance / Monthly Suffix */}
+                        {plan.priceSuffix && (
+                          <div className="text-[11px] text-[#a1a1aa] bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2 font-sans flex items-start gap-2 w-full leading-normal">
+                            <span 
+                              className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 animate-pulse"
+                              style={{ backgroundColor: isOnboarding ? "#c084fc" : "#00f0ff" }}
+                            ></span>
+                            <span className="flex-grow">
+                              {plan.priceSuffix.replace(" setup + ", "").replace(" + ", "")}
+                            </span>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -187,7 +214,7 @@ export default function Pricing() {
                           ? { background: "linear-gradient(135deg, #00f0ff, #0070ff)", color: "#000", boxShadow: "0 0 20px rgba(0,240,255,0.2)" }
                           : isOnboarding
                           ? { border: "1px solid rgba(139, 92, 246, 0.4)", color: "#c084fc", boxShadow: "0 0 15px rgba(139, 92, 246, 0.05)" }
-                          : { border: "1px solid rgba(0,240,255,0.3)", color: "#00f0ff" }
+                          : { border: "1px solid rgba(0, 240, 255, 0.3)", color: "#00f0ff" }
                       }
                       onMouseEnter={(e) => {
                         if (!plan.popular) {
@@ -200,7 +227,7 @@ export default function Pricing() {
                         }
                       }}
                     >
-                      {t.pricing.ctaBtn} {plan.name}
+                      {t.pricing.ctaBtn}
                     </a>
                   </div>
                 );

@@ -37,7 +37,7 @@ export default async function LocalePage({
         <Navbar />
         <Hero />
         <CasosDeUso />
-        <ProcessAuditor />
+        {/* <ProcessAuditor /> */}
         <Portfolio />
         <Pricing />
         {/* <Proceso /> */}

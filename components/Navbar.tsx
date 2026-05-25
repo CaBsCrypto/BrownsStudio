@@ -34,7 +34,7 @@ export default function Navbar() {
 
   const navLinks = [
     { label: nav.services, href: "#servicios", id: "servicios", page: false },
-    { label: nav.auditor ?? "Auditor", href: "#auditor", id: "auditor", page: false },
+    // { label: nav.auditor ?? "Auditor", href: "#auditor", id: "auditor", page: false },
     { label: nav.portfolio, href: "#portfolio", id: "portfolio", page: false },
     { label: nav.pricing,  href: "#precios",   id: "precios",   page: false },
     { label: nav.faq,      href: "#faq",       id: "faq",       page: false },
@@ -71,6 +71,16 @@ export default function Navbar() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const inicioEl = document.getElementById("inicio");
+    if (inicioEl) {
+      e.preventDefault();
+      inicioEl.scrollIntoView({ behavior: "smooth" });
+      setActiveSection("");
+      setMobileOpen(false);
+    }
+  };
+
   return (
     <>
       <header
@@ -84,7 +94,12 @@ export default function Navbar() {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
 
-            <Link href="/" className="flex items-center gap-3 group" aria-label={SITE_CONFIG.name}>
+            <Link
+              href={`/${lang}`}
+              onClick={handleLogoClick}
+              className="flex items-center gap-3 group"
+              aria-label={SITE_CONFIG.name}
+            >
               <div className="relative">
                 <div className="absolute inset-0 bg-accent-gold/20 blur-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <img 
@@ -100,7 +115,7 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop nav */}
-            <div className="hidden lg:flex items-center gap-8">
+            <div className="hidden lg:flex items-center lg:gap-5 xl:gap-8">
               {/* Link 1: Services */}
               <button
                 onClick={() => handleNavClick("#servicios")}
@@ -118,7 +133,7 @@ export default function Navbar() {
 
               {/* Solutions Dropdown */}
               <div 
-                className="relative pb-2"
+                className="relative flex items-center"
                 onMouseEnter={() => setDropdownOpen(true)}
                 onMouseLeave={() => setDropdownOpen(false)}
               >
@@ -133,7 +148,7 @@ export default function Navbar() {
                 
                 {/* Premium Glassmorphic Dropdown Menu */}
                 <div
-                  className={`absolute left-1/2 -translate-x-1/2 mt-2 w-56 rounded-xl border transition-all duration-300 ${
+                  className={`absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 rounded-xl border transition-all duration-300 before:content-[''] before:absolute before:inset-x-0 before:-top-3 before:h-3 ${
                     dropdownOpen 
                       ? "opacity-100 translate-y-0 pointer-events-auto" 
                       : "opacity-0 -translate-y-2 pointer-events-none"

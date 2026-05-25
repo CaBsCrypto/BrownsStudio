@@ -36,6 +36,9 @@ importers:
         specifier: ^19.0.0
         version: 19.2.6(react@19.2.6)
     devDependencies:
+      '@kapso/workflows':
+        specifier: ^0.2.0
+        version: 0.2.0
       '@types/node':
         specifier: ^20
         version: 20.19.41
@@ -378,6 +381,9 @@ packages:
 
   '@js-sdsl/ordered-map@4.4.2':
     resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
+
+  '@kapso/workflows@0.2.0':
+    resolution: {integrity: sha512-W2FFyQI4J4wU3SHVfu9uX42BHW9S58TAs0cu5rOYX5Oi49s6rI0c43P2Tgh34yB1xSJwNqQnbK8jMgaDGrvJfg==}
 
   '@napi-rs/wasm-runtime@1.1.4':
     resolution: {integrity: sha512-3NQNNgA1YSlJb/kMH1ildASP9HW7/7kYnRI2szWJaofaS1hWmbGI4H+d3+22aGzXXN9IJ+n+GiFVcGipJP18ow==}
@@ -2756,6 +2762,8 @@ snapshots:
 
   '@js-sdsl/ordered-map@4.4.2':
     optional: true
+
+  '@kapso/workflows@0.2.0': {}
 
   '@napi-rs/wasm-runtime@1.1.4(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
