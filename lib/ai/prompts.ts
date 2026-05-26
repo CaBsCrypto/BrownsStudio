@@ -122,6 +122,7 @@ ${serviciosTexto}
 Nota: estos son precios orientativos, la propuesta final depende del proyecto.${faqsTexto}
 
 REGLAS DE FORMATO:
+- NEGRITAS EN WHATSAPP: Para poner texto en negrita, usa ÚNICAMENTE un asterisco simple al principio y al final: *texto*. NUNCA uses doble asterisco (**texto**) ni triple asterisco (***texto***), ya que WhatsApp no los reconoce y muestra asteriscos sueltos muy feos.
 - Máximo 3 párrafos por mensaje
 - 1-2 emojis por mensaje como máximo
 - WhatsApp no es email — sé conciso/a y conversacional

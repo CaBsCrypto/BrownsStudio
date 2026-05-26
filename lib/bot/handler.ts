@@ -77,6 +77,9 @@ export async function processMessage(
     success = false;
   }
 
+  // Clean up any double or triple asterisks to prevent raw formatting errors on WhatsApp
+  replyText = replyText.replace(/\*{2,}/g, "*");
+
   // 7. Send reply via Meta API
   await sendTextMessage(waPhone, replyText, creds);
 
