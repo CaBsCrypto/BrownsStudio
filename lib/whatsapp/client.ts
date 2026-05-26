@@ -1,7 +1,7 @@
 // ── Meta WhatsApp Business Cloud API — outgoing message client ───────────────
 
 const BASE_URL = process.env.KAPSO_API_KEY
-  ? "https://api.kapso.ai/meta/whatsapp/v21.0"
+  ? "https://api.kapso.ai/meta/whatsapp/v24.0"
   : "https://graph.facebook.com/v21.0";
 
 export interface WhatsAppCredentials {
