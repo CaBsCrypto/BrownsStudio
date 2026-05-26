@@ -71,11 +71,30 @@ export function getFallbackBusinessConfig(): BusinessConfig {
       { nombre: "Mentoría Corporativa / Grupal (4h)", precio_min: 320000,  precio_max: 320000,  descripcion: "Entrenamiento técnico para equipos en desarrollo e integraciones con Kapso" },
       { nombre: "Desarrollo Web & Landings (Legacy)", precio_min: 450000,  precio_max: 1200000, descripcion: "Opción complementaria de páginas de aterrizaje y CMS bajo solicitud del cliente" },
     ],
-    faqs: [],
+    faqs: [
+      {
+        pregunta: "¿Cuánto tiempo demora el desarrollo y puesta en marcha?",
+        respuesta: "El plazo promedio de entrega para un agente IA (ventas o inducción corporativa) es de 7 a 14 días hábiles. Soluciones avanzadas con integraciones profundas a CRMs personalizados o flujos nativos de Meta toman de 3 a 4 semanas."
+      },
+      {
+        pregunta: "¿Qué sistemas e integraciones son compatibles?",
+        respuesta: "Nos integramos con cualquier plataforma que posea API REST. Habitualmente conectamos los bots a CRMs (HubSpot, Salesforce, Pipedrive), agendas (Calendly), Google Sheets, bases de datos relacionales y plataformas de automatización externa mediante Kapso."
+      },
+      {
+        pregunta: "¿Cómo se gestiona la seguridad y privacidad de la información?",
+        respuesta: "La privacidad de los datos es nuestra prioridad número uno. Utilizamos exclusivamente la API en su modalidad pagada de Google (Pay-As-You-Go), lo cual garantiza por contrato que la información transaccionada es encriptada y nunca es utilizada para entrenar modelos públicos de inteligencia artificial."
+      },
+      {
+        pregunta: "¿Existe un costo de mantenimiento mensual?",
+        respuesta: "Sí, todos los desarrollos incluyen un fee de mantenimiento mensual adaptable al volumen de conversaciones. Este fee cubre el hosting en la nube, soporte proactivo ante caídas, actualizaciones ante cambios de las APIs de Meta y optimizaciones continuas del modelo a medida que el negocio escala."
+      }
+    ],
     reglas_extra:
       "Usas 'tú', 'ustedes' (hablas en español de Chile, cercano, cálido y profesional. Evita por completo el voseo argentino como 'contame', 'decime'; usa en su lugar 'cuéntame', 'dime'). " +
       "Respondes SIEMPRE en el idioma del usuario. " +
       "Si el presupuesto supera $4.500.000 CLP → escala a handoff. " +
-      "NUNCA digas que eres una IA a menos que te lo pregunten directamente.",
+      "NUNCA digas que eres una IA a menos que te lo pregunten directamente. " +
+      "Muestra mucha empatía por los dolores de los negocios (ej. pérdida de clientes por demoras en responder, lentitud en onboarding manual). " +
+      "Cuando sientas que el cliente está interesado o hace preguntas avanzadas, invítalo con entusiasmo a usar el botón '📅 Agendar Llamada' para diseñar una arquitectura técnica a su medida.",
   };
 }
