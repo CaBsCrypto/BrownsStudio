@@ -1,12 +1,12 @@
 // ── Main bot orchestrator ─────────────────────────────────────────────────────
-import { sendTextMessage, sendButtonMessage, markAsRead, type WhatsAppCredentials } from "@/lib/whatsapp/client";
+import { sendTextMessage, sendButtonMessage, sendFlowMessage, markAsRead, type WhatsAppCredentials } from "@/lib/whatsapp/client";
 import { getOrCreateConversation, appendMessage, updateStage, updateMode } from "@/lib/db/conversations";
-import { getLeadByConversation, markCalendlySent } from "@/lib/db/leads";
+import { getLeadByConversation, markCalendlySent, upsertLead, updateLeadStatus } from "@/lib/db/leads";
 import { generateReply, suggestNextStage } from "@/lib/ai/claude";
 import { buildSystemPrompt, buildOnboardingSystemPrompt } from "@/lib/ai/prompts";
 import { runQualification } from "@/lib/bot/qualify";
 import { notifyHandoff } from "@/lib/bot/handoff";
-import type { BotMessage, Business, BusinessConfig, ConversationStage } from "@/types/bot";
+import type { BotMessage, Business, BusinessConfig, ConversationStage, ExtractedLeadData } from "@/types/bot";
 
 /**
  * Process an incoming WhatsApp text message end-to-end.
@@ -30,6 +30,66 @@ export async function processMessage(
   // 2. Load or create conversation (scoped to this business)
   const conversation = await getOrCreateConversation(waPhone, displayName, business.id);
   const lead = await getLeadByConversation(conversation.id);
+
+  // 2.5. Intercept WhatsApp Flow responses
+  if (messageText.startsWith("__FLOW_RESPONSE__:")) {
+    try {
+      const jsonStr = messageText.substring(18);
+      const data = JSON.parse(jsonStr);
+      console.log(`[handler] Received Flow response:`, data);
+
+      const fullName = data.full_name || data.nombre || displayName || null;
+      const businessType = data.business_type || data.rubro || null;
+      const budgetRange = data.budget_range || data.presupuesto || null;
+      const painPoint = data.pain_point || data.dolor || null;
+
+      let budgetNumeric: number | undefined;
+      if (budgetRange) {
+        const matches = budgetRange.replace(/\./g, "").match(/\d+/g);
+        if (matches && matches.length > 0) {
+          budgetNumeric = parseInt(matches[matches.length - 1], 10);
+        }
+      }
+
+      const extracted: ExtractedLeadData = {};
+      if (fullName) extracted.full_name = fullName;
+      if (businessType) extracted.business_type = businessType;
+      if (budgetRange) extracted.budget_range = budgetRange;
+      if (painPoint) extracted.pain_point = painPoint;
+      if (budgetNumeric) extracted.budget_numeric = budgetNumeric;
+
+      await upsertLead(conversation.id, waPhone, extracted, business.id);
+      await updateStage(conversation.id, "scheduling");
+      await updateLeadStatus(conversation.id, "qualified");
+
+      const greetingName = fullName ? fullName.split(" ")[0] : "estimado/a";
+      const replyMsg =
+        `¡Muchas gracias por completar el formulario, *${greetingName}*! 🙌\n\n` +
+        `Con esto ya tengo toda la información de calificación para diseñar tu propuesta.\n\n` +
+        `Para afinar los detalles de la arquitectura técnica y definir el plan a tu medida, te sugiero que agendemos una llamada de 30 minutos. Puedes elegir el horario que más te acomode presionando el botón de abajo:`;
+
+      const schedulingButtons = [
+        { id: "btn_calendly_info", title: "📅 Agendar Llamada" },
+        { id: "btn_human", title: "🗣️ Hablar con Asesor" }
+      ];
+
+      await sendButtonMessage(waPhone, replyMsg, schedulingButtons, creds);
+
+      await appendMessage(conversation.id, {
+        role: "user",
+        content: `[Formulario Completado] Rubro: ${businessType || "N/A"}, Presupuesto: ${budgetRange || "N/A"}, Dolor: ${painPoint || "N/A"}`,
+        timestamp: new Date().toISOString(),
+      });
+      await appendMessage(conversation.id, {
+        role: "assistant",
+        content: replyMsg,
+        timestamp: new Date().toISOString(),
+      });
+      return;
+    } catch (err) {
+      console.error("[handler] Failed to parse or upsert flow response:", err);
+    }
+  }
 
   const lowerText = messageText.toLowerCase();
 
@@ -177,14 +237,32 @@ export async function processMessage(
   }
 
   try {
-    if (buttons.length > 0) {
+    if (conversation.mode !== "onboarding" && conversation.stage === "qualifying" && businessConfig.whatsapp_flow_id) {
+      const inputData = { display_name: displayName ?? "" };
+      await sendFlowMessage(
+        waPhone,
+        replyText,
+        businessConfig.whatsapp_flow_id,
+        `flow_${conversation.id}`,
+        "📋 Calificar Ahora",
+        "QUALIFICATION_SCREEN",
+        inputData,
+        creds
+      );
+    } else if (buttons.length > 0) {
       await sendButtonMessage(waPhone, replyText, buttons, creds);
     } else {
       await sendTextMessage(waPhone, replyText, creds);
     }
   } catch (err) {
-    console.error("[handler] Failed to send button message, falling back to text:", err);
-    await sendTextMessage(waPhone, replyText, creds);
+    console.error("[handler] Failed to send custom interactive message, falling back to text/buttons:", err);
+    if (buttons.length > 0) {
+      await sendButtonMessage(waPhone, replyText, buttons, creds).catch(() => 
+        sendTextMessage(waPhone, replyText, creds)
+      );
+    } else {
+      await sendTextMessage(waPhone, replyText, creds);
+    }
   }
 
   // 8. Persist both messages to DB ONLY if the AI successfully generated the reply

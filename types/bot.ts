@@ -104,4 +104,5 @@ export interface BusinessConfig {
   servicios: ServiceItem[];
   faqs: FaqItem[];
   reglas_extra: string | null;
+  whatsapp_flow_id?: string | null;
 }

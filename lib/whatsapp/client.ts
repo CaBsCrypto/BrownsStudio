@@ -103,6 +103,53 @@ export async function sendButtonMessage(
 }
 
 /**
+ * Send an interactive WhatsApp Flow message.
+ * @param flowId - The unique Flow ID registered in Meta
+ * @param flowToken - Unique token representing the context of this conversation
+ * @param flowCta - Text displayed on the CTA button (max 20 chars, e.g. "Comenzar")
+ * @param screen - The ID of the screen in the flow to navigate to first
+ * @param inputData - Key-value pair of data to pre-populate the form (e.g. { display_name: "John" })
+ */
+export async function sendFlowMessage(
+  to: string,
+  bodyText: string,
+  flowId: string,
+  flowToken: string,
+  flowCta: string,
+  screen: string,
+  inputData?: object,
+  creds?: WhatsAppCredentials
+): Promise<void> {
+  await callMetaAPI(
+    {
+      messaging_product: "whatsapp",
+      recipient_type: "individual",
+      to,
+      type: "interactive",
+      interactive: {
+        type: "flow",
+        body: { text: bodyText },
+        action: {
+          name: "flow",
+          parameters: {
+            flow_message_version: "3",
+            flow_token: flowToken,
+            flow_id: flowId,
+            flow_cta: flowCta.substring(0, 20),
+            flow_action: "navigate",
+            flow_action_payload: {
+              screen,
+              data: inputData ?? {},
+            },
+          },
+        },
+      },
+    },
+    creds
+  );
+}
+
+/**
  * Mark a message as read (shows blue ticks on sender's side).
  */
 export async function markAsRead(

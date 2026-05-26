@@ -116,6 +116,8 @@ async function handlePayload(payload: WhatsAppWebhookPayload): Promise<void> {
           messageText = message.text.body.trim();
         } else if (message.type === "interactive" && message.interactive?.type === "button_reply" && message.interactive.button_reply) {
           messageText = message.interactive.button_reply.title.trim();
+        } else if (message.type === "interactive" && (message.interactive as any)?.type === "nfm_reply" && (message.interactive as any).nfm_reply) {
+          messageText = `__FLOW_RESPONSE__:${(message.interactive as any).nfm_reply.response_json}`;
         } else {
           console.log(`[WhatsApp] Ignoring message type: ${message.type}`);
           continue;

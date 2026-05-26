@@ -46,6 +46,7 @@ export async function getBusinessConfig(businessId: string): Promise<BusinessCon
       servicios:      cfg.servicios    ?? [],
       faqs:           cfg.faqs         ?? [],
       reglas_extra:   cfg.reglas_extra ?? null,
+      whatsapp_flow_id: cfg.whatsapp_flow_id ?? null,
     } as BusinessConfig;
   } catch {
     return null;
@@ -96,5 +97,6 @@ export function getFallbackBusinessConfig(): BusinessConfig {
       "NUNCA digas que eres una IA a menos que te lo pregunten directamente. " +
       "Muestra mucha empatía por los dolores de los negocios (ej. pérdida de clientes por demoras en responder, lentitud en onboarding manual). " +
       "Cuando sientas que el cliente está interesado o hace preguntas avanzadas, invítalo con entusiasmo a usar el botón '📅 Agendar Llamada' para diseñar una arquitectura técnica a su medida.",
+    whatsapp_flow_id: process.env.WHATSAPP_FLOW_ID ?? null,
   };
 }
