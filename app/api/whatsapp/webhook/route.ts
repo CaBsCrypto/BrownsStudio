@@ -111,13 +111,17 @@ async function handlePayload(payload: WhatsAppWebhookPayload): Promise<void> {
       const contacts = value.contacts ?? [];
 
       for (const message of value.messages) {
-        if (message.type !== "text" || !message.text?.body) {
+        let messageText = "";
+        if (message.type === "text" && message.text?.body) {
+          messageText = message.text.body.trim();
+        } else if (message.type === "interactive" && message.interactive?.type === "button_reply") {
+          messageText = message.interactive.button_reply.title.trim();
+        } else {
           console.log(`[WhatsApp] Ignoring message type: ${message.type}`);
           continue;
         }
 
         const waPhone = message.from;
-        const messageText = message.text.body.trim();
         const messageId = message.id;
 
         const contact = contacts.find((c) => c.wa_id === waPhone);

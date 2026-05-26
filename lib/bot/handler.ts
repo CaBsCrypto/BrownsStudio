@@ -1,5 +1,5 @@
 // ── Main bot orchestrator ─────────────────────────────────────────────────────
-import { sendTextMessage, markAsRead, type WhatsAppCredentials } from "@/lib/whatsapp/client";
+import { sendTextMessage, sendButtonMessage, markAsRead, type WhatsAppCredentials } from "@/lib/whatsapp/client";
 import { getOrCreateConversation, appendMessage, updateStage } from "@/lib/db/conversations";
 import { getLeadByConversation, markCalendlySent } from "@/lib/db/leads";
 import { generateReply, suggestNextStage } from "@/lib/ai/claude";
@@ -80,8 +80,36 @@ export async function processMessage(
   // Clean up any double or triple asterisks to prevent raw formatting errors on WhatsApp
   replyText = replyText.replace(/\*{2,}/g, "*");
 
-  // 7. Send reply via Meta API
-  await sendTextMessage(waPhone, replyText, creds);
+  // 7. Send reply via Meta API (with buttons if appropriate)
+  let buttons: Array<{ id: string; title: string }> = [];
+  const lowerReply = replyText.toLowerCase();
+
+  if (conversation.stage === "greeting" || lowerReply.includes("charlie") && lowerReply.includes("virtual")) {
+    buttons = [
+      { id: "btn_services", title: "💡 Ver Servicios" },
+      { id: "btn_human", title: "🗣️ Hablar con Alguien" }
+    ];
+  } else if (conversation.stage === "scheduling" || lowerReply.includes("calendly") || lowerReply.includes("llamada")) {
+    buttons = [
+      { id: "btn_calendly_info", title: "📅 Agendar Llamada" },
+      { id: "btn_human", title: "🗣️ Hablar con Alguien" }
+    ];
+  } else if (conversation.stage === "qualifying") {
+    buttons = [
+      { id: "btn_human", title: "🗣️ Hablar con Alguien" }
+    ];
+  }
+
+  try {
+    if (buttons.length > 0) {
+      await sendButtonMessage(waPhone, replyText, buttons, creds);
+    } else {
+      await sendTextMessage(waPhone, replyText, creds);
+    }
+  } catch (err) {
+    console.error("[handler] Failed to send button message, falling back to text:", err);
+    await sendTextMessage(waPhone, replyText, creds);
+  }
 
   // 8. Persist both messages to DB ONLY if the AI successfully generated the reply
   if (success) {
