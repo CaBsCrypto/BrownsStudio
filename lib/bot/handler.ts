@@ -31,6 +31,20 @@ export async function processMessage(
   const conversation = await getOrCreateConversation(waPhone, displayName, business.id);
   const lead = await getLeadByConversation(conversation.id);
 
+  // 2.3. If conversation is in 'handoff' stage, do NOT trigger Gemini or send bot messages.
+  // This allows the human owner to chat manually with the customer in WhatsApp Business
+  // without the AI bot interfering or replying automatically.
+  if (conversation.stage === "handoff") {
+    const userMessage: BotMessage = {
+      role: "user",
+      content: messageText,
+      timestamp: new Date().toISOString(),
+    };
+    await appendMessage(conversation.id, userMessage);
+    console.log(`[handler] Conversation in handoff mode — skipping AI response to let owner chat`);
+    return;
+  }
+
   // 2.5. Intercept WhatsApp Flow responses
   if (messageText.startsWith("__FLOW_RESPONSE__:")) {
     try {
@@ -168,7 +182,7 @@ export async function processMessage(
     lowerText.includes("asesor") ||
     lowerText.includes("soporte");
 
-  if (wantsHuman && conversation.stage !== "handoff") {
+  if (wantsHuman) {
     await handleHandoff(
       conversation.id, waPhone, "handoff",
       "Solicitud explícita del cliente", lead, businessConfig, creds
