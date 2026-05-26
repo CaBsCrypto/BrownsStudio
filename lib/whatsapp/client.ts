@@ -1,6 +1,8 @@
 // ── Meta WhatsApp Business Cloud API — outgoing message client ───────────────
 
-const BASE_URL = "https://graph.facebook.com/v21.0";
+const BASE_URL = process.env.KAPSO_API_KEY
+  ? "https://api.kapso.ai/meta/whatsapp/v21.0"
+  : "https://graph.facebook.com/v21.0";
 
 export interface WhatsAppCredentials {
   phoneNumberId?: string;
@@ -15,20 +17,30 @@ function getPhoneNumberId(override?: string): string {
 
 function getAccessToken(override?: string): string {
   const token = override ?? process.env.WHATSAPP_ACCESS_TOKEN;
-  if (!token) throw new Error("WHATSAPP_ACCESS_TOKEN is not set");
-  return token;
+  if (!token && !process.env.KAPSO_API_KEY) {
+    throw new Error("Neither WHATSAPP_ACCESS_TOKEN nor KAPSO_API_KEY is set");
+  }
+  return token ?? "";
 }
 
 async function callMetaAPI(body: object, creds?: WhatsAppCredentials): Promise<void> {
   const phoneNumberId = getPhoneNumberId(creds?.phoneNumberId);
   const url = `${BASE_URL}/${phoneNumberId}/messages`;
 
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  const kapsoApiKey = process.env.KAPSO_API_KEY;
+  if (kapsoApiKey) {
+    headers["X-API-Key"] = kapsoApiKey;
+  } else {
+    headers["Authorization"] = `Bearer ${getAccessToken(creds?.accessToken)}`;
+  }
+
   const res = await fetch(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getAccessToken(creds?.accessToken)}`,
-    },
+    headers,
     body: JSON.stringify(body),
   });
 
