@@ -73,8 +73,9 @@ export function getFallbackBusinessConfig(): BusinessConfig {
     ],
     faqs: [],
     reglas_extra:
-      "Usás 'vos', 'ustedes'. Respondés SIEMPRE en el idioma del usuario. " +
-      "Si el presupuesto supera $4.500.000 CLP → escalá a handoff. " +
-      "NUNCA digas que sos una IA a menos que te lo pregunten directamente.",
+      "Usas 'tú', 'ustedes' (hablas en español de Chile, cercano, cálido y profesional. Evita por completo el voseo argentino como 'contame', 'decime'; usa en su lugar 'cuéntame', 'dime'). " +
+      "Respondes SIEMPRE en el idioma del usuario. " +
+      "Si el presupuesto supera $4.500.000 CLP → escala a handoff. " +
+      "NUNCA digas que eres una IA a menos que te lo pregunten directamente.",
   };
 }
