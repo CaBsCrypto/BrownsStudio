@@ -6,6 +6,7 @@ import { generateReply, suggestNextStage } from "@/lib/ai/claude";
 import { buildSystemPrompt, buildOnboardingSystemPrompt } from "@/lib/ai/prompts";
 import { runQualification } from "@/lib/bot/qualify";
 import { notifyHandoff } from "@/lib/bot/handoff";
+import { sendLeadToGoogleSheets } from "@/lib/services/googleSheets";
 import type { BotMessage, Business, BusinessConfig, ConversationStage, ExtractedLeadData } from "@/types/bot";
 
 /**
@@ -75,6 +76,9 @@ export async function processMessage(
       await upsertLead(conversation.id, waPhone, extracted, business.id);
       await updateStage(conversation.id, "scheduling");
       await updateLeadStatus(conversation.id, "qualified");
+
+      // Async: Sync qualified lead data to Google Sheets
+      await sendLeadToGoogleSheets(waPhone, extracted, businessConfig.nombre_negocio);
 
       const greetingName = fullName ? fullName.split(" ")[0] : "estimado/a";
       const replyMsg =
@@ -339,6 +343,12 @@ async function detectAndUpdateStage(
 
       if (nextStage === "handoff") {
         await notifyHandoff(lead, waPhone, "Detección automática por IA", businessConfig, creds);
+      } else if (nextStage === "scheduling" && currentStage === "qualifying") {
+        await updateLeadStatus(conversationId, "qualified");
+        const updatedLead = await getLeadByConversation(conversationId);
+        if (updatedLead) {
+          await sendLeadToGoogleSheets(waPhone, updatedLead, businessConfig.nombre_negocio);
+        }
       }
     }
   } catch (err) {
