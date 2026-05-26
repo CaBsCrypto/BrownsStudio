@@ -34,7 +34,7 @@ export async function generateReply(
     model: DEFAULT_MODEL,
     systemInstruction: systemPrompt,
     generationConfig: {
-      maxOutputTokens: 400,
+      maxOutputTokens: 1000,
       temperature: 0.7,
     },
   });

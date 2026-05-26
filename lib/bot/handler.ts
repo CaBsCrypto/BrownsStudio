@@ -63,6 +63,7 @@ export async function processMessage(
 
   // 6. Generate Gemini reply (use per-business API key if available)
   let replyText: string;
+  let success = true;
   try {
     replyText = await generateReply(
       systemPrompt,
@@ -72,33 +73,36 @@ export async function processMessage(
   } catch (err) {
     console.error("[handler] Gemini error:", err);
     replyText =
-      "Disculpá, tuve un problema técnico. ¿Podés intentar nuevamente en un momento? 🙏";
+      "Disculpa, tuve un problema técnico. ¿Puedes intentar nuevamente en un momento? 🙏";
+    success = false;
   }
 
   // 7. Send reply via Meta API
   await sendTextMessage(waPhone, replyText, creds);
 
-  // 8. Persist both messages to DB
-  await appendMessage(conversation.id, userMessage);
-  await appendMessage(conversation.id, {
-    role: "assistant",
-    content: replyText,
-    timestamp: new Date().toISOString(),
-  });
+  // 8. Persist both messages to DB ONLY if the AI successfully generated the reply
+  if (success) {
+    await appendMessage(conversation.id, userMessage);
+    await appendMessage(conversation.id, {
+      role: "assistant",
+      content: replyText,
+      timestamp: new Date().toISOString(),
+    });
 
-  // 9. Check if Calendly link was mentioned → mark as sent
-  if (businessConfig.calendly_url && replyText.includes(businessConfig.calendly_url) && !lead?.calendly_sent) {
-    await markCalendlySent(conversation.id);
+    // 9. Check if Calendly link was mentioned → mark as sent
+    if (businessConfig.calendly_url && replyText.includes(businessConfig.calendly_url) && !lead?.calendly_sent) {
+      await markCalendlySent(conversation.id);
+    }
+
+    // 10. Async: extract lead data and detect stage transitions
+    await Promise.allSettled([
+      runQualification(conversation.id, waPhone, updatedMessages, business.id),
+      detectAndUpdateStage(
+        conversation.id, conversation.stage, updatedMessages,
+        waPhone, lead, businessConfig, creds
+      ),
+    ]);
   }
-
-  // 10. Async: extract lead data and detect stage transitions
-  await Promise.allSettled([
-    runQualification(conversation.id, waPhone, updatedMessages, business.id),
-    detectAndUpdateStage(
-      conversation.id, conversation.stage, updatedMessages,
-      waPhone, lead, businessConfig, creds
-    ),
-  ]);
 }
 
 /**
