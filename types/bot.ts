@@ -29,6 +29,7 @@ export interface Conversation {
   display_name: string | null;
   messages: BotMessage[];
   stage: ConversationStage;
+  mode?: "sales" | "onboarding";
   last_message_at: string;
   created_at: string;
   updated_at: string;

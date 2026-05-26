@@ -1,9 +1,9 @@
 // ── Main bot orchestrator ─────────────────────────────────────────────────────
 import { sendTextMessage, sendButtonMessage, markAsRead, type WhatsAppCredentials } from "@/lib/whatsapp/client";
-import { getOrCreateConversation, appendMessage, updateStage } from "@/lib/db/conversations";
+import { getOrCreateConversation, appendMessage, updateStage, updateMode } from "@/lib/db/conversations";
 import { getLeadByConversation, markCalendlySent } from "@/lib/db/leads";
 import { generateReply, suggestNextStage } from "@/lib/ai/claude";
-import { buildSystemPrompt } from "@/lib/ai/prompts";
+import { buildSystemPrompt, buildOnboardingSystemPrompt } from "@/lib/ai/prompts";
 import { runQualification } from "@/lib/bot/qualify";
 import { notifyHandoff } from "@/lib/bot/handoff";
 import type { BotMessage, Business, BusinessConfig, ConversationStage } from "@/types/bot";
@@ -31,15 +31,82 @@ export async function processMessage(
   const conversation = await getOrCreateConversation(waPhone, displayName, business.id);
   const lead = await getLeadByConversation(conversation.id);
 
-  // 3. Detect explicit handoff triggers BEFORE calling Gemini
   const lowerText = messageText.toLowerCase();
+
+  // 3. Check for onboarding demo toggles BEFORE handoff or Gemini
+  if (lowerText.includes("demo onboarding") || lowerText.includes("probar demo") || lowerText.includes("🚀 demo onboarding")) {
+    await updateMode(conversation.id, "onboarding");
+    conversation.mode = "onboarding";
+
+    const introMsg =
+      "¡Bienvenido/a al canal de *Onboarding interno de Browns Studio*! 🚀\n\n" +
+      "Acabo de activar el modo de demostración. A partir de ahora simularé ser *Eduardo*, el Asistente IA de Onboarding de tu empresa.\n\n" +
+      "Imagínate que eres un nuevo colaborador en su primer día. Pregúntame sobre:\n" +
+      "- 📅 *Horarios e ingreso*\n" +
+      "- 🎁 *Beneficios y capacitación*\n" +
+      "- Slack, Notion u otros.\n\n" +
+      "Cuando quieras salir de la demo, simplemente presiona el botón *🚪 Volver a Ventas*.";
+
+    const demoButtons = [
+      { id: "btn_onboarding_q1", title: "📅 Horarios" },
+      { id: "btn_onboarding_q2", title: "🎁 Beneficios" },
+      { id: "btn_sales_exit", title: "🚪 Volver a Ventas" }
+    ];
+
+    await sendButtonMessage(waPhone, introMsg, demoButtons, creds);
+    await appendMessage(conversation.id, {
+      role: "user",
+      content: messageText,
+      timestamp: new Date().toISOString(),
+    });
+    await appendMessage(conversation.id, {
+      role: "assistant",
+      content: introMsg,
+      timestamp: new Date().toISOString(),
+    });
+    return;
+  }
+
+  if (lowerText.includes("volver a ventas") || lowerText.includes("salir de la demo") || lowerText.includes("🚪 volver a ventas")) {
+    await updateMode(conversation.id, "sales");
+    conversation.mode = "sales";
+
+    const exitMsg =
+      "¡Excelente! Hemos salido de la demostración del Agente de Onboarding. 🔙\n\n" +
+      "Volvemos a nuestro chat de *Ventas y Consultoría de Browns Studio*. " +
+      "Cuéntame, ¿qué tal te pareció la fluidez y velocidad del asistente? ¿Te gustaría cotizar una solución similar para tu negocio?";
+
+    const salesButtons = [
+      { id: "btn_services", title: "💡 Ver Servicios" },
+      { id: "btn_human", title: "🗣️ Hablar con Asesor" }
+    ];
+
+    await sendButtonMessage(waPhone, exitMsg, salesButtons, creds);
+    await appendMessage(conversation.id, {
+      role: "user",
+      content: messageText,
+      timestamp: new Date().toISOString(),
+    });
+    await appendMessage(conversation.id, {
+      role: "assistant",
+      content: exitMsg,
+      timestamp: new Date().toISOString(),
+    });
+    return;
+  }
+
+  // 4. Detect explicit handoff triggers
   const wantsHuman =
     lowerText.includes("hablar con alguien") ||
     lowerText.includes("hablar con una persona") ||
     lowerText.includes("quiero una persona") ||
     lowerText.includes("hablar con el equipo") ||
+    lowerText.includes("hablar con asesor") ||
+    lowerText.includes("hablar con soporte") ||
     lowerText.includes("speak to a human") ||
-    lowerText.includes("real person");
+    lowerText.includes("real person") ||
+    lowerText.includes("asesor") ||
+    lowerText.includes("soporte");
 
   if (wantsHuman && conversation.stage !== "handoff") {
     await handleHandoff(
@@ -49,7 +116,7 @@ export async function processMessage(
     return;
   }
 
-  // 4. Build user message
+  // 5. Build user message
   const userMessage: BotMessage = {
     role: "user",
     content: messageText,
@@ -58,8 +125,10 @@ export async function processMessage(
 
   const updatedMessages = [...conversation.messages, userMessage];
 
-  // 5. Build system prompt with current stage, lead context, and business config
-  const systemPrompt = buildSystemPrompt(conversation.stage, lead, businessConfig);
+  // 6. Build system prompt based on mode
+  const systemPrompt = conversation.mode === "onboarding"
+    ? buildOnboardingSystemPrompt(businessConfig, conversation.display_name)
+    : buildSystemPrompt(conversation.stage, lead, businessConfig);
 
   // 6. Generate Gemini reply (use per-business API key if available)
   let replyText: string;
@@ -84,19 +153,26 @@ export async function processMessage(
   let buttons: Array<{ id: string; title: string }> = [];
   const lowerReply = replyText.toLowerCase();
 
-  if (conversation.stage === "greeting" || lowerReply.includes("charlie") && lowerReply.includes("virtual")) {
+  if (conversation.mode === "onboarding") {
+    buttons = [
+      { id: "btn_onboarding_q1", title: "📅 Horarios" },
+      { id: "btn_onboarding_q2", title: "🎁 Beneficios" },
+      { id: "btn_sales_exit", title: "🚪 Volver a Ventas" }
+    ];
+  } else if (conversation.stage === "greeting" || (lowerReply.includes("charlie") && lowerReply.includes("virtual"))) {
     buttons = [
       { id: "btn_services", title: "💡 Ver Servicios" },
-      { id: "btn_human", title: "🗣️ Hablar con Alguien" }
+      { id: "btn_onboarding_demo", title: "🚀 Demo Onboarding" },
+      { id: "btn_human", title: "🗣️ Hablar con Asesor" }
     ];
   } else if (conversation.stage === "scheduling" || lowerReply.includes("calendly") || lowerReply.includes("llamada")) {
     buttons = [
       { id: "btn_calendly_info", title: "📅 Agendar Llamada" },
-      { id: "btn_human", title: "🗣️ Hablar con Alguien" }
+      { id: "btn_human", title: "🗣️ Hablar con Asesor" }
     ];
   } else if (conversation.stage === "qualifying") {
     buttons = [
-      { id: "btn_human", title: "🗣️ Hablar con Alguien" }
+      { id: "btn_human", title: "🗣️ Hablar con Asesor" }
     ];
   }
 
@@ -125,14 +201,16 @@ export async function processMessage(
       await markCalendlySent(conversation.id);
     }
 
-    // 10. Async: extract lead data and detect stage transitions
-    await Promise.allSettled([
-      runQualification(conversation.id, waPhone, updatedMessages, business.id),
-      detectAndUpdateStage(
-        conversation.id, conversation.stage, updatedMessages,
-        waPhone, lead, businessConfig, creds
-      ),
-    ]);
+    // 10. Async: extract lead data and detect stage transitions (only in sales mode)
+    if (conversation.mode !== "onboarding") {
+      await Promise.allSettled([
+        runQualification(conversation.id, waPhone, updatedMessages, business.id),
+        detectAndUpdateStage(
+          conversation.id, conversation.stage, updatedMessages,
+          waPhone, lead, businessConfig, creds
+        ),
+      ]);
+    }
   }
 }
 

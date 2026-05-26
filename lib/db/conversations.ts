@@ -24,7 +24,14 @@ export async function getOrCreateConversation(
   const ref = db.collection(COL).doc(id);
 
   const snap = await ref.get();
-  if (snap.exists) return { id, ...snap.data() } as Conversation;
+  if (snap.exists) {
+    const data = snap.data()!;
+    return {
+      id,
+      ...data,
+      mode: data.mode ?? "sales",
+    } as Conversation;
+  }
 
   const now  = new Date().toISOString();
   const data = {
@@ -33,6 +40,7 @@ export async function getOrCreateConversation(
     display_name:    displayName ?? null,
     messages:        [],
     stage:           "greeting" as ConversationStage,
+    mode:            "sales",
     last_message_at: now,
     created_at:      now,
   };
@@ -66,4 +74,12 @@ export async function updateStage(
 ): Promise<void> {
   const db = getFirestoreClient();
   await db.collection(COL).doc(conversationId).update({ stage });
+}
+
+export async function updateMode(
+  conversationId: string,
+  mode: "sales" | "onboarding"
+): Promise<void> {
+  const db = getFirestoreClient();
+  await db.collection(COL).doc(conversationId).update({ mode });
 }
