@@ -9,6 +9,8 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { translations } from "@/lib/i18n/translations";
 import { Lang } from "@/lib/i18n/LanguageContext";
+import fs from "fs";
+import path from "path";
 
 interface Props {
   params: Promise<{ slug: string; locale: string }>;
@@ -48,6 +50,8 @@ export default async function ProyectoPage({ params }: Props) {
   const proyecto = getProyectoBySlug(slug);
 
   if (!proyecto) notFound();
+
+  const hasPreview = fs.existsSync(path.join(process.cwd(), "public/previews", `${slug}.webp`));
 
   const lang = (["en", "es", "pt"].includes(locale) ? locale : "es") as Lang;
   const t = translations[lang];
@@ -123,56 +127,58 @@ export default async function ProyectoPage({ params }: Props) {
               {/* Left — Main content */}
               <div className="lg:col-span-2 space-y-10">
                 {/* Preview screenshot + visit button */}
-                <div className="rounded-2xl overflow-hidden border border-white/8 relative group/preview" style={{ background: proyecto.color }}>
-                  {/* Browser chrome bar */}
-                  <div className="flex items-center gap-1.5 px-4 py-2.5 bg-black/40 border-b border-white/10">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-400/60" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
-                    <span className="ml-2 flex-1 h-5 rounded bg-white/10 text-white/30 text-[11px] flex items-center px-3 font-mono truncate">
-                      {proyecto.linkDemo?.replace("https://", "") ?? `${proyecto.slug}.vercel.app`}
-                    </span>
+                {hasPreview && (
+                  <div className="rounded-2xl overflow-hidden border border-white/8 relative group/preview" style={{ background: proyecto.color }}>
+                    {/* Browser chrome bar */}
+                    <div className="flex items-center gap-1.5 px-4 py-2.5 bg-black/40 border-b border-white/10">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-400/60" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
+                      <span className="ml-2 flex-1 h-5 rounded bg-white/10 text-white/30 text-[11px] flex items-center px-3 font-mono truncate">
+                        {proyecto.linkDemo?.replace("https://", "") ?? `${proyecto.slug}.vercel.app`}
+                      </span>
+                      {proyecto.linkDemo && (
+                        <a
+                          href={proyecto.linkDemo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ml-2 p-1 rounded hover:bg-white/10 transition-colors"
+                          title={lang === "en" ? "Open site" : lang === "pt" ? "Abrir site" : "Abrir sitio"}
+                        >
+                          <ExternalLink size={12} className="text-white/40 hover:text-white/80" />
+                        </a>
+                      )}
+                    </div>
+
+                    {/* Screenshot */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`/previews/${proyecto.slug}.webp`}
+                      alt={`Preview de ${proyecto.nombre}`}
+                      className="w-full object-cover object-top"
+                      style={{ maxHeight: 420 }}
+                    />
+
+                    {/* Hover overlay — visit button */}
                     {proyecto.linkDemo && (
                       <a
                         href={proyecto.linkDemo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="ml-2 p-1 rounded hover:bg-white/10 transition-colors"
-                        title={lang === "en" ? "Open site" : lang === "pt" ? "Abrir site" : "Abrir sitio"}
+                        className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/preview:opacity-100 transition-all duration-300"
+                        style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)" }}
                       >
-                        <ExternalLink size={12} className="text-white/40 hover:text-white/80" />
+                        <span
+                          className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm text-black translate-y-2 group-hover/preview:translate-y-0 transition-transform duration-300"
+                          style={{ background: "linear-gradient(135deg, #00f0ff, #0099bb)", boxShadow: "0 0 30px rgba(0,240,255,0.35)" }}
+                        >
+                          <ExternalLink size={15} />
+                          {lang === "en" ? "Visit live site" : lang === "pt" ? "Visitar site ao vivo" : "Visitar sitio en vivo"}
+                        </span>
                       </a>
                     )}
                   </div>
-
-                  {/* Screenshot */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={`/previews/${proyecto.slug}.webp`}
-                    alt={`Preview de ${proyecto.nombre}`}
-                    className="w-full object-cover object-top"
-                    style={{ maxHeight: 420 }}
-                  />
-
-                  {/* Hover overlay — visit button */}
-                  {proyecto.linkDemo && (
-                    <a
-                      href={proyecto.linkDemo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/preview:opacity-100 transition-all duration-300"
-                      style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)" }}
-                    >
-                      <span
-                        className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm text-black translate-y-2 group-hover/preview:translate-y-0 transition-transform duration-300"
-                        style={{ background: "linear-gradient(135deg, #00f0ff, #0099bb)", boxShadow: "0 0 30px rgba(0,240,255,0.35)" }}
-                      >
-                        <ExternalLink size={15} />
-                        {lang === "en" ? "Visit live site" : lang === "pt" ? "Visitar site ao vivo" : "Visitar sitio en vivo"}
-                      </span>
-                    </a>
-                  )}
-                </div>
+                )}
 
                 {/* Description */}
                 <div>
