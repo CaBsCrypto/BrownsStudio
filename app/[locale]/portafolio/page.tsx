@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import BrownsOSLoader from "@/components/BrownsOSLoader";
 import Portfolio from "@/components/Portfolio";
+import SobreMi from "@/components/SobreMi";
 import { notFound } from "next/navigation";
 
 const LOCALES = ["en", "es", "pt"] as const;
@@ -37,8 +38,13 @@ export default async function PortafolioPage({ params }: PageProps) {
         <div className="pt-24 lg:pt-32" />
 
         {/* Premium Projects Carousel */}
-        <div className="flex-grow">
+        <div>
           <Portfolio />
+        </div>
+
+        {/* Sobre Nosotros / Cristian Section */}
+        <div className="border-t border-white/[0.05] bg-white/[0.01] py-10">
+          <SobreMi />
         </div>
 
         <Footer />
