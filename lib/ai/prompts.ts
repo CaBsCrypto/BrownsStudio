@@ -1,5 +1,6 @@
 // ── Browns Studio "Charlie" — Dynamic system prompt builder ─────────────────
 import type { ConversationStage, Lead, BusinessConfig } from "@/types/bot";
+import { getLocalKnowledgeBase } from "@/lib/ai/knowledge";
 
 const STAGE_INSTRUCTIONS: Record<ConversationStage, string> = {
   greeting: `
@@ -106,6 +107,12 @@ export function buildSystemPrompt(
     .replace("[CALENDLY_URL]", config.calendly_url ?? "nuestro link de agenda")
     .replace("[CANALES_HANDOFF]", canalesHandoff);
 
+  // Load Obsidian-compatible local knowledge base if available
+  const localKnowledge = getLocalKnowledgeBase();
+  const knowledgeSection = localKnowledge
+    ? `\n\nBASE DE CONOCIMIENTOS DE LA EMPRESA (Sincronizada desde Obsidian):\n${localKnowledge}`
+    : "";
+
   return `
 Eres ${config.nombre_bot}, el asistente virtual de ${config.nombre_negocio}.
 ${config.rubro ? `Rubro: ${config.rubro}.` : ""}
@@ -119,7 +126,7 @@ TU PERSONALIDAD:
 
 SERVICIOS Y PRECIOS ORIENTATIVOS:
 ${serviciosTexto}
-Nota: estos son precios orientativos, la propuesta final depende del proyecto.${faqsTexto}
+Nota: estos son precios orientativos, la propuesta final depende del proyecto.${faqsTexto}${knowledgeSection}
 
 REGLAS DE FORMATO:
 - NEGRITAS EN WHATSAPP: Para poner texto en negrita, usa ÚNICAMENTE un asterisco simple al principio y al final: *texto*. NUNCA uses doble asterisco (**texto**) ni triple asterisco (***texto***), ya que WhatsApp no los reconoce y muestra asteriscos sueltos muy feos.
