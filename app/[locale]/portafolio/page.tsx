@@ -40,10 +40,10 @@ export default async function PortafolioPage({ params }: PageProps) {
         <Navbar />
         
         {/* Spacer below fixed navbar */}
-        <div className="pt-24 lg:pt-28" />
+        <div className="pt-16 lg:pt-20" />
 
         {/* Subtle page title */}
-        <div className="max-w-7xl mx-auto px-4 w-full pt-8 pb-4 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 w-full pt-2 pb-1 relative z-10">
           <h1 className="reveal font-display font-bold text-3xl sm:text-4xl text-[#e5e5e5] mb-2 tracking-tight" style={{ letterSpacing: "-0.02em" }}>
             {lang === "en" ? "My Portfolio" : lang === "pt" ? "Meu Portfólio" : "Mi Portafolio"}
           </h1>
