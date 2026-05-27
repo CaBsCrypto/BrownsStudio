@@ -9,9 +9,10 @@ import { useLang } from "@/lib/i18n/LanguageContext";
 
 interface PortfolioProps {
   hideHeader?: boolean;
+  hideCTA?: boolean;
 }
 
-export default function Portfolio({ hideHeader = false }: PortfolioProps) {
+export default function Portfolio({ hideHeader = false, hideCTA = false }: PortfolioProps) {
   const { lang, t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef   = useRef<HTMLDivElement>(null);
@@ -256,23 +257,25 @@ export default function Portfolio({ hideHeader = false }: PortfolioProps) {
         </div>
 
         {/* Bottom CTA */}
-        <div className="reveal text-center">
-          <p className="text-[#9e9e9e] text-sm mb-4">
-            {t.portfolio.cta}
-          </p>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-black font-semibold hover:scale-105 active:scale-[0.97] transition-all duration-300"
-            style={{
-              background: "linear-gradient(135deg, #c6c6c7, #939eb5)",
-              boxShadow: "0 0 24px rgba(198,198,199,0.15)",
-            }}
-          >
-            {t.portfolio.ctaBtn}
-          </a>
-        </div>
+        {!hideCTA && (
+          <div className="reveal text-center">
+            <p className="text-[#9e9e9e] text-sm mb-4">
+              {t.portfolio.cta}
+            </p>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-black font-semibold hover:scale-105 active:scale-[0.97] transition-all duration-300"
+              style={{
+                background: "linear-gradient(135deg, #c6c6c7, #939eb5)",
+                boxShadow: "0 0 24px rgba(198,198,199,0.15)",
+              }}
+            >
+              {t.portfolio.ctaBtn}
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );

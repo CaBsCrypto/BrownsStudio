@@ -39,7 +39,7 @@ export default async function PortafolioPage({ params }: PageProps) {
 
         {/* Premium Projects Carousel */}
         <div>
-          <Portfolio hideHeader={false} />
+          <Portfolio hideHeader={false} hideCTA={true} />
         </div>
 
         {/* Sobre Nosotros / Cristian Section */}
