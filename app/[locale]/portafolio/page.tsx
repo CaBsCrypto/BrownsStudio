@@ -43,11 +43,11 @@ export default async function PortafolioPage({ params }: PageProps) {
         <div className="pt-16 lg:pt-20" />
 
         {/* Subtle page title */}
-        <div className="max-w-7xl mx-auto px-4 w-full pt-2 pb-1 relative z-10">
-          <h1 className="reveal font-display font-bold text-3xl sm:text-4xl text-[#e5e5e5] mb-2 tracking-tight" style={{ letterSpacing: "-0.02em" }}>
+        <div className="max-w-7xl mx-auto px-4 w-full pt-2 pb-0 relative z-10">
+          <h1 className="font-display font-bold text-3xl sm:text-4xl text-[#e5e5e5] mb-2 tracking-tight" style={{ letterSpacing: "-0.02em" }}>
             {lang === "en" ? "My Portfolio" : lang === "pt" ? "Meu Portfólio" : "Mi Portafolio"}
           </h1>
-          <p className="reveal text-[#9e9e9e] text-sm leading-relaxed max-w-xl">
+          <p className="text-[#9e9e9e] text-sm leading-relaxed max-w-xl">
             {lang === "en" ? "A curated selection of custom-built projects and digital solutions." : lang === "pt" ? "Uma seleção de projetos e soluções desenvolvidos sob medida." : "Una selección de proyectos y desarrollos a medida."}
           </p>
         </div>

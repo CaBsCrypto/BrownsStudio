@@ -127,8 +127,8 @@ export default function Portfolio({ hideHeader = false, hideCTA = false }: Portf
       <div className="relative max-w-7xl mx-auto">
 
         {/* Header row */}
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
-          {!hideHeader ? (
+        {!hideHeader ? (
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
             <div>
               <div
                 className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4"
@@ -143,66 +143,122 @@ export default function Portfolio({ hideHeader = false, hideCTA = false }: Portf
                 {t.portfolio.title}
               </h2>
             </div>
-          ) : (
-            <div className="hidden sm:block flex-grow" />
-          )}
 
-          {/* Counter + arrows */}
-          <div className="reveal reveal-delay-2 flex items-center gap-3 flex-shrink-0 pb-1">
-            <span className="text-[#484848] text-sm tabular-nums font-mono">
-              {String(activeIndex + 1).padStart(2, "0")} /{" "}
-              {String(total).padStart(2, "0")}
-            </span>
-            <button
-              onClick={prev}
-              aria-label={t.portfolio.prevLabel}
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
-              style={{
-                background: "rgba(31, 31, 31, 0.6)",
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
-                border: "1px solid rgba(72,72,72,0.3)",
-                color: "#9e9e9e",
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = "rgba(71,196,255,0.4)";
-                el.style.color = "#47c4ff";
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = "rgba(72,72,72,0.3)";
-                el.style.color = "#9e9e9e";
-              }}
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              onClick={next}
-              aria-label={t.portfolio.nextLabel}
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
-              style={{
-                background: "rgba(31, 31, 31, 0.6)",
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
-                border: "1px solid rgba(72,72,72,0.3)",
-                color: "#9e9e9e",
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = "rgba(71,196,255,0.4)";
-                el.style.color = "#47c4ff";
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = "rgba(72,72,72,0.3)";
-                el.style.color = "#9e9e9e";
-              }}
-            >
-              <ChevronRight size={18} />
-            </button>
+            {/* Counter + arrows */}
+            <div className="reveal reveal-delay-2 flex items-center gap-3 flex-shrink-0 pb-1">
+              <span className="text-[#484848] text-sm tabular-nums font-mono">
+                {String(activeIndex + 1).padStart(2, "0")} /{" "}
+                {String(total).padStart(2, "0")}
+              </span>
+              <button
+                onClick={prev}
+                aria-label={t.portfolio.prevLabel}
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
+                style={{
+                  background: "rgba(31, 31, 31, 0.6)",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  border: "1px solid rgba(72,72,72,0.3)",
+                  color: "#9e9e9e",
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = "rgba(71,196,255,0.4)";
+                  el.style.color = "#47c4ff";
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = "rgba(72,72,72,0.3)";
+                  el.style.color = "#9e9e9e";
+                }}
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                onClick={next}
+                aria-label={t.portfolio.nextLabel}
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
+                style={{
+                  background: "rgba(31, 31, 31, 0.6)",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  border: "1px solid rgba(72,72,72,0.3)",
+                  color: "#9e9e9e",
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = "rgba(71,196,255,0.4)";
+                  el.style.color = "#47c4ff";
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = "rgba(72,72,72,0.3)";
+                  el.style.color = "#9e9e9e";
+                }}
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex items-center justify-end mb-2 sm:mb-3">
+            {/* Counter + arrows — no delay/reveal class for instant load */}
+            <div className="flex items-center gap-3 flex-shrink-0 pb-1">
+              <span className="text-[#484848] text-sm tabular-nums font-mono">
+                {String(activeIndex + 1).padStart(2, "0")} /{" "}
+                {String(total).padStart(2, "0")}
+              </span>
+              <button
+                onClick={prev}
+                aria-label={t.portfolio.prevLabel}
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
+                style={{
+                  background: "rgba(31, 31, 31, 0.6)",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  border: "1px solid rgba(72,72,72,0.3)",
+                  color: "#9e9e9e",
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = "rgba(71,196,255,0.4)";
+                  el.style.color = "#47c4ff";
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = "rgba(72,72,72,0.3)";
+                  el.style.color = "#9e9e9e";
+                }}
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                onClick={next}
+                aria-label={t.portfolio.nextLabel}
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed"
+                style={{
+                  background: "rgba(31, 31, 31, 0.6)",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  border: "1px solid rgba(72,72,72,0.3)",
+                  color: "#9e9e9e",
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = "rgba(71,196,255,0.4)";
+                  el.style.color = "#47c4ff";
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = "rgba(72,72,72,0.3)";
+                  el.style.color = "#9e9e9e";
+                }}
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Carousel track */}
         <div className="relative"
