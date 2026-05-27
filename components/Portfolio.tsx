@@ -7,7 +7,11 @@ import { WHATSAPP_URL } from "@/lib/config";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
-export default function Portfolio() {
+interface PortfolioProps {
+  hideHeader?: boolean;
+}
+
+export default function Portfolio({ hideHeader = false }: PortfolioProps) {
   const { lang, t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef   = useRef<HTMLDivElement>(null);
@@ -123,20 +127,24 @@ export default function Portfolio() {
 
         {/* Header row */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
-          <div>
-            <div
-              className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4"
-              style={{ border: "1px solid rgba(71,196,255,0.2)", background: "rgba(71,196,255,0.05)", color: "#47c4ff" }}
-            >
-              {t.portfolio.eyebrow}
+          {!hideHeader ? (
+            <div>
+              <div
+                className="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-4"
+                style={{ border: "1px solid rgba(71,196,255,0.2)", background: "rgba(71,196,255,0.05)", color: "#47c4ff" }}
+              >
+                {t.portfolio.eyebrow}
+              </div>
+              <h2
+                className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#e5e5e5] leading-tight"
+                style={{ letterSpacing: "-0.03em" }}
+              >
+                {t.portfolio.title}
+              </h2>
             </div>
-            <h2
-              className="reveal reveal-delay-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#e5e5e5] leading-tight"
-              style={{ letterSpacing: "-0.03em" }}
-            >
-              {t.portfolio.title}
-            </h2>
-          </div>
+          ) : (
+            <div className="hidden sm:block flex-grow" />
+          )}
 
           {/* Counter + arrows */}
           <div className="reveal reveal-delay-2 flex items-center gap-3 flex-shrink-0 pb-1">
