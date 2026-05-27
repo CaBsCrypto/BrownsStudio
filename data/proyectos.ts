@@ -20,6 +20,67 @@ export interface Proyecto {
 
 export const proyectos: Proyecto[] = [
   {
+    slug: "historiaconjavi",
+    nombre: "Mentoria Historia — Javiera Araya",
+    tipo: {
+      es: "Ecosistema EdTech",
+      en: "EdTech Ecosystem",
+      pt: "Ecossistema EdTech",
+    },
+    descripcion: {
+      es: "Plataforma interactiva y embudo de conversión premium para Javiera Araya Molina, mentora de Historia, Geografía y Formación Ciudadana online en Chile.",
+      en: "Interactive platform and premium conversion funnel for Javiera Araya Molina, online History and Civics mentor in Chile.",
+      pt: "Plataforma interativa e funil de conversão premium para Javiera Araya Molina, mentora online de História e Civismo no Chile.",
+    },
+    descripcionLarga: {
+      es: "Javiera Araya Molina, profesora e historiadora chilena, requería un ecosistema digital de alta conversión que rompiera con la frialdad de las páginas educativas tradicionales. Diseñamos un hub interactivo premium que incluye un simulador de carga académica y planes de estudio personalizados, un chat de WhatsApp simulado en tiempo real para demostrar el soporte continuo, y una estructura visual impecable en tonos tierra (terracota y crema) que transmite la calidez del aprendizaje guiado y humano.",
+      en: "Javiera Araya Molina, a Chilean teacher and historian, required a high-converting digital ecosystem that broke away from traditional, cold educational sites. We designed a premium interactive hub featuring an academic load simulator and personalized study plans, a real-time simulated WhatsApp chat to demonstrate ongoing support, and a flawless visual structure in earth tones (terracotta and cream) that conveys the warmth of guided human learning.",
+      pt: "Javiera Araya Molina, professora e historiadora chilena, necessitava de um ecossistema digital de alta conversão que quebrasse a frieza das páginas educacionais tradicionais. Desenvolvemos un hub interativo premium que incluye um simulador de carga acadêmica e planos de estudo personalizados, um chat de WhatsApp simulado en tiempo real para demostrar el soporte continuo, e uma estructura visual impecável em tons terrosos (terracota e creme) que transmite o acolhimento da aprendizagem guiada e humana.",
+    },
+    tecnologias: ["React", "TypeScript", "Tailwind CSS", "Vite", "AI Studio"],
+    color: "linear-gradient(135deg, #1f1412 0%, #3a1e1a 50%, #c2593f 100%)",
+    colorAccent: "#c2593f",
+    caracteristicas: {
+      es: [
+        "Simulador de carga académica inteligente",
+        "Chat interactivo de soporte 24/7 simulado",
+        "Embudo de conversión de alta persuasión",
+        "Diseño responsivo premium en tonos tierra",
+        "Integración directa con WhatsApp pedagógico",
+        "Estrategia SEO local enfocada en Chile",
+      ],
+      en: [
+        "Smart academic load simulator",
+        "Interactive simulated 24/7 support chat",
+        "High-persuasion conversion funnel",
+        "Premium responsive design in earth tones",
+        "Direct integration with educational WhatsApp",
+        "Local SEO strategy focused on Chile",
+      ],
+      pt: [
+        "Simulador de carga acadêmica inteligente",
+        "Chat interativo de suporte 24/7 simulado",
+        "Funil de conversão de alta persuasão",
+        "Design responsivo premium em tons terrosos",
+        "Integração direta com o WhatsApp pedagógico",
+        "Estratégia de SEO local focada no Chile",
+      ],
+    },
+    resultado: {
+      es: "Plataforma interactiva que multiplica el agendamiento de clases de diagnóstico mediante gamificación y persuasión visual.",
+      en: "Interactive platform that multiplies diagnostic class bookings through gamification and visual persuasion.",
+      pt: "Plataforma interativa que multiplica o agendamento de aulas de diagnóstico por meio de gamificação e persuasão visual.",
+    },
+    quote: {
+      es: "La Historia no se memoriza: se comprende para entender tu presente.",
+      en: "History is not memorized: it is understood to understand your present.",
+      pt: "A História não se memoriza: compreende-se para entender o seu presente.",
+    },
+    quoteAutor: "Javiera Araya Molina",
+    linkDemo: "https://historiaconjavi.vercel.app",
+    año: 2026,
+  },
+  {
     slug: "trust-leaf",
     nombre: "Trust Leaf",
     tipo: {
