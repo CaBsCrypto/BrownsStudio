@@ -144,6 +144,9 @@ export const translations = {
       dotLabel: "Go to project",
       cta: "Ready to let your processes run themselves?",
       ctaBtn: "I want my agent",
+      introEyebrow: "EXCLUSIVE PORTFOLIO",
+      introTitle: "Elite Software & AI Solutions",
+      introSub: "A curated selection of our most recent work. We design and implement high-performance digital ecosystems, custom automations, and robust web platforms built to scale.",
     },
     about: {
       eyebrow: "Who's behind it",
@@ -692,6 +695,9 @@ export const translations = {
       dotLabel: "Ir al proyecto",
       cta: "¿Listo para que tus procesos trabajen solos?",
       ctaBtn: "Quiero mi agente",
+      introEyebrow: "PORTAFOLIO EXCLUSIVO",
+      introTitle: "Soluciones de Élite en Software e IA",
+      introSub: "Una selección de nuestros trabajos más recientes. Diseñamos e implementamos ecosistemas digitales de alto rendimiento, automatizaciones a medida y plataformas web robustas construidas para escalar.",
     },
     about: {
       eyebrow: "Quién está detrás",
@@ -1288,6 +1294,9 @@ export const translations = {
       dotLabel: "Ir para o projeto",
       cta: "Pronto para que seus processos trabalhem sozinhos?",
       ctaBtn: "Quero meu agente",
+      introEyebrow: "PORTFÓLIO EXCLUSIVO",
+      introTitle: "Soluções de Elite em Software e IA",
+      introSub: "Uma seleção com curadoria de nossos trabalhos mais recentes. Projetamos e implementamos ecossistemas digitais de alto desempenho, automações personalizadas e plataformas web robustas construídas para escalar.",
     },
     about: {
       eyebrow: "Quem está por trás",
