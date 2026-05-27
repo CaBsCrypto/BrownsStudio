@@ -40,31 +40,15 @@ export default async function PortafolioPage({ params }: PageProps) {
         <Navbar />
         
         {/* Spacer below fixed navbar */}
-        <div className="pt-24 lg:pt-32" />
+        <div className="pt-24 lg:pt-28" />
 
-        {/* Intro Hero Section */}
-        <div className="max-w-4xl mx-auto text-center px-4 pt-10 pb-8 relative z-10">
-          {/* Subtle cyan glow dot behind title */}
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full pointer-events-none opacity-[0.07] blur-[100px]"
-            style={{ background: "rgba(71,196,255,0.7)" }}
-          />
-
-          <p
-            className="reveal inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-6 border border-cyan-500/15"
-            style={{ background: "rgba(71,196,255,0.04)", color: "#47c4ff" }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#47c4ff] animate-pulse" />
-            {t.portfolio.introEyebrow}
-          </p>
-          <h1
-            className="reveal font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white leading-[1.12] mb-6 tracking-tight"
-            style={{ letterSpacing: "-0.03em" }}
-          >
-            {t.portfolio.introTitle}
+        {/* Subtle page title */}
+        <div className="max-w-7xl mx-auto px-4 w-full pt-8 pb-4 relative z-10">
+          <h1 className="reveal font-display font-bold text-3xl sm:text-4xl text-[#e5e5e5] mb-2 tracking-tight" style={{ letterSpacing: "-0.02em" }}>
+            {lang === "en" ? "My Portfolio" : lang === "pt" ? "Meu Portfólio" : "Mi Portafolio"}
           </h1>
-          <p className="reveal text-[#939eb5] text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-            {t.portfolio.introSub}
+          <p className="reveal text-[#9e9e9e] text-sm leading-relaxed max-w-xl">
+            {lang === "en" ? "A curated selection of custom-built projects and digital solutions." : lang === "pt" ? "Uma seleção de projetos e soluções desenvolvidos sob medida." : "Una selección de proyectos y desarrollos a medida."}
           </p>
         </div>
 

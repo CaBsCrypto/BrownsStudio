@@ -115,7 +115,7 @@ export default function Portfolio({ hideHeader = false, hideCTA = false }: Portf
     <section
       ref={sectionRef}
       id="portfolio"
-      className="section-padding overflow-hidden bg-transparent"
+      className={`${hideHeader ? "py-2 sm:py-4" : "section-padding"} overflow-hidden bg-transparent`}
       style={{ background: "transparent" }}
     >
       {/* Subtle orb behind the section */}
