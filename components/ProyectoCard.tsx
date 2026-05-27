@@ -39,15 +39,17 @@ export default function ProyectoCard({ proyecto, index }: ProyectoCardProps) {
       />
 
       {/* URL pill */}
-      <div
-        className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full"
-        style={{ background: "rgba(0,0,0,0.75)", border: "1px solid rgba(255,255,255,0.08)" }}
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
-        <span className="text-white/60 text-[10px] font-mono tracking-tight truncate max-w-[160px]">
-          {proyecto.linkDemo?.replace("https://", "").split("/")[0] ?? `${proyecto.slug}.vercel.app`}
-        </span>
-      </div>
+      {!proyecto.comingSoon && (
+        <div
+          className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full"
+          style={{ background: "rgba(0,0,0,0.75)", border: "1px solid rgba(255,255,255,0.08)" }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
+          <span className="text-white/60 text-[10px] font-mono tracking-tight truncate max-w-[160px]">
+            {proyecto.linkDemo?.replace("https://", "").split("/")[0] ?? `${proyecto.slug}.vercel.app`}
+          </span>
+        </div>
+      )}
 
       {/* Arrow top-right */}
       <div
