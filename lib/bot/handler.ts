@@ -46,6 +46,63 @@ export async function processMessage(
     return;
   }
 
+  // ── Programmatic Security Guards (Anti-Abuse & Anti-Flood) ───────────────────
+  const lowerText = messageText.toLowerCase();
+
+  // A. Programmatic Anti-Abuse (Insults & Vulgarity Filter)
+  const OFFENSIVE_WORDS = [
+    "puta", "mierda", "conchadesumadre", "chupala", "culiao", "culia", "weon", 
+    "hueon", "aweonao", "maricon", "bastardo", "cbron", "hijo de puta", "hdp", 
+    "gil", "ctm", "ql", "csm", "perra", "pendejo", "estupido", "idiota"
+  ];
+  const containsOffensiveWord = OFFENSIVE_WORDS.some(word => 
+    lowerText.includes(word) || new RegExp(`\\b${word}\\b`, 'i').test(lowerText)
+  );
+
+  if (containsOffensiveWord) {
+    const warningMessage = 
+      "Estimado/a, para poder brindarle soporte requerimos mantener un trato respetuoso. " +
+      `Derivaré su chat de inmediato con uno de nuestros ejecutivos de ${businessConfig.nombre_negocio}.`;
+    
+    await sendTextMessage(waPhone, warningMessage, creds);
+    await updateStage(conversation.id, "handoff");
+    await appendMessage(conversation.id, {
+      role: "user",
+      content: messageText,
+      timestamp: new Date().toISOString(),
+    });
+    await appendMessage(conversation.id, {
+      role: "assistant",
+      content: warningMessage,
+      timestamp: new Date().toISOString(),
+    });
+    await notifyHandoff(lead, waPhone, "Lenguaje inapropiado / Insulto detectado", businessConfig, creds);
+    return;
+  }
+
+  // B. Programmatic Anti-Flood (Token Safety Limit)
+  // Max 20 messages in Firestore history (10 rounds of Q&A) before forcing human takeover
+  if (conversation.mode !== "onboarding" && conversation.messages && conversation.messages.length >= 20) {
+    const limitMessage =
+      "Has alcanzado el límite máximo de interacciones automatizadas de esta sesión. 🔒\n\n" +
+      `Para continuar y asegurar que todas tus necesidades queden cubiertas de la mejor manera, te he transferido de forma automática con un especialista de ${businessConfig.nombre_negocio}. En breve te contactaremos.`;
+    
+    await sendTextMessage(waPhone, limitMessage, creds);
+    await updateStage(conversation.id, "handoff");
+    await appendMessage(conversation.id, {
+      role: "user",
+      content: messageText,
+      timestamp: new Date().toISOString(),
+    });
+    await appendMessage(conversation.id, {
+      role: "assistant",
+      content: limitMessage,
+      timestamp: new Date().toISOString(),
+    });
+    await notifyHandoff(lead, waPhone, "Límite de mensajes alcanzado (Anti-Flood)", businessConfig, creds);
+    return;
+  }
+
   // 2.5. Intercept WhatsApp Flow responses
   if (messageText.startsWith("__FLOW_RESPONSE__:")) {
     try {
@@ -108,9 +165,6 @@ export async function processMessage(
       console.error("[handler] Failed to parse or upsert flow response:", err);
     }
   }
-
-  const lowerText = messageText.toLowerCase();
-
   // 3. Check for onboarding demo toggles BEFORE handoff or Gemini
   if (lowerText.includes("demo onboarding") || lowerText.includes("probar demo") || lowerText.includes("🚀 demo onboarding")) {
     await updateMode(conversation.id, "onboarding");
