@@ -1,6 +1,7 @@
 // ── Browns Studio "Charlie" — Dynamic system prompt builder ─────────────────
 import type { ConversationStage, Lead, BusinessConfig } from "@/types/bot";
 import { getLocalKnowledgeBase } from "@/lib/ai/knowledge";
+import { getSemanticKnowledgeContext } from "@/lib/ai/vectorRAG";
 
 const STAGE_INSTRUCTIONS: Record<ConversationStage, string> = {
   greeting: `
@@ -50,11 +51,13 @@ nuevo en lo que puedes ayudarle.
 /**
  * Build the full system prompt injecting stage, lead data, and business config.
  */
-export function buildSystemPrompt(
+export async function buildSystemPrompt(
   stage: ConversationStage,
   lead: Lead | null,
-  config: BusinessConfig
-): string {
+  config: BusinessConfig,
+  query?: string,
+  apiKeyOverride?: string
+): Promise<string> {
   // Build services list
   const serviciosTexto = config.servicios.length
     ? config.servicios
@@ -107,8 +110,10 @@ export function buildSystemPrompt(
     .replace("[CALENDLY_URL]", config.calendly_url ?? "nuestro link de agenda")
     .replace("[CANALES_HANDOFF]", canalesHandoff);
 
-  // Load Obsidian-compatible local knowledge base if available
-  const localKnowledge = getLocalKnowledgeBase();
+  // Load Obsidian-compatible local knowledge base using Vector RAG if a query is provided
+  const localKnowledge = query
+    ? await getSemanticKnowledgeContext(query, 3, apiKeyOverride)
+    : getLocalKnowledgeBase();
   const knowledgeSection = localKnowledge
     ? `\n\nBASE DE CONOCIMIENTOS DE LA EMPRESA (Sincronizada desde Obsidian):\n${localKnowledge}`
     : "";
@@ -142,6 +147,7 @@ REGLAS DE COMPORTAMIENTO:
 - Si el cliente muestra frustración o impaciencia en 2 mensajes seguidos → indica que escalas a una persona
 - NUNCA digas que eres una IA a menos que te lo pregunten directamente
 - Si te preguntan si eres IA → responde honestamente: "Soy ${config.nombre_bot}, el asistente virtual de ${config.nombre_negocio}. Soy una IA 🤖 ¿Quieres que te conecte con alguien del equipo?"
+- CONTROL DE ERRORES DE AUDIO: Si el mensaje del usuario dice "🎤 [Audio no legible / Error de transcripción]" o similar, significa que el audio llegó corrupto, con excesivo ruido de fondo o falló la red. Responde con extrema amabilidad y cercanía chilena, indicándole que no lograste escuchar bien su audio y pidiéndole por favor que lo intente enviar nuevamente o lo escriba por texto.
 ${config.reglas_extra ? `\nREGLAS ADICIONALES DEL NEGOCIO:\n${config.reglas_extra}` : ""}
 
 ETAPA ACTUAL DE LA CONVERSACIÓN: ${stage}

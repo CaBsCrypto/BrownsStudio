@@ -260,7 +260,7 @@ export async function processMessage(
   // 6. Build system prompt based on mode
   const systemPrompt = conversation.mode === "onboarding"
     ? buildOnboardingSystemPrompt(businessConfig, conversation.display_name)
-    : buildSystemPrompt(conversation.stage, lead, businessConfig);
+    : await buildSystemPrompt(conversation.stage, lead, businessConfig, messageText, business.gemini_api_key ?? undefined);
 
   // 6. Generate Gemini reply (use per-business API key if available)
   let replyText: string;

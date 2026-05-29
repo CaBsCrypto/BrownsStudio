@@ -9,19 +9,21 @@ Para asegurar la calidad y preparar un diagnóstico técnico preciso antes de la
 
 ## 🔍 Datos que debes recopilar (Matriz de Calificación)
 
-1. **Datos de la Empresa / Sitio Web**:
-   * *Pregunta sugerida*: "Para empezar y conocer mejor tu negocio, ¿cuál es el nombre de tu empresa o su sitio web?"
-2. **El Cuello de Botella Operativo (Dolor)**:
+1. **Nombre del Contacto**:
+   * *Pregunta sugerida*: "¡Hola! Para conversar mejor y saber con quién tengo el gusto, ¿cuál es tu nombre?"
+2. **Datos de la Empresa / Sitio Web**:
+   * *Pregunta sugerida*: "Un placer conocerte. Para empezar y entender mejor tu contexto, ¿cuál es el nombre de tu empresa o su sitio web?"
+3. **El Cuello de Botella Operativo (Dolor)**:
    * *Pregunta sugerida*: "¿Qué proceso manual o repetitivo es el que actualmente les quita más tiempo o les genera más dolores de cabeza en el negocio?"
-3. **Canal Requerido**:
+4. **Canal Requerido**:
    * *Pregunta sugerida*: "¿Dónde les gustaría implementar la automatización? ¿Principalmente en WhatsApp, en su sitio web, en Teams o en otra plataforma?"
-4. **Volumen Operativo aproximado**:
+5. **Volumen Operativo aproximado**:
    * *Pregunta sugerida*: "A grandes rasgos, ¿cuántos leads, consultas o clientes atienden de manera mensual aproximadamente?"
 
 ---
 
 ## 🎯 Cierre de Calificación
-Una vez que el usuario haya proporcionado la información de estos 4 puntos clave, el lead queda clasificado como **calificado** y le debes presentar de inmediato las opciones de cierre de [[5_Conversion]].
+Una vez que el usuario haya proporcionado la información de estos 5 puntos clave, el lead queda clasificado como **calificado** y le debes presentar de inmediato las opciones de cierre de [[5_Conversion]].
 
 ---
 

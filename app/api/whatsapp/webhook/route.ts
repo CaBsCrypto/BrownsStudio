@@ -4,6 +4,7 @@ import { verifyWebhookSignature, verifyKapsoSignature } from "@/lib/whatsapp/ver
 import { processMessage } from "@/lib/bot/handler";
 import { getBusinessByPhoneId, getBusinessConfig, getFallbackBusinessConfig } from "@/lib/db/businesses";
 import type { WhatsAppWebhookPayload } from "@/lib/whatsapp/types";
+import { downloadWhatsAppAudio, transcribeAudioWithGemini } from "@/lib/services/audio";
 
 // ── GET — Meta webhook verification challenge ─────────────────────────────────
 export async function GET(request: Request): Promise<Response> {
@@ -118,6 +119,16 @@ async function handlePayload(payload: WhatsAppWebhookPayload): Promise<void> {
           messageText = message.interactive.button_reply.title.trim();
         } else if (message.type === "interactive" && (message.interactive as any)?.type === "nfm_reply" && (message.interactive as any).nfm_reply) {
           messageText = `__FLOW_RESPONSE__:${(message.interactive as any).nfm_reply.response_json}`;
+        } else if (message.type === "audio" && message.audio) {
+          try {
+            console.log(`[WhatsApp] Audio message received: ID=${message.audio.id}`);
+            const { buffer, mimeType } = await downloadWhatsAppAudio(message.audio.id, creds?.accessToken);
+            const transcript = await transcribeAudioWithGemini(buffer, mimeType, business.gemini_api_key ?? undefined);
+            messageText = `🎤 [Audio] ${transcript}`;
+          } catch (err) {
+            console.error("[WhatsApp] Audio processing failed:", err);
+            messageText = "🎤 [Audio no legible / Error de transcripción]";
+          }
         } else {
           console.log(`[WhatsApp] Ignoring message type: ${message.type}`);
           continue;
