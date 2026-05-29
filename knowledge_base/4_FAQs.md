@@ -19,3 +19,9 @@ La privacidad es nuestra máxima prioridad. Usamos la API empresarial pagada de 
 
 ### ¿Existe un costo de mantenimiento mensual?
 Sí, todos los desarrollos incluyen un fee de soporte y mantenimiento mensual adaptable al volumen de conversaciones del negocio. Este fee cubre el hosting cloud, soporte técnico proactivo ante caídas, actualizaciones ante cambios de las APIs de Meta y optimizaciones continuas del modelo de IA.
+
+---
+
+## 🧭 Conexiones de Consulta
+* Para conocer los detalles del Acuerdo de Nivel de Servicio de soporte de Browns Studio, revisa [[10_Politicas_de_Soporte]].
+* Para traducir conceptos técnicos complejos (como RAG o Handoff), consulta [[7_Glosario]].

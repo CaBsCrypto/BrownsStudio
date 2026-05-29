@@ -22,3 +22,9 @@ Para asegurar la calidad y preparar un diagnóstico técnico preciso antes de la
 
 ## 🎯 Cierre de Calificación
 Una vez que el usuario haya proporcionado la información de estos 4 puntos clave, el lead queda clasificado como **calificado** y le debes presentar de inmediato las opciones de cierre de [[5_Conversion]].
+
+---
+
+## 🧭 Conexiones Estratégicas
+* Si el lead tiene dudas o objeciones sobre ManyChat o precios elevados, consulta [[8_Manejo_de_Objeciones]].
+* Para auditar el encaje de volumen o presupuesto mínimo de Browns Studio, revisa [[9_Ficha_Cliente_Ideal]].
