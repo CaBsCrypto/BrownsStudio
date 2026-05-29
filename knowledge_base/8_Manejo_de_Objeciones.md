@@ -25,4 +25,6 @@ Cuando un cliente presente dudas o defensas sobre contratar nuestros servicios, 
 ---
 
 ## 🧭 Conexión en el Cerebro
-* Volver a la calificación de prospectos en [[3_Calificacion]] o avanzar a conversión directa en [[5_Conversion]].
+* Volver a la calificación de prospectos en [[3_Calificacion]].
+* Avanzar a conversión directa en [[5_Conversion]].
+* **Gancho del Onboarding**: Si el cliente sigue indeciso o dice que no, ofrécele ver la demo de bienvenida interactiva de [[11_Onboarding_Clientes]] para revertir el riesgo.
