@@ -65,9 +65,9 @@ export function getFallbackBusinessConfig(): BusinessConfig {
     calendly_url:   process.env.CALENDLY_URL ?? "https://calendly.com/brownsstudio/consulta",
     handoff_phone:  process.env.HANDOFF_NOTIFICATION_PHONE ?? null,
     servicios: [
-      { nombre: "Agente IA de Ventas",    precio_min: 750000,  precio_max: 1500000, descripcion: "WhatsApp, calificación automática, Calendly e integración básica de CRM" },
-      { nombre: "Agente IA de Onboarding", precio_min: 1200000, precio_max: 2500000, descripcion: "Entrenamiento rápido de personal mediante base de conocimiento interactiva de la empresa" },
-      { nombre: "Flujos Nativos (WhatsApp Flows)", precio_min: 900000,  precio_max: 1800000, descripcion: "Formularios interactivos nativos de WhatsApp, encuestas avanzadas e integraciones Kapso" },
+      { nombre: "WhatsApp Lead Triage & Sales Closer", precio_min: 750000,  precio_max: 1500000, descripcion: "WhatsApp, calificación automática, Calendly e integración básica de CRM" },
+      { nombre: "Internal Process & Knowledge Copilot", precio_min: 1200000, precio_max: 2500000, descripcion: "Entrenamiento rápido de personal mediante base de conocimiento interactiva de la empresa" },
+      { nombre: "Custom Agential Systems & Workflow Automations", precio_min: 900000,  precio_max: 1800000, descripcion: "Sistemas avanzados hiper-conectados y flujos lógicos en tiempo real con integraciones Kapso" },
       { nombre: "Mentoría 1-1 de Ingeniería Agéntica (1h)", precio_min: 90000,   precio_max: 90000,   descripcion: "Diseño de flujos, arquitecturas multi-agente y mejores prácticas en IA" },
       { nombre: "Mentoría Corporativa / Grupal (4h)", precio_min: 320000,  precio_max: 320000,  descripcion: "Entrenamiento técnico para equipos en desarrollo e integraciones con Kapso" },
       { nombre: "Desarrollo Web & Landings (Legacy)", precio_min: 450000,  precio_max: 1200000, descripcion: "Opción complementaria de páginas de aterrizaje y CMS bajo solicitud del cliente" },
