@@ -64,3 +64,44 @@ export async function getLeadByConversation(conversationId: string): Promise<Lea
   if (!snap.exists) return null;
   return { id: snap.id, ...snap.data() } as Lead;
 }
+
+/**
+ * Searches for an existing lead by matching a phone number or name.
+ * Uses robust suffix/prefix cleaning and case-insensitive comparison.
+ */
+export async function findLeadByContactInfo(
+  phone?: string,
+  name?: string
+): Promise<Lead | null> {
+  const db = getFirestoreClient();
+  const leadsRef = db.collection(COL);
+
+  const clean = (p: string) => p.replace(/\D/g, "");
+
+  if (phone) {
+    const cleanedPhone = clean(phone);
+    if (cleanedPhone.length >= 8) {
+      const snap = await leadsRef.get();
+      for (const doc of snap.docs) {
+        const leadPhone = clean(doc.data().wa_phone || "");
+        if (leadPhone && (cleanedPhone.endsWith(leadPhone) || leadPhone.endsWith(cleanedPhone))) {
+          return { id: doc.id, ...doc.data() } as Lead;
+        }
+      }
+    }
+  }
+
+  if (name) {
+    const nameLower = name.toLowerCase().trim();
+    const snap = await leadsRef.get();
+    for (const doc of snap.docs) {
+      const leadName = (doc.data().full_name || "").toLowerCase().trim();
+      if (leadName && (leadName.includes(nameLower) || nameLower.includes(leadName))) {
+        return { id: doc.id, ...doc.data() } as Lead;
+      }
+    }
+  }
+
+  return null;
+}
+

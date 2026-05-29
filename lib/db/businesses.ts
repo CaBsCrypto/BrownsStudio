@@ -53,6 +53,17 @@ export async function getBusinessConfig(businessId: string): Promise<BusinessCon
   }
 }
 
+export async function getBusinessById(businessId: string): Promise<Business | null> {
+  try {
+    const db = getFirestoreClient();
+    const snap = await db.collection(COL).doc(businessId).get();
+    if (!snap.exists) return null;
+    return { id: snap.id, ...snap.data() } as Business;
+  } catch {
+    return null;
+  }
+}
+
 export function getFallbackBusinessConfig(): BusinessConfig {
   return {
     id:             "fallback",

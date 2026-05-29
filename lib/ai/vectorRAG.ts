@@ -63,6 +63,18 @@ export async function syncEmbeddingsCache(apiKeyOverride?: string): Promise<Cach
   const folderPath = path.join(process.cwd(), "knowledge_base");
   const cachePath = path.join(process.cwd(), "data", "knowledge_base_embeddings.json");
 
+  // Production optimization: Skip scanning and hashing if pre-compiled cache exists
+  if (process.env.NODE_ENV === "production" && fs.existsSync(cachePath)) {
+    try {
+      const compiledData = JSON.parse(fs.readFileSync(cachePath, "utf-8"));
+      if (compiledData && compiledData.length > 0) {
+        return compiledData;
+      }
+    } catch (err) {
+      console.warn("[RAG-Vector] Failed to load pre-compiled cache from disk. Falling back to active scan.", err);
+    }
+  }
+
   let cache: CachedEmbedding[] = [];
   if (fs.existsSync(cachePath)) {
     try {

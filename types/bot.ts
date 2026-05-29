@@ -39,6 +39,7 @@ export interface Lead {
   id: string;
   conversation_id: string;
   wa_phone: string;
+  business_id?: string | null;
   full_name: string | null;
   business_type: string | null;
   budget_range: string | null;
