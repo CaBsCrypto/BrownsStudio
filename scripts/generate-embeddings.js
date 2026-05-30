@@ -35,7 +35,7 @@ async function run() {
   console.log(`[Build-Embeddings] Found ${files.length} notes to embed using: ${EMBEDDING_MODEL}`);
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: EMBEDDING_MODEL });
+  const model = genAI.getGenerativeModel({ model: EMBEDDING_MODEL }, { apiVersion: "v1" });
   const compiledCache = [];
 
   for (const file of files) {

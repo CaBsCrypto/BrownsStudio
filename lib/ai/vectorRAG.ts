@@ -46,7 +46,7 @@ async function computeEmbedding(text: string, apiKeyOverride?: string): Promise<
   if (!apiKey) throw new Error("No Gemini API key available for embeddings");
   
   const client = new GoogleGenerativeAI(apiKey);
-  const model = client.getGenerativeModel({ model: EMBEDDING_MODEL });
+  const model = client.getGenerativeModel({ model: EMBEDDING_MODEL }, { apiVersion: "v1" });
   
   const result = await model.embedContent(text);
   if (!result.embedding?.values) {
