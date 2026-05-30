@@ -60,9 +60,9 @@ async function run() {
         content,
       });
     } catch (err) {
-      console.error(`[Build-Embeddings] ERROR: Failed to embed file ${file}:`, err.message);
-      // Exit with error to fail the build if embeddings are critical
-      process.exit(1);
+      console.warn(`[Build-Embeddings] WARNING: Failed to embed file ${file}:`, err.message);
+      console.warn("[Build-Embeddings] Skipping pre-compilation due to API error. The system will fallback to complete concatenation.");
+      process.exit(0);
     }
   }
 
@@ -76,12 +76,12 @@ async function run() {
       `[Build-Embeddings] SUCCESS: Pre-compiled ${compiledCache.length} note embeddings to: ${cachePath}`
     );
   } catch (err) {
-    console.error("[Build-Embeddings] ERROR: Failed to write cache file to disk:", err.message);
-    process.exit(1);
+    console.warn("[Build-Embeddings] WARNING: Failed to write cache file to disk:", err.message);
+    process.exit(0);
   }
 }
 
 run().catch((err) => {
-  console.error("[Build-Embeddings] Fatal error in execution:", err);
-  process.exit(1);
+  console.warn("[Build-Embeddings] WARNING: Fatal error in execution:", err);
+  process.exit(0);
 });
