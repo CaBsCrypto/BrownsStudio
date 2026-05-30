@@ -4,6 +4,11 @@ allowBuilds:
   '2': sharp
   '3': unrs-resolver
   '@firebase/util': true
+  esbuild: true
   protobufjs: true
   sharp: true
   unrs-resolver: true
+
+packages:
+  - '.'
+  - 'video-generator'

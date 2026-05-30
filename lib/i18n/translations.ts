@@ -179,60 +179,117 @@ export const translations = {
       popular: "Most Recommended",
       ctaBtn: "Get a Quote",
       combo: "Not sure which service fits? Book a free 45-min process audit — no commitment required.",
+      moreDetails: "View full details & timeline ➔",
+      modalTitle: "Service Blueprint & Delivery",
+      deliverables: "What's Included (Key Deliverables)",
+      timeline: "Step-by-Step Implementation",
+      close: "Close",
       plans: [
         {
-          name: "Business AI Setup",
-          desc: "Activate WhatsApp's native AI so your business responds 24/7 without extra staff",
-          price: "1,390,000 CLP",
-          priceSuffix: " setup + 175,000 CLP/mo maintenance",
+          name: "WhatsApp Lead Triage & Sales Closer",
+          desc: "Autonomous lead profiling and qualification on WhatsApp 24/7 with silent human handoff.",
+          price: "750,000 - 1,500,000 CLP",
+          priceSuffix: " setup + 90,000 CLP/mo support & hosting",
           features: [
-            "Conversation audit (top 30 questions identified)",
-            "Full knowledge base written in your brand voice",
-            "Strategic agent configuration & escalation rules",
-            "30+ real conversation tests before launch",
-            "1-hour handoff training session included",
+            "Conversational lead qualification",
+            "Real-time Google Sheets sync",
+            "Silent human escalation (handoff)"
           ],
+          longFeatures: [
+            "Conversational lead qualification on WhatsApp 24/7 without rigid buttons",
+            "Real-time contact synchronization directly to Google Sheets",
+            "Autonomous appointment booking via native Calendly integration",
+            "Silent human escalation (handoff) with full chat history logged in Firestore",
+            "Real-time audio processing and voice note transcription via Gemini",
+            "Private Web Admin Portal (/admin) to audit all chats and leads",
+            "Programmatic security guards (built-in Anti-Abuse and Anti-Flood filters)"
+          ],
+          howWeDoIt: [
+            { step: "Day 1-2: Conversational Scoping", desc: "We define the 5 key profiling questions and map your bot's exact brand voice." },
+            { step: "Day 3-4: Obsidian Knowledge Base", desc: "We structure markdown files with your services, pricing guidelines, and common FAQs." },
+            { step: "Day 5-7: Webhooks & Integrations", desc: "We connect Meta APIs, Calendly, and Google Sheets within our agential system." },
+            { step: "Day 8-10: Stress Testing & Deploy", desc: "We run 30+ real test conversations and push the bot to live production." }
+          ]
         },
         {
-          name: "El Capacitador IA",
-          desc: "WhatsApp team onboarding and operational process agent. Resolves queries in text, image, and voice using an Obsidian-style structured wiki.",
-          price: "1,850,000 CLP",
-          priceSuffix: " setup + 225,000 CLP/mo maintenance",
+          name: "Internal Process & Knowledge Copilot",
+          desc: "Onboarding automation and internal support powered by Obsidian-wiki and multimodal RAG.",
+          price: "1,200,000 - 2,500,000 CLP",
+          priceSuffix: " setup + 145,000 CLP/mo support & hosting",
           features: [
+            "Obsidian-style knowledge base",
+            "Local vector RAG (0ms latency, free)",
+            "Text, voice, and image processing"
+          ],
+          longFeatures: [
             "Obsidian-style structured knowledge base integration (markdown/wiki)",
-            "Multimodal query processing: handles text, image, and voice notes",
-            "Real-time escalation alerts to human supervisors when stuck",
-            "75% reduction in team onboarding and internal support resolution time",
-            "Native deployment to WhatsApp, Slack, or Microsoft Teams",
+            "In-memory vector RAG search (0ms latency) without expensive database fees",
+            "Multimodal query processing: handles text, voice notes, and image attachments",
+            "Real-time supervisor escalation alerts if the AI needs human assistance",
+            "75% reduction in internal support wait times and employee onboarding duration",
+            "Native deployment to Slack, Microsoft Teams, or WhatsApp",
+            "Automated incremental cache pre-compilation during build phase (Vercel-ready)"
           ],
+          howWeDoIt: [
+            { step: "Day 1-3: Information Audit", desc: "We scan your onboarding manuals, operational guidelines, and company wikis." },
+            { step: "Day 4-6: Vector RAG Structure", desc: "We organize the Obsidian vault and configure incremental text-embedding-004 caching." },
+            { step: "Day 7-8: Channel Deployment", desc: "We deploy the bot directly inside your Slack, Teams, or company WhatsApp channels." },
+            { step: "Day 9-10: Calibration & Launch", desc: "We stress-test the model against hallucinations and verify response accuracy." }
+          ]
         },
         {
-          name: "Custom WhatsApp Agent",
-          desc: "A custom-coded agent that connects to your real systems and takes action — not just answers",
-          price: "2,600,000+ CLP",
-          priceSuffix: " setup + 325,000 CLP/mo maintenance",
+          name: "Custom Agential Systems & Workflows",
+          desc: "Fully custom agential systems executing real-time actions and integrations across CRMs.",
+          price: "900,000 - 1,800,000 CLP",
+          priceSuffix: " setup + 125,000 CLP/mo support & hosting",
           features: [
-            "Fully custom-coded agent (no templates)",
-            "Real-time integration with your systems (Calendar, CRM, Sheets, Shopify)",
-            "Lead qualification, booking & 24/7 support",
-            "Knowledge base trained with your exact business logic",
-            "Human escalation with full conversation context",
+            "Custom-coded agential software",
+            "Bidirectional CRM integrations",
+            "Advanced background automation"
           ],
-          popular: true,
+          longFeatures: [
+            "Fully custom-coded agential system (Node.js/TypeScript, clean architecture)",
+            "Bidirectional real-time CRM integration (HubSpot, Salesforce, Pipedrive)",
+            "Transactional synchronization with e-commerce, ERPs, and custom databases",
+            "Advanced workflow automations executing complex backend tasks via Kapso",
+            "Advanced logic routing and direct secure interactions with proprietary APIs",
+            "Bank-grade encrypted credential keychain storage",
+            "Priority engineering support and proactive updates for API changes"
+          ],
+          howWeDoIt: [
+            { step: "Day 1-3: Architecture & API Scoping", desc: "We audit your CRM/ERP APIs and design the logical data mapping." },
+            { step: "Day 4-8: Backend Engineering", desc: "We build custom logical routines and cloud automation functions in Kapso." },
+            { step: "Day 9-11: Integration Testing", desc: "We perform full end-to-end sandbox testing of all transactional synchronizations." },
+            { step: "Day 12: Production Go-Live", desc: "We deploy the system live and securely connect it to your operations." }
+          ],
+          popular: true
         },
         {
           name: "Enterprise Agentic System",
-          desc: "Multi-agent architecture for complex operations — fully integrated with your business",
+          desc: "Multi-agent orchestration architecture for complex, large-scale corporate operations.",
           price: "Custom Quote",
-          priceSuffix: " + 750,000+ CLP/mo maintenance",
+          priceSuffix: " + 350,000+ CLP/mo support & engineering",
           features: [
-            "Multi-agent orchestration system",
-            "Internal knowledge agent for your team",
-            "Document processing & data extraction",
-            "Multiple system integrations + custom CRM",
-            "60-day priority engineering support",
+            "Advanced multi-agent orchestration",
+            "Intelligent document processing",
+            "Guaranteed engineering SLA"
           ],
-        },
+          longFeatures: [
+            "Sovereign multi-agent system with intelligent routing between specialized agents",
+            "AI-powered document processing and secure data extraction (PDFs, spreadsheets)",
+            "Unlimited integrations with proprietary databases and legacy systems",
+            "Custom enterprise-grade multi-role administration dashboard",
+            "Proactive system health monitoring and high-availability Vercel hosting",
+            "Strict bank-grade data encryption and strict privacy standard compliance",
+            "24/7 dedicated engineering support and guaranteed response SLA"
+          ],
+          howWeDoIt: [
+            { step: "Phase 1: Consulting & Blueprint", desc: "We map your entire operations and design the complete multi-agent blueprint." },
+            { step: "Phase 2: Sandbox Engineering", desc: "We build and run the multi-agent ecosystem in a secure, isolated sandbox." },
+            { step: "Phase 3: Database & Core Connect", desc: "We hook the agents to your central corporate database and live systems." },
+            { step: "Phase 4: Scaling & Training", desc: "We roll out the platform gradually and train your executive team." }
+          ]
+        }
       ],
       trainingPlans: [
         {
@@ -730,60 +787,117 @@ export const translations = {
       popular: "Más Recomendado",
       ctaBtn: "Cotizar Proyecto",
       combo: "¿No sabes qué servicio necesitas? Agenda una auditoría de procesos gratis de 45 min — sin compromiso.",
+      moreDetails: "Ver detalles e implementación ➔",
+      modalTitle: "Detalles del Servicio e Implementación",
+      deliverables: "Qué Incluye (Entregables)",
+      timeline: "Paso a Paso de la Implementación",
+      close: "Cerrar",
       plans: [
         {
-          name: "Business AI Setup",
-          desc: "Activa el agente nativo de WhatsApp para que tu negocio responda 24/7 sin contratar más personal",
-          price: "1.390.000 CLP",
-          priceSuffix: " setup + 175.000 CLP/mes mantenimiento",
+          name: "WhatsApp Lead Triage & Sales Closer",
+          desc: "Calificación y perfilado autónomo de prospectos en WhatsApp 24/7 con traspaso silencioso.",
+          price: "750.000 - 1.500.000 CLP",
+          priceSuffix: " setup + 90.000 CLP/mes de soporte y hosting",
           features: [
-            "Auditoría de conversaciones (top 30 preguntas identificadas)",
-            "Knowledge base completa redactada en tu tono de marca",
-            "Configuración estratégica del agente y reglas de derivación a humano",
-            "30+ conversaciones de prueba reales antes del lanzamiento",
-            "Sesión de capacitación de 1 hora incluida",
+            "Calificación conversacional de leads",
+            "Sincronización a Google Sheets",
+            "Derivación silenciosa a humanos (handoff)"
           ],
+          longFeatures: [
+            "Calificación conversacional de leads en WhatsApp 24/7 sin botones rígidos",
+            "Sincronización de contactos calificados a Google Sheets en tiempo real",
+            "Agendamiento automático mediante integración nativa con Calendly",
+            "Derivación silenciosa a humanos (handoff) con historial de chat en Firestore",
+            "Procesamiento y transcripción de notas de voz en tiempo real con Gemini",
+            "Panel de administración web (/admin) para auditar chats y leads",
+            "Filtros de seguridad programáticos (Anti-Abuso y Anti-Flood integrados)"
+          ],
+          howWeDoIt: [
+            { step: "Día 1-2: Scoping Conversacional", desc: "Definimos las 5 preguntas de perfilado y el tono de voz de tu bot." },
+            { step: "Día 3-4: Bóveda en Obsidian", desc: "Estructuramos las notas de conocimiento de tus servicios y preguntas frecuentes." },
+            { step: "Día 5-7: Integraciones & Webhooks", desc: "Conectamos las APIs de Meta, Calendly y Google Sheets en Kapso." },
+            { step: "Día 8-10: Testing & Despliegue", desc: "Realizamos 30 conversaciones de prueba reales y liberamos el bot a producción." }
+          ]
         },
         {
-          name: "El Capacitador IA",
-          desc: "Agente de WhatsApp para onboarding y procesos. Resuelve dudas de tu equipo en texto, imagen y voz usando Obsidian.",
-          price: "1.850.000 CLP",
-          priceSuffix: " setup + 225.000 CLP/mes mantenimiento",
+          name: "Internal Process & Knowledge Copilot",
+          desc: "Automatización de soporte interno e inducción (onboarding) de personal con RAG multimedia.",
+          price: "1.200.000 - 2.500.000 CLP",
+          priceSuffix: " setup + 145.000 CLP/mes de soporte y hosting",
           features: [
+            "Base de conocimientos Obsidian",
+            "RAG vectorial local (0ms costo cero)",
+            "Procesamiento de audio, imágenes y texto"
+          ],
+          longFeatures: [
             "Base de conocimientos estructurada estilo Obsidian (markdown/wiki)",
-            "Procesamiento de dudas multiformato: texto, notas de voz e imágenes",
-            "Alertas en tiempo real y derivación a supervisores si la IA se traba",
-            "Reducción del 75% en el tiempo de soporte y capacitación interna",
+            "RAG vectorial en memoria (0ms latencia) sin bases de datos de pago",
+            "Procesamiento de consultas multiformato: texto, notas de voz e imágenes",
+            "Alertas en tiempo real y escalación a supervisores ante fallos de IA",
+            "Reducción del 75% en tiempos de soporte y capacitación interna",
             "Despliegue nativo en WhatsApp, Slack o Microsoft Teams",
+            "Actualización automática y pre-compilación de embeddings en fase de build"
           ],
+          howWeDoIt: [
+            { step: "Día 1-3: Auditoría de Información", desc: "Escaneamos tus manuales de inducción, reglamentos y wikis de la empresa." },
+            { step: "Día 4-6: Estructuración RAG", desc: "Estructuramos la bóveda Obsidian y configuramos el caché incremental text-embedding-004." },
+            { step: "Día 7-8: Despliegue en Canales", desc: "Conectamos el bot a tus canales internos de Slack, Teams o WhatsApp corporativo." },
+            { step: "Día 9-10: Calibración & Lanzamiento", desc: "Validamos las respuestas del bot contra alucinaciones con tests de estrés." }
+          ]
         },
         {
-          name: "Agente WhatsApp a Medida",
-          desc: "Un agente programado que se conecta a tus sistemas reales y actúa — no solo responde",
-          price: "2.600.000+ CLP",
-          priceSuffix: " setup + 325.000 CLP/mes mantenimiento",
+          name: "Custom Agential Systems & Workflows",
+          desc: "Agentes autónomos hiper-conectados que ejecutan acciones reales en tus sistemas internos.",
+          price: "900.000 - 1.800.000 CLP",
+          priceSuffix: " setup + 125.000 CLP/mes de soporte y hosting",
           features: [
-            "Agente programado a medida (sin plantillas)",
-            "Integración en tiempo real con tus sistemas (Calendar, CRM, Sheets, Shopify)",
-            "Calificación de leads, agendamiento y soporte 24/7",
-            "Knowledge base entrenada con tu lógica de negocio exacta",
-            "Derivación a humano con contexto completo de la conversación",
+            "Agente programado a medida en código",
+            "Integración bidireccional de CRMs",
+            "Automatización de tareas en segundo plano"
           ],
-          popular: true,
+          longFeatures: [
+            "Agente programado a medida en código limpio (Node.js/TypeScript)",
+            "Integración bidireccional en tiempo real con CRMs (HubSpot, Salesforce, Pipedrive)",
+            "Sincronización transaccional con pasarelas de pago y ERPs corporativos",
+            "Automatización de tareas complejas en segundo plano mediante workflows de Kapso",
+            "Lógica de ruteo avanzada e interacción con bases de datos propietarias",
+            "Llavero de credenciales API encriptado de nivel bancario",
+            "Soporte de ingeniería y mantenimiento prioritario ante actualizaciones de API"
+          ],
+          howWeDoIt: [
+            { step: "Día 1-3: Arquitectura & API Scoping", desc: "Analizamos las APIs de tu CRM/ERP y diseñamos el mapa lógico de interacciones." },
+            { step: "Día 4-8: Desarrollo de Funciones", desc: "Escribimos el código de automatización e integraciones en caliente en Kapso." },
+            { step: "Día 9-11: Testing de Integraciones", desc: "Simulamos sincronizaciones transaccionales y de bases de datos de extremo a extremo." },
+            { step: "Día 12: Despliegue & Producción", desc: "Liberamos el sistema conectado a tus operaciones reales." }
+          ],
+          popular: true
         },
         {
           name: "Sistema Agéntico Empresarial",
-          desc: "Arquitectura multi-agente para operaciones complejas — integrada con todo tu negocio",
+          desc: "Arquitectura multi-agente para operaciones complejas de gran escala y múltiples capas.",
           price: "A Cotizar",
-          priceSuffix: " + 750.000+ CLP/mes mantenimiento",
+          priceSuffix: " + 350.000+ CLP/mes de soporte e ingeniería",
           features: [
-            "Sistema de orquestación multi-agente",
-            "Agente de conocimiento interno para tu equipo",
-            "Procesamiento de documentos y extracción de datos",
-            "Múltiples integraciones de sistemas + CRM propio",
-            "Soporte de ingeniería prioritario por 60 días",
+            "Orquestación multi-agente avanzada",
+            "Procesamiento inteligente de documentos",
+            "SLA de ingeniería garantizado"
           ],
-        },
+          longFeatures: [
+            "Sistema de orquestación y ruteo entre múltiples agentes especializados",
+            "Procesamiento inteligente y extracción de datos de documentos corporativos (PDFs, Excel)",
+            "Integraciones ilimitadas con sistemas heredados (Legacy Systems) y CRMs propios",
+            "Panel de administración corporativo personalizado multi-rol",
+            "Monitoreo proactivo ante caídas de red y redundancia de servidores en Vercel",
+            "SLA (Acuerdo de Nivel de Servicio) de ingeniería y soporte prioritario 24/7",
+            "Seguridad de datos de nivel bancario con cumplimiento estricto de privacidad"
+          ],
+          howWeDoIt: [
+            { step: "Fase 1: Consultoría & Blueprint", desc: "Mapeamos la operación completa de la compañía y diseñamos el blueprint de agentes." },
+            { step: "Fase 2: Desarrollo & Sandbox", desc: "Construimos el ecosistema multi-agente en un sandbox de pruebas seguro." },
+            { step: "Fase 3: Integración de Sistemas", desc: "Conectamos los agentes a la base de datos central y sistemas corporativos." },
+            { step: "Fase 4: Despliegue & Escalado", desc: "Liberamos gradualmente el sistema y entrenamos a tu equipo directivo." }
+          ]
+        }
       ],
       aiPlans: [],
       trainingPlans: [
@@ -1329,60 +1443,117 @@ export const translations = {
       popular: "Mais Recomendado",
       ctaBtn: "Orçar Projeto",
       combo: "Não sabe qual serviço precisa? Agende uma auditoria de processos grátis de 45 min — sem compromisso.",
+      moreDetails: "Ver detalhes e cronograma ➔",
+      modalTitle: "Detalhes do Serviço e Cronograma",
+      deliverables: "O Que Inclui (Entregáveis)",
+      timeline: "Cronograma de Implantação",
+      close: "Fechar",
       plans: [
         {
-          name: "Business AI Setup",
-          desc: "Ative o agente nativo do WhatsApp para que seu negócio responda 24/7 sem contratar mais pessoal",
-          price: "1.390.000 CLP",
-          priceSuffix: " setup + 175.000 CLP/mês de manutenção",
+          name: "WhatsApp Lead Triage & Sales Closer",
+          desc: "Qualificação e perfilamento autônomo de prospectos no WhatsApp 24/7 com transição silenciosa para humanos.",
+          price: "750.000 - 1.500.000 CLP",
+          priceSuffix: " setup + 90.000 CLP/mês de suporte e hospedagem",
           features: [
-            "Auditoria de conversas (top 30 perguntas identificadas)",
-            "Knowledge base completa escrita no tom da sua marca",
-            "Configuração estratégica do agente e regras de encaminhamento",
-            "30+ conversas de teste reais antes do lançamento",
-            "Sessão de treinamento de 1 hora incluída",
+            "Qualificação conversacional de leads",
+            "Sincronização com Google Sheets",
+            "Transição silenciosa para humanos (handoff)"
           ],
+          longFeatures: [
+            "Qualificação conversacional de leads no WhatsApp 24/7 sem botões rígidos",
+            "Sincronização de contatos qualificados com Google Sheets em tempo real",
+            "Agendamento automático via integração nativa com o Calendly",
+            "Transição silenciosa para humanos (handoff) com histórico de chat gravado no Firestore",
+            "Processamento e transcrição de notas de voz em tempo real com Gemini",
+            "Painel de administração web (/admin) privado para auditar chats e leads",
+            "Filtros de segurança programáticos (Anti-Abuso e Anti-Flood integrados)"
+          ],
+          howWeDoIt: [
+            { step: "Dia 1-2: Escopo Conversacional", desc: "Definimos as 5 perguntas de perfilamento e o tom de voz do seu bot." },
+            { step: "Dia 3-4: Base de Conhecimento Obsidian", desc: "Estruturamos arquivos markdown com seus serviços, diretrizes de preços e FAQs comuns." },
+            { step: "Dia 5-7: Webhooks & Integrações", desc: "Conectamos as APIs da Meta, Calendly e Google Sheets dentro do nosso sistema agêntico." },
+            { step: "Dia 8-10: Testes de Estresse & Implantação", desc: "Realizamos mais de 30 conversas de teste reais e liberamos o bot para produção ativa." }
+          ]
         },
         {
-          name: "O Capacitador IA",
-          desc: "Agente de WhatsApp para onboarding e processos. Resolve dúvidas em texto, imagem e voz com sua base Obsidian.",
-          price: "1.850.000 CLP",
-          priceSuffix: " setup + 225.000 CLP/mês de manutenção",
+          name: "Internal Process & Knowledge Copilot",
+          desc: "Automação de suporte interno e integração (onboarding) de funcionários com RAG multimídia.",
+          price: "1.200.000 - 2.500.000 CLP",
+          priceSuffix: " setup + 145.000 CLP/mês de suporte e hospedagem",
           features: [
-            "Base de conhecimentos estruturada estilo Obsidian (markdown/wiki)",
-            "Processamento de dúvidas em multiformato: texto, notas de voz e imagens",
-            "Alertas em tempo real e encaminhamento a supervisores se a IA travar",
-            "Reduência de 75% no tempo de suporte e integração interna",
-            "Implantação nativa no WhatsApp, Slack ou Microsoft Teams",
+            "Base de conhecimento Obsidian",
+            "RAG vetorial local (0ms latência, grátis)",
+            "Processamento de áudio, imagem e texto"
           ],
+          longFeatures: [
+            "Integração de base de conhecimento estruturada estilo Obsidian (markdown/wiki)",
+            "Busca RAG vetorial em memória (0ms de latência) sem taxas caras de banco de dados",
+            "Processamento de consultas multimídia: lida com texto, notas de voz e anexos de imagem",
+            "Alertas em tempo real e escalonamento para supervisores se a IA precisar de ajuda humana",
+            "Redução de 75% no tempo de suporte interno e duração do onboarding de funcionários",
+            "Implantação nativa no Slack, Microsoft Teams ou WhatsApp corporativo",
+            "Pré-compilação automática do cache de embeddings durante a fase de build (pronto para Vercel)"
+          ],
+          howWeDoIt: [
+            { step: "Dia 1-3: Auditoria de Informação", desc: "Escaneamos seus manuais de onboarding, diretrizes operacionais e wikis da empresa." },
+            { step: "Dia 4-6: Estruturação do RAG Vetorial", desc: "Organizamos a bóveda do Obsidian e configuramos o cache incremental text-embedding-004." },
+            { step: "Dia 7-8: Implantação de Canais", desc: "Conectamos o bot diretamente nos canais do Slack, Teams ou WhatsApp da sua empresa." },
+            { step: "Dia 9-10: Calibração & Lançamento", desc: "Validamos as respostas do bot contra alucinações com testes de estresse." }
+          ]
         },
         {
-          name: "Agente WhatsApp sob Medida",
-          desc: "Um agente programado que se conecta aos seus sistemas reais e age — não só responde",
-          price: "2.600.000+ CLP",
-          priceSuffix: " setup + 325.000 CLP/mês de manutenção",
+          name: "Custom Agential Systems & Workflows",
+          desc: "Agentes autônomos hiperconectados que executam ações reais nos seus sistemas internos.",
+          price: "900.000 - 1.800.000 CLP",
+          priceSuffix: " setup + 125.000 CLP/mês de suporte e hospedagem",
           features: [
-            "Agente programado sob medida (sem templates)",
-            "Integração em tempo real com seus sistemas (Calendar, CRM, Sheets, Shopify)",
-            "Qualificação de leads, agendamento e suporte 24/7",
-            "Knowledge base treinada com sua lógica de negócio exata",
-            "Encaminhamento para humano com contexto completo da conversa",
+            "Agente programado sob medida em código",
+            "Integração bidirecional de CRMs",
+            "Automação de tarefas em segundo plano"
           ],
-          popular: true,
+          longFeatures: [
+            "Sistema agêntico totalmente codificado sob medida (Node.js/TypeScript, arquitetura limpa)",
+            "Integração bidirecional em tempo real com CRMs (HubSpot, Salesforce, Pipedrive)",
+            "Sincronização transacional com e-commerce, ERPs e bancos de dados personalizados",
+            "Automação avançada de tarefas complexas em segundo plano via workflows no Kapso",
+            "Lógica de roteamento avançada e interações seguras diretas com APIs proprietárias",
+            "Chaveiro de credenciais API criptografado de nível bancário",
+            "Suporte de engenharia prioritário e atualizações proativas para mudanças de API"
+          ],
+          howWeDoIt: [
+            { step: "Dia 1-3: Arquitetura & Escopo de API", desc: "Analisamos as APIs do seu CRM/ERP e desenhamos o mapa de dados lógico." },
+            { step: "Dia 4-8: Engenharia de Backend", desc: "Construímos as rotinas lógicas personalizadas e funções de nuvem no Kapso." },
+            { step: "Dia 9-11: Testes de Integração", desc: "Realizamos testes de ponta a ponta em ambiente sandbox de todas as sincronizações." },
+            { step: "Dia 12: Implantação & Produção", desc: "Liberamos o sistema conectado com segurança às suas operações reais." }
+          ],
+          popular: true
         },
         {
           name: "Sistema Agêntico Empresarial",
-          desc: "Arquitetura multi-agente para operações complexas — integrada com todo o seu negócio",
-          price: "Sob Medida",
-          priceSuffix: " + 750.000+ CLP/mês de manutenção",
+          desc: "Arquitetura de orquestração multi-agente para operações corporativas complexas de grande escala.",
+          price: "A Cotizar",
+          priceSuffix: " + 350.000+ CLP/mês de suporte e engenharia",
           features: [
-            "Sistema de orquestração multi-agente",
-            "Agente de conhecimento interno para sua equipe",
-            "Processamento de documentos e extração de dados",
-            "Múltiplas integrações de sistemas + CRM próprio",
-            "Suporte de engenharia prioritário por 60 dias",
+            "Orquestração multi-agente avançada",
+            "Processamento inteligente de documentos",
+            "SLA de engenharia garantido"
           ],
-        },
+          longFeatures: [
+            "Sistema multi-agente soberano com roteamento inteligente entre agentes especializados",
+            "Processamento inteligente de documentos e extração segura de dados (PDFs, planilhas)",
+            "Integrações ilimitadas com bancos de dados proprietários e sistemas legados",
+            "Painel de administração corporativo personalizado multi-função",
+            "Monitoramento proativo da saúde do sistema e hospedagem de alta disponibilidade na Vercel",
+            "Criptografia de dados de nível bancário e conformidade estrita com padrões de privacidade",
+            "Suporte de engenharia dedicado 24/7 e garantia de SLA de tempo de resposta"
+          ],
+          howWeDoIt: [
+            { step: "Fase 1: Consultoria & Blueprint", desc: "Mapeamos toda a operação da empresa e desenhamos o blueprint multi-agente completo." },
+            { step: "Fase 2: Engenharia de Sandbox", desc: "Construímos e executamos o ecossistema multi-agente em um sandbox isolado e seguro." },
+            { step: "Fase 3: Banco de Dados & Conexão", desc: "Conectamos os agentes ao seu banco de dados central e aos sistemas em tempo real." },
+            { step: "Fase 4: Implantação & Treinamento", desc: "Liberamos o sistema gradualmente e treinamos sua equipe executiva." }
+          ]
+        }
       ],
       trainingPlans: [
         {

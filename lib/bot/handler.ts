@@ -81,8 +81,10 @@ export async function processMessage(
   }
 
   // B. Programmatic Anti-Flood (Token Safety Limit)
-  // Max 20 messages in Firestore history (10 rounds of Q&A) before forcing human takeover
-  if (conversation.mode !== "onboarding" && conversation.messages && conversation.messages.length >= 20) {
+  // Max 50 messages in Firestore history (25 rounds of Q&A) before forcing human takeover
+  // Whitelist Cristian's personal number from this limit to allow unlimited testing
+  const isWhitelisted = waPhone.includes("56936306028") || waPhone.includes("36306028");
+  if (conversation.mode !== "onboarding" && !isWhitelisted && conversation.messages && conversation.messages.length >= 50) {
     const limitMessage =
       "Has alcanzado el límite máximo de interacciones automatizadas de esta sesión. 🔒\n\n" +
       `Para continuar y asegurar que todas tus necesidades queden cubiertas de la mejor manera, te he transferido de forma automática con un especialista de ${businessConfig.nombre_negocio}. En breve te contactaremos.`;

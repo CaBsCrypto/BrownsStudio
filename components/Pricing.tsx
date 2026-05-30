@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, Zap, Globe, GraduationCap, MessageCircle } from "lucide-react";
+import { Check, Zap, Globe, GraduationCap, MessageCircle, X } from "lucide-react";
 import { getWhatsAppWithPackage, WHATSAPP_URL } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
@@ -10,6 +10,30 @@ export default function Pricing() {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeTab, setActiveTab] = useState<'web' | 'training'>('web');
   const [isRevealed, setIsRevealed] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<any | null>(null);
+
+  // Lock body scroll when modal is active
+  useEffect(() => {
+    if (selectedPlan) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedPlan]);
+
+  // Handle keyboard escape press
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelectedPlan(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -83,7 +107,11 @@ export default function Pricing() {
           return (
             <div className={`grid grid-cols-1 md:grid-cols-2 ${plansCount >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6 max-w-7xl mx-auto`}>
               {((activeTab === 'web' ? (t.pricing as any).plans : (t.pricing as any).trainingPlans) as any[]).map((plan) => {
-                const isOnboarding = plan.name.toLowerCase().includes("onboarding") || plan.name.toLowerCase().includes("inducción") || plan.name.toLowerCase().includes("induc");
+                const isOnboarding = plan.name.toLowerCase().includes("onboarding") || 
+                                     plan.name.toLowerCase().includes("inducción") || 
+                                     plan.name.toLowerCase().includes("induc") ||
+                                     plan.name.toLowerCase().includes("copilot") ||
+                                     plan.name.toLowerCase().includes("knowledge");
                 return (
                   <div
                     key={plan.name}
@@ -182,16 +210,26 @@ export default function Pricing() {
                       </div>
                     </div>
 
-                    <ul className="space-y-3 mb-8 flex-grow">
-                      {plan.features.map((feature: string) => (
+                    <ul className="space-y-3 mb-5 flex-grow">
+                      {plan.features.slice(0, 3).map((feature: string) => (
                         <li key={feature} className="flex items-start gap-2.5 text-sm text-[#9e9e9e]">
                           <Check size={15} className="flex-shrink-0 mt-0.5" style={{ color: isOnboarding ? "#a78bfa" : "#00f0ff" }} />
-                          {feature}
+                          <span>{feature}</span>
                         </li>
                       ))}
                     </ul>
 
-                    {isOnboarding && (
+                    {activeTab === 'web' && (
+                      <button
+                        onClick={() => setSelectedPlan(plan)}
+                        className="text-left text-xs font-semibold mb-6 transition-all duration-300 hover:translate-x-1 flex items-center gap-1 w-fit"
+                        style={{ color: isOnboarding ? "#c084fc" : "#00f0ff" }}
+                      >
+                        {(t.pricing as any).moreDetails || "Ver detalles e implementación ➔"}
+                      </button>
+                    )}
+
+                    {isOnboarding && !plan.longFeatures && (
                       <div className="mb-6 pt-3 border-t border-white/5">
                         <div className="flex flex-col gap-1.5">
                           <span className="text-[9px] text-[#9e9e9e]/60 uppercase tracking-widest font-mono font-bold">Compatible Channels:</span>
@@ -208,7 +246,7 @@ export default function Pricing() {
                       href={getWhatsAppWithPackage(plan.name)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full text-center py-3 rounded-xl text-sm font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                      className="block w-full text-center py-3 rounded-xl text-sm font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 mt-auto"
                       style={
                         plan.popular
                           ? { background: "linear-gradient(135deg, #00f0ff, #0070ff)", color: "#000", boxShadow: "0 0 20px rgba(0,240,255,0.2)" }
@@ -283,6 +321,208 @@ export default function Pricing() {
             dangerouslySetInnerHTML={{ __html: t.pricing.combo }}
           />
         </p>
+      {/* Modal for Plan Details */}
+      {selectedPlan && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+          role="dialog"
+          aria-modal="true"
+        >
+          {/* Backdrop with extreme blur and dark tint */}
+          <div 
+            className="absolute inset-0 bg-black/70 backdrop-blur-md transition-opacity duration-300"
+            onClick={() => setSelectedPlan(null)}
+          />
+          
+          {/* Modal Content container */}
+          <div 
+            className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-3xl p-6 sm:p-10 transition-all duration-300 flex flex-col border"
+            style={{
+              background: "rgba(10, 11, 15, 0.95)",
+              borderColor: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge")
+                ? "rgba(139, 92, 246, 0.3)"
+                : "rgba(0, 240, 255, 0.3)",
+              boxShadow: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge")
+                ? "0 0 50px rgba(139, 92, 246, 0.15)"
+                : "0 0 50px rgba(0, 240, 255, 0.15)",
+            }}
+          >
+            {/* Close button */}
+            <button 
+              onClick={() => setSelectedPlan(null)}
+              className="absolute top-6 right-6 p-2 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
+              aria-label="Close"
+            >
+              <X size={18} />
+            </button>
+
+            {/* Header */}
+            <div className="mb-8 pr-10">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest font-mono text-[#9e9e9e] bg-white/5 border border-white/10 rounded-full px-3 py-1 inline-block mb-3">
+                {t.pricing.modalTitle || "Detalles del Servicio e Implementación"}
+              </span>
+              <h3 className="font-display font-black text-2xl sm:text-4xl text-white mb-2">
+                {selectedPlan.name}
+              </h3>
+              <p className="text-[#9e9e9e] text-sm sm:text-base leading-relaxed max-w-2xl">
+                {selectedPlan.desc}
+              </p>
+
+              {/* Price inside modal */}
+              <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                <div className="flex items-baseline gap-1.5">
+                  <span 
+                    className="font-display font-black text-2xl sm:text-3xl"
+                    style={{ 
+                      color: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge") 
+                        ? "#c084fc" 
+                        : "#00f0ff" 
+                    }}
+                  >
+                    {selectedPlan.price.replace(" CLP", "")}
+                  </span>
+                  {!selectedPlan.price.toLowerCase().includes("cotizar") && 
+                   !selectedPlan.price.toLowerCase().includes("quote") && 
+                   !selectedPlan.price.toLowerCase().includes("medida") && 
+                   !selectedPlan.price.toLowerCase().includes("talk") && 
+                   !selectedPlan.price.toLowerCase().includes("convers") && (
+                    <span className="text-[#9e9e9e] text-[9px] font-bold uppercase tracking-widest font-mono bg-white/5 border border-white/10 rounded px-1.5 py-0.5">
+                      CLP Setup
+                    </span>
+                  )}
+                </div>
+                {selectedPlan.priceSuffix && (
+                  <div className="text-[11px] text-[#a1a1aa] bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-1.5 font-sans flex items-center gap-2">
+                    <span 
+                      className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse"
+                      style={{ 
+                        backgroundColor: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge") 
+                          ? "#c084fc" 
+                          : "#00f0ff" 
+                      }}
+                    />
+                    <span>
+                      {selectedPlan.priceSuffix.replace(" setup + ", "").replace(" + ", "")}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Content Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 border-t border-white/10 pt-8 flex-grow">
+              {/* Left: Long Features list (7 columns on large screens) */}
+              <div className="lg:col-span-7 flex flex-col h-full">
+                <h4 className="font-display font-bold text-lg text-white mb-5 flex items-center gap-2">
+                  <span 
+                    className="w-1 h-5 rounded-full"
+                    style={{ 
+                      backgroundColor: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge") 
+                        ? "#8b5cf6" 
+                        : "#00f0ff" 
+                    }}
+                  />
+                  {t.pricing.deliverables || "Qué Incluye (Entregables)"}
+                </h4>
+                <ul className="space-y-4 flex-grow">
+                  {selectedPlan.longFeatures && selectedPlan.longFeatures.map((feature: string) => (
+                    <li key={feature} className="flex items-start gap-3 text-sm text-[#ceced2] leading-relaxed">
+                      <Check 
+                        size={16} 
+                        className="flex-shrink-0 mt-0.5" 
+                        style={{ 
+                          color: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge") 
+                            ? "#a78bfa" 
+                            : "#00f0ff" 
+                        }} 
+                      />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Right: Vertical Timeline "how we do it" (5 columns on large screens) */}
+              <div className="lg:col-span-5 flex flex-col h-full border-t lg:border-t-0 lg:border-l border-white/10 pt-8 lg:pt-0 lg:pl-8">
+                <h4 className="font-display font-bold text-lg text-white mb-5 flex items-center gap-2">
+                  <span 
+                    className="w-1 h-5 rounded-full"
+                    style={{ 
+                      backgroundColor: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge") 
+                        ? "#8b5cf6" 
+                        : "#00f0ff" 
+                    }}
+                  />
+                  {t.pricing.timeline || "Paso a Paso de la Implementación"}
+                </h4>
+                <div className="relative pl-6 space-y-6 flex-grow">
+                  {/* Timeline vertical connector line */}
+                  <div 
+                    className="absolute left-2.5 top-2 bottom-2 w-[1px]"
+                    style={{
+                      background: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge")
+                        ? "linear-gradient(to bottom, #8b5cf6, rgba(139, 92, 246, 0.1))"
+                        : "linear-gradient(to bottom, #00f0ff, rgba(0, 240, 255, 0.1))"
+                    }}
+                  />
+                  
+                  {selectedPlan.howWeDoIt && selectedPlan.howWeDoIt.map((stepItem: { step: string, desc: string }, index: number) => (
+                    <div key={stepItem.step} className="relative group">
+                      {/* Dot */}
+                      <span 
+                        className="absolute -left-[21.5px] top-1.5 w-3 h-3 rounded-full border-2 transition-all duration-300 group-hover:scale-125"
+                        style={{
+                          backgroundColor: "#0a0b0f",
+                          borderColor: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge")
+                            ? "#a78bfa"
+                            : "#00f0ff",
+                          boxShadow: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge")
+                            ? "0 0 8px rgba(139, 92, 246, 0.5)"
+                            : "0 0 8px rgba(0, 240, 255, 0.5)",
+                        }}
+                      />
+                      <h5 className="font-display font-semibold text-sm text-white leading-none mb-1.5">
+                        {stepItem.step}
+                      </h5>
+                      <p className="text-xs text-[#9e9e9e] leading-relaxed">
+                        {stepItem.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Action Area */}
+            <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <button 
+                onClick={() => setSelectedPlan(null)}
+                className="text-xs font-semibold text-[#9e9e9e] hover:text-white transition-colors duration-200"
+              >
+                {t.pricing.close || "Cerrar"}
+              </button>
+              <a
+                href={getWhatsAppWithPackage(selectedPlan.name)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full sm:w-auto"
+                style={{
+                  background: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge")
+                    ? "linear-gradient(135deg, #8b5cf6, #6366f1)"
+                    : "linear-gradient(135deg, #00f0ff, #0070ff)",
+                  color: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge") ? "#fff" : "#000",
+                  boxShadow: selectedPlan.name.toLowerCase().includes("copilot") || selectedPlan.name.toLowerCase().includes("knowledge")
+                    ? "0 0 25px rgba(139, 92, 246, 0.3)"
+                    : "0 0 25px rgba(0, 240, 255, 0.3)"
+                }}
+              >
+                <MessageCircle size={16} />
+                {t.pricing.ctaBtn}
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
       </div>
     </section>
   );
