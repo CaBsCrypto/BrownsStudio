@@ -40,10 +40,17 @@ export async function generateReply(
   });
 
   // Convert to Gemini history format (all messages except the last user message)
-  const history = messages.slice(0, -1).map((m) => ({
+  let history = messages.slice(0, -1).map((m) => ({
     role: m.role === "user" ? "user" : "model",
     parts: [{ text: m.content }],
   }));
+
+  // Gemini requires the conversation history to strictly start with a 'user' message.
+  // If the first message in the history is from the model/assistant (e.g. the automatic welcome greeting in the web demo),
+  // we filter out leading model messages until we find a user message, or start with an empty history.
+  while (history.length > 0 && history[0].role === "model") {
+    history.shift();
+  }
 
   // Last message is the current user input
   const lastMessage = messages[messages.length - 1];
@@ -52,6 +59,7 @@ export async function generateReply(
   }
 
   const chat = model.startChat({ history });
+
   const result = await chat.sendMessage(lastMessage.content);
   const text = result.response.text();
 
