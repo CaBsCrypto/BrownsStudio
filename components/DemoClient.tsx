@@ -153,6 +153,7 @@ const LOCAL_TEXTS = {
     promptExText: "Presiona para probar esta pregunta:",
     enterpriseFeature: "Función B2B Premium",
     enterpriseDesc: "Este simulador utiliza la misma lógica agéntica de nuestro motor RAG para WhatsApp.",
+    welcomeTemplate: "¡Hola! Bienvenido/a al canal de WhatsApp de *{businessName}*. Soy *{botName}*, tu asistente virtual de atención. ¿En qué te puedo colaborar hoy? 🙌",
   },
   en: {
     heroTitle: "Test your Live WhatsApp Bot ⚡",
@@ -182,6 +183,7 @@ const LOCAL_TEXTS = {
     promptExText: "Click to test this question:",
     enterpriseFeature: "B2B Premium Feature",
     enterpriseDesc: "This simulator uses the exact same agential logic as our real WhatsApp RAG engine.",
+    welcomeTemplate: "Hi! Welcome to the WhatsApp channel of *{businessName}*. I am *{botName}*, your virtual assistant. How can I help you today? 🙌",
   },
   pt: {
     heroTitle: "Teste seu Bot de WhatsApp em Vivo ⚡",
@@ -211,8 +213,10 @@ const LOCAL_TEXTS = {
     promptExText: "Clique para testar esta pergunta:",
     enterpriseFeature: "Recurso B2B Premium",
     enterpriseDesc: "Este simulador utiliza a mesma lógica agêntica do nosso motor RAG para WhatsApp.",
+    welcomeTemplate: "Olá! Bem-vindo ao canal de WhatsApp da *{businessName}*. Sou *{botName}*, seu assistente virtual de atendimento. Como posso te ajudar hoje? 🙌",
   },
 };
+
 
 interface Message {
   role: "user" | "assistant";
@@ -257,15 +261,45 @@ export default function DemoClient({ locale }: { locale: string }) {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
+  const formatWhatsAppText = (text: string) => {
+    if (!text) return "";
+    
+    // Split by asterisks to find bold segments
+    const boldParts = text.split(/(\*[^*]+\*)/g);
+    
+    return boldParts.map((part, bIdx) => {
+      if (part.startsWith("*") && part.endsWith("*")) {
+        const innerText = part.slice(1, -1);
+        return <strong key={`b-${bIdx}`} className="font-extrabold text-white">{innerText}</strong>;
+      }
+      
+      // Split by underscores to find italic segments
+      const italicParts = part.split(/(_[^_]+_)/g);
+      return italicParts.map((subPart, iIdx) => {
+        if (subPart.startsWith("_") && subPart.endsWith("_")) {
+          const innerText = subPart.slice(1, -1);
+          return <em key={`i-${iIdx}`} className="italic">{innerText}</em>;
+        }
+        return subPart;
+      });
+    });
+  };
+
   const resetChat = () => {
+    const template = t.welcomeTemplate || "¡Hola! Bienvenido/a al canal de WhatsApp de *{businessName}*. Soy *{botName}*, tu asistente virtual de atención. ¿En qué te puedo colaborar hoy? 🙌";
+    const welcome = template
+      .replace("{businessName}", activeConfig.businessName)
+      .replace("{botName}", activeConfig.botName);
+      
     setMessages([
       {
         role: "assistant",
-        content: `¡Hola! Bienvenido/a al canal de WhatsApp de *${activeConfig.businessName}*. Soy *${activeConfig.botName}*, tu asistente virtual de atención. ¿En qué te puedo colaborar hoy? 🙌`,
+        content: welcome,
         timestamp: formatTime(new Date()),
       },
     ]);
   };
+
 
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -535,115 +569,145 @@ export default function DemoClient({ locale }: { locale: string }) {
           </div>
         </div>
 
-        {/* Right Panel: WhatsApp Interactive Simulator */}
-        <div className="lg:col-span-6 flex flex-col h-[700px] bg-[#0b141a] rounded-3xl border border-slate-900 overflow-hidden shadow-2xl relative shadow-slate-950/50">
-          {/* Header */}
-          <div className="bg-[#1f2c34] px-4 py-3 flex items-center justify-between border-b border-slate-900">
-            <div className="flex items-center gap-3">
-              {/* WhatsApp Avatar Mockup */}
-              <div className="w-10 h-10 rounded-full bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-bold font-header text-sm">
-                {activeConfig.businessName.substring(0, 2).toUpperCase()}
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-white leading-tight">
-                  {activeConfig.businessName}
-                </h4>
-                <p className="text-xs text-slate-400 leading-none flex items-center gap-1.5 mt-1">
-                  <span className="w-2 h-2 rounded-full bg-[#25d366]" />
-                  <span>{t.onlineStatus}</span>
-                </p>
-              </div>
+        {/* Right Panel: WhatsApp Interactive Simulator inside a Premium Smartphone Frame */}
+        <div className="lg:col-span-6 flex justify-center items-center w-full">
+          {/* High-tech curved smartphone frame with double borders and metallic glow */}
+          <div className="w-full max-w-[390px] h-[730px] rounded-[56px] bg-[#07080b] p-3.5 border-[5px] border-slate-800 shadow-[0_0_60px_rgba(99,102,241,0.15)] ring-1 ring-white/10 overflow-hidden flex flex-col relative">
+            
+            {/* Elegant camera and speaker notch */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-36 h-5.5 bg-[#07080b] rounded-b-2xl z-40 flex items-center justify-center gap-2 border-x border-b border-slate-800/50">
+              <div className="w-14 h-1 bg-slate-800 rounded-full" />
+              <div className="w-2.5 h-2.5 bg-slate-950 rounded-full border border-slate-900" />
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1 bg-slate-900/60 border border-slate-800 rounded-full text-[11px] text-slate-400 font-medium">
-              <Landmark className="w-3.5 h-3.5 text-indigo-400" />
-              <span>{activeConfig.botName}</span>
-            </div>
-          </div>
 
-          {/* Chat Bubble Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#0b141a] scrollbar-thin scrollbar-thumb-slate-800">
-            {messages.map((msg, index) => {
-              const isUser = msg.role === "user";
-              return (
-                <div
-                  key={index}
-                  className={`flex ${isUser ? "justify-end" : "justify-start"} animate-fade-in`}
-                >
-                  <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-md relative overflow-hidden ${
-                      isUser
-                        ? "bg-[#005c4b] text-white rounded-tr-none border border-emerald-800/40"
-                        : "bg-[#202c33] text-slate-100 rounded-tl-none border border-slate-800"
-                    }`}
-                  >
-                    {/* Simulated Voice note indicator */}
-                    {msg.isAudio && (
-                      <div className="flex items-center gap-2 mb-2 p-1.5 rounded-lg bg-emerald-900/40 border border-emerald-800/30 text-emerald-300 text-xs">
-                        <Mic className="w-4 h-4 animate-pulse text-rose-500" />
-                        <span>🎤 [Audio Transcrito]</span>
-                      </div>
-                    )}
-                    
-                    {/* Render newlines correctly and formatting */}
-                    <p className="whitespace-pre-line leading-relaxed">
-                      {msg.content}
+            {/* Screen Container */}
+            <div className="flex-grow rounded-[42px] bg-[#0b141a] overflow-hidden flex flex-col relative border border-white/5 shadow-inner">
+              {/* Premium Repeating WhatsApp Pattern Grid Overlay */}
+              <div 
+                className="absolute inset-0 opacity-[0.05] pointer-events-none"
+                style={{
+                  backgroundImage: "radial-gradient(rgba(37, 211, 102, 0.25) 1.5px, transparent 1.5px)",
+                  backgroundSize: "24px 24px"
+                }}
+              />
+              <div 
+                className="absolute inset-0 opacity-[0.02] pointer-events-none"
+                style={{
+                  backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
+                  backgroundSize: "48px 48px"
+                }}
+              />
+
+              {/* Chat Header */}
+              <div className="bg-[#1f2c34]/95 backdrop-blur-md px-4 py-3 pt-6 flex items-center justify-between border-b border-slate-900/60 sticky top-0 z-30">
+                <div className="flex items-center gap-3">
+                  {/* WhatsApp Avatar Mockup with custom gradient and shadow */}
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-600 to-violet-600 border border-indigo-400/30 flex items-center justify-center text-white font-bold font-header text-xs shadow-[0_0_12px_rgba(99,102,241,0.25)]">
+                    {activeConfig.businessName.substring(0, 2).toUpperCase()}
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-semibold text-white leading-tight">
+                      {activeConfig.businessName}
+                    </h4>
+                    <p className="text-[10px] text-slate-400 leading-none flex items-center gap-1.5 mt-1.5">
+                      <span className="w-2 h-2 rounded-full bg-[#25d366] animate-pulse" />
+                      <span>{t.onlineStatus}</span>
                     </p>
-                    
-                    {/* Tick Checkmarks and Timestamp */}
-                    <div className="flex items-center justify-end gap-1.5 mt-2 text-[10px] text-slate-400 leading-none">
-                      <span>{msg.timestamp}</span>
-                      {isUser && (
-                        <CheckCheck className="w-3.5 h-3.5 text-indigo-400" />
-                      )}
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 px-2.5 py-0.5 bg-slate-950/60 border border-slate-800 rounded-full text-[9px] text-slate-400 font-medium tracking-wide">
+                  <Landmark className="w-2.5 h-2.5 text-indigo-400" />
+                  <span>{activeConfig.botName}</span>
+                </div>
+              </div>
+
+              {/* Chat Bubble Area */}
+              <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-[#0b141a] scrollbar-thin scrollbar-thumb-slate-800 relative z-10 pr-2">
+                {messages.map((msg, index) => {
+                  const isUser = msg.role === "user";
+                  return (
+                    <div
+                      key={index}
+                      className={`flex ${isUser ? "justify-end" : "justify-start"} animate-in fade-in slide-in-from-bottom-2 duration-300`}
+                    >
+                      <div
+                        className={`max-w-[85%] rounded-[20px] px-3.5 py-2.5 text-xs sm:text-sm shadow-xl relative overflow-hidden ${
+                          isUser
+                            ? "bg-[#005c4b] text-white rounded-tr-none border border-emerald-800/30"
+                            : "bg-[#202c33]/95 text-slate-100 rounded-tl-none border border-slate-800/60"
+                        }`}
+                      >
+                        {/* Simulated Voice note indicator */}
+                        {msg.isAudio && (
+                          <div className="flex items-center gap-2 mb-2 p-1.5 rounded-lg bg-emerald-950/40 border border-emerald-800/30 text-emerald-300 text-[10px] font-semibold">
+                            <Mic className="w-3.5 h-3.5 animate-pulse text-rose-500" />
+                            <span>🎤 [Audio Transcrito]</span>
+                          </div>
+                        )}
+                        
+                        {/* Render newlines correctly and formatting */}
+                        <p className="whitespace-pre-line leading-relaxed">
+                          {formatWhatsAppText(msg.content)}
+                        </p>
+                        
+                        {/* Tick Checkmarks and Timestamp */}
+                        <div className="flex items-center justify-end gap-1.5 mt-1.5 text-[9px] text-slate-400 leading-none">
+                          <span>{msg.timestamp}</span>
+                          {isUser && (
+                            <CheckCheck className="w-3 h-3 text-[#00f0ff]" />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {isTyping && (
+                  <div className="flex justify-start animate-fade-in">
+                    <div className="bg-[#202c33]/90 border border-slate-800/60 rounded-[20px] rounded-tl-none px-4 py-2.5 text-xs shadow-md">
+                      <div className="flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                        <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                        <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                        <span className="text-[10px] text-slate-400 ml-2 italic">
+                          {activeConfig.botName} {t.typing}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-
-            {isTyping && (
-              <div className="flex justify-start animate-fade-in">
-                <div className="bg-[#202c33] border border-slate-800 rounded-2xl rounded-tl-none px-4 py-3 text-sm shadow-md">
-                  <div className="flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
-                    <span className="text-xs text-slate-400 ml-2 italic">
-                      {activeConfig.botName} {t.typing}
-                    </span>
-                  </div>
-                </div>
+                )}
+                <div ref={chatEndRef} />
               </div>
-            )}
-            <div ref={chatEndRef} />
-          </div>
 
-          {/* Footer Input Area */}
-          <div className="bg-[#1f2c34] p-3 flex items-center gap-2 border-t border-slate-900">
-            <input
-              type="text"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && inputText.trim()) {
-                  sendMessage(inputText);
-                }
-              }}
-              placeholder={t.inputPlaceholder}
-              className="flex-1 bg-[#2a3942] text-white border-none rounded-full px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"
-            />
-            
-            <button
-              type="button"
-              onClick={() => {
-                if (inputText.trim()) sendMessage(inputText);
-              }}
-              className="w-11 h-11 rounded-full bg-[#00a884] hover:bg-[#008f72] active:scale-95 text-white flex items-center justify-center transition-all duration-200"
-            >
-              <Send className="w-4 h-4" />
-            </button>
+              {/* Footer Input Area */}
+              <div className="bg-[#1f2c34]/95 backdrop-blur-md p-3 pb-5 flex items-center gap-2 border-t border-slate-900/60 sticky bottom-0 z-30">
+                <input
+                  type="text"
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && inputText.trim()) {
+                      sendMessage(inputText);
+                    }
+                  }}
+                  placeholder={t.inputPlaceholder}
+                  className="flex-grow bg-[#2a3942] text-white border-none rounded-full px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 placeholder-slate-400"
+                />
+                
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (inputText.trim()) sendMessage(inputText);
+                  }}
+                  className="w-9 h-9 rounded-full bg-[#00a884] hover:bg-[#008f72] active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   );
