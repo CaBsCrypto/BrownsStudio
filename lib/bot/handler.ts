@@ -82,8 +82,9 @@ export async function processMessage(
 
   // B. Programmatic Anti-Flood (Token Safety Limit)
   // Max 50 messages in Firestore history (25 rounds of Q&A) before forcing human takeover
-  // Whitelist Cristian's personal number from this limit to allow unlimited testing
-  const isWhitelisted = waPhone.includes("56936306028") || waPhone.includes("36306028");
+  // Whitelist Cristian's personal numbers from this limit to allow unlimited testing
+  const isWhitelisted = waPhone.includes("56936306028") || waPhone.includes("36306028") ||
+                        waPhone.includes("56961857682") || waPhone.includes("61857682");
   if (conversation.mode !== "onboarding" && !isWhitelisted && conversation.messages && conversation.messages.length >= 50) {
     const limitMessage =
       "Has alcanzado el límite máximo de interacciones automatizadas de esta sesión. 🔒\n\n" +
