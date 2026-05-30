@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { MessageCircle, Sparkles, ChevronDown, ExternalLink, Activity, CheckCircle } from "lucide-react";
 import { WHATSAPP_URL, getWhatsAppLink } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
+
 
 const CLIENT_LOGOS = [
   { name: "Trust Leaf",       abbr: "TL", color: "#C5A070" },
@@ -429,6 +431,14 @@ export default function Hero() {
                 )}
               </div>
 
+              <Link
+                href={`/${lang}/demo`}
+                className="flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full sm:w-auto justify-center border border-indigo-500/30 text-[#818cf8] hover:border-indigo-400 hover:text-white hover:bg-indigo-500/10 hover:shadow-[0_0_25px_rgba(99,102,241,0.15)] animate-pulse"
+              >
+                <Sparkles size={14} className="text-indigo-400" />
+                {lang === "en" ? "Try Live Demo ⚡" : lang === "pt" ? "Testar Demo em Vivo ⚡" : "Probar Demo en Vivo ⚡"}
+              </Link>
+
               <button
                 onClick={() => document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth" })}
                 className="flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full sm:w-auto justify-center border border-white/10 text-[#9e9e9e] hover:border-tertiary/50 hover:text-white hover:bg-tertiary/5 hover:shadow-[0_0_20px_rgba(0,240,255,0.12)]"
@@ -436,6 +446,7 @@ export default function Hero() {
                 {t.hero.cta2}
               </button>
             </div>
+
 
             {/* Floating HUD-style Stats Card */}
             <div

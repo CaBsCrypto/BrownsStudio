@@ -39,7 +39,9 @@ export default function Navbar() {
     { label: nav.pricing,  href: "#precios",   id: "precios",   page: false },
     { label: nav.faq,      href: "#faq",       id: "faq",       page: false },
     { label: nav.formacion ?? "Formación", href: `/${lang}/formacion`, id: "formacion", page: true },
+    { label: "Demo", href: `/${lang}/demo`, id: "demo", page: true },
   ];
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);

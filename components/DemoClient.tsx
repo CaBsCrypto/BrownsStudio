@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Sparkles, MessageSquare, Send, Mic, RefreshCw, CheckCheck, Landmark, ShieldCheck } from "lucide-react";
+import { WHATSAPP_URL, getWhatsAppLink } from "@/lib/config";
+
 
 interface Preset {
   businessName: string;
@@ -713,8 +715,51 @@ export default function DemoClient({ locale }: { locale: string }) {
             </div>
           </div>
         </div>
+      </div>
 
+      {/* Premium CTA Section below the panels */}
+
+      <div className="mt-16 bg-gradient-to-r from-indigo-950/40 via-slate-900/60 to-violet-950/40 border border-slate-800/80 rounded-[32px] p-8 text-center max-w-4xl mx-auto shadow-2xl relative overflow-hidden group hover:border-indigo-500/20 transition-all duration-500">
+        <div className="absolute inset-0 bg-indigo-500/5 blur-3xl -z-10 animate-pulse" />
+        <h3 className="text-xl sm:text-2xl font-bold font-header text-white mb-3">
+          {locale === "en" 
+            ? "Ready to Launch Your Custom Enterprise Bot? 🚀" 
+            : locale === "pt" 
+            ? "Pronto para Lançar Seu Bot Empresarial Personalizado? 🚀" 
+            : "¿Listo para Implementar tu Propio Bot Agéntico? 🚀"}
+        </h3>
+        <p className="text-sm text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed">
+          {locale === "en"
+            ? "Integrate our proprietary AI engine into your sales, qualifying, support, or internal training flows. 100% automated, customized to your knowledge base, and connected to your CRM/Google Sheets."
+            : locale === "pt"
+            ? "Integre nosso motor de IA exclusivo em seus fluxos de vendas, qualificação, suporte ou treinamento interno. 100% automatizado, sob medida para sua base de conhecimento e conectado ao seu CRM/Sheets."
+            : "Integra nuestro motor exclusivo de IA en tus flujos de ventas, calificación, soporte o inducción interna. 100% automatizado, a la medida de tu base de conocimiento y conectado a tus planillas o CRM."}
+        </p>
+        
+        <a
+          href={getWhatsAppLink(
+            locale === "en"
+              ? "Hello! I tried the WhatsApp Bot simulator and would like to coordinate implementing a custom agential AI bot for my business."
+              : locale === "pt"
+              ? "Olá! Testei o simulador do Bot de WhatsApp e gostaria de coordenar a implementação de um bot de IA agêntica personalizado para a minha empresa."
+              : "Hola! Estuve probando el simulador del Bot de WhatsApp y me gustaría coordinar para implementar un bot agéntico de IA a la medida para mi negocio."
+          )}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2.5 px-10 py-4 rounded-full font-extrabold text-sm text-black transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_30px_rgba(0,240,255,0.25)] relative overflow-hidden"
+          style={{
+            background: "linear-gradient(135deg, #00f0ff, #00c8d8)",
+          }}
+        >
+          <MessageSquare size={16} />
+          {locale === "en" 
+            ? "Coordinate Implementation on WhatsApp ➔" 
+            : locale === "pt" 
+            ? "Coordenar Implementação no WhatsApp ➔" 
+            : "Coordinar Implementación por WhatsApp ➔"}
+        </a>
       </div>
     </div>
   );
 }
+
