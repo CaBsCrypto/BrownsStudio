@@ -58,7 +58,7 @@ export default async function DemoPage({
       <Navbar />
       
       {/* Dynamic Client Demo Component */}
-      <div className="relative pt-36 lg:pt-44 pb-16 z-10">
+      <div className="relative pt-16 lg:pt-20 pb-16 z-10">
         <DemoClient locale={locale} />
       </div>
 
