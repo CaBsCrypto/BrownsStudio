@@ -250,7 +250,7 @@ export default function DemoClient({ locale }: { locale: string }) {
   const [isTyping, setIsTyping] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
 
-  const chatEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Initialize with a welcome message on mount or config change
   useEffect(() => {
@@ -258,8 +258,14 @@ export default function DemoClient({ locale }: { locale: string }) {
   }, [activeConfig]);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   }, [messages, isTyping]);
+
 
   const formatWhatsAppText = (text: string) => {
     if (!text) return "";
@@ -622,7 +628,7 @@ export default function DemoClient({ locale }: { locale: string }) {
               </div>
 
               {/* Chat Bubble Area */}
-              <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-[#0b141a] scrollbar-thin scrollbar-thumb-slate-800 relative z-10 pr-2">
+              <div ref={chatContainerRef} className="flex-grow overflow-y-auto p-4 space-y-4 bg-[#0b141a] scrollbar-thin scrollbar-thumb-slate-800 relative z-10 pr-2">
                 {messages.map((msg, index) => {
                   const isUser = msg.role === "user";
                   return (
@@ -676,8 +682,8 @@ export default function DemoClient({ locale }: { locale: string }) {
                     </div>
                   </div>
                 )}
-                <div ref={chatEndRef} />
               </div>
+
 
               {/* Footer Input Area */}
               <div className="bg-[#1f2c34]/95 backdrop-blur-md p-3 pb-5 flex items-center gap-2 border-t border-slate-900/60 sticky bottom-0 z-30">
