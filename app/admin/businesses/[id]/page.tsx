@@ -13,6 +13,10 @@ interface Config {
   id: string; nombre_bot: string; tono: string; horario: string;
   calendly_url: string | null; handoff_phone: string | null;
   servicios: any[]; faqs: any[]; reglas_extra: string | null;
+  sync_provider?: "lemontech" | "boostr" | "mock" | null;
+  lemontech_client_id?: string | null;
+  lemontech_client_secret?: string | null;
+  boostr_api_key?: string | null;
 }
 interface Lead {
   id: string; wa_phone: string; full_name: string | null; business_type: string | null;
@@ -222,6 +226,59 @@ export default function BusinessDetailPage({ params }: { params: Promise<{ id: s
                 rows={3} className={`${INPUT} resize-none`} />
             </Field>
           </Section>
+
+          {/* Sincronización Judicial (Solo para el rubro legal) */}
+          {(editBiz.rubro?.toLowerCase() === "legal" || business.rubro?.toLowerCase() === "legal") && (
+            <Section title="Sincronización Judicial (JurisClaro AI) 🇨🇱⚖️">
+              <div className="grid grid-cols-2 gap-4">
+                <Field label="Proveedor de Sincronización">
+                  <select
+                    value={editConfig.sync_provider ?? "mock"}
+                    onChange={(e) => setEditConfig({ ...editConfig, sync_provider: e.target.value as any })}
+                    className={INPUT}
+                  >
+                    <option value="mock">Simulador de Causas (Mock)</option>
+                    <option value="lemontech">Lemontech CaseTracking API</option>
+                    <option value="boostr">Boostr.cl API (Causas Públicas)</option>
+                  </select>
+                </Field>
+                {editConfig.sync_provider === "boostr" && (
+                  <Field label="API Key de Boostr.cl">
+                    <input
+                      type="password"
+                      value={editConfig.boostr_api_key ?? ""}
+                      onChange={(e) => setEditConfig({ ...editConfig, boostr_api_key: e.target.value })}
+                      placeholder="bs_api_xxxxxx..."
+                      className={INPUT}
+                    />
+                  </Field>
+                )}
+              </div>
+
+              {editConfig.sync_provider === "lemontech" && (
+                <div className="grid grid-cols-2 gap-4 animate-fade-in">
+                  <Field label="Lemontech Client ID">
+                    <input
+                      type="text"
+                      value={editConfig.lemontech_client_id ?? ""}
+                      onChange={(e) => setEditConfig({ ...editConfig, lemontech_client_id: e.target.value })}
+                      placeholder="lt-client-xxxx..."
+                      className={INPUT}
+                    />
+                  </Field>
+                  <Field label="Lemontech Client Secret">
+                    <input
+                      type="password"
+                      value={editConfig.lemontech_client_secret ?? ""}
+                      onChange={(e) => setEditConfig({ ...editConfig, lemontech_client_secret: e.target.value })}
+                      placeholder="••••••••••••••••"
+                      className={INPUT}
+                    />
+                  </Field>
+                </div>
+              )}
+            </Section>
+          )}
 
           <Section title="Servicios">
             <div className="space-y-3">
