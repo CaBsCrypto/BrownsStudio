@@ -6,6 +6,7 @@ const NAV = [
   { href: "/admin/businesses", label: "Negocios", icon: "🏢" },
   { href: "/admin/generator", label: "Generador Cerebro", icon: "🧠" },
   { href: "/admin/prospects", label: "Vídeos Prospección", icon: "🎬" },
+  { href: "/admin/legal", label: "Casos Judiciales", icon: "⚖️" },
 ];
 
 

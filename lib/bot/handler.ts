@@ -28,6 +28,13 @@ export async function processMessage(
   // 1. Mark message as read (shows blue ticks)
   try { await markAsRead(messageId, creds); } catch { /* non-critical */ }
 
+  // ── Legal business delegation ──────────────────────────────────────────────
+  if (business.rubro === "legal") {
+    const { processLegalMessage } = await import("./legalHandler");
+    await processLegalMessage(waPhone, messageText, messageId, business, businessConfig, displayName, creds);
+    return;
+  }
+
   // 2. Load or create conversation (scoped to this business)
   const conversation = await getOrCreateConversation(waPhone, displayName, business.id);
   const lead = await getLeadByConversation(conversation.id);
