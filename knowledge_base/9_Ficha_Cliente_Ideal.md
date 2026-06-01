@@ -16,7 +16,7 @@ Nuestros servicios están diseñados de forma óptima para empresas que cumplen 
 2. **Volumen de Consultas**:
    * Negocios que reciben al menos **100 a 500 prospectos/conversaciones de chat mensuales**. Si procesan menos de esto, el bot tiene un ROI más lento, por lo que es preferible recomendarles inicialmente nuestras mentorías.
 3. **Presupuesto Comercial Mínimo**:
-   * Clientes con capacidad de inversión a partir de **$750.000 CLP** para desarrollos estándar.
+   * Clientes con capacidad de inversión a partir de **$800.000 CLP** para desarrollos estándar.
    * En el caso de **Estudios Jurídicos (LegalTech)**, la inversión de entrada comienza en **$1.200.000 CLP** debido al valor de las integraciones con APIs del PJUD/Lemontech y la lógica avanzada de traducción con Gemini 2.0 Flash.
 
 ---

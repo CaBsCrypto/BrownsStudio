@@ -188,8 +188,8 @@ export const translations = {
         {
           name: "WhatsApp Lead Triage & Sales Closer",
           desc: "Autonomous lead profiling and qualification on WhatsApp 24/7 with silent human handoff.",
-          price: "750,000 - 1,500,000 CLP",
-          priceSuffix: " setup + 90,000 CLP/mo support & hosting",
+          price: "800,000 CLP",
+          priceSuffix: " setup + 125,000 CLP/mo (Annual) or 250,000 CLP/mo (Monthly)",
           features: [
             "Conversational lead qualification",
             "Real-time Google Sheets sync",
@@ -796,8 +796,8 @@ export const translations = {
         {
           name: "WhatsApp Lead Triage & Sales Closer",
           desc: "Calificación y perfilado autónomo de prospectos en WhatsApp 24/7 con traspaso silencioso.",
-          price: "750.000 - 1.500.000 CLP",
-          priceSuffix: " setup + 90.000 CLP/mes de soporte y hosting",
+          price: "800.000 CLP",
+          priceSuffix: " setup + 125.000 CLP/mes (Pago Anual) o 250.000 CLP/mes (Pago Mensual)",
           features: [
             "Calificación conversacional de leads",
             "Sincronización a Google Sheets",
@@ -1452,8 +1452,8 @@ export const translations = {
         {
           name: "WhatsApp Lead Triage & Sales Closer",
           desc: "Qualificação e perfilamento autônomo de prospectos no WhatsApp 24/7 com transição silenciosa para humanos.",
-          price: "750.000 - 1.500.000 CLP",
-          priceSuffix: " setup + 90.000 CLP/mês de suporte e hospedagem",
+          price: "800.000 CLP",
+          priceSuffix: " setup + 125.000 CLP/mês (Pago Anual) ou 250.000 CLP/mês (Pago Mensual)",
           features: [
             "Qualificação conversacional de leads",
             "Sincronização com Google Sheets",

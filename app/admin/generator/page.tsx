@@ -40,7 +40,7 @@ export default function ObsidianGeneratorPage() {
   // Services
   const [serv1Nombre, setServ1Nombre] = useState("WhatsApp Lead Triage & Sales Closer");
   const [serv1Desc, setServ1Desc] = useState("Captura, calificación y perfilado autónomo de prospectos en WhatsApp 24/7 con traspaso silencioso a humanos.");
-  const [serv1Precio, setServ1Precio] = useState("$750.000 a $1.500.000 CLP");
+  const [serv1Precio, setServ1Precio] = useState("$800.000 CLP Setup + $125.000/mes (Anual) o $250.000/mes (Mensual)");
 
   const [serv2Nombre, setServ2Nombre] = useState("Internal Process & Knowledge Copilot");
   const [serv2Desc, setServ2Desc] = useState("Automatización de soporte interno e inducción (onboarding) mediante consulta ágil de manuales organizacionales (Obsidian RAG).");
@@ -90,7 +90,7 @@ export default function ObsidianGeneratorPage() {
   const [objDesconfianza, setObjDesconfianza] = useState("Explícale que a los clientes les molesta la demora, no la IA. Ofrecemos respuestas empáticas inmediatas en 2s y derivación silenciosa.");
 
   // Ideal Client (ICP)
-  const [icpCriterios, setIcpCriterios] = useState("Clínicas médicas, inmobiliarias, agencias B2B o e-commerce consolidados con más de 100 conversaciones mensuales y presupuesto desde $750.000 CLP.");
+  const [icpCriterios, setIcpCriterios] = useState("Clínicas médicas, inmobiliarias, agencias B2B o e-commerce consolidados con más de 100 conversaciones mensuales y presupuesto desde $800.000 CLP.");
   const [icpDownsell, setIcpDownsell] = useState("Ofrecer mentorías 1-1 de Ingeniería Agéntica de 1h o grupales de 4h para que aprendan a montar sus propios agentes con Kapso.");
 
   // SLA & Support

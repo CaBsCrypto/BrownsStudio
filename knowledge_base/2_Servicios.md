@@ -9,7 +9,7 @@ Browns Studio no vende plantillas rígidas ni configuraciones básicas de IA. Di
 ### 1. WhatsApp Lead Triage & Sales Closer (Agente de Ventas)
 * **Descripción**: Captura, calificación y perfilado autónomo de prospectos en WhatsApp 24/7.
 * **Qué incluye**: Diseño de flujos conversacionales dinámicos en Kapso, calificación de leads, agendamiento autónomo de llamadas y traspaso silencioso a humanos.
-* **Valor Orientativo**: Desde $750.000 a $1.500.000 CLP.
+* **Valor Orientativo**: $800.000 CLP Setup + Mantenimiento mensual de $125.000 CLP (Pago Anual) o $250.000 CLP (Pago Mensual).
 
 ### 2. Internal Process & Knowledge Copilot (El Capacitador IA)
 * **Descripción**: Automatización de soporte interno, inducción (onboarding) de personal y consulta ágil de manuales organizacionales.
