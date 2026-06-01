@@ -13,14 +13,15 @@ interface PipelineDiagramProps {
 export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
   businessName,
   crmLabel,
-  actions = ["Crear Lead en HubSpot", "Agendar en Calendly", "Notificar en Slack"],
+  actions = [],
   industry,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const theme = getTheme(industry);
+  const isAbogados = industry === "abogados";
 
-  // Scene entrance scaling for content (not background)
+  // Scene entrance scaling for content
   const sceneEntrance = spring({
     frame,
     fps,
@@ -78,7 +79,6 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
   const showRightNodesGlow = frame >= 100;
 
   // ─── CAMERA MOTION (Cinematic 3D Tilt) ───
-  // We use a slow 3D rotation instead of a horizontal pan to keep everything in frame
   const tiltY = interpolate(frame, [0, 180], [-6, 6], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -88,23 +88,24 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
     extrapolateRight: "clamp",
   });
 
-  // Screen shake on each alert pop (frame 30, 60, 100, 130) - Made extremely subtle and crisp
+  // Sudden high-impact screen shake (Frame 510 in video, which is relative frame 0 of scene)
   const getShake = (triggerFrame: number) => {
     const elapsed = frame - triggerFrame;
-    if (elapsed < 0 || elapsed > 8) return 0;
-    return Math.sin(elapsed * 2.2) * 2.0 * Math.max(0, 1 - elapsed / 8);
+    if (elapsed < 0 || elapsed > 15) return 0;
+    // Bouncy screen shake decay
+    return Math.sin(elapsed * 2.2) * 6.0 * Math.max(0, 1 - elapsed / 15);
   };
   
-  const shakeX = getShake(30) + getShake(60) + getShake(100) + getShake(130);
-  const shakeY = getShake(30) + getShake(60) + getShake(100) + getShake(130);
+  const shakeX = getShake(0);
+  const shakeY = getShake(0);
 
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "#080e2e",
-        fontFamily: "Outfit, sans-serif",
+        backgroundColor: "#050B14",
+        fontFamily: "Outfit, 'Montserrat', sans-serif",
         overflow: "hidden",
-        perspective: "1200px", // Added perspective for 3D depth
+        perspective: "1200px",
       }}
     >
       {/* ─── CAMERA CONTAINER ─── */}
@@ -133,7 +134,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
         }}
       />
 
-      {/* Global backdrop cyan-purple ambient lights */}
+      {/* Global backdrop navy ambient lights */}
       <div
         style={{
           position: "absolute",
@@ -142,13 +143,13 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           width: "800px",
           height: "800px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, rgba(0,0,0,0) 70%)",
+          background: "radial-gradient(circle, rgba(10, 37, 64, 0.15) 0%, rgba(0,0,0,0) 70%)",
           filter: "blur(50px)",
           pointerEvents: "none",
         }}
       />
 
-      {/* Localized node glow aura (Obsidian - Top Center) */}
+      {/* Localized node glow aura (Obsidian/Brain - Top Center) */}
       <div
         style={{
           position: "absolute",
@@ -157,7 +158,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           width: "240px",
           height: "240px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(217, 70, 239, 0.12) 0%, rgba(0,0,0,0) 70%)",
+          background: `radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(0,0,0,0) 70%)`,
           filter: "blur(20px)",
           opacity: interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp", extrapolateLeft: "clamp" }),
         }}
@@ -187,13 +188,13 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           width: "300px",
           height: "300px",
           borderRadius: "50%",
-          background: `radial-gradient(circle, rgba(${theme.primaryGlow}, 0.18) 0%, rgba(${theme.secondaryGlow}, 0.08) 50%, rgba(0,0,0,0) 70%)`,
+          background: `radial-gradient(circle, rgba(${theme.primaryGlow}, 0.28) 0%, rgba(${theme.secondaryGlow}, 0.15) 50%, rgba(0,0,0,0) 70%)`,
           filter: "blur(30px)",
           transform: `scale(${interpolate(frame, [70, 85], [1, 1.3], { extrapolateRight: "clamp", extrapolateLeft: "clamp" })})`,
         }}
       />
 
-      {/* Localized node glow aura (HubSoft - Right Top) */}
+      {/* Localized node glow aura (PJE Chile - Right Top) */}
       <div
         style={{
           position: "absolute",
@@ -208,7 +209,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
         }}
       />
 
-      {/* Localized node glow aura (Calendly - Right Bottom) */}
+      {/* Localized node glow aura (Ley 20886 - Right Bottom) */}
       <div
         style={{
           position: "absolute",
@@ -251,10 +252,10 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
             textTransform: "uppercase",
             letterSpacing: "6px",
             margin: 0,
-            textShadow: `0 0 10px rgba(${theme.primaryGlow}, 0.3)`,
+            textShadow: `0 0 10px rgba(${theme.secondaryGlow}, 0.3)`,
           }}
         >
-          Infraestructura Agéntica Avanzada
+          {isAbogados ? "Poder Judicial de Chile" : "Infraestructura Agéntica Avanzada"}
         </h2>
         <h1
           style={{
@@ -269,7 +270,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
             letterSpacing: "-1px",
           }}
         >
-          Integración en Tiempo Real
+          {isAbogados ? "Sincronización Ley 20.886" : "Integración en Tiempo Real"}
         </h1>
       </div>
 
@@ -286,84 +287,72 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           zIndex: 1,
         }}
       >
-        {/* ============================================
-            PATH 0: Obsidian (540, 350) -> Orb (540, 700) 
-           ============================================ */}
-        {/* Glow Layer */}
+        {/* PATH 0: Obsidian (540, 350) -> Orb (540, 700) */}
         <path
           d="M 540 350 L 540 700"
           fill="none"
-          stroke={`rgba(217, 70, 239, 0.08)`}
+          stroke={`rgba(212, 175, 55, 0.08)`}
           strokeWidth="14"
         />
         {showLine1Glow && (
           <path
             d="M 540 350 L 540 700"
             fill="none"
-            stroke={`rgba(217, 70, 239, 0.4)`}
+            stroke={`rgba(212, 175, 55, 0.4)`}
             strokeWidth="12"
             filter="blur(4px)"
           />
         )}
-        {/* Core Line Layer */}
         <path
           d="M 540 350 L 540 700"
           fill="none"
-          stroke={showLine1Glow ? "#d946ef" : "rgba(255, 255, 255, 0.1)"}
+          stroke={showLine1Glow ? "#D4AF37" : "rgba(255, 255, 255, 0.1)"}
           strokeWidth="6"
           strokeDasharray={showLine1Glow ? "25 100" : "none"}
           strokeDashoffset={lineOffset}
         />
 
-        {/* ============================================
-            PATH 1: WhatsApp (160, 700) -> Orb (540, 700) 
-           ============================================ */}
-        {/* Glow Layer */}
+        {/* PATH 1: WhatsApp (160, 700) -> Orb (540, 700) */}
         <path
           d="M 160 700 L 540 700"
           fill="none"
-          stroke={`rgba(${theme.primaryGlow}, 0.08)`}
+          stroke={`rgba(37, 211, 102, 0.08)`}
           strokeWidth="14"
         />
         {showLine1Glow && (
           <path
             d="M 160 700 L 540 700"
             fill="none"
-            stroke={`rgba(${theme.primaryGlow}, 0.4)`}
+            stroke={`rgba(37, 211, 102, 0.4)`}
             strokeWidth="12"
             filter="blur(4px)"
           />
         )}
-        {/* Core Line Layer */}
         <path
           d="M 160 700 L 540 700"
           fill="none"
-          stroke={showLine1Glow ? theme.pipelineLine1 : "rgba(255, 255, 255, 0.1)"}
+          stroke={showLine1Glow ? "#25d366" : "rgba(255, 255, 255, 0.1)"}
           strokeWidth="6"
           strokeDasharray={showLine1Glow ? "25 100" : "none"}
           strokeDashoffset={lineOffset}
         />
 
-        {/* =======================================================
-            PATH 2: Orb (540, 700) -> HubSpot (880, 540) [Cubic Bezier S-Curve]
-           ======================================================= */}
-        {/* Glow Layer */}
+        {/* PATH 2: Orb (540, 700) -> PJE Portal (880, 540) */}
         <path
           d="M 540 700 C 660 700, 760 540, 880 540"
           fill="none"
-          stroke={`rgba(${theme.alertBorder2}, 0.08)`}
+          stroke={`rgba(10, 37, 64, 0.08)`}
           strokeWidth="14"
         />
         {showLine23Glow && (
           <path
             d="M 540 700 C 660 700, 760 540, 880 540"
             fill="none"
-            stroke={`rgba(${theme.alertBorder2}, 0.4)`}
+            stroke={`rgba(10, 37, 64, 0.4)`}
             strokeWidth="12"
             filter="blur(4px)"
           />
         )}
-        {/* Core Line Layer */}
         <path
           d="M 540 700 C 660 700, 760 540, 880 540"
           fill="none"
@@ -373,26 +362,22 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           strokeDashoffset={lineOffset}
         />
 
-        {/* =======================================================
-            PATH 3: Orb (540, 700) -> Calendly (880, 860) [Cubic Bezier S-Curve]
-           ======================================================= */}
-        {/* Glow Layer */}
+        {/* PATH 3: Orb (540, 700) -> Ley Base (880, 860) */}
         <path
           d="M 540 700 C 660 700, 760 860, 880 860"
           fill="none"
-          stroke={`rgba(${theme.alertBorder3}, 0.08)`}
+          stroke={`rgba(30, 58, 138, 0.08)`}
           strokeWidth="14"
         />
         {showLine23Glow && (
           <path
             d="M 540 700 C 660 700, 760 860, 880 860"
             fill="none"
-            stroke={`rgba(${theme.alertBorder3}, 0.4)`}
+            stroke={`rgba(30, 58, 138, 0.4)`}
             strokeWidth="12"
             filter="blur(4px)"
           />
         )}
-        {/* Core Line Layer */}
         <path
           d="M 540 700 C 660 700, 760 860, 880 860"
           fill="none"
@@ -404,9 +389,9 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
       </svg>
 
 
-      {/* 4. PIXEL-PERFECT POSITIONED DIAGRAM NODES */}
+      {/* 4. DIAGRAM NODES */}
       
-      {/* NODE 1: WhatsApp (Left) - Center: (160, 700) -> left: 100, top: 640 */}
+      {/* NODE 1: WhatsApp Client */}
       <div
         style={{
           position: "absolute",
@@ -416,7 +401,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           height: 120,
           zIndex: 5,
           borderRadius: "50%",
-          backgroundColor: "#0e1640",
+          backgroundColor: "#050B14",
           border: "3px solid #25d366",
           display: "flex",
           justifyContent: "center",
@@ -426,27 +411,25 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
       >
         <MessageSquare size={52} color="#25d366" />
       </div>
-      {/* Label for WhatsApp */}
       <div
         style={{
           position: "absolute",
-          left: 100,
+          left: 60,
           top: 775,
-          width: 120,
+          width: 200,
           textAlign: "center",
           color: "#25d366",
           fontSize: 18,
           fontWeight: 700,
           letterSpacing: "1px",
           textTransform: "uppercase",
-          fontFamily: "Outfit, sans-serif",
           textShadow: "0 2px 10px rgba(37, 211, 102, 0.3)",
         }}
       >
-        WhatsApp
+        WhatsApp Client
       </div>
 
-      {/* NODE 0: OBSIDIAN BRAIN (Top Center) - Center: (540, 350) -> left: 480, top: 290 */}
+      {/* NODE 0: Legal Knowledge (Top Center) */}
       <div
         style={{
           position: "absolute",
@@ -456,37 +439,35 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           height: 120,
           zIndex: 5,
           borderRadius: "50%",
-          backgroundColor: "#0e1640",
-          border: "3px solid #d946ef",
+          backgroundColor: "#050B14",
+          border: `3px solid ${theme.pipelineLine1}`,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          boxShadow: "0 0 35px rgba(217, 70, 239, 0.25), inset 0 0 15px rgba(217, 70, 239, 0.1)",
+          boxShadow: `0 0 35px rgba(212, 175, 55, 0.25), inset 0 0 15px rgba(212, 175, 55, 0.1)`,
         }}
       >
-        <Brain size={52} color="#d946ef" />
+        <Brain size={52} color={theme.pipelineLine1} />
       </div>
-      {/* Label for Obsidian */}
       <div
         style={{
           position: "absolute",
-          left: 410,
+          left: 360,
           top: 250,
-          width: 260,
+          width: 360,
           textAlign: "center",
-          color: "#d946ef",
+          color: theme.pipelineLine1,
           fontSize: 18,
           fontWeight: 700,
           letterSpacing: "1px",
           textTransform: "uppercase",
-          fontFamily: "Outfit, sans-serif",
-          textShadow: "0 2px 10px rgba(217, 70, 239, 0.3)",
+          textShadow: `0 2px 10px rgba(${theme.secondaryGlow}, 0.3)`,
         }}
       >
-        Base de Conocimiento
+        Base de Conocimiento Legal
       </div>
 
-      {/* NODE 2: BROWNS STUDIO ORB (Center) - Center: (540, 700) -> left: 440, top: 600 */}
+      {/* NODE 2: BROWNS STUDIO ORB (Center: Motor IA Legal Chile) */}
       <div
         style={{
           position: "absolute",
@@ -508,9 +489,9 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
             width: "100%",
             height: "100%",
             borderRadius: "50%",
-            background: `linear-gradient(135deg, ${theme.pipelineLine1} 0%, ${theme.pipelineLine2} 50%, ${theme.pipelineLine3} 100%)`,
+            background: `linear-gradient(135deg, ${theme.pipelineLine1} 0%, ${theme.pipelineLine3} 100%)`,
             transform: `rotate(${rotation}deg)`,
-            boxShadow: `0 0 50px rgba(${theme.primaryGlow}, 0.45), 0 0 100px rgba(${theme.secondaryGlow}, 0.25)`,
+            boxShadow: `0 0 50px rgba(${theme.secondaryGlow}, 0.45), 0 0 100px rgba(${theme.primaryGlow}, 0.25)`,
             filter: "blur(1px)",
           }}
         />
@@ -521,7 +502,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
             width: "82%",
             height: "82%",
             borderRadius: "50%",
-            backgroundColor: "#080e2e",
+            backgroundColor: "#050B14",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -552,7 +533,6 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           </span>
         </div>
       </div>
-      {/* Label for Center Orb */}
       <div
         style={{
           position: "absolute",
@@ -565,14 +545,13 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           fontWeight: 800,
           letterSpacing: "1px",
           textTransform: "uppercase",
-          fontFamily: "Outfit, sans-serif",
-          textShadow: `0 2px 15px rgba(${theme.primaryGlow}, 0.5)`,
+          textShadow: `0 2px 15px rgba(${theme.secondaryGlow}, 0.5)`,
         }}
       >
-        Agente {businessName}
+        Motor IA Legal Chile
       </div>
 
-      {/* NODE 3: HubSpot Node (Right Top) - Center: (880, 540) -> left: 820, top: 480 */}
+      {/* NODE 3: PJE Portal Connection (Right Top) */}
       <div
         style={{
           position: "absolute",
@@ -582,7 +561,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           height: 120,
           zIndex: 5,
           borderRadius: "50%",
-          backgroundColor: "#0e1640",
+          backgroundColor: "#050B14",
           border: `3px solid ${interpolate(frame, [175, 195], [0, 1], { extrapolateRight: "clamp", extrapolateLeft: "clamp" }) > 0.5 ? theme.pipelineLine2 : "rgba(255,255,255,0.08)"}`,
           boxShadow: `0 0 ${interpolate(frame, [175, 200], [0, 35], { extrapolateRight: "clamp", extrapolateLeft: "clamp" })}px rgba(${theme.alertBorder2}, 0.35), inset 0 0 15px rgba(${theme.alertBorder2}, 0.15)`,
           display: "flex",
@@ -592,28 +571,25 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
       >
         <Database size={52} color={showRightNodesGlow ? theme.pipelineLine2 : "#475569"} />
       </div>
-      {/* Label for HubSpot */}
       <div
         style={{
           position: "absolute",
-          left: 820,
+          left: 780,
           top: 615,
-          width: 120,
+          width: 200,
           textAlign: "center",
           color: showRightNodesGlow ? theme.pipelineLine2 : "#475569",
           fontSize: 20,
           fontWeight: 700,
           letterSpacing: "1px",
           textTransform: "uppercase",
-          fontFamily: "Outfit, sans-serif",
           textShadow: showRightNodesGlow ? `0 2px 10px rgba(${theme.alertBorder2}, 0.3)` : "none",
-          transition: "color 0.3s ease, text-shadow 0.3s ease",
         }}
       >
-        CRM
+        PJE Portal
       </div>
 
-      {/* NODE 4: Calendly Node (Right Bottom) - Center: (880, 860) -> left: 820, top: 800 */}
+      {/* NODE 4: Ley 20.886 Data Base (Right Bottom) */}
       <div
         style={{
           position: "absolute",
@@ -623,7 +599,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           height: 120,
           zIndex: 5,
           borderRadius: "50%",
-          backgroundColor: "#0e1640",
+          backgroundColor: "#050B14",
           border: `3px solid ${interpolate(frame, [175, 195], [0, 1], { extrapolateRight: "clamp", extrapolateLeft: "clamp" }) > 0.5 ? theme.pipelineLine3 : "rgba(255,255,255,0.08)"}`,
           boxShadow: `0 0 ${interpolate(frame, [175, 200], [0, 35], { extrapolateRight: "clamp", extrapolateLeft: "clamp" })}px rgba(${theme.alertBorder3}, 0.35), inset 0 0 15px rgba(${theme.alertBorder3}, 0.15)`,
           display: "flex",
@@ -633,25 +609,22 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
       >
         <Calendar size={52} color={showRightNodesGlow ? theme.pipelineLine3 : "#475569"} />
       </div>
-      {/* Label for Calendly */}
       <div
         style={{
           position: "absolute",
-          left: 820,
+          left: 780,
           top: 935,
-          width: 120,
+          width: 200,
           textAlign: "center",
           color: showRightNodesGlow ? theme.pipelineLine3 : "#475569",
           fontSize: 20,
           fontWeight: 700,
           letterSpacing: "1px",
           textTransform: "uppercase",
-          fontFamily: "Outfit, sans-serif",
           textShadow: showRightNodesGlow ? `0 2px 10px rgba(${theme.alertBorder3}, 0.3)` : "none",
-          transition: "color 0.3s ease, text-shadow 0.3s ease",
         }}
       >
-        Calendly
+        Ley 20.886
       </div>
 
 
@@ -659,12 +632,12 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
       <div
         style={{
           position: "absolute",
-          top: 1080, // Positioned exactly below the diagram, perfectly balanced in the lower third
+          top: 1080, 
           left: 140,
           width: "800px",
           display: "flex",
           flexDirection: "column",
-          gap: 24, // Generous spacing
+          gap: 24,
           zIndex: 10,
         }}
       >
@@ -674,22 +647,22 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
             style={{
               transform: `translateY(${(1 - alert0Spring) * 35}px)`,
               opacity: alert0Spring,
-              backgroundColor: "rgba(10, 18, 30, 0.75)",
-              border: `1px solid rgba(217, 70, 239, 0.2)`,
+              backgroundColor: "rgba(10, 18, 30, 0.85)",
+              border: `1px solid rgba(212, 175, 55, 0.25)`,
               borderRadius: "24px",
               padding: "24px 30px",
               display: "flex",
               alignItems: "center",
               gap: 20,
               backdropFilter: "blur(20px)",
-              boxShadow: `0 10px 30px rgba(217, 70, 239, 0.08)`,
+              boxShadow: `0 10px 30px rgba(212, 175, 55, 0.08)`,
             }}
           >
-            <Brain size={32} color="#d946ef" />
+            <Brain size={32} color="#D4AF37" />
             <div>
-              <div style={{ color: "#d946ef", fontWeight: 800, fontSize: 18, letterSpacing: "1px", textTransform: "uppercase" }}>Base de Conocimiento</div>
+              <div style={{ color: "#D4AF37", fontWeight: 800, fontSize: 18, letterSpacing: "1px", textTransform: "uppercase" }}>Base de Conocimiento</div>
               <div style={{ color: "#e2e8f0", fontSize: 22, marginTop: 6, fontWeight: 500 }}>
-                Recuperando: <strong style={{ color: "#ffffff" }}>Respuestas Entrenadas</strong>
+                Recuperando: <strong style={{ color: "#ffffff" }}>Respuestas Entrenadas (Ley 20.886)</strong>
               </div>
             </div>
           </div>
@@ -701,8 +674,8 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
             style={{
               transform: `translateY(${(1 - alert1Spring) * 35}px)`,
               opacity: alert1Spring,
-              backgroundColor: "rgba(10, 18, 30, 0.75)",
-              border: `1px solid rgba(${theme.alertBorder1}, 0.2)`,
+              backgroundColor: "rgba(10, 18, 30, 0.85)",
+              border: `1px solid rgba(${theme.alertBorder1}, 0.25)`,
               borderRadius: "24px",
               padding: "24px 30px",
               display: "flex",
@@ -714,7 +687,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           >
             <span style={{ fontSize: 32 }}>🧠</span>
             <div>
-              <div style={{ color: theme.pipelineLine1, fontWeight: 800, fontSize: 18, letterSpacing: "1px", textTransform: "uppercase" }}>Agente Browns OS</div>
+              <div style={{ color: theme.pipelineLine1, fontWeight: 800, fontSize: 18, letterSpacing: "1px", textTransform: "uppercase" }}>Agente Legal Chile</div>
               <div style={{ color: "#e2e8f0", fontSize: 22, marginTop: 6, fontWeight: 500 }}>
                 Lead Calificado: <strong style={{ color: "#ffffff" }}>{crmLabel}</strong>
               </div>
@@ -728,20 +701,20 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
             style={{
               transform: `translateY(${(1 - alert2Spring) * 35}px)`,
               opacity: alert2Spring,
-              backgroundColor: "rgba(10, 18, 30, 0.75)",
-              border: `1px solid rgba(${theme.alertBorder2}, 0.2)`,
+              backgroundColor: "rgba(10, 18, 30, 0.85)",
+              border: `1px solid rgba(10, 37, 64, 0.3)`,
               borderRadius: "24px",
               padding: "24px 30px",
               display: "flex",
               alignItems: "center",
               gap: 20,
               backdropFilter: "blur(20px)",
-              boxShadow: `0 10px 30px rgba(${theme.alertBorder2}, 0.08)`,
+              boxShadow: `0 10px 30px rgba(10, 37, 64, 0.1)`,
             }}
           >
             <span style={{ fontSize: 32 }}>⚡</span>
             <div>
-              <div style={{ color: theme.pipelineLine2, fontWeight: 800, fontSize: 18, letterSpacing: "1px", textTransform: "uppercase" }}>Integraciones OK</div>
+              <div style={{ color: "#F8FAFC", fontWeight: 800, fontSize: 18, letterSpacing: "1px", textTransform: "uppercase" }}>Integración PJE</div>
               <div style={{ color: "#e2e8f0", fontSize: 22, marginTop: 6, fontWeight: 500 }}>
                 {actions[0]} & {actions[1]}
               </div>
@@ -755,15 +728,15 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
             style={{
               transform: `translateY(${(1 - alert3Spring) * 35}px)`,
               opacity: alert3Spring,
-              backgroundColor: "rgba(10, 18, 30, 0.75)",
-              border: `1px solid rgba(${theme.alertBorder3}, 0.2)`,
+              backgroundColor: "rgba(10, 18, 30, 0.85)",
+              border: `1px solid rgba(30, 58, 138, 0.3)`,
               borderRadius: "24px",
               padding: "24px 30px",
               display: "flex",
               alignItems: "center",
               gap: 20,
               backdropFilter: "blur(20px)",
-              boxShadow: `0 10px 30px rgba(${theme.alertBorder3}, 0.08)`,
+              boxShadow: `0 10px 30px rgba(30, 58, 138, 0.1)`,
             }}
           >
             <Bell size={32} color={theme.pipelineLine3} />

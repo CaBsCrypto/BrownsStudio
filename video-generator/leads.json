@@ -4,19 +4,16 @@
     "businessName": "García & Asociados",
     "industry": "abogados",
     "botName": "Sofía",
-    "hookText": "¿Cuánto tiempo pierdes en consultas por despido? Así lo resolvemos.",
+    "hookText": "¿Tus abogados junior pierden horas respondiendo dudas repetitivas de clientes? Así es como lo resuelves.",
     "messages": [
-      { "sender": "client", "text": "Hola, me despidieron ayer de mi trabajo y creo que fue injustificado." },
-      { "sender": "bot", "text": "¡Hola! Evaluamos tu caso en una consulta gratis. Para ver si calificas, ¿cuántos años trabajaste ahí?" },
-      { "sender": "client", "text": "Estuve trabajando durante 4 años." },
-      { "sender": "bot", "text": "Entendido. ¿Qué causal de despido te indicaron en la carta?" },
-      { "sender": "client", "text": "Pusieron necesidades de la empresa, pero contrataron a otra persona hoy." },
-      { "sender": "bot", "text": "Excelente. Para agendar tu cita y enviarte el recordatorio, ¿me podrías dejar tu correo?" },
-      { "sender": "client", "text": "carlos.mendoza@gmail.com" },
-      { "sender": "bot", "text": "¡Reserva lista! Analizaremos tu carta y finiquito en la consulta gratis. Te esperamos el viernes. ⚖️💼" }
+      { "sender": "client", "text": "Hola doctor, ¿cómo va mi demanda por el despido? Estoy super preocupado." },
+      { "sender": "bot", "text": "Hola Juan. Entiendo tu preocupación, estas esperas son difíciles. Para darte el estado exacto del PJE, ¿me indicas el RIT y Tribunal de tu causa?" },
+      { "sender": "client", "text": "Es el RIT O-1234-2026 del Segundo Juzgado de Letras del Trabajo de Santiago." },
+      { "sender": "bot", "text": "Conectando al PJE... Listo. Tu causa tiene asignada fecha de Audiencia Preparatoria para el 15 de Julio. Quédate tranquilo, tu abogado ya cargó la lista de testigos. Todo va en orden." },
+      { "sender": "client", "text": "Uf, excelente. Me dejas mucho más tranquilo, muchas gracias." }
     ],
     "ctaUrl": "browns.studio/legal",
-    "crmLabel": "Caso Calificado & Dossier",
-    "actions": ["Crear Expediente Digital", "Agendar Consulta Estratégica", "Notificar Abogado"]
+    "crmLabel": "Motor IA Legal Chile",
+    "actions": ["Conexión PJE Realizada", "Cargada Ley 20.886", "Notificar a Abogado"]
   }
 ]

@@ -37,22 +37,22 @@ export const THEMES: Record<string, IndustryTheme> = {
     alertBorder3: "168, 85, 247",
   },
   abogados: {
-    primaryGlow: "212, 175, 55", // Gold/Ochre
-    secondaryGlow: "184, 134, 11", // Dark Goldenrod
-    textGradient: "linear-gradient(180deg, #ffffff 0%, #fcd34d 100%)",
-    chatHeader: "#1f1a17", // Very Dark Brown/Black
-    chatHeaderGradient: "linear-gradient(135deg, #fcd34d 0%, #d4af37 100%)",
-    chatHeaderColor: "#1f1a17",
-    botAvatarGradient: "linear-gradient(135deg, #d4af37 0%, #b8860b 100%)",
-    clientBubble: "#fef3c7", // Light Amber/Gold
-    clientBubbleText: "#451a03",
-    checkMarks: "#d4af37",
-    pipelineLine1: "#fbbf24", // Amber
-    pipelineLine2: "#d97706", // Amber dark
-    pipelineLine3: "#b45309", // Amber darker
-    alertBorder1: "251, 191, 36",
-    alertBorder2: "217, 119, 6",
-    alertBorder3: "180, 83, 9",
+    primaryGlow: "10, 37, 64", // Deep Navy
+    secondaryGlow: "212, 175, 55", // Gold/Ochre
+    textGradient: "linear-gradient(180deg, #F8FAFC 0%, #D4AF37 100%)",
+    chatHeader: "#0A2540", // Deep Navy
+    chatHeaderGradient: "linear-gradient(135deg, #0A2540 0%, #050B14 100%)",
+    chatHeaderColor: "#F8FAFC",
+    botAvatarGradient: "linear-gradient(135deg, #D4AF37 0%, #0A2540 100%)",
+    clientBubble: "#1E293B", // Slate-800
+    clientBubbleText: "#F8FAFC", // Off-white
+    checkMarks: "#D4AF37",
+    pipelineLine1: "#D4AF37", // Gold
+    pipelineLine2: "#0A2540", // Deep Navy
+    pipelineLine3: "#1E3A8A", // Blue-900
+    alertBorder1: "212, 175, 55",
+    alertBorder2: "10, 37, 64",
+    alertBorder3: "30, 58, 138",
   },
   dental: {
     primaryGlow: "14, 165, 233", // Light Blue

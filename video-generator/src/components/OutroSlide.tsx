@@ -14,6 +14,7 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
   const { fps } = useVideoConfig();
   const theme = getIndustryTheme(industry);
   const industryText = getIndustryText(industry);
+  const isAbogados = industry === "abogados";
 
   // --- CAMERA DRIFT: Slow continuous zoom-out
   const cameraDrift = interpolate(frame, [0, 120], [1.08, 1], {
@@ -46,6 +47,236 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
     [-1, 1],
     [10, 25]
   );
+
+  // Custom Legal ROI Metric Springs
+  const card1Entrance = spring({
+    frame: frame - 20,
+    fps,
+    config: { damping: 12, mass: 0.8 },
+  });
+
+  const card2Entrance = spring({
+    frame: frame - 45,
+    fps,
+    config: { damping: 12, mass: 0.8 },
+  });
+
+  const brandingEntrance = spring({
+    frame: frame - 70,
+    fps,
+    config: { damping: 12, mass: 0.8 },
+  });
+
+  if (isAbogados) {
+    return (
+      <AbsoluteFill
+        style={{
+          backgroundColor: "#050B14",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "60px 40px",
+          boxSizing: "border-box",
+          fontFamily: "Outfit, 'Montserrat', sans-serif",
+          overflow: "hidden",
+        }}
+      >
+        {/* Background radial highlights */}
+        <div
+          style={{
+            position: "absolute",
+            width: "900px",
+            height: "900px",
+            borderRadius: "50%",
+            background: `radial-gradient(circle, rgba(${theme.secondaryGlow}, 0.15) 0%, rgba(${theme.primaryGlow}, 0.05) 45%, rgba(0,0,0,0) 70%)`,
+            filter: "blur(50px)",
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* Global halo */}
+        <div
+          style={{
+            position: "absolute",
+            width: "800px",
+            height: "800px",
+            borderRadius: "50%",
+            border: `1.5px solid rgba(${theme.secondaryGlow}, 0.08)`,
+            boxShadow: `0 0 60px rgba(${theme.secondaryGlow}, 0.03)`,
+            transform: `scale(${cameraDrift})`,
+            pointerEvents: "none",
+            zIndex: 1,
+          }}
+        />
+
+        {/* Outer Container */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "100%",
+            zIndex: 10,
+            transform: `scale(${cameraDrift})`,
+          }}
+        >
+          {/* Main Title */}
+          <h1
+            style={{
+              color: "white",
+              fontSize: "64px",
+              fontWeight: 950,
+              textAlign: "center",
+              lineHeight: 1.15,
+              marginBottom: "60px",
+              background: theme.textGradient,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              letterSpacing: "-2px",
+            }}
+          >
+            El Futuro de tu<br />Estudio Empieza Hoy
+          </h1>
+
+          {/* Grid of Stat Cards */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "36px",
+              width: "100%",
+              maxWidth: "600px",
+              marginBottom: "80px",
+            }}
+          >
+            {/* Card 1 */}
+            <div
+              style={{
+                transform: `scale(${card1Entrance})`,
+                opacity: card1Entrance,
+                backgroundColor: "rgba(10, 37, 64, 0.4)",
+                border: "1px solid rgba(212, 175, 55, 0.2)",
+                borderRadius: "30px",
+                padding: "36px",
+                textAlign: "center",
+                boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+                backdropFilter: "blur(10px)",
+              }}
+            >
+              <h2
+                style={{
+                  color: "#D4AF37",
+                  fontSize: "90px",
+                  fontWeight: 950,
+                  margin: 0,
+                  lineHeight: 1.0,
+                  letterSpacing: "-2px",
+                }}
+              >
+                -70%
+              </h2>
+              <p
+                style={{
+                  color: "#F8FAFC",
+                  fontSize: "26px",
+                  fontWeight: 600,
+                  margin: "12px 0 0 0",
+                  letterSpacing: "1px",
+                  textTransform: "uppercase",
+                }}
+              >
+                Tiempo en Soporte
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div
+              style={{
+                transform: `scale(${card2Entrance})`,
+                opacity: card2Entrance,
+                backgroundColor: "rgba(10, 37, 64, 0.4)",
+                border: "1px solid rgba(212, 175, 55, 0.2)",
+                borderRadius: "30px",
+                padding: "36px",
+                textAlign: "center",
+                boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+                backdropFilter: "blur(10px)",
+              }}
+            >
+              <h2
+                style={{
+                  color: "#D4AF37",
+                  fontSize: "90px",
+                  fontWeight: 950,
+                  margin: 0,
+                  lineHeight: 1.0,
+                  letterSpacing: "-2px",
+                }}
+              >
+                100%
+              </h2>
+              <p
+                style={{
+                  color: "#F8FAFC",
+                  fontSize: "26px",
+                  fontWeight: 600,
+                  margin: "12px 0 0 0",
+                  letterSpacing: "1px",
+                  textTransform: "uppercase",
+                }}
+              >
+                Clientes Tranquilos e Informados
+              </p>
+            </div>
+          </div>
+
+          {/* Branding */}
+          <div
+            style={{
+              transform: `scale(${brandingEntrance})`,
+              opacity: brandingEntrance,
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {/* Soft firm logo badge */}
+            <div
+              style={{
+                background: `linear-gradient(135deg, ${theme.pipelineLine1} 0%, ${theme.pipelineLine3} 100%)`,
+                color: "#0A2540",
+                fontSize: "26px",
+                fontWeight: 900,
+                padding: "16px 40px",
+                borderRadius: "20px",
+                letterSpacing: "2px",
+                boxShadow: `0 10px 30px rgba(${theme.secondaryGlow}, 0.3)`,
+                display: "inline-block",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                textTransform: "uppercase",
+              }}
+            >
+              García & Asociados
+            </div>
+            <p
+              style={{
+                color: "#64748b",
+                fontSize: "18px",
+                marginTop: "16px",
+                fontWeight: 600,
+                letterSpacing: "2px",
+                textTransform: "uppercase",
+              }}
+            >
+              Tecnología por Browns Studio
+            </p>
+          </div>
+        </div>
+      </AbsoluteFill>
+    );
+  }
 
   return (
     <AbsoluteFill

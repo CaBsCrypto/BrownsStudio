@@ -67,10 +67,11 @@ export const HookSlide: React.FC<{
   // --- KINETIC TYPOGRAPHY (abogados pro)
   const isAbogados = industry === "abogados";
   const KINETIC_PHRASES = [
-    { start: 0, end: 30, text: "¿CUÁNTO TIEMPO", isHighlight: false },
-    { start: 30, end: 55, text: "PIERDES", isHighlight: true },
-    { start: 55, end: 85, text: "POR DESPIDO?", isHighlight: false },
-    { start: 85, end: 120, text: "ASÍ LO RESOLVEMOS.", isHighlight: true },
+    { start: 0, end: 18, text: "¿TUS", isHighlight: false },
+    { start: 18, end: 36, text: "ABOGADOS", isHighlight: false },
+    { start: 36, end: 54, text: "JUNIOR", isHighlight: true },
+    { start: 54, end: 72, text: "PIERDEN", isHighlight: true },
+    { start: 72, end: 120, text: "HORAS?", isHighlight: true },
   ];
 
   const activePhraseObj = KINETIC_PHRASES.find(p => frame >= p.start && frame < p.end) || KINETIC_PHRASES[KINETIC_PHRASES.length - 1];
@@ -81,12 +82,12 @@ export const HookSlide: React.FC<{
   const wordScale = spring({
     frame: frame - activeStartFrame,
     fps,
-    config: { damping: 8, stiffness: 160 },
-    from: 1.35,
+    config: { damping: 10, mass: 0.6 },
+    from: 0.4,
     to: 1.0,
   });
 
-  const angles = { 0: -3, 30: 4, 55: -2, 85: 3 };
+  const angles = { 0: -3, 18: 4, 36: -2, 54: 3, 72: -1 };
   const activeAngle = angles[activeStartFrame as keyof typeof angles] || 0;
 
   const flashOpacity = interpolate(
@@ -94,6 +95,12 @@ export const HookSlide: React.FC<{
     [0, 5],
     [0.15, 0],
     { extrapolateRight: "clamp" }
+  );
+
+  const redGlowPulse = interpolate(
+    Math.sin(frame * 0.15),
+    [-1, 1],
+    [10, 40]
   );
 
   // --- TYPEWRITER: starts immediately at frame 0, 2 frames per char
@@ -235,7 +242,7 @@ export const HookSlide: React.FC<{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            boxShadow: industry === "abogados" ? `0 10px 30px rgba(${theme.primaryGlow}, 0.15)` : "0 10px 30px rgba(239, 68, 68, 0.15)",
+            boxShadow: industry === "abogados" ? `0 0 ${redGlowPulse}px rgba(239, 68, 68, 0.8)` : "0 10px 30px rgba(239, 68, 68, 0.15)",
           }}
         >
           {industry === "abogados" ? (

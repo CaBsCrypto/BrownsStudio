@@ -9,6 +9,18 @@ const calculateMetadata: CalculateMetadataFunction<PitchVideoProps> = async ({
   props,
 }) => {
   try {
+    if (props.industry === "abogados") {
+      return {
+        durationInFrames: 810,
+        props: {
+          ...props,
+          hookDurationInFrames: 120,
+          outroDurationInFrames: 120,
+          whatsappDurationInFrames: 390,
+        },
+      };
+    }
+
     // 1. Measure the generated AI voiceovers
     const hookDurationSec = await getAudioDuration(staticFile(`voiceovers/${props.id}_hook.mp3`));
     const outroDurationSec = await getAudioDuration(staticFile("voiceovers/outro_v3.mp3"));

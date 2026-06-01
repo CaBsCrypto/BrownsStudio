@@ -39,6 +39,8 @@ export const PitchVideoComposition: React.FC<PitchVideoProps> = (props) => {
     whatsappDurationInFrames = 270,
   } = inputProps;
 
+  const isAbogados = industry === "abogados";
+
   // Absolute frame offsets for audio pings (accounting for transition overlaps)
   const hookExitFrame = hookDurationInFrames - SLIDE_DURATION;
   
@@ -54,46 +56,69 @@ export const PitchVideoComposition: React.FC<PitchVideoProps> = (props) => {
   // Exact start frame of the OutroSlide in the TransitionSeries absolute timeline
   const outroStartFrame = pipelineEntryFrame + PIPELINE_FRAMES - FADE_DURATION;
 
+  const musicFile = isAbogados ? "law_ambient_beat.mp3" : "music.mp3";
+  const musicVolume = isAbogados ? 0.25 : 0.06;
+
   return (
-    <AbsoluteFill style={{ backgroundColor: "#080e2e" }}>
+    <AbsoluteFill style={{ backgroundColor: "#050B14" }}>
       {/* ─── AUDIO: Background Music (looping, low volume) ─── */}
-      <Audio src={staticFile("music.mp3")} volume={0.06} loop />
+      <Audio src={staticFile(musicFile)} volume={musicVolume} loop />
 
-      {/* ─── AUDIO: Primary Voiceovers (Top-level Sequence to prevent TransitionSeries duplication bugs) ─── */}
-      <Sequence from={0} durationInFrames={hookDurationInFrames}>
-        <Audio src={staticFile(`voiceovers/${id}_hook.mp3`)} volume={1} />
-      </Sequence>
+      {/* ─── AUDIO: Primary Voiceovers ─── */}
+      {isAbogados ? (
+        <>
+          {/* Hook Voiceover: 0 to 120 */}
+          <Sequence from={0} durationInFrames={120}>
+            <Audio src={staticFile("voiceovers/v2_legal_hook.mp3")} volume={1} />
+          </Sequence>
 
-      <Sequence from={outroStartFrame} durationInFrames={outroDurationInFrames}>
-        <Audio src={staticFile(`voiceovers/outro_v3.mp3`)} volume={1} />
-      </Sequence>
+          {/* Chat Ambient: 120 to 510 */}
+          <Sequence from={120} durationInFrames={390}>
+            <Audio src={staticFile("bg_keyboard_clicks.mp3")} volume={0.4} />
+          </Sequence>
 
-      {/* ─── AUDIO: WhatsApp notification pings ─── */}
-      {messagePings.map((pingFrame, i) => (
-        <Sequence key={i} from={pingFrame} durationInFrames={30}>
-          <Audio src={staticFile("notification.mp3")} volume={0.12} />
-        </Sequence>
-      ))}
+          {/* Pipeline Voiceover: 510 to 690 */}
+          <Sequence from={510} durationInFrames={180}>
+            <Audio src={staticFile("voiceovers/v2_legal_pipeline.mp3")} volume={1} />
+          </Sequence>
 
-      {/* Pipeline alert 0 (Obsidian) */}
-      <Sequence from={alert0Frame} durationInFrames={30}>
-        <Audio src={staticFile("beep.wav")} volume={0.12} />
-      </Sequence>
+          {/* Outro Voiceover: 690 to 810 */}
+          <Sequence from={690} durationInFrames={120}>
+            <Audio src={staticFile("voiceovers/v3_legal_outro.mp3")} volume={1} />
+          </Sequence>
+        </>
+      ) : (
+        <>
+          <Sequence from={0} durationInFrames={hookDurationInFrames}>
+            <Audio src={staticFile(`voiceovers/${id}_hook.mp3`)} volume={1} />
+          </Sequence>
 
-      {/* Pipeline alert 1 */}
-      <Sequence from={alert1Frame} durationInFrames={30}>
-        <Audio src={staticFile("beep.wav")} volume={0.12} />
-      </Sequence>
+          <Sequence from={outroStartFrame} durationInFrames={outroDurationInFrames}>
+            <Audio src={staticFile("voiceovers/outro_v3.mp3")} volume={1} />
+          </Sequence>
 
-      {/* Pipeline alert 2 */}
-      <Sequence from={alert2Frame} durationInFrames={30}>
-        <Audio src={staticFile("beep.wav")} volume={0.12} />
-      </Sequence>
+          {/* WhatsApp notification pings */}
+          {messagePings.map((pingFrame, i) => (
+            <Sequence key={i} from={pingFrame} durationInFrames={30}>
+              <Audio src={staticFile("notification.mp3")} volume={0.12} />
+            </Sequence>
+          ))}
 
-      {/* Pipeline alert 3 */}
-      <Sequence from={alert3Frame} durationInFrames={30}>
-        <Audio src={staticFile("beep.wav")} volume={0.12} />
-      </Sequence>
+          {/* Pipeline alert beeps */}
+          <Sequence from={alert0Frame} durationInFrames={30}>
+            <Audio src={staticFile("beep.wav")} volume={0.12} />
+          </Sequence>
+          <Sequence from={alert1Frame} durationInFrames={30}>
+            <Audio src={staticFile("beep.wav")} volume={0.12} />
+          </Sequence>
+          <Sequence from={alert2Frame} durationInFrames={30}>
+            <Audio src={staticFile("beep.wav")} volume={0.12} />
+          </Sequence>
+          <Sequence from={alert3Frame} durationInFrames={30}>
+            <Audio src={staticFile("beep.wav")} volume={0.12} />
+          </Sequence>
+        </>
+      )}
 
       {/* ─── VISUAL SCENES with TransitionSeries ─── */}
       <TransitionSeries>
@@ -116,6 +141,7 @@ export const PitchVideoComposition: React.FC<PitchVideoProps> = (props) => {
               businessName={businessName}
               botName={botName}
               messages={messages}
+              industry={industry}
             />
           </AbsoluteFill>
           <Sequence durationInFrames={LIGHT_LEAK_DURATION}>
