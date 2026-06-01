@@ -127,6 +127,119 @@ export async function processLegalMessage(
 
   // CASE A: Client NOT registered
   if (!client) {
+    // 1. Check if they have already sent a valid RUT in their recent history
+    let lastUserRut: string | null = null;
+    if (conversation.messages && conversation.messages.length > 0) {
+      for (let i = conversation.messages.length - 1; i >= 0; i--) {
+        const m = conversation.messages[i];
+        if (m.role === "user") {
+          const extracted = extractRut(m.content);
+          if (extracted && validateRut(formatRut(extracted))) {
+            lastUserRut = formatRut(extracted);
+            break;
+          }
+        }
+      }
+    }
+
+    if (lastUserRut) {
+      // Treat the current message as the Cause RIT/ROL verification
+      const rutCases = await getCasesByRut(lastUserRut);
+      const cleanInput = messageText.replace(/\s+/g, "").toUpperCase();
+      const matchedCase = rutCases.find(
+        (c) =>
+          c.rol.replace(/\s+/g, "").toUpperCase() === cleanInput ||
+          c.rol.toUpperCase() === messageText.toUpperCase()
+      );
+
+      if (matchedCase) {
+        // Authenticated! Register the client mapping waPhone to RUT
+        const newClient = await registerLegalClient({
+          id: waPhone,
+          rut: lastUserRut,
+          full_name: matchedCase.caratula.split(" CON ")[0] || displayName || "Cliente Judicial",
+          email: null,
+        });
+
+        const successMsg =
+          `¡Identidad verificada con éxito! 🛡️⚖️\n\n` +
+          `Hemos vinculado su número celular a la causa ROL *${matchedCase.rol}* asociada a su RUT *${lastUserRut}*.\n\n` +
+          `A continuación, le presento la última resolución procesal simplificada por nuestro asistente:`;
+
+        await sendTextMessage(waPhone, successMsg, creds);
+
+        // ⚠️ STRESS/CRITICAL ALERT CHECK
+        const ALERT_WORDS = ["embargo", "arresto", "detencion", "detención", "lanzamiento", "desalojo", "prision", "prisión", "remate", "fuerza publica", "fuerza pública", "orden de arresto"];
+        const textToAnalyze = (matchedCase.raw_resolution + " " + matchedCase.translated_resolution).toLowerCase();
+        const containsAlert = ALERT_WORDS.some(word => textToAnalyze.includes(word));
+
+        if (containsAlert) {
+          const alertMsg =
+            `⚖️ *ALERTA EN SU CAUSA ROL: ${matchedCase.rol}*\n` +
+            `*Tribunal:* ${matchedCase.tribunal}\n` +
+            `*Carátula:* ${matchedCase.caratula}\n\n` +
+            `⚠️ *Aviso Importante:* Hemos detectado que la última actualización procesal de su caso contiene un hito judicial prioritario.\n\n` +
+            `Para su absoluta tranquilidad y resguardo legal, **hemos derivado este chat con máxima urgencia a su abogado asignado**, congelando el bot conversacional. Un profesional de nuestro equipo se comunicará directamente con usted.`;
+
+          await sendTextMessage(waPhone, alertMsg, creds);
+          await updateStage(conversation.id, "handoff");
+
+          await appendMessage(conversation.id, {
+            role: "user",
+            content: messageText,
+            timestamp: new Date().toISOString(),
+          });
+          await appendMessage(conversation.id, {
+            role: "assistant",
+            content: successMsg + "\n" + alertMsg,
+            timestamp: new Date().toISOString(),
+          });
+
+          await notifyHandoff(null, waPhone, `🚨 ALERTA JUDICIAL EN CAUSA ${matchedCase.rol}`, businessConfig, creds);
+          return;
+        }
+
+        // Normal Resolution: Present the Gemini translation!
+        const caseMsg =
+          `⚖️ *Causa ROL:* ${matchedCase.rol}\n` +
+          `🏛️ *Tribunal:* ${matchedCase.tribunal}\n` +
+          `👤 *Carátula:* ${matchedCase.caratula}\n` +
+          `📌 *Estado:* ${matchedCase.status}\n\n` +
+          `${matchedCase.translated_resolution}\n\n` +
+          `_Última sincronización: ${new Date(matchedCase.updated_at).toLocaleDateString("es-CL")}_`;
+
+        const buttons = [
+          { id: "btn_human_legal", title: "🗣️ Hablar con Abogado" }
+        ];
+
+        if (rutCases.length > 1) {
+          buttons.unshift({ id: "btn_other_cases", title: "⚖️ Ver Otras Causas" });
+        }
+
+        await sendButtonMessage(waPhone, caseMsg, buttons, creds);
+
+        await appendMessage(conversation.id, {
+          role: "user",
+          content: messageText,
+          timestamp: new Date().toISOString(),
+        });
+        await appendMessage(conversation.id, {
+          role: "assistant",
+          content: successMsg + "\n" + caseMsg,
+          timestamp: new Date().toISOString(),
+        });
+      } else {
+        // RIT not matched
+        const errorMsg =
+          `El identificador de causa judicial o RIT ingresado (*${messageText}*) no coincide con los registros asociados a su RUT (*${lastUserRut}*) en nuestra base de datos. ⚠️\n\n` +
+          `Por favor, vuelva a verificar el RIT e ingréselo nuevamente (ejemplo: \`C-125-2025\`).`;
+        
+        await sendTextMessage(waPhone, errorMsg, creds);
+      }
+      return;
+    }
+
+    // 2. No RUT in recent history: look for RUT in the current message
     const extractedRut = extractRut(messageText);
 
     if (extractedRut) {
@@ -136,33 +249,23 @@ export async function processLegalMessage(
       if (!isValid) {
         const errorMsg =
           `Disculpe, el RUT ingresado (*${formatted}*) no parece ser válido según el algoritmo verificador. ⚠️\n\n` +
-          `Por favor, vuelva a ingresar su **RUT** completo con dígito verificador para poder buscar sus causas judiciales (ejemplo: \`15.936.028-9\`).`;
+          `Por favor, vuelva a ingresar su **RUT** completo con dígito verificador (ejemplo: \`15.936.028-9\`).`;
         
         await sendTextMessage(waPhone, errorMsg, creds);
         return;
       }
 
-      // Valid RUT - register client
-      const newClient = await registerLegalClient({
-        id: waPhone,
-        rut: formatted,
-        full_name: displayName || "Cliente Judicial",
-        email: null,
-      });
-
-      const successMsg = `¡Muchas gracias! Su RUT *${formatted}* ha sido verificado y vinculado con éxito a su número de celular. 🤝\n\nBuscando sus causas judiciales activas en nuestro sistema...`;
-      await sendTextMessage(waPhone, successMsg, creds);
-
-      // Instantly query causes for this client
+      // Check if this RUT exists in our database of cases (pre-existing check)
       const cases = await getCasesByRut(formatted);
 
       if (cases.length === 0) {
         const noCasesMsg =
-          `Actualmente no encontramos causas judiciales activas vinculadas a su RUT (*${formatted}*) en nuestro sistema. 📂\n\n` +
-          `Si considera que esto es un error o su caso fue iniciado recientemente, por favor solicite asistencia a su abogado asignado presionando el botón de abajo:`;
+          `Disculpe, el RUT ingresado (*${formatted}*) no registra causas judiciales activas en nuestra base de datos. 📂\n\n` +
+          `Por motivos de seguridad, solo los clientes activos con causas previamente registradas en nuestro sistema pueden acceder a este canal.\n\n` +
+          `Si considera que esto es un error o requiere contratar nuestros servicios, solicite asistencia con un asesor:`;
         
         const noCasesButtons = [
-          { id: "btn_abogado_legal", title: "🗣️ Hablar con Abogado" }
+          { id: "btn_abogado_legal", title: "🗣️ Hablar con Asesor" }
         ];
         
         await sendButtonMessage(waPhone, noCasesMsg, noCasesButtons, creds);
@@ -174,18 +277,33 @@ export async function processLegalMessage(
         });
         await appendMessage(conversation.id, {
           role: "assistant",
-          content: successMsg + "\n" + noCasesMsg,
+          content: noCasesMsg,
           timestamp: new Date().toISOString(),
         });
       } else {
-        // We have cases! List them
-        await listClientCases(waPhone, newClient.full_name, cases, conversation.id, messageText, creds);
+        // RUT exists in database! Prompt for RIT to authorize
+        const promptRitMsg =
+          `¡RUT *${formatted}* encontrado en nuestra base de datos judicial! 📂\n\n` +
+          `Por razones estrictas de seguridad y confidencialidad, por favor **ingrese el identificador de su causa (RIT o ROL)** para verificar su identidad (ejemplo: \`C-125-2025\`).`;
+        
+        await sendTextMessage(waPhone, promptRitMsg, creds);
+        
+        await appendMessage(conversation.id, {
+          role: "user",
+          content: messageText,
+          timestamp: new Date().toISOString(),
+        });
+        await appendMessage(conversation.id, {
+          role: "assistant",
+          content: promptRitMsg,
+          timestamp: new Date().toISOString(),
+        });
       }
     } else {
       // Send welcome prompt asking for RUT
       const welcomeMsg =
-        `Estimado/a, le damos la bienvenida a *JurisClaro AI* ⚖️, el canal de atención interactivo de su estudio jurídico.\n\n` +
-        `Para poder brindarle un informe detallado sobre el estado de sus juicios y traducir las resoluciones complejas del Poder Judicial a un lenguaje simple y comprensible, por favor **ingrese su RUT** (ejemplo: \`15.936.028-9\`).`;
+        `Estimado/a, le damos la bienvenida a *JurisClaro AI* ⚖️, el canal de consulta judicial interactivo de su estudio jurídico.\n\n` +
+        `Para verificar su identidad en nuestra base de datos y proteger la confidencialidad de su información, por favor **ingrese su RUT de cliente** (ejemplo: \`15.936.028-9\`).`;
 
       await sendTextMessage(waPhone, welcomeMsg, creds);
     }
