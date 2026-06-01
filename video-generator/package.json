@@ -1,0 +1,30 @@
+{
+  "name": "browns-studio-video-generator",
+  "version": "1.0.0",
+  "description": "Programmatic video generator for Browns Studio marketing pitches using Remotion",
+  "main": "generate.js",
+  "scripts": {
+    "start": "remotion preview src/index.ts",
+    "build": "node generate.js",
+    "remotion": "remotion"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.220",
+    "@remotion/google-fonts": "^4.0.220",
+    "@remotion/light-leaks": "4.0.468",
+    "@remotion/renderer": "^4.0.220",
+    "@remotion/transitions": "^4.0.220",
+    "lucide-react": "^0.475.0",
+    "mediabunny": "^1.45.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "remotion": "^4.0.220"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "dotenv": "^17.4.2",
+    "tsx": "^4.22.3",
+    "typescript": "^5.0.0"
+  }
+}

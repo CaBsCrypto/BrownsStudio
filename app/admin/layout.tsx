@@ -5,7 +5,9 @@ import { usePathname, useRouter } from "next/navigation";
 const NAV = [
   { href: "/admin/businesses", label: "Negocios", icon: "🏢" },
   { href: "/admin/generator", label: "Generador Cerebro", icon: "🧠" },
+  { href: "/admin/prospects", label: "Vídeos Prospección", icon: "🎬" },
 ];
+
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

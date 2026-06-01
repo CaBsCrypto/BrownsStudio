@@ -1,0 +1,22 @@
+[
+  {
+    "id": "abogados-pro",
+    "businessName": "García & Asociados",
+    "industry": "abogados",
+    "botName": "Sofía",
+    "hookText": "¿Cuánto tiempo pierdes en consultas por despido? Así lo resolvemos.",
+    "messages": [
+      { "sender": "client", "text": "Hola, me despidieron ayer de mi trabajo y creo que fue injustificado." },
+      { "sender": "bot", "text": "¡Hola! Evaluamos tu caso en una consulta gratis. Para ver si calificas, ¿cuántos años trabajaste ahí?" },
+      { "sender": "client", "text": "Estuve trabajando durante 4 años." },
+      { "sender": "bot", "text": "Entendido. ¿Qué causal de despido te indicaron en la carta?" },
+      { "sender": "client", "text": "Pusieron necesidades de la empresa, pero contrataron a otra persona hoy." },
+      { "sender": "bot", "text": "Excelente. Para agendar tu cita y enviarte el recordatorio, ¿me podrías dejar tu correo?" },
+      { "sender": "client", "text": "carlos.mendoza@gmail.com" },
+      { "sender": "bot", "text": "¡Reserva lista! Analizaremos tu carta y finiquito en la consulta gratis. Te esperamos el viernes. ⚖️💼" }
+    ],
+    "ctaUrl": "browns.studio/legal",
+    "crmLabel": "Caso Calificado & Dossier",
+    "actions": ["Crear Expediente Digital", "Agendar Consulta Estratégica", "Notificar Abogado"]
+  }
+]

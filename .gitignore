@@ -33,3 +33,13 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local Scratch and IDE configs
+/scratch/
+.agents/
+.roo/
+.kapso/
+.obsidian/
+.vscode/
+*.canvas
+

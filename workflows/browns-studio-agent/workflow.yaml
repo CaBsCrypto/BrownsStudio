@@ -1,0 +1,8 @@
+definition: definition.json
+name: Browns Studio AI Agent
+slug: browns-studio-agent
+status: active
+triggers:
+  - active: true
+    phoneNumberId: "1121481194385373"
+    triggerType: inbound_message
