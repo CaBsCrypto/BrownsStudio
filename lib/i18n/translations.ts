@@ -184,6 +184,17 @@ export const translations = {
       deliverables: "What's Included (Key Deliverables)",
       timeline: "Step-by-Step Implementation",
       close: "Close",
+      supportPopup: {
+        title: "What does Monthly Support & Hosting include?",
+        desc: "To guarantee that your AI agent operates 24/7 without interruption and 100% error-free, the monthly fee covers:",
+        items: [
+          "High-speed cloud hosting (Vercel Edge & Firebase)",
+          "Ongoing Meta (WhatsApp Cloud API) and CRM updates to prevent breakage",
+          "Continuous conversational calibration and prompt training",
+          "Anti-abuse security filters and real-time handoff monitoring",
+          "Full private access to the Web Admin Dashboard (/admin)"
+        ]
+      },
       plans: [
         {
           name: "WhatsApp Lead Triage & Sales Closer",
@@ -792,6 +803,17 @@ export const translations = {
       deliverables: "Qué Incluye (Entregables)",
       timeline: "Paso a Paso de la Implementación",
       close: "Cerrar",
+      supportPopup: {
+        title: "¿Qué incluye el Mantenimiento y Hosting mensual?",
+        desc: "Para garantizar que tu agente de IA opere de forma ininterrumpida 24/7 y 100% libre de fallos, el fee mensual cubre:",
+        items: [
+          "Hosting cloud de alta velocidad (Vercel Edge & Firebase)",
+          "Mantenimiento continuo ante actualizaciones obligatorias de Meta (WhatsApp) y CRMs",
+          "Calibración conversacional constante y optimización de prompts",
+          "Filtros de seguridad anti-abuso y monitoreo de alertas en tiempo real",
+          "Acceso privado ilimitado a tu panel de administración web (/admin)"
+        ]
+      },
       plans: [
         {
           name: "WhatsApp Lead Triage & Sales Closer",
@@ -1448,6 +1470,17 @@ export const translations = {
       deliverables: "O Que Inclui (Entregáveis)",
       timeline: "Cronograma de Implantação",
       close: "Fechar",
+      supportPopup: {
+        title: "O que inclui o Suporte & Hospedagem mensal?",
+        desc: "Para garantir que o seu agente de IA opere de forma ininterrumpida 24/7 e 100% livre de falhas, a taxa mensal cobre:",
+        items: [
+          "Hospedagem em nuvem de alta velocidade (Vercel Edge & Firebase)",
+          "Manutenção contínua diante das atualizações obrigatórias da Meta (WhatsApp) e CRMs",
+          "Calibração conversacional constante e otimização de prompts",
+          "Filtros de segurança anti-abuso e monitoramento de alertas em tempo real",
+          "Acesso privado ilimitado ao seu painel de administração web (/admin)"
+        ]
+      },
       plans: [
         {
           name: "WhatsApp Lead Triage & Sales Closer",

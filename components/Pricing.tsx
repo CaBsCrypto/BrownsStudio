@@ -11,10 +11,11 @@ export default function Pricing() {
   const [activeTab, setActiveTab] = useState<'web' | 'training'>('web');
   const [isRevealed, setIsRevealed] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<any | null>(null);
+  const [isSupportOpen, setIsSupportOpen] = useState(false);
 
   // Lock body scroll when modal is active
   useEffect(() => {
-    if (selectedPlan) {
+    if (selectedPlan || isSupportOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -22,13 +23,14 @@ export default function Pricing() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [selectedPlan]);
+  }, [selectedPlan, isSupportOpen]);
 
   // Handle keyboard escape press
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setSelectedPlan(null);
+        setIsSupportOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -197,14 +199,27 @@ export default function Pricing() {
 
                         {/* Maintenance / Monthly Suffix */}
                         {plan.priceSuffix && (
-                          <div className="text-[11px] text-[#a1a1aa] bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2 font-sans flex items-start gap-2 w-full leading-normal">
-                            <span 
-                              className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 animate-pulse"
-                              style={{ backgroundColor: isOnboarding ? "#c084fc" : "#00f0ff" }}
-                            ></span>
-                            <span className="flex-grow">
-                              {plan.priceSuffix.replace(" setup + ", "").replace(" + ", "")}
-                            </span>
+                          <div className="text-[11px] text-[#a1a1aa] bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 font-sans flex items-center justify-between gap-2.5 w-full leading-normal">
+                            <div className="flex items-start gap-2 flex-grow">
+                              <span 
+                                className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 animate-pulse"
+                                style={{ backgroundColor: isOnboarding ? "#c084fc" : "#00f0ff" }}
+                              ></span>
+                              <span className="flex-grow">
+                                {plan.priceSuffix.replace(" setup + ", "").replace(" + ", "")}
+                              </span>
+                            </div>
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setIsSupportOpen(true);
+                              }}
+                              className="p-1 px-2 rounded bg-white/5 hover:bg-white/10 hover:text-white transition-all flex-shrink-0 flex items-center justify-center border border-white/5 shadow-sm active:scale-95"
+                              title="Ver detalles de soporte"
+                            >
+                              <span className="text-[9px] font-bold tracking-wider font-mono" style={{ color: isOnboarding ? "#c084fc" : "#00f0ff" }}>+ INFO</span>
+                            </button>
                           </div>
                         )}
                       </div>
@@ -519,6 +534,80 @@ export default function Pricing() {
                 <MessageCircle size={16} />
                 {t.pricing.ctaBtn}
               </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal for Monthly Support Details */}
+      {isSupportOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200"
+          role="dialog"
+          aria-modal="true"
+        >
+          {/* Backdrop with extreme blur and dark tint */}
+          <div 
+            className="absolute inset-0 bg-black/70 backdrop-blur-md transition-opacity duration-300"
+            onClick={() => setIsSupportOpen(false)}
+          />
+          
+          {/* Modal Content container */}
+          <div 
+            className="relative w-full max-w-lg rounded-3xl p-6 sm:p-8 transition-all duration-300 border flex flex-col scale-in"
+            style={{
+              background: "rgba(10, 11, 15, 0.95)",
+              borderColor: "rgba(0, 240, 255, 0.3)",
+              boxShadow: "0 0 50px rgba(0, 240, 255, 0.15)",
+            }}
+          >
+            {/* Close button */}
+            <button 
+              onClick={() => setIsSupportOpen(false)}
+              className="absolute top-6 right-6 p-2 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
+              aria-label="Close"
+            >
+              <X size={16} />
+            </button>
+
+            {/* Header */}
+            <div className="mb-6 pr-10">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest font-mono text-[#00f0ff] bg-[#00f0ff]/5 border border-[#00f0ff]/10 rounded-full px-3.5 py-1 inline-block mb-3 shadow-[0_0_10px_rgba(0,240,255,0.1)]">
+                Soporte & Hosting 24/7
+              </span>
+              <h3 className="font-display font-black text-xl sm:text-2xl text-white mb-2 leading-tight">
+                {(t.pricing as any).supportPopup?.title || "¿Qué incluye el Mantenimiento y Hosting mensual?"}
+              </h3>
+              <p className="text-[#9e9e9e] text-xs sm:text-sm leading-relaxed">
+                {(t.pricing as any).supportPopup?.desc || "Para garantizar que tu agente de IA opere de forma ininterrumpida 24/7 y 100% libre de fallos, el fee mensual cubre:"}
+              </p>
+            </div>
+
+            {/* Details List */}
+            <ul className="space-y-3.5 border-t border-white/10 pt-5 mb-6">
+              {((t.pricing as any).supportPopup?.items as string[] || []).map((item, index) => (
+                <li key={index} className="flex items-start gap-3 text-xs sm:text-sm text-[#ceced2] leading-relaxed">
+                  <Check 
+                    size={15} 
+                    className="flex-shrink-0 mt-0.5 text-[#00f0ff]" 
+                  />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Action Area */}
+            <div className="pt-4 border-t border-white/5 flex justify-end">
+              <button 
+                onClick={() => setIsSupportOpen(false)}
+                className="px-6 py-2.5 rounded-xl text-xs font-semibold text-black hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                style={{
+                  background: "linear-gradient(135deg, #00f0ff, #0070ff)",
+                  boxShadow: "0 0 15px rgba(0, 240, 255, 0.2)"
+                }}
+              >
+                {(t.pricing as any).close || "Entendido"}
+              </button>
             </div>
           </div>
         </div>
