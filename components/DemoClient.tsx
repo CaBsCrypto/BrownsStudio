@@ -50,6 +50,19 @@ const PRESETS: Record<string, Record<string, Preset>> = {
 * Objetivo: Capturar el presupuesto del cliente y derivarlo a handoff humano.`,
       firstQuestion: "Hola, estoy buscando arrendar un departamento de 2 dormitorios en Las Condes.",
     },
+    abogados: {
+      businessName: "JurisClaro Abogados",
+      botName: "Andrés (Asistente Judicial)",
+      services: `* Consulta de causa judicial y proveídos en línea (PJUD): Gratis para clientes.
+* Defensa en Juicio Civil o Ejecutivo: desde $1.200.000 CLP.
+* Defensa de Deudas y Embargos: desde $750.000 CLP.
+* Triage y Redacción de Escritos Urgentes: desde $180.000 CLP.`,
+      faqs: `* Horario: Lunes a Viernes de 09:00 a 18:00 (Soporte humano). Bot 24/7.
+* Dirección: Av. Andrés Bello 2223, Piso 12, Providencia, Santiago (Torre Costanera).
+* Reglas: Muy empático y tranquilizador. Si hay menciones a "embargo", "arresto" o "lanzamiento", el bot se silencia y se activa el protocolo de contención prioritario con el abogado a cargo.
+* Objetivo: Indicar que para ver el estado de su caso el cliente debe ingresar su RUT y RIT judicial en el sistema para resguardar la confidencialidad.`,
+      firstQuestion: "Hola, ¿cómo puedo revisar el estado de mi causa civil?",
+    },
   },
   en: {
     dental: {
@@ -87,6 +100,19 @@ const PRESETS: Record<string, Record<string, Preset>> = {
 * Goal: Capture the buyer's budget and hand over to a human broker immediately.`,
       firstQuestion: "Hello, I'm looking to rent a 2-bedroom apartment in Las Condes.",
     },
+    abogados: {
+      businessName: "JurisClaro Law Firm",
+      botName: "Andres (Legal Assistant)",
+      services: `* Online court case tracking & translation (PJUD): Free for active clients.
+* Civil Litigations & Corporate Defense: from $2,500.
+* Debt & Foreclosure Legal Protection: from $1,500.
+* Urgently Drafted Written Pleadings: from $350.`,
+      faqs: `* Hours: Mon-Fri 9:00 AM to 6:00 PM (Human support). Bot active 24/7.
+* Address: 2223 Andres Bello Ave, 12th Floor, Providencia, Santiago.
+* Rules: Reassuring, objective, and highly professional. If 'foreclosure', 'arrest', or 'eviction' are mentioned, freeze AI and escalate to immediate human handoff.
+* Goal: Prompt client to provide their RUT and court RIT to securely authorize and display case tracking details.`,
+      firstQuestion: "Hello, how can I track the status of my civil court case?",
+    },
   },
   pt: {
     dental: {
@@ -123,6 +149,19 @@ const PRESETS: Record<string, Record<string, Preset>> = {
 * Objetivo: Descobrir o orçamento do comprador e transferir para um corretor humano imediatamente.`,
       firstQuestion: "Olá, estou procurando alugar um apartamento de 2 quartos em Las Condes.",
     },
+    abogados: {
+      businessName: "JurisClaro Advogados",
+      botName: "André (Assistente Judicial)",
+      services: `* Acompanhamento processual online e tradução (PJUD): Grátis para clientes ativos.
+* Contencioso Cível e Defesa Empresarial: a partir de R$ 8.000.
+* Defesa de Dívidas e Penhoras: a partir de R$ 5.000.
+* Elaboração de Petições Urgentes: a partir de R$ 1.200.`,
+      faqs: `* Horário: Seg-Sex das 9h às 18h (Suporte humano). Assistente ativo 24/7.
+* Endereço: Av. Andrés Bello 2223, 12º Andar, Providencia, Santiago.
+* Regras: Muito empático, calmo e focado em segurança jurídica. Se houver menção a 'penhora', 'prisão' ou 'despejo', congele a IA e transfira para o advogado especialista.
+* Objetivo: Solicitar ao cliente seu RUT e RIT judicial para autorizar a consulta com segurança máxima.`,
+      firstQuestion: "Olá, como posso verificar o andamento do meu processo cível?",
+    },
   },
 };
 
@@ -135,6 +174,7 @@ const LOCAL_TEXTS = {
       dental: "Clínica Dental",
       agency: "Agencia Creativa",
       propiedades: "Inmobiliaria",
+      abogados: "Estudio Jurídico",
     },
     bizConfigTitle: "2. Personalizar el cerebro del Bot:",
     bizLabel: "Nombre de tu Empresa",
@@ -165,6 +205,7 @@ const LOCAL_TEXTS = {
       dental: "Dental Clinic",
       agency: "Creative Agency",
       propiedades: "Real Estate",
+      abogados: "Law Firm",
     },
     bizConfigTitle: "2. Customize the Bot's Brain:",
     bizLabel: "Your Business Name",
@@ -195,6 +236,7 @@ const LOCAL_TEXTS = {
       dental: "Clínica Dental",
       agency: "Agência Criativa",
       propiedades: "Imobiliária",
+      abogados: "Escritório Jurídico",
     },
     bizConfigTitle: "2. Personalizar o Cêrebro do Bot:",
     bizLabel: "Nome da sua Empresa",
@@ -314,7 +356,7 @@ export default function DemoClient({ locale }: { locale: string }) {
   };
 
   // Preset loaders
-  const loadPreset = (key: "dental" | "agency" | "propiedades") => {
+  const loadPreset = (key: "dental" | "agency" | "propiedades" | "abogados") => {
     const selected = presets[key];
     setBusinessName(selected.businessName);
     setBotName(selected.botName);
@@ -440,7 +482,7 @@ export default function DemoClient({ locale }: { locale: string }) {
               <RefreshCw className="w-4 h-4" />
               {t.presetTitle}
             </h3>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <button
                 type="button"
                 onClick={() => loadPreset("dental")}
@@ -473,6 +515,17 @@ export default function DemoClient({ locale }: { locale: string }) {
                 }`}
               >
                 <span>🏠 {t.presets.propiedades}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => loadPreset("abogados")}
+                className={`py-3 px-2 rounded-2xl border text-xs font-medium transition-all duration-300 flex flex-col items-center justify-center gap-2 ${
+                  businessName === presets.abogados.businessName
+                    ? "bg-indigo-600/20 border-indigo-500 text-white shadow-lg shadow-indigo-500/10"
+                    : "bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-white"
+                }`}
+              >
+                <span>⚖️ {t.presets.abogados}</span>
               </button>
             </div>
           </div>
