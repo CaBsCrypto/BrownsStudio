@@ -74,6 +74,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ],
       shortcut: ["/icon.png?v=5"],
     },
+    verification: {
+      google: "JUDQ9__0Yav0nHVC7KmtM469yB1gi5S8Hf5JIa_U1NA",
+    },
   };
 }
 
@@ -95,8 +98,13 @@ export default async function LocaleLayout({
       description: t.seo.description,
       url: `${SITE_CONFIG.url}/${locale}`,
       email: SITE_CONFIG.email,
+      address: {
+        "@type": "PostalAddress",
+        "addressLocality": "Santiago",
+        "addressCountry": "CL"
+      },
       sameAs: [SITE_CONFIG.instagram, SITE_CONFIG.linkedin, SITE_CONFIG.youtube],
-      areaServed: locale === "en" ? "Global" : "América Latina",
+      areaServed: locale === "en" ? "Global" : ["Chile", "América Latina"],
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: t.nav.services,

@@ -1,17 +1,20 @@
 import React from "react";
-import { AbsoluteFill, staticFile, Audio, Sequence } from "remotion";
+import { AbsoluteFill, staticFile, Audio, Sequence, useCurrentFrame, useVideoConfig, interpolate } from "remotion";
 import { TransitionSeries, linearTiming, springTiming } from "@remotion/transitions";
 import { slide } from "@remotion/transitions/slide";
 import { fade } from "@remotion/transitions/fade";
 import { LightLeak } from "@remotion/light-leaks";
 import { PitchVideoProps, defaultVideoProps } from "./types";
 import { HookSlide } from "./components/HookSlide";
-import { WhatsAppChat } from "./components/WhatsAppChat";
+import { WhatsAppChat, getAppearFrame } from "./components/WhatsAppChat";
 import { PipelineDiagram } from "./components/PipelineDiagram";
 import { OutroSlide } from "./components/OutroSlide";
+import { DentalHookSlide } from "./components/DentalHookSlide";
+import { DentalPipeline3D } from "./components/DentalPipeline3D";
+import { DentalOutroSlide } from "./components/DentalOutroSlide";
 
 // We receive dynamic durations from calculateMetadata
-const PIPELINE_FRAMES = 180;
+const PIPELINE_FRAMES = 330;
 
 // Transition durations
 const SLIDE_DURATION = 20;
@@ -23,6 +26,17 @@ export const PitchVideoComposition: React.FC<PitchVideoProps> = (props) => {
     ...defaultVideoProps,
     ...props,
   };
+
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  // Volume fade-out for Chat Ambient so it doesn't bleed into Pipeline
+  const chatVolume = interpolate(
+    frame,
+    [650, 680],
+    [0.4, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
 
   const {
     id,
@@ -39,13 +53,13 @@ export const PitchVideoComposition: React.FC<PitchVideoProps> = (props) => {
     whatsappDurationInFrames = 270,
   } = inputProps;
 
-  const isAbogados = industry === "abogados";
+  const isDental = true;
 
   // Absolute frame offsets for audio pings (accounting for transition overlaps)
   const hookExitFrame = hookDurationInFrames - SLIDE_DURATION;
   
-  // Calculate ping frames dynamically based on message indexes
-  const messagePings = messages.map((_, index) => hookExitFrame + 20 + index * 45);
+  // Sync audio pings perfectly with the visual bubble appearance
+  const messagePings = messages.map((_, index) => hookExitFrame + getAppearFrame(index));
 
   const pipelineEntryFrame = hookExitFrame + whatsappDurationInFrames - SLIDE_DURATION;
   const alert0Frame = pipelineEntryFrame + 30;
@@ -56,8 +70,8 @@ export const PitchVideoComposition: React.FC<PitchVideoProps> = (props) => {
   // Exact start frame of the OutroSlide in the TransitionSeries absolute timeline
   const outroStartFrame = pipelineEntryFrame + PIPELINE_FRAMES - FADE_DURATION;
 
-  const musicFile = isAbogados ? "law_ambient_beat.mp3" : "music.mp3";
-  const musicVolume = isAbogados ? 0.25 : 0.06;
+  const musicFile = "music.mp3";
+  const musicVolume = 0.06;
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#050B14" }}>
@@ -65,66 +79,33 @@ export const PitchVideoComposition: React.FC<PitchVideoProps> = (props) => {
       <Audio src={staticFile(musicFile)} volume={musicVolume} loop />
 
       {/* ─── AUDIO: Primary Voiceovers ─── */}
-      {isAbogados ? (
-        <>
-          {/* Hook Voiceover: 0 to 120 */}
-          <Sequence from={0} durationInFrames={120}>
-            <Audio src={staticFile("voiceovers/v2_legal_hook.mp3")} volume={1} />
-          </Sequence>
+      {/* Hook Voiceover */}
+      <Sequence from={0}>
+        <Audio src={staticFile("voiceovers/v1_dental_hook_v3.mp3")} volume={1} />
+      </Sequence>
 
-          {/* Chat Ambient: 120 to 510 */}
-          <Sequence from={120} durationInFrames={390}>
-            <Audio src={staticFile("bg_keyboard_clicks.mp3")} volume={0.4} />
-          </Sequence>
+      {/* Pipeline Voiceover */}
+      <Sequence from={pipelineEntryFrame}>
+        <Audio src={staticFile("voiceovers/v1_dental_pipeline_v3.mp3")} volume={1} />
+      </Sequence>
 
-          {/* Pipeline Voiceover: 510 to 690 */}
-          <Sequence from={510} durationInFrames={180}>
-            <Audio src={staticFile("voiceovers/v2_legal_pipeline.mp3")} volume={1} />
-          </Sequence>
+      {/* Outro Voiceover */}
+      <Sequence from={outroStartFrame}>
+        <Audio src={staticFile("voiceovers/v1_dental_outro_v3.mp3")} volume={1} />
+      </Sequence>
 
-          {/* Outro Voiceover: 690 to 810 */}
-          <Sequence from={690} durationInFrames={120}>
-            <Audio src={staticFile("voiceovers/v3_legal_outro.mp3")} volume={1} />
-          </Sequence>
-        </>
-      ) : (
-        <>
-          <Sequence from={0} durationInFrames={hookDurationInFrames}>
-            <Audio src={staticFile(`voiceovers/${id}_hook.mp3`)} volume={1} />
-          </Sequence>
-
-          <Sequence from={outroStartFrame} durationInFrames={outroDurationInFrames}>
-            <Audio src={staticFile("voiceovers/outro_v3.mp3")} volume={1} />
-          </Sequence>
-
-          {/* WhatsApp notification pings */}
-          {messagePings.map((pingFrame, i) => (
-            <Sequence key={i} from={pingFrame} durationInFrames={30}>
-              <Audio src={staticFile("notification.mp3")} volume={0.12} />
-            </Sequence>
-          ))}
-
-          {/* Pipeline alert beeps */}
-          <Sequence from={alert0Frame} durationInFrames={30}>
-            <Audio src={staticFile("beep.wav")} volume={0.12} />
-          </Sequence>
-          <Sequence from={alert1Frame} durationInFrames={30}>
-            <Audio src={staticFile("beep.wav")} volume={0.12} />
-          </Sequence>
-          <Sequence from={alert2Frame} durationInFrames={30}>
-            <Audio src={staticFile("beep.wav")} volume={0.12} />
-          </Sequence>
-          <Sequence from={alert3Frame} durationInFrames={30}>
-            <Audio src={staticFile("beep.wav")} volume={0.12} />
-          </Sequence>
-        </>
-      )}
+      {/* WhatsApp notification pings */}
+      {messagePings.map((pingFrame, i) => (
+        <Sequence key={i} from={pingFrame} durationInFrames={30}>
+          <Audio src={staticFile("notification.mp3")} volume={0.12} />
+        </Sequence>
+      ))}
 
       {/* ─── VISUAL SCENES with TransitionSeries ─── */}
       <TransitionSeries>
         {/* 1. HOOK SLIDE */}
         <TransitionSeries.Sequence durationInFrames={hookDurationInFrames}>
-          <HookSlide hookText={hookText} industry={industry} durationInFrames={hookDurationInFrames} />
+          <DentalHookSlide durationInFrames={hookDurationInFrames} />
         </TransitionSeries.Sequence>
 
         {/* Transition: Hook → WhatsApp — slide from bottom */}
@@ -135,7 +116,6 @@ export const PitchVideoComposition: React.FC<PitchVideoProps> = (props) => {
 
         {/* 2. WHATSAPP CHAT */}
         <TransitionSeries.Sequence durationInFrames={whatsappDurationInFrames}>
-          {/* LightLeak overlay at the start of this sequence (plays over the cut) */}
           <AbsoluteFill>
             <WhatsAppChat
               businessName={businessName}
@@ -144,9 +124,6 @@ export const PitchVideoComposition: React.FC<PitchVideoProps> = (props) => {
               industry={industry}
             />
           </AbsoluteFill>
-          <Sequence durationInFrames={LIGHT_LEAK_DURATION}>
-            <LightLeak seed={3} hueShift={180} />
-          </Sequence>
         </TransitionSeries.Sequence>
 
         {/* Transition: WhatsApp → Pipeline — slide from left */}
@@ -158,16 +135,13 @@ export const PitchVideoComposition: React.FC<PitchVideoProps> = (props) => {
         {/* 3. PIPELINE DIAGRAM */}
         <TransitionSeries.Sequence durationInFrames={PIPELINE_FRAMES}>
           <AbsoluteFill>
-            <PipelineDiagram
-              businessName={businessName}
-              crmLabel={crmLabel}
-              actions={actions}
-              industry={industry}
-            />
+              <PipelineDiagram
+                businessName={businessName}
+                crmLabel={crmLabel}
+                actions={actions}
+                industry={industry}
+              />
           </AbsoluteFill>
-          <Sequence durationInFrames={LIGHT_LEAK_DURATION}>
-            <LightLeak seed={7} hueShift={240} />
-          </Sequence>
         </TransitionSeries.Sequence>
 
         {/* Transition: Pipeline → Outro — smooth fade */}
@@ -178,7 +152,7 @@ export const PitchVideoComposition: React.FC<PitchVideoProps> = (props) => {
 
         {/* 4. OUTRO */}
         <TransitionSeries.Sequence durationInFrames={outroDurationInFrames}>
-          <OutroSlide ctaUrl={ctaUrl} industry={industry} />
+          <DentalOutroSlide ctaUrl={ctaUrl} />
         </TransitionSeries.Sequence>
       </TransitionSeries>
 

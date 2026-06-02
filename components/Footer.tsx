@@ -24,7 +24,7 @@ export default function Footer() {
   return (
     <footer className="bg-bg-secondary border-t border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
@@ -75,6 +75,39 @@ export default function Footer() {
                   </a>
                 </li>
               ))}
+            </ul>
+          </div>
+
+          {/* Recursos SEO */}
+          <div>
+            <h4 className="text-text-primary font-semibold text-sm mb-4 tracking-wide">
+              Soluciones & Casos
+            </h4>
+            <ul className="space-y-2.5">
+              <li>
+                <a
+                  href="/es/soluciones/dentistas"
+                  className="text-text-muted text-sm hover:text-accent-gold transition-colors duration-200"
+                >
+                  IA para Dentistas
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/es/soluciones/abogados"
+                  className="text-text-muted text-sm hover:text-accent-gold transition-colors duration-200"
+                >
+                  IA para Abogados
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/es/casos-de-estudio"
+                  className="text-text-muted text-sm hover:text-accent-gold transition-colors duration-200"
+                >
+                  Casos de Estudio
+                </a>
+              </li>
             </ul>
           </div>
 

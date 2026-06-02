@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate, Img, staticFile } from "remotion";
 import { Database, Calendar, MessageSquare, Bell, Brain } from "lucide-react";
 import { getTheme } from "../theme";
 
@@ -29,7 +29,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
   });
 
   // Slow continuous dolly-in zoom for extra cinematic effect
-  const slowZoom = interpolate(frame, [0, 180], [1, 1.05]);
+  const slowZoom = interpolate(frame, [0, 250], [1, 1.05]);
   const contentScale = sceneEntrance * slowZoom;
 
   // Pulse spring of the center Orb when data hits it at frame 35
@@ -79,11 +79,11 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
   const showRightNodesGlow = frame >= 100;
 
   // ─── CAMERA MOTION (Cinematic 3D Tilt) ───
-  const tiltY = interpolate(frame, [0, 180], [-6, 6], {
+  const tiltY = interpolate(frame, [0, 250], [-6, 6], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const tiltX = interpolate(frame, [0, 180], [3, -2], {
+  const tiltX = interpolate(frame, [0, 250], [3, -2], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -447,7 +447,11 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           boxShadow: `0 0 35px rgba(212, 175, 55, 0.25), inset 0 0 15px rgba(212, 175, 55, 0.1)`,
         }}
       >
-        <Brain size={52} color={theme.pipelineLine1} />
+        {isAbogados ? (
+          <Img src={staticFile("brain_icon.png")} style={{ width: 80, height: 80, objectFit: "contain" }} />
+        ) : (
+          <Brain size={52} color={theme.pipelineLine1} />
+        )}
       </div>
       <div
         style={{
@@ -464,7 +468,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           textShadow: `0 2px 10px rgba(${theme.secondaryGlow}, 0.3)`,
         }}
       >
-        Base de Conocimiento Legal
+        {isAbogados ? "Base de Conocimiento Legal" : "Historial Clínico"}
       </div>
 
       {/* NODE 2: BROWNS STUDIO ORB (Center: Motor IA Legal Chile) */}
@@ -548,7 +552,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           textShadow: `0 2px 15px rgba(${theme.secondaryGlow}, 0.5)`,
         }}
       >
-        Motor IA Legal Chile
+        {isAbogados ? "Motor IA Legal Chile" : "Motor IA Odontológico"}
       </div>
 
       {/* NODE 3: PJE Portal Connection (Right Top) */}
@@ -569,7 +573,14 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           alignItems: "center",
         }}
       >
-        <Database size={52} color={showRightNodesGlow ? theme.pipelineLine2 : "#475569"} />
+        {isAbogados ? (
+          <Img 
+            src={staticFile("database_icon.png")} 
+            style={{ width: 80, height: 80, objectFit: "contain", opacity: showRightNodesGlow ? 1 : 0.4 }} 
+          />
+        ) : (
+          <Database size={52} color={showRightNodesGlow ? theme.pipelineLine2 : "#475569"} />
+        )}
       </div>
       <div
         style={{
@@ -586,7 +597,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           textShadow: showRightNodesGlow ? `0 2px 10px rgba(${theme.alertBorder2}, 0.3)` : "none",
         }}
       >
-        PJE Portal
+        {isAbogados ? "PJE Portal" : "Software Dental"}
       </div>
 
       {/* NODE 4: Ley 20.886 Data Base (Right Bottom) */}
@@ -607,7 +618,14 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           alignItems: "center",
         }}
       >
-        <Calendar size={52} color={showRightNodesGlow ? theme.pipelineLine3 : "#475569"} />
+        {isAbogados ? (
+          <Img 
+            src={staticFile("calendar_icon.png")} 
+            style={{ width: 80, height: 80, objectFit: "contain", opacity: showRightNodesGlow ? 1 : 0.4 }} 
+          />
+        ) : (
+          <Calendar size={52} color={showRightNodesGlow ? theme.pipelineLine3 : "#475569"} />
+        )}
       </div>
       <div
         style={{
@@ -624,7 +642,7 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           textShadow: showRightNodesGlow ? `0 2px 10px rgba(${theme.alertBorder3}, 0.3)` : "none",
         }}
       >
-        Ley 20.886
+        {isAbogados ? "Ley 20.886" : "Agenda Médica"}
       </div>
 
 
@@ -662,7 +680,11 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
             <div>
               <div style={{ color: "#D4AF37", fontWeight: 800, fontSize: 18, letterSpacing: "1px", textTransform: "uppercase" }}>Base de Conocimiento</div>
               <div style={{ color: "#e2e8f0", fontSize: 22, marginTop: 6, fontWeight: 500 }}>
-                Recuperando: <strong style={{ color: "#ffffff" }}>Respuestas Entrenadas (Ley 20.886)</strong>
+                {isAbogados ? (
+                  <>Recuperando: <strong style={{ color: "#ffffff" }}>Respuestas Entrenadas (Ley 20.886)</strong></>
+                ) : (
+                  <>Analizando: <strong style={{ color: "#ffffff" }}>Tratamientos y Aranceles</strong></>
+                )}
               </div>
             </div>
           </div>
@@ -687,7 +709,9 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           >
             <span style={{ fontSize: 32 }}>🧠</span>
             <div>
-              <div style={{ color: theme.pipelineLine1, fontWeight: 800, fontSize: 18, letterSpacing: "1px", textTransform: "uppercase" }}>Agente Legal Chile</div>
+              <div style={{ color: theme.pipelineLine1, fontWeight: 800, fontSize: 18, letterSpacing: "1px", textTransform: "uppercase" }}>
+                {isAbogados ? "Agente Legal Chile" : "Agente Clínico IA"}
+              </div>
               <div style={{ color: "#e2e8f0", fontSize: 22, marginTop: 6, fontWeight: 500 }}>
                 Lead Calificado: <strong style={{ color: "#ffffff" }}>{crmLabel}</strong>
               </div>
@@ -714,7 +738,9 @@ export const PipelineDiagram: React.FC<PipelineDiagramProps> = ({
           >
             <span style={{ fontSize: 32 }}>⚡</span>
             <div>
-              <div style={{ color: "#F8FAFC", fontWeight: 800, fontSize: 18, letterSpacing: "1px", textTransform: "uppercase" }}>Integración PJE</div>
+              <div style={{ color: "#F8FAFC", fontWeight: 800, fontSize: 18, letterSpacing: "1px", textTransform: "uppercase" }}>
+                {isAbogados ? "Integración PJE" : "Sincronización Clínica"}
+              </div>
               <div style={{ color: "#e2e8f0", fontSize: 22, marginTop: 6, fontWeight: 500 }}>
                 {actions[0]} & {actions[1]}
               </div>

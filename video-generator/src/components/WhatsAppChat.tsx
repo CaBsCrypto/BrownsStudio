@@ -15,9 +15,9 @@ interface WhatsAppChatProps {
   industry?: string;
 }
 
-const getAppearFrame = (index: number) => {
-  const frames = [0, 75, 150, 230, 320];
-  return frames[index] !== undefined ? frames[index] : 20 + index * 45;
+export const getAppearFrame = (index: number) => {
+  const frames = [30, 90, 160, 240, 330, 400, 460];
+  return frames[index] !== undefined ? frames[index] : 30 + index * 60;
 };
 
 export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
@@ -84,18 +84,19 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
     statusText = "escribiendo...";
   }
 
-  // Continuous, clamped scrollY driven by frame progression
+  // Hold scroll until later messages appear so user has time to read
   const scrollY = interpolate(
     frame,
-    [130, 150, 210, 230, 300, 320],
-    [0, 180, 180, 520, 520, 920],
+    [230, 260, 320, 350],
+    [0, 200, 200, 420],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "#050B14", 
+        background: `radial-gradient(circle at center, rgba(${theme.secondaryGlow}, 0.25) 0%, rgba(${theme.primaryGlow}, 0.1) 50%, #050B14 100%)`,
+        backgroundColor: "#050B14",
         fontFamily: "Outfit, 'Montserrat', sans-serif",
         display: "flex",
         flexDirection: "column",
@@ -118,7 +119,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
           transform: `rotateY(-2deg) rotateX(1deg) scale(${cameraZoom})`,
           transformStyle: "preserve-3d",
           boxShadow: "0 30px 100px rgba(0,0,0,0.5)",
-          backgroundColor: isAbogados ? "#050B14" : "#efeae2", 
+          backgroundColor: isAbogados ? "#0b141a" : "#efeae2", 
         }}>
 
           {/* WhatsApp wallpaper */}
@@ -128,7 +129,8 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
               inset: 0,
               backgroundImage: "url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')",
               backgroundSize: "400px",
-              opacity: isAbogados ? 0.06 : 0.45,
+              opacity: isAbogados ? 0.08 : 0.45,
+              filter: isAbogados ? "invert(1)" : "none", // Makes the pattern white for dark mode
               pointerEvents: "none",
               zIndex: 0,
             }}
@@ -137,7 +139,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
           {/* ─── NATIVE HEADER ─── */}
           <div
             style={{
-              backgroundColor: isAbogados ? "#0A2540" : "#075e54", 
+              backgroundColor: isAbogados ? "#202c33" : "#075e54", 
               padding: "36px 20px 24px 10px", 
               display: "flex",
               alignItems: "center",
@@ -238,8 +240,13 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
                 });
 
                 const isClient = msg.sender === "client";
-                const bubbleBg = isClient ? theme.clientBubble : theme.pipelineLine3; 
-                const bubbleTextColor = isClient ? theme.clientBubbleText : "#F8FAFC";
+                
+                // In a realistic view, client (user reading) is right (green), bot is left (grey)
+                // But from the business perspective (our bot), bot might be right.
+                // Assuming client = user asking question (right), bot = answering (left).
+                // Or vice versa. Usually, demo videos show the customer's phone, so client = right (green), bot = left (grey).
+                const bubbleBg = isClient ? (isAbogados ? "#005c4b" : "#dcf8c6") : (isAbogados ? "#202c33" : "#ffffff");
+                const bubbleTextColor = isAbogados ? "#e9edef" : "#111b21";
 
                 return (
                   <div
@@ -254,16 +261,15 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
                   >
                     <div
                       style={{
-                        backgroundColor: isAbogados ? bubbleBg : (isClient ? "#dcf8c6" : "#ffffff"),
-                        color: isAbogados ? bubbleTextColor : "#111b21",
+                        backgroundColor: bubbleBg,
+                        color: bubbleTextColor,
                         borderRadius: isClient ? "16px 0px 16px 16px" : "0px 16px 16px 16px",
                         padding: "18px 24px",
                         fontSize: 26,
                         maxWidth: "85%",
                         lineHeight: 1.4,
-                        boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
+                        boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
                         position: "relative",
-                        border: isAbogados ? "1px solid rgba(255,255,255,0.05)" : "none",
                       }}
                     >
                       {/* Tail triangle */}
@@ -271,7 +277,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
                         position: "absolute",
                         top: 0,
                         [isClient ? "right" : "left"]: -15,
-                        color: isAbogados ? bubbleBg : (isClient ? "#dcf8c6" : "#ffffff"),
+                        color: bubbleBg,
                       }}>
                         {isClient ? (
                           <path fill="currentColor" d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z"></path>
@@ -292,8 +298,8 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
                         float: "right",
                         marginLeft: 20
                       }}>
-                        <span style={{ fontSize: 16, color: isAbogados ? "#94a3b8" : "#667781" }}>10:4{2 + i}</span>
-                        {isClient && <span style={{ fontSize: 20, color: isAbogados ? theme.checkMarks : "#53bdeb", fontWeight: "bold", letterSpacing: "-3px" }}>✓✓</span>}
+                        <span style={{ fontSize: 16, color: isAbogados ? "#8696a0" : "#667781" }}>08:4{5 + i}</span>
+                        {isClient && <span style={{ fontSize: 20, color: isAbogados ? "#53bdeb" : "#53bdeb", fontWeight: "bold", letterSpacing: "-3px" }}>✓✓</span>}
                       </div>
                     </div>
                   </div>
@@ -312,13 +318,13 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
                 >
                   <div
                     style={{
-                      backgroundColor: isAbogados ? theme.pipelineLine3 : "#ffffff",
+                      backgroundColor: isAbogados ? "#202c33" : "#ffffff",
                       borderRadius: "0px 16px 16px 16px",
                       padding: "20px 24px",
                       display: "flex",
                       alignItems: "center",
                       gap: 8,
-                      boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
                       position: "relative",
                     }}
                   >
@@ -326,7 +332,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
                       position: "absolute",
                       top: 0,
                       left: -15,
-                      color: isAbogados ? theme.pipelineLine3 : "#ffffff",
+                      color: isAbogados ? "#202c33" : "#ffffff",
                     }}>
                       <path fill="currentColor" d="M1.533 3.568L8 12.193V1H2.812C1.042 1 .474 2.156 1.533 3.568z"></path>
                     </svg>
@@ -364,14 +370,14 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
           >
             <div style={{
               flex: 1,
-              backgroundColor: isAbogados ? "#1E293B" : "#ffffff",
+              backgroundColor: isAbogados ? "#202c33" : "#ffffff",
               borderRadius: "40px",
               padding: "20px 24px",
               display: "flex",
               alignItems: "center",
               gap: 24,
-              boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
-              border: isAbogados ? "1px solid rgba(255,255,255,0.05)" : "none",
+              boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
+              border: "none",
             }}>
               <Smile color={isAbogados ? "#D4AF37" : "#8696a0"} size={36} />
               <div style={{ flex: 1, color: isAbogados ? "#94a3b8" : "#8696a0", fontSize: 24, display: "flex", alignItems: "center", gap: 10 }}>

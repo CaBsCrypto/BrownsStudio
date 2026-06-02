@@ -6,6 +6,8 @@ import {
   spring,
   interpolate,
   Easing,
+  Img,
+  staticFile,
 } from "remotion";
 import { MessageSquareOff, Scale } from "lucide-react";
 import { getTheme } from "../theme";
@@ -67,11 +69,11 @@ export const HookSlide: React.FC<{
   // --- KINETIC TYPOGRAPHY (abogados pro)
   const isAbogados = industry === "abogados";
   const KINETIC_PHRASES = [
-    { start: 0, end: 18, text: "¿TUS", isHighlight: false },
-    { start: 18, end: 36, text: "ABOGADOS", isHighlight: false },
-    { start: 36, end: 54, text: "JUNIOR", isHighlight: true },
-    { start: 54, end: 72, text: "PIERDEN", isHighlight: true },
-    { start: 72, end: 120, text: "HORAS?", isHighlight: true },
+    { start: 0, end: 12, text: "¿TU", isHighlight: false },
+    { start: 12, end: 28, text: "EQUIPO", isHighlight: false },
+    { start: 28, end: 50, text: "DE ABOGADOS", isHighlight: true },
+    { start: 50, end: 70, text: "PIERDE", isHighlight: true },
+    { start: 70, end: 120, text: "HORAS?", isHighlight: true },
   ];
 
   const activePhraseObj = KINETIC_PHRASES.find(p => frame >= p.start && frame < p.end) || KINETIC_PHRASES[KINETIC_PHRASES.length - 1];
@@ -82,20 +84,15 @@ export const HookSlide: React.FC<{
   const wordScale = spring({
     frame: frame - activeStartFrame,
     fps,
-    config: { damping: 10, mass: 0.6 },
-    from: 0.4,
+    config: { damping: 18, mass: 1.0 },
+    from: 0.9,
     to: 1.0,
   });
 
-  const angles = { 0: -3, 18: 4, 36: -2, 54: 3, 72: -1 };
+  const angles = { 0: 0, 15: 0, 35: 0, 60: 0, 75: 0 };
   const activeAngle = angles[activeStartFrame as keyof typeof angles] || 0;
 
-  const flashOpacity = interpolate(
-    frame - activeStartFrame,
-    [0, 5],
-    [0.15, 0],
-    { extrapolateRight: "clamp" }
-  );
+
 
   const redGlowPulse = interpolate(
     Math.sin(frame * 0.15),
@@ -165,6 +162,20 @@ export const HookSlide: React.FC<{
         overflow: "hidden",
       }}
     >
+      {/* ─── LUXURY OFFICE BACKGROUND ─── */}
+      <Img
+        src={staticFile("office_bg.png")}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          opacity: 0.18, // Subtle cinematic backdrop
+          pointerEvents: "none",
+        }}
+      />
+
       {/* ─── CAMERA CONTAINER ─── */}
       <div style={{
         position: "absolute",
@@ -232,25 +243,35 @@ export const HookSlide: React.FC<{
         }}
       >
         {/* Floating icon */}
-        <div
-          style={{
-            backgroundColor: industry === "abogados" ? `rgba(${theme.primaryGlow}, 0.1)` : "rgba(239, 68, 68, 0.1)",
-            border: industry === "abogados" ? `1px solid rgba(${theme.primaryGlow}, 0.3)` : "1px solid rgba(239, 68, 68, 0.3)",
-            borderRadius: "32px",
-            padding: "24px",
-            marginBottom: "40px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            boxShadow: industry === "abogados" ? `0 0 ${redGlowPulse}px rgba(239, 68, 68, 0.8)` : "0 10px 30px rgba(239, 68, 68, 0.15)",
-          }}
-        >
-          {industry === "abogados" ? (
-            <Scale size={64} color={`rgb(${theme.primaryGlow})`} />
-          ) : (
+        {industry === "abogados" ? (
+          <Img 
+            src={staticFile("scale_icon.png")} 
+            style={{ 
+              width: 160, 
+              height: 160, 
+              objectFit: "cover",
+              marginBottom: "40px",
+              borderRadius: "32px",
+              boxShadow: `0 0 ${redGlowPulse}px rgba(212, 175, 55, 0.4)`
+            }} 
+          />
+        ) : (
+          <div
+            style={{
+              backgroundColor: "rgba(239, 68, 68, 0.1)",
+              border: "1px solid rgba(239, 68, 68, 0.3)",
+              borderRadius: "32px",
+              padding: "24px",
+              marginBottom: "40px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              boxShadow: "0 10px 30px rgba(239, 68, 68, 0.15)",
+            }}
+          >
             <MessageSquareOff size={64} color="#ef4444" />
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Industry Tag */}
         <div
@@ -272,23 +293,49 @@ export const HookSlide: React.FC<{
 
         {/* Hook Headline — KINETIC or TYPEWRITER */}
         {isAbogados ? (
-          <h1
-            style={{
-              fontSize: "90px",
-              fontWeight: 950,
-              lineHeight: 1.1,
-              margin: 0,
-              maxWidth: "1000px",
-              textAlign: "center",
-              transform: `scale(${wordScale}) rotate(${activeAngle}deg)`,
-              color: isHighlight ? `rgb(${theme.primaryGlow})` : "#ffffff",
-              textShadow: isHighlight ? `0 0 45px rgba(${theme.primaryGlow}, 0.65)` : "none",
-              letterSpacing: "-3px",
-              fontFamily: "Outfit, sans-serif",
-            }}
-          >
-            {activePhraseText}
-          </h1>
+          <div style={{ position: "relative", display: "flex", justifyContent: "center" }}>
+            <h1
+              style={{
+                fontSize: "60px",
+                fontWeight: 500,
+                lineHeight: 1.2,
+                margin: 0,
+                maxWidth: "1000px",
+                textAlign: "center",
+                transform: `scale(${wordScale})`,
+                color: isHighlight ? "#D4AF37" : "#E2E8F0",
+                textShadow: isHighlight ? "0 0 20px rgba(212, 175, 55, 0.2)" : "0 2px 10px rgba(0,0,0,0.3)",
+                letterSpacing: "-0.5px",
+                fontFamily: "Outfit, sans-serif",
+              }}
+            >
+              {activePhraseText}
+            </h1>
+            
+            {/* Silent tag: "Y tu DINERO" */}
+            {activePhraseText === "HORAS?" && frame >= 85 && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  marginTop: "20px",
+                  transform: `scale(${spring({
+                    frame: frame - 85,
+                    fps,
+                    config: { damping: 12, mass: 0.8 },
+                  })})`,
+                  color: "#F8FAFC",
+                  fontSize: "44px",
+                  fontWeight: 900,
+                  letterSpacing: "3px",
+                  textShadow: "0 0 30px rgba(212, 175, 55, 0.5)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                ...Y TU DINERO
+              </div>
+            )}
+          </div>
         ) : (
           <h1
             style={{
@@ -331,17 +378,6 @@ export const HookSlide: React.FC<{
       </div>
       </div>
 
-      {/* Screen flash light overlay exactly on kinetic word pops */}
-      {isAbogados && (
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          backgroundColor: "#ffffff",
-          opacity: flashOpacity,
-          pointerEvents: "none",
-          zIndex: 100,
-        }} />
-      )}
     </AbsoluteFill>
   );
 };

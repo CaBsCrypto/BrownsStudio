@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE_CONFIG } from "@/lib/config";
 import { proyectos } from "@/data/proyectos";
 import { solucionesData } from "@/lib/solucionesData";
+import { casosDeEstudioData } from "@/lib/casosDeEstudioData";
 
 const LOCALES = ["es", "en", "pt"] as const;
 
@@ -78,10 +79,47 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
+  // Casos de Estudio (/[locale]/casos-de-estudio/[slug])
+  const casos = Object.keys(casosDeEstudioData);
+  const casosRoutes: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
+    casos.map((slug) => ({
+      url: `${base}/${locale}/casos-de-estudio/${slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+      alternates: {
+        languages: {
+          es: `${base}/es/casos-de-estudio/${slug}`,
+          en: `${base}/en/casos-de-estudio/${slug}`,
+          pt: `${base}/pt/casos-de-estudio/${slug}`,
+          "x-default": `${base}/es/casos-de-estudio/${slug}`,
+        },
+      },
+    }))
+  );
+
+  // Casos de Estudio Index (/[locale]/casos-de-estudio)
+  const casosIndexRoutes: MetadataRoute.Sitemap = LOCALES.map((locale) => ({
+    url: `${base}/${locale}/casos-de-estudio`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.9,
+    alternates: {
+      languages: {
+        es: `${base}/es/casos-de-estudio`,
+        en: `${base}/en/casos-de-estudio`,
+        pt: `${base}/pt/casos-de-estudio`,
+        "x-default": `${base}/es/casos-de-estudio`,
+      },
+    },
+  }));
+
   return [
     ...localeRoutes,
     ...solucionesRoutes,
     ...formacionRoutes,
     ...proyectoRoutes,
+    ...casosRoutes,
+    ...casosIndexRoutes,
   ];
 }

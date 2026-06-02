@@ -9,20 +9,27 @@
     "remotion": "remotion"
   },
   "dependencies": {
-    "@remotion/cli": "^4.0.220",
-    "@remotion/google-fonts": "^4.0.220",
-    "@remotion/light-leaks": "4.0.468",
-    "@remotion/renderer": "^4.0.220",
-    "@remotion/transitions": "^4.0.220",
+    "@react-three/fiber": "^9.6.1",
+    "@remotion/cli": "4.0.469",
+    "@remotion/google-fonts": "4.0.469",
+    "@remotion/light-leaks": "4.0.469",
+    "@remotion/renderer": "4.0.469",
+    "@remotion/three": "4.0.469",
+    "@remotion/transitions": "4.0.469",
+    "debounce": "^3.0.0",
+    "get-audio-duration": "^4.0.1",
     "lucide-react": "^0.475.0",
     "mediabunny": "^1.45.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "remotion": "^4.0.220"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-reconciler": "^0.33.0",
+    "remotion": "4.0.469",
+    "three": "^0.184.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.184.1",
     "dotenv": "^17.4.2",
     "tsx": "^4.22.3",
     "typescript": "^5.0.0"

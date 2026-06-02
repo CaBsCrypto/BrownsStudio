@@ -1,0 +1,44 @@
+{
+  "id": "abogados-pro",
+  "businessName": "García & Asociados",
+  "industry": "abogados",
+  "botName": "Sofía",
+  "hookText": "¿Tu equipo de abogados pierde horas respondiendo dudas repetitivas de clientes? Así es como lo resuelves.",
+  "messages": [
+    {
+      "sender": "client",
+      "text": "Hola abogado, ¿cómo va mi demanda por el despido? Estoy super preocupado."
+    },
+    {
+      "sender": "bot",
+      "text": "Hola Juan. Entiendo tu preocupación, estas esperas son difíciles. Para darte el estado exacto del PJE, ¿me indicas el RIT y Tribunal de tu causa?"
+    },
+    {
+      "sender": "client",
+      "text": "Es el RIT O-1234-2026 del Segundo Juzgado de Letras del Trabajo de Santiago."
+    },
+    {
+      "sender": "bot",
+      "text": "Conectando al PJE... Listo. Tu causa tiene asignada fecha de Audiencia Preparatoria para el 15 de Julio. Quédate tranquilo, tu abogado ya cargó la lista de testigos. Todo va en orden."
+    },
+    {
+      "sender": "client",
+      "text": "Uf, excelente. Me dejas mucho más tranquilo, muchas gracias."
+    },
+    {
+      "sender": "bot",
+      "text": "De nada Juan. Recuerda que puedes consultarme cualquier novedad por este canal 24/7."
+    },
+    {
+      "sender": "client",
+      "text": "Perfecto, lo haré. ¡Buen día!"
+    }
+  ],
+  "ctaUrl": "browns.studio/legal",
+  "crmLabel": "Motor IA Legal Chile",
+  "actions": [
+    "Conexión PJE Realizada",
+    "Cargada Ley 20.886",
+    "Notificar a Abogado"
+  ]
+}

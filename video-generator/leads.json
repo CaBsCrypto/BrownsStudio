@@ -1,19 +1,19 @@
 [
   {
-    "id": "abogados-pro",
-    "businessName": "García & Asociados",
-    "industry": "abogados",
-    "botName": "Sofía",
-    "hookText": "¿Tus abogados junior pierden horas respondiendo dudas repetitivas de clientes? Así es como lo resuelves.",
+    "id": "dental-pro",
+    "businessName": "Centro Odontológico",
+    "industry": "dental",
+    "botName": "Ana",
+    "hookText": "¿Horas perdidas en tu clínica dental? Así lo resolvemos con Inteligencia Artificial.",
     "messages": [
-      { "sender": "client", "text": "Hola doctor, ¿cómo va mi demanda por el despido? Estoy super preocupado." },
-      { "sender": "bot", "text": "Hola Juan. Entiendo tu preocupación, estas esperas son difíciles. Para darte el estado exacto del PJE, ¿me indicas el RIT y Tribunal de tu causa?" },
-      { "sender": "client", "text": "Es el RIT O-1234-2026 del Segundo Juzgado de Letras del Trabajo de Santiago." },
-      { "sender": "bot", "text": "Conectando al PJE... Listo. Tu causa tiene asignada fecha de Audiencia Preparatoria para el 15 de Julio. Quédate tranquilo, tu abogado ya cargó la lista de testigos. Todo va en orden." },
-      { "sender": "client", "text": "Uf, excelente. Me dejas mucho más tranquilo, muchas gracias." }
+      { "sender": "client", "text": "Hola, se me rompió una muela masticando y tengo un dolor insoportable desde anoche. ¿Tienen alguna hora de urgencia para hoy?" },
+      { "sender": "bot", "text": "¡Hola! Lamento mucho que estés con dolor. Soy la asistente virtual de la clínica. Tengo un espacio de urgencia disponible a las 09:30 AM con la Dra. Silva. ¿Te lo aseguro de inmediato?" },
+      { "sender": "client", "text": "¡Por favor, sí! Me salva la vida. ¿Tienen convenio con Isapres?" },
+      { "sender": "bot", "text": "Así es, tenemos sistema I-Med para bono en línea. Tu urgencia está confirmada y el box preparado. Te envío la ubicación para que vengas tranquilo." },
+      { "sender": "client", "text": "Voy saliendo para allá. ¡Mil gracias!" }
     ],
-    "ctaUrl": "browns.studio/legal",
-    "crmLabel": "Motor IA Legal Chile",
-    "actions": ["Conexión PJE Realizada", "Cargada Ley 20.886", "Notificar a Abogado"]
+    "ctaUrl": "browns.studio/dental",
+    "crmLabel": "DentalManager CRM",
+    "actions": ["Alerta Urgencia Generada", "Hora Confirmada Agenda", "Box Médico Preparado"]
   }
 ]

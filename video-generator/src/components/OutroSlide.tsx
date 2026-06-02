@@ -17,7 +17,7 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
   const isAbogados = industry === "abogados";
 
   // --- CAMERA DRIFT: Slow continuous zoom-out
-  const cameraDrift = interpolate(frame, [0, 120], [1.08, 1], {
+  const cameraDrift = interpolate(frame, [0, 165], [1.08, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp"
   });
@@ -67,6 +67,12 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
     config: { damping: 12, mass: 0.8 },
   });
 
+  const ctaEntrance = spring({
+    frame: frame - 90,
+    fps,
+    config: { damping: 12, mass: 0.8 },
+  });
+
   if (isAbogados) {
     return (
       <AbsoluteFill
@@ -76,7 +82,7 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          padding: "60px 40px",
+          padding: "50px 40px",
           boxSizing: "border-box",
           fontFamily: "Outfit, 'Montserrat', sans-serif",
           overflow: "hidden",
@@ -125,11 +131,11 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
           <h1
             style={{
               color: "white",
-              fontSize: "64px",
+              fontSize: "56px",
               fontWeight: 950,
               textAlign: "center",
               lineHeight: 1.15,
-              marginBottom: "60px",
+              marginBottom: "40px",
               background: theme.textGradient,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -143,22 +149,23 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
           <div
             style={{
               display: "flex",
-              flexDirection: "column",
-              gap: "36px",
+              flexDirection: "row",
+              gap: "24px",
               width: "100%",
-              maxWidth: "600px",
-              marginBottom: "80px",
+              maxWidth: "800px",
+              marginBottom: "40px",
             }}
           >
             {/* Card 1 */}
             <div
               style={{
+                flex: 1,
                 transform: `scale(${card1Entrance})`,
                 opacity: card1Entrance,
                 backgroundColor: "rgba(10, 37, 64, 0.4)",
                 border: "1px solid rgba(212, 175, 55, 0.2)",
                 borderRadius: "30px",
-                padding: "36px",
+                padding: "30px",
                 textAlign: "center",
                 boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
                 backdropFilter: "blur(10px)",
@@ -167,7 +174,7 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
               <h2
                 style={{
                   color: "#D4AF37",
-                  fontSize: "90px",
+                  fontSize: "70px",
                   fontWeight: 950,
                   margin: 0,
                   lineHeight: 1.0,
@@ -179,7 +186,7 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
               <p
                 style={{
                   color: "#F8FAFC",
-                  fontSize: "26px",
+                  fontSize: "20px",
                   fontWeight: 600,
                   margin: "12px 0 0 0",
                   letterSpacing: "1px",
@@ -193,12 +200,13 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
             {/* Card 2 */}
             <div
               style={{
+                flex: 1,
                 transform: `scale(${card2Entrance})`,
                 opacity: card2Entrance,
                 backgroundColor: "rgba(10, 37, 64, 0.4)",
                 border: "1px solid rgba(212, 175, 55, 0.2)",
                 borderRadius: "30px",
-                padding: "36px",
+                padding: "30px",
                 textAlign: "center",
                 boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
                 backdropFilter: "blur(10px)",
@@ -207,7 +215,7 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
               <h2
                 style={{
                   color: "#D4AF37",
-                  fontSize: "90px",
+                  fontSize: "70px",
                   fontWeight: 950,
                   margin: 0,
                   lineHeight: 1.0,
@@ -219,15 +227,57 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
               <p
                 style={{
                   color: "#F8FAFC",
-                  fontSize: "26px",
+                  fontSize: "20px",
                   fontWeight: 600,
                   margin: "12px 0 0 0",
                   letterSpacing: "1px",
                   textTransform: "uppercase",
                 }}
               >
-                Clientes Tranquilos e Informados
+                Clientes Tranquilos
               </p>
+            </div>
+          </div>
+
+          {/* CTA Button */}
+          <div
+            style={{
+              transform: `scale(${ctaEntrance})`,
+              opacity: ctaEntrance,
+              marginBottom: "30px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
+            <div
+              style={{
+                background: `linear-gradient(90deg, ${theme.pipelineLine1} 0%, ${theme.pipelineLine2} 100%)`,
+                color: "white",
+                fontSize: "28px",
+                fontWeight: 900,
+                padding: "20px 60px",
+                borderRadius: "24px",
+                letterSpacing: "1px",
+                boxShadow: `0 15px ${btnGlow}px rgba(${theme.primaryGlow}, 0.35)`,
+                display: "inline-block",
+                border: "1px solid rgba(255,255,255,0.2)",
+                fontFamily: "var(--font-jet-brains-mono), monospace",
+              }}
+            >
+              {ctaUrl}
+            </div>
+            <div
+              style={{
+                color: "#64748b",
+                fontSize: "18px",
+                marginTop: "16px",
+                fontWeight: 600,
+                letterSpacing: "2px",
+                textTransform: "uppercase"
+              }}
+            >
+              👇 Link en el perfil 👇
             </div>
           </div>
 
@@ -242,29 +292,11 @@ export const OutroSlide: React.FC<{ ctaUrl: string; industry?: string }> = ({ ct
               alignItems: "center",
             }}
           >
-            {/* Soft firm logo badge */}
-            <div
-              style={{
-                background: `linear-gradient(135deg, ${theme.pipelineLine1} 0%, ${theme.pipelineLine3} 100%)`,
-                color: "#0A2540",
-                fontSize: "26px",
-                fontWeight: 900,
-                padding: "16px 40px",
-                borderRadius: "20px",
-                letterSpacing: "2px",
-                boxShadow: `0 10px 30px rgba(${theme.secondaryGlow}, 0.3)`,
-                display: "inline-block",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-                textTransform: "uppercase",
-              }}
-            >
-              García & Asociados
-            </div>
             <p
               style={{
                 color: "#64748b",
                 fontSize: "18px",
-                marginTop: "16px",
+                margin: 0,
                 fontWeight: 600,
                 letterSpacing: "2px",
                 textTransform: "uppercase",

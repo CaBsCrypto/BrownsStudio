@@ -9,7 +9,7 @@ const MODEL_ID = "eleven_multilingual_v2";
 const SEGMENTS = [
   {
     name: "v2_legal_hook.mp3",
-    text: "¿Tus abogados junior pierden horas respondiendo dudas repetitivas de clientes? Así es como lo resuelves."
+    text: "¿Tu equipo de abogados pierde horas respondiendo dudas repetitivas de clientes? Así es como lo resuelves."
   },
   {
     name: "v2_legal_pipeline.mp3",
@@ -17,7 +17,7 @@ const SEGMENTS = [
   },
   {
     name: "v3_legal_outro.mp3",
-    text: "Ahorra hasta un setenta por ciento de tiempo en atención y libera a tu equipo para litigar. El futuro de tu estudio empieza hoy."
+    text: "Ahorra hasta un setenta por ciento de tiempo en atención y libera a tu equipo para litigar. El futuro de tu estudio empieza hoy. Ve al link en nuestro perfil, y solicita tu demostración gratuita."
   }
 ];
 
@@ -67,7 +67,7 @@ async function generateAudio(text: string, outputPath: string) {
 }
 
 async function main() {
-  const voiceoversDir = path.join(__dirname, "../public/voiceovers");
+  const voiceoversDir = path.join(process.cwd(), "public/voiceovers");
 
   for (const seg of SEGMENTS) {
     const outputPath = path.join(voiceoversDir, seg.name);

@@ -9,7 +9,7 @@ export const SITE_CONFIG = {
   instagram: "https://instagram.com/brownsstudio",
   linkedin: "https://linkedin.com/company/brownsstudio",
   youtube: "https://youtube.com/@brownsstudio",
-  url: "https://brownsstudio.dev",
+  url: "https://browns.studio",
   spotsAvailable: 4, // Actualizar mensualmente
 };
 
