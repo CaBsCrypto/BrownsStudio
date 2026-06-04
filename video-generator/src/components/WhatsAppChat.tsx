@@ -84,11 +84,11 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
     statusText = "escribiendo...";
   }
 
-  // Hold scroll until later messages appear so user has time to read
+  // Scroll dynamically for longer conversations (messages 5, 6, 7)
   const scrollY = interpolate(
     frame,
-    [230, 260, 320, 350],
-    [0, 200, 200, 420],
+    [310, 340, 380, 410, 450, 480],
+    [0, 150, 150, 300, 300, 450],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 

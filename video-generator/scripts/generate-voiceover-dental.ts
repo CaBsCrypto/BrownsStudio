@@ -8,8 +8,8 @@ const MODEL_ID = "eleven_multilingual_v2";
 
 const SEGMENTS = [
   {
-    name: "v1_dental_hook_v3.mp3",
-    text: "¿Horas perdidas en tu clínica dental? Así lo resolvemos con Inteligencia Artificial."
+    name: "v1_dental_hook_v4.mp3",
+    text: "¿Pierdes cotizaciones de tratamientos por no responder a tiempo? Así lo resolvemos con Inteligencia Artificial."
   },
   {
     name: "v1_dental_pipeline_v3.mp3",

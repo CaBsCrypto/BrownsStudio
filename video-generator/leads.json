@@ -1,19 +1,21 @@
 [
   {
-    "id": "dental-pro",
+    "id": "dentistas-nuevo",
     "businessName": "Centro Odontológico",
     "industry": "dental",
     "botName": "Ana",
-    "hookText": "¿Horas perdidas en tu clínica dental? Así lo resolvemos con Inteligencia Artificial.",
+    "hookText": "¿Pierdes cotizaciones de tratamientos por no responder a tiempo? Así lo resolvemos con Inteligencia Artificial.",
     "messages": [
-      { "sender": "client", "text": "Hola, se me rompió una muela masticando y tengo un dolor insoportable desde anoche. ¿Tienen alguna hora de urgencia para hoy?" },
-      { "sender": "bot", "text": "¡Hola! Lamento mucho que estés con dolor. Soy la asistente virtual de la clínica. Tengo un espacio de urgencia disponible a las 09:30 AM con la Dra. Silva. ¿Te lo aseguro de inmediato?" },
-      { "sender": "client", "text": "¡Por favor, sí! Me salva la vida. ¿Tienen convenio con Isapres?" },
-      { "sender": "bot", "text": "Así es, tenemos sistema I-Med para bono en línea. Tu urgencia está confirmada y el box preparado. Te envío la ubicación para que vengas tranquilo." },
-      { "sender": "client", "text": "Voy saliendo para allá. ¡Mil gracias!" }
+      { "sender": "client", "text": "Hola, me gustaría cotizar un diseño de sonrisa con carillas de porcelana. ¿Cuáles son los precios?" },
+      { "sender": "bot", "text": "¡Hola! Qué gusto saludarte. El diseño de sonrisa es 100% personalizado. ¿Tienes alguna radiografía reciente o te gustaría agendar una evaluación sin costo para darte el presupuesto exacto?" },
+      { "sender": "client", "text": "No tengo radiografías. Prefiero la evaluación. ¿Tienen horas para esta semana después de las 18:00?" },
+      { "sender": "bot", "text": "¡Claro! Tengo disponibilidad este jueves a las 18:30 hrs con el Dr. Sepúlveda, especialista en estética. ¿Te la reservo?" },
+      { "sender": "client", "text": "Sí, me parece perfecto. ¿Se puede pagar en cuotas?" },
+      { "sender": "bot", "text": "¡Por supuesto! Tenemos facilidades de pago hasta en 12 cuotas sin interés. Tu hora ya quedó confirmada. ¡Te esperamos el jueves!" },
+      { "sender": "client", "text": "¡Excelente, nos vemos!" }
     ],
     "ctaUrl": "browns.studio/dental",
-    "crmLabel": "DentalManager CRM",
-    "actions": ["Alerta Urgencia Generada", "Hora Confirmada Agenda", "Box Médico Preparado"]
+    "crmLabel": "Cotización Diseño Sonrisa",
+    "actions": ["Presupuesto Solicitado", "Hora Evaluación Confirmada", "Opciones Pago Enviadas"]
   }
 ]

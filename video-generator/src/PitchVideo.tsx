@@ -15,9 +15,9 @@ const calculateMetadata: CalculateMetadataFunction<PitchVideoProps> = async ({
     let whatsappDurationInFrames = 270;
 
     if (props.industry === "dental") {
-      hookFile = "voiceovers/v1_dental_hook_v3.mp3";
+      hookFile = "voiceovers/v1_dental_hook_v4.mp3";
       outroFile = "voiceovers/v1_dental_outro_v3.mp3";
-      whatsappDurationInFrames = 500;
+      whatsappDurationInFrames = 680;
     } else {
       whatsappDurationInFrames = messageCount * 45 + 20;
     }

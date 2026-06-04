@@ -81,7 +81,7 @@ export const PitchVideoComposition: React.FC<PitchVideoProps> = (props) => {
       {/* ─── AUDIO: Primary Voiceovers ─── */}
       {/* Hook Voiceover */}
       <Sequence from={0}>
-        <Audio src={staticFile("voiceovers/v1_dental_hook_v3.mp3")} volume={1} />
+        <Audio src={staticFile("voiceovers/v1_dental_hook_v4.mp3")} volume={1} />
       </Sequence>
 
       {/* Pipeline Voiceover */}
