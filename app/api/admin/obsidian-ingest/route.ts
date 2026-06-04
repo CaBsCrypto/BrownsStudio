@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI, SchemaType, Schema } from "@google/generative-ai";
-import fs from "fs";
-import path from "path";
+import JSZip from "jszip";
 
 // Esquema estructurado para forzar a Gemini a devolver exactamente los 5 archivos
 const obsidianSchema: Schema = {
@@ -77,51 +76,49 @@ export async function POST(request: Request) {
     const result = await model.generateContent(prompt);
     const responseData = JSON.parse(result.response.text());
 
-    // Crear la estructura de carpetas en el file system
     const safeClientId = clientName.toLowerCase().replace(/[^a-z0-9]/g, "-");
-    const vaultDir = path.join(process.cwd(), "knowledge_base", "clientes", safeClientId);
-    const obsidianDir = path.join(vaultDir, ".obsidian");
 
-    // Asegurar que existan los directorios
-    if (!fs.existsSync(vaultDir)) {
-      fs.mkdirSync(vaultDir, { recursive: true });
-    }
-    if (!fs.existsSync(obsidianDir)) {
-      fs.mkdirSync(obsidianDir, { recursive: true });
-    }
+    // Crear el ZIP en memoria en lugar de escribir en disco (para soportar Vercel Serverless)
+    const zip = new JSZip();
 
-    // Escribir los 5 archivos Markdown
-    fs.writeFileSync(path.join(vaultDir, "01_Identidad.md"), responseData.identidad);
-    fs.writeFileSync(path.join(vaultDir, "02_Servicios.md"), responseData.servicios);
-    fs.writeFileSync(path.join(vaultDir, "03_Operaciones.md"), responseData.operaciones);
-    fs.writeFileSync(path.join(vaultDir, "04_FAQs.md"), responseData.faqs);
-    fs.writeFileSync(path.join(vaultDir, "05_Comercial.md"), responseData.comercial);
+    // Escribir los 5 archivos Markdown en la raiz del ZIP
+    zip.file("01_Identidad.md", responseData.identidad);
+    zip.file("02_Servicios.md", responseData.servicios);
+    zip.file("03_Operaciones.md", responseData.operaciones);
+    zip.file("04_FAQs.md", responseData.faqs);
+    zip.file("05_Comercial.md", responseData.comercial);
 
     // Escribir la configuración base para que Obsidian lo reconozca como un Vault
-    const appJson = {
-      "attachmentFolderPath": "/",
-      "alwaysUpdateLinks": true,
-      "newFileLocation": "root",
-      "showUnsupportedFiles": true
-    };
-    const workspaceJson = {
-      "main": {
-        "id": "root",
-        "type": "split",
-        "children": []
-      }
-    };
-    
-    fs.writeFileSync(path.join(obsidianDir, "app.json"), JSON.stringify(appJson, null, 2));
-    fs.writeFileSync(path.join(obsidianDir, "workspace.json"), JSON.stringify(workspaceJson, null, 2));
+    const obsidianDir = zip.folder(".obsidian");
+    if (obsidianDir) {
+      const appJson = {
+        "attachmentFolderPath": "/",
+        "alwaysUpdateLinks": true,
+        "newFileLocation": "root",
+        "showUnsupportedFiles": true
+      };
+      const workspaceJson = {
+        "main": {
+          "id": "root",
+          "type": "split",
+          "children": []
+        }
+      };
+      
+      obsidianDir.file("app.json", JSON.stringify(appJson, null, 2));
+      obsidianDir.file("workspace.json", JSON.stringify(workspaceJson, null, 2));
+    }
 
-    console.log(`[Obsidian Ingest] Vault creado exitosamente en ${vaultDir}`);
+    const zipBuffer = await zip.generateAsync({ type: "nodebuffer" });
 
-    return NextResponse.json({
-      success: true,
-      message: "Cerebro RAG creado exitosamente",
-      vaultPath: vaultDir,
-      clientId: safeClientId
+    console.log(`[Obsidian Ingest] Vault ZIP creado en memoria para ${safeClientId}`);
+
+    return new NextResponse(new Uint8Array(zipBuffer), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/zip",
+        "Content-Disposition": `attachment; filename="${safeClientId}-obsidian-vault.zip"`,
+      },
     });
 
   } catch (error: any) {

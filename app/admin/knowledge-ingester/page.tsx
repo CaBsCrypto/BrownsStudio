@@ -26,14 +26,24 @@ export default function KnowledgeIngesterPage() {
         body: JSON.stringify({ clientName, rawText }),
       });
 
-      const data = await res.json();
-
       if (!res.ok) {
+        const data = await res.json();
         throw new Error(data.error || "Error al generar el Cerebro");
       }
 
+      // Descargar el archivo ZIP retornado por el servidor
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${clientName.toLowerCase().replace(/[^a-z0-9]/g, "-")}-obsidian-vault.zip`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
       setStatus("success");
-      setMessage(`¡Éxito! Cerebro creado en: /knowledge_base/clientes/${data.clientId}. El directorio ya es un Vault nativo de Obsidian listo para sincronizar.`);
+      setMessage(`¡Éxito! El Cerebro de IA se ha descargado a tu computadora como un archivo ZIP. Descomprímelo y úsalo en Obsidian.`);
     } catch (error: any) {
       console.error(error);
       setStatus("error");
