@@ -63,6 +63,17 @@ const PRESETS: Record<string, Record<string, Preset>> = {
 * Objetivo: Indicar que para ver el estado de su caso el cliente debe ingresar su RUT y RIT judicial en el sistema para resguardar la confidencialidad.`,
       firstQuestion: "Hola, ¿cómo puedo revisar el estado de mi causa civil?",
     },
+    coach: {
+      businessName: "Instituto de Liderazgo",
+      botName: "Prof. Javier (Capacitador)",
+      services: `* Curso de Liderazgo Corporativo: $150.000 CLP.
+* Mentoring 1 a 1 (1 mes): $450.000 CLP.
+* Taller de Ventas para Equipos: $900.000 CLP.`,
+      faqs: `* Horario: Sesiones de Lunes a Viernes, horario a convenir.
+* Reglas: Tono motivador, inspirador y muy didáctico. Responder como un maestro experimentado.
+* Objetivo: Lograr que el interesado descargue el programa del curso o agende una sesión de diagnóstico.`,
+      firstQuestion: "Hola, me interesa el curso de liderazgo corporativo para mi equipo.",
+    },
   },
   en: {
     dental: {
@@ -113,6 +124,17 @@ const PRESETS: Record<string, Record<string, Preset>> = {
 * Goal: Prompt client to provide their RUT and court RIT to securely authorize and display case tracking details.`,
       firstQuestion: "Hello, how can I track the status of my civil court case?",
     },
+    coach: {
+      businessName: "Leadership Institute",
+      botName: "Prof. Javier (Trainer)",
+      services: `* Corporate Leadership Course: $200.
+* 1-on-1 Mentoring (1 month): $500.
+* Team Sales Workshop: $1,200.`,
+      faqs: `* Hours: Sessions Mon-Fri, flexible schedule.
+* Rules: Motivational, inspiring, and highly educational tone. Act like an experienced mentor.
+* Goal: Get the prospect to download the course syllabus or book a discovery call.`,
+      firstQuestion: "Hello, I am interested in the corporate leadership course for my team.",
+    },
   },
   pt: {
     dental: {
@@ -162,6 +184,17 @@ const PRESETS: Record<string, Record<string, Preset>> = {
 * Objetivo: Solicitar ao cliente seu RUT e RIT judicial para autorizar a consulta com segurança máxima.`,
       firstQuestion: "Olá, como posso verificar o andamento do meu processo cível?",
     },
+    coach: {
+      businessName: "Instituto de Liderança",
+      botName: "Prof. Javier (Treinador)",
+      services: `* Curso de Liderança Corporativa: R$ 800.
+* Mentoria 1 a 1 (1 mês): R$ 2.500.
+* Workshop de Vendas para Equipes: R$ 5.000.`,
+      faqs: `* Horário: Sessões de Seg-Sex, horário a combinar.
+* Regras: Tom motivacional, inspirador e muito didático. Aja como um mentor experiente.
+* Objetivo: Fazer com que o interessado baixe o programa do curso ou agende uma sessão de diagnóstico.`,
+      firstQuestion: "Olá, tenho interesse no curso de liderança corporativa para minha equipe.",
+    },
   },
 };
 
@@ -175,6 +208,7 @@ const LOCAL_TEXTS = {
       agency: "Agencia Creativa",
       propiedades: "Inmobiliaria",
       abogados: "Estudio Jurídico",
+      coach: "Capacitador",
     },
     bizConfigTitle: "2. Personalizar el cerebro del Bot:",
     bizLabel: "Nombre de tu Empresa",
@@ -206,6 +240,7 @@ const LOCAL_TEXTS = {
       agency: "Creative Agency",
       propiedades: "Real Estate",
       abogados: "Law Firm",
+      coach: "Trainer",
     },
     bizConfigTitle: "2. Customize the Bot's Brain:",
     bizLabel: "Your Business Name",
@@ -237,6 +272,7 @@ const LOCAL_TEXTS = {
       agency: "Agência Criativa",
       propiedades: "Imobiliária",
       abogados: "Escritório Jurídico",
+      coach: "Treinador",
     },
     bizConfigTitle: "2. Personalizar o Cêrebro do Bot:",
     bizLabel: "Nome da sua Empresa",
@@ -356,7 +392,7 @@ export default function DemoClient({ locale }: { locale: string }) {
   };
 
   // Preset loaders
-  const loadPreset = (key: "dental" | "agency" | "propiedades" | "abogados") => {
+  const loadPreset = (key: "dental" | "agency" | "propiedades" | "abogados" | "coach") => {
     const selected = presets[key];
     setBusinessName(selected.businessName);
     setBotName(selected.botName);
@@ -482,7 +518,7 @@ export default function DemoClient({ locale }: { locale: string }) {
               <RefreshCw className="w-4 h-4" />
               {t.presetTitle}
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
               <button
                 type="button"
                 onClick={() => loadPreset("dental")}
@@ -526,6 +562,17 @@ export default function DemoClient({ locale }: { locale: string }) {
                 }`}
               >
                 <span>⚖️ {t.presets.abogados}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => loadPreset("coach")}
+                className={`py-3 px-2 rounded-2xl border text-xs font-medium transition-all duration-300 flex flex-col items-center justify-center gap-2 ${
+                  businessName === presets.coach?.businessName
+                    ? "bg-indigo-600/20 border-indigo-500 text-white shadow-lg shadow-indigo-500/10"
+                    : "bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-white"
+                }`}
+              >
+                <span>🎓 {t.presets.coach}</span>
               </button>
             </div>
           </div>

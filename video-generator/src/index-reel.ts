@@ -1,11 +1,11 @@
 import { registerRoot } from "remotion";
-import { Root } from "./Root";
+import { ReelVideo } from "./ReelVideo";
 import { loadFont as loadOutfit } from "@remotion/google-fonts/Outfit";
 import { loadFont as loadInter } from "@remotion/google-fonts/Inter";
 
-// Register premium fonts for all video formats
+// Register premium fonts (same as the pitch format)
 loadOutfit();
 loadInter();
 
-// Register all compositions: Pitch videos + Reel videos
-registerRoot(Root);
+// Register only the Reel compositions
+registerRoot(ReelVideo);

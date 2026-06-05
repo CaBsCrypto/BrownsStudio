@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate, Img, staticFile } from "remotion";
 import { ArrowLeft, Video, Phone, MoreVertical, Paperclip, Camera, Mic, Smile } from "lucide-react";
 import { getTheme } from "../theme";
 
@@ -16,8 +16,20 @@ interface WhatsAppChatProps {
 }
 
 export const getAppearFrame = (index: number) => {
-  const frames = [30, 90, 160, 240, 330, 400, 460];
-  return frames[index] !== undefined ? frames[index] : 30 + index * 60;
+  // Delays designed to simulate realistic typing and reading time
+  const frames = [
+    30,   // Msg 0 (Client)
+    100,  // Msg 1 (Bot)
+    200,  // Msg 2 (Client)
+    300,  // Msg 3 (Bot)
+    420,  // Msg 4 (Client)
+    520,  // Msg 5 (Bot)
+    640,  // Msg 6 (Client)
+    740,  // Msg 7 (Bot)
+    860,  // Msg 8
+    960,  // Msg 9
+  ];
+  return frames[index] !== undefined ? frames[index] : 960 + (index - 9) * 100;
 };
 
 export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
@@ -87,22 +99,35 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
   // Scroll dynamically for longer conversations (messages 5, 6, 7)
   const scrollY = interpolate(
     frame,
-    [310, 340, 380, 410, 450, 480],
-    [0, 150, 150, 300, 300, 450],
+    // Start scrolling even later, pushed back to frame 600
+    [600, 650, 720, 770, 820, 870],
+    [0, 180, 180, 360, 360, 550],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
   return (
     <AbsoluteFill
       style={{
-        background: `radial-gradient(circle at center, rgba(${theme.secondaryGlow}, 0.25) 0%, rgba(${theme.primaryGlow}, 0.1) 50%, #050B14 100%)`,
-        backgroundColor: "#050B14",
+        backgroundColor: "#020617",
         fontFamily: "Outfit, 'Montserrat', sans-serif",
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
       }}
     >
+      {/* Premium Ambient Background Behind the Phone */}
+      <AbsoluteFill>
+        <Img 
+          src={staticFile("images/dental_clinic_modern_bg.png")} 
+          style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.6, filter: "blur(20px)" }} 
+        />
+      </AbsoluteFill>
+      <AbsoluteFill 
+        style={{ 
+          background: `radial-gradient(circle at center, rgba(${theme.secondaryGlow}, 0.3) 0%, rgba(${theme.primaryGlow}, 0.15) 50%, rgba(5, 11, 20, 0.4) 100%)` 
+        }} 
+      />
+
       <div style={{
         perspective: "1200px",
         width: "100%",

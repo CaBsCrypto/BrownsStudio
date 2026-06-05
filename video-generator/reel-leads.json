@@ -1,0 +1,134 @@
+[
+  {
+    "id": "dental-reel",
+    "industry": "dental",
+    "businessName": "Clínica Dental",
+    "botName": "Dra. Ana",
+    "statNumber": "73%",
+    "statText": "de los pacientes elige al primero en responder.",
+    "statSubline": "¿Tu clínica responde a tiempo? Mira cómo nuestra IA atiende por ti.",
+    "messages": [
+      {
+        "sender": "client",
+        "text": "¡Hola! Quisiera información sobre implantes dentales y precios."
+      },
+      {
+        "sender": "bot",
+        "text": "¡Hola! 👋 Soy Ana, la asistente virtual de la clínica. Los implantes son personalizados. ¿Te gustaría agendar una evaluación sin costo con nuestro especialista?"
+      },
+      {
+        "sender": "client",
+        "text": "Sí, pero trabajo de lunes a viernes hasta las 18:00. ¿Tienen horario después de eso?"
+      },
+      {
+        "sender": "bot",
+        "text": "¡Claro que sí! Atendemos hasta las 20:00 hrs. Tengo disponibilidad este jueves a las 18:30 o el viernes a las 19:00. ¿Cuál prefieres?"
+      },
+      {
+        "sender": "client",
+        "text": "El viernes a las 19:00 me queda perfecto."
+      },
+      {
+        "sender": "bot",
+        "text": "¡Excelente! Para confirmar la reserva necesito tu nombre completo y tu correo electrónico por favor."
+      },
+      {
+        "sender": "client",
+        "text": "Matías Valdés, matias.valdes@gmail.com"
+      },
+      {
+        "sender": "bot",
+        "text": "✅ ¡Listo Matías! Tu evaluación quedó agendada el viernes a las 19:00 hrs. Te envié el link de confirmación al correo. ¡Nos vemos!"
+      }
+    ],
+    "ctaUrl": "browns.studio/demo",
+    "ctaHeadline": "Ponle un asistente de IA a tu clínica",
+    "hookDurationInFrames": 280,
+    "chatDurationInFrames": 900,
+    "ctaDurationInFrames": 240
+  },
+  {
+    "id": "abogados-reel",
+    "industry": "abogados",
+    "businessName": "Estudio Legal",
+    "botName": "Sofía",
+    "statNumber": "9/10",
+    "statText": "consultas legales no califican.",
+    "statSubline": "Tu equipo pierde horas filtrando casos. Ya no más.",
+    "messages": [
+      {
+        "sender": "client",
+        "text": "Hola, me despidieron ayer de mi trabajo y creo que fue sin justificación."
+      },
+      {
+        "sender": "bot",
+        "text": "¡Hola! Evaluamos tu caso en una consulta gratuita. Para saber si calificas, ¿cuántos años trabajaste en esa empresa?"
+      },
+      {
+        "sender": "client",
+        "text": "3 años. Siempre tuve buenas evaluaciones y sin antecedentes."
+      },
+      {
+        "sender": "bot",
+        "text": "✅ Tu caso tiene fuertes indicios de despido injustificado. Te agendé una consulta gratis con un abogado. ¿Cuándo puedes?"
+      },
+      {
+        "sender": "client",
+        "text": "Mañana en la mañana."
+      },
+      {
+        "sender": "bot",
+        "text": "Perfecto. Agendado para mañana a las 10:00 am. Recibirás un SMS recordatorio. ¡Hablamos pronto!"
+      }
+    ],
+    "ctaUrl": "browns.studio/legal",
+    "ctaHeadline": "Automatiza el filtrado de casos legales",
+    "hookDurationInFrames": 210,
+    "chatDurationInFrames": 700,
+    "ctaDurationInFrames": 240
+  },
+  {
+    "id": "training-reel",
+    "industry": "training",
+    "businessName": "Intranet Corp",
+    "botName": "Soporte HR",
+    "statNumber": "45%",
+    "statText": "del tiempo se pierde buscando información.",
+    "statSubline": "¿Tu equipo hace siempre las mismas preguntas?",
+    "messages": [
+      {
+        "sender": "client",
+        "text": "Hola, necesito el protocolo para devoluciones internacionales."
+      },
+      {
+        "sender": "bot",
+        "text": "¡Hola! 👋 Claro, según el Manual de Logística (página 42), los pasos son:"
+      },
+      {
+        "sender": "bot",
+        "text": "1️⃣ Recibir producto. 2️⃣ Inspeccionar. 3️⃣ Llenar form XYZ. 4️⃣ Emitir nota."
+      },
+      {
+        "sender": "client",
+        "text": "Perfecto. ¿Dónde encuentro el formulario XYZ?"
+      },
+      {
+        "sender": "bot",
+        "text": "Aquí tienes el link directo: intranet.empresa.com/forms/xyz. ¿Te ayudo con algo más?"
+      },
+      {
+        "sender": "client",
+        "text": "No, con eso estoy listo. ¡Gracias!"
+      },
+      {
+        "sender": "bot",
+        "text": "✅ ¡De nada! Queda guardado en el historial por si lo necesitas. ¡Buen turno!"
+      }
+    ],
+    "ctaUrl": "browns.studio/demo",
+    "ctaHeadline": "Ponle un asistente IA a tu equipo",
+    "hookDurationInFrames": 280,
+    "chatDurationInFrames": 800,
+    "ctaDurationInFrames": 240
+  }
+]

@@ -4,9 +4,12 @@
   "description": "Programmatic video generator for Browns Studio marketing pitches using Remotion",
   "main": "generate.js",
   "scripts": {
-    "start": "remotion preview src/index.ts",
+    "start": "remotion studio src/index.ts",
     "build": "node generate.js",
-    "remotion": "remotion"
+    "remotion": "remotion",
+    "remotion:reel": "remotion",
+    "build:reel": "node generate-reel.js",
+    "studio:reel": "remotion studio src/index.ts"
   },
   "dependencies": {
     "@react-three/fiber": "^9.6.1",

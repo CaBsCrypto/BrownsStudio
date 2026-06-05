@@ -72,6 +72,24 @@ export const THEMES: Record<string, IndustryTheme> = {
     alertBorder2: "14, 165, 233",
     alertBorder3: "2, 132, 199",
   },
+  training: {
+    primaryGlow: "59, 130, 246", // Blue-500
+    secondaryGlow: "148, 163, 184", // Slate-400
+    textGradient: "linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%)",
+    chatHeader: "#1e293b", // Slate-800
+    chatHeaderGradient: "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)",
+    chatHeaderColor: "#f8fafc",
+    botAvatarGradient: "linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)",
+    clientBubble: "#f1f5f9", // Slate-100
+    clientBubbleText: "#0f172a", // Slate-900
+    checkMarks: "#3b82f6",
+    pipelineLine1: "#3b82f6",
+    pipelineLine2: "#64748b",
+    pipelineLine3: "#1e293b",
+    alertBorder1: "59, 130, 246",
+    alertBorder2: "148, 163, 184",
+    alertBorder3: "30, 41, 59",
+  },
   default: {
     primaryGlow: "0, 240, 255", 
     secondaryGlow: "168, 85, 247", 
