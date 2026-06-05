@@ -97,13 +97,9 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({
   }
 
   // Scroll dynamically for longer conversations (messages 5, 6, 7)
-  const scrollY = interpolate(
-    frame,
-    // Start scrolling even later, pushed back to frame 600
-    [600, 650, 720, 770, 820, 870],
-    [0, 180, 180, 360, 360, 550],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-  );
+  // El usuario solicitó no subir la conversación en ningún momento,
+  // dado que el formato vertical tiene espacio de sobra para los mensajes.
+  const scrollY = 0;
 
   return (
     <AbsoluteFill

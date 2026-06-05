@@ -64,15 +64,16 @@ const PRESETS: Record<string, Record<string, Preset>> = {
       firstQuestion: "Hola, ¿cómo puedo revisar el estado de mi causa civil?",
     },
     coach: {
-      businessName: "Instituto de Liderazgo",
-      botName: "Prof. Javier (Capacitador)",
-      services: `* Curso de Liderazgo Corporativo: $150.000 CLP.
-* Mentoring 1 a 1 (1 mes): $450.000 CLP.
-* Taller de Ventas para Equipos: $900.000 CLP.`,
-      faqs: `* Horario: Sesiones de Lunes a Viernes, horario a convenir.
-* Reglas: Tono motivador, inspirador y muy didáctico. Responder como un maestro experimentado.
-* Objetivo: Lograr que el interesado descargue el programa del curso o agende una sesión de diagnóstico.`,
-      firstQuestion: "Hola, me interesa el curso de liderazgo corporativo para mi equipo.",
+      businessName: "TechCorp Global",
+      botName: "Javier (Capacitador RRHH)",
+      services: `* Manual de Inducción: Disponible en la intranet corporativa.
+* Políticas de Vacaciones: 15 días hábiles anuales tras el primer año.
+* Estructura de la Empresa: Equipos ágiles organizados en escuadrones.
+* Solicitud de Equipos: Mediante ticket al departamento de TI.`,
+      faqs: `* Horario de Soporte RRHH: Lunes a Viernes de 09:00 a 18:00.
+* Reglas: Tono amable, paciente y muy claro. Eres el mentor principal para los nuevos ingresos.
+* Objetivo: Resolver dudas operativas de nuevos empleados, entregar manuales y orientarlos en la cultura de la empresa.`,
+      firstQuestion: "Hola, soy nuevo en el equipo. ¿Me ayudas a entender cómo solicito mis días libres?",
     },
   },
   en: {
@@ -125,15 +126,16 @@ const PRESETS: Record<string, Record<string, Preset>> = {
       firstQuestion: "Hello, how can I track the status of my civil court case?",
     },
     coach: {
-      businessName: "Leadership Institute",
-      botName: "Prof. Javier (Trainer)",
-      services: `* Corporate Leadership Course: $200.
-* 1-on-1 Mentoring (1 month): $500.
-* Team Sales Workshop: $1,200.`,
-      faqs: `* Hours: Sessions Mon-Fri, flexible schedule.
-* Rules: Motivational, inspiring, and highly educational tone. Act like an experienced mentor.
-* Goal: Get the prospect to download the course syllabus or book a discovery call.`,
-      firstQuestion: "Hello, I am interested in the corporate leadership course for my team.",
+      businessName: "TechCorp Global",
+      botName: "Javier (HR Trainer)",
+      services: `* Onboarding Manual: Available on the corporate intranet.
+* PTO Policy: 15 business days per year after the first year.
+* Company Structure: Agile teams organized into squads.
+* Equipment Requests: Via IT ticketing system.`,
+      faqs: `* HR Support Hours: Mon-Fri 9:00 AM to 6:00 PM.
+* Rules: Friendly, patient, and very clear tone. You are the main mentor for new hires.
+* Goal: Resolve operational doubts for new employees, provide manuals, and guide them in the company culture.`,
+      firstQuestion: "Hi, I'm new to the team. Can you help me understand how to request PTO?",
     },
   },
   pt: {
@@ -185,15 +187,16 @@ const PRESETS: Record<string, Record<string, Preset>> = {
       firstQuestion: "Olá, como posso verificar o andamento do meu processo cível?",
     },
     coach: {
-      businessName: "Instituto de Liderança",
-      botName: "Prof. Javier (Treinador)",
-      services: `* Curso de Liderança Corporativa: R$ 800.
-* Mentoria 1 a 1 (1 mês): R$ 2.500.
-* Workshop de Vendas para Equipes: R$ 5.000.`,
-      faqs: `* Horário: Sessões de Seg-Sex, horário a combinar.
-* Regras: Tom motivacional, inspirador e muito didático. Aja como um mentor experiente.
-* Objetivo: Fazer com que o interessado baixe o programa do curso ou agende uma sessão de diagnóstico.`,
-      firstQuestion: "Olá, tenho interesse no curso de liderança corporativa para minha equipe.",
+      businessName: "TechCorp Global",
+      botName: "Javier (Treinador de RH)",
+      services: `* Manual de Integração: Disponível na intranet corporativa.
+* Política de Férias: 30 dias anuais.
+* Estrutura da Empresa: Equipes ágeis organizadas em esquadrões.
+* Solicitação de Equipamentos: Via sistema de tickets de TI.`,
+      faqs: `* Horário de Suporte RH: Seg-Sex das 09:00 às 18:00.
+* Regras: Tom amigável, paciente e muito claro. Você é o mentor principal para novos contratados.
+* Objetivo: Resolver dúvidas operacionais de novos funcionários, fornecer manuais e orientá-los na cultura da empresa.`,
+      firstQuestion: "Olá, sou novo na equipe. Você pode me ajudar a entender como solicito minhas férias?",
     },
   },
 };
