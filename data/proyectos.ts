@@ -565,6 +565,7 @@ export const proyectos: Proyecto[] = [
     quoteAutor: "SpicyCrust Labs",
     linkDemo: "https://spicycrust.com/",
     año: 2026,
+    comingSoon: true,
   },
   {
     slug: "spicy-challenge",
@@ -623,6 +624,7 @@ export const proyectos: Proyecto[] = [
     quoteAutor: "SpicyCrust Labs",
     linkDemo: "https://spicychallenge.spicycrust.com/",
     año: 2026,
+    comingSoon: true,
   },
   {
     slug: "slash-slice",
@@ -681,6 +683,7 @@ export const proyectos: Proyecto[] = [
     quoteAutor: "SpicyCrust Labs",
     linkDemo: "https://slashslice.spicycrust.com/",
     año: 2026,
+    comingSoon: true,
   }
 ];
 
