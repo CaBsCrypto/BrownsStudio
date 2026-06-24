@@ -81,6 +81,68 @@ export const proyectos: Proyecto[] = [
     año: 2026,
   },
   {
+    slug: "rhythm-slice",
+    nombre: "Rhythm Slice",
+    tipo: {
+      es: "ZK Rhythm Game",
+      en: "ZK Rhythm Game",
+      pt: "ZK Rhythm Game",
+    },
+    descripcion: {
+      es: "Juego de ritmo estilo Guitar Hero con temática de pizzas y tecnología Zero-Knowledge sobre Stellar. Cada nota es un ingrediente, cada canción una pizza diferente.",
+      en: "Guitar Hero-style rhythm game with pizza theme and Zero-Knowledge technology on Stellar. Every note is an ingredient, every song a different pizza.",
+      pt: "Jogo de ritmo no estilo Guitar Hero com tema de pizza e tecnologia Zero-Knowledge no Stellar. Cada nota é um ingrediente, cada música uma pizza diferente.",
+    },
+    descripcionLarga: {
+      es: "Rhythm Slice combina mecánicas de rhythm game con la blockchain de Stellar y Zero-Knowledge proofs. El jugador cocina pizzas siguiendo el ritmo de la música — cada ingrediente cae al compás y hay que capturarlo en el momento exacto. Construido en un hackathon, integra ZK para verificación de puntajes on-chain de forma transparente y sin revelar datos privados.",
+      en: "Rhythm Slice combines rhythm game mechanics with the Stellar blockchain and Zero-Knowledge proofs. The player cooks pizzas to the rhythm of the music — every ingredient falls to the beat and must be captured at the exact moment. Built in a hackathon, it integrates ZK for transparent on-chain score verification without revealing private data.",
+      pt: "O Rhythm Slice combina mecânicas de jogo de ritmo com a blockchain Stellar e provas Zero-Knowledge. O jogador cozinha pizzas no ritmo da música — cada ingrediente cai na batida e deve ser capturado no momento exato. Construído em um hackathon, integra ZK para verificação transparente de pontuação on-chain sem revelar dados privados.",
+    },
+    tecnologias: ["Unity", "C#", "Stellar", "Zero-Knowledge", "Web Build"],
+    color: "linear-gradient(135deg, #1a0520 0%, #6b1fb1 35%, #e91e8c 65%, #ff6b35 100%)",
+    colorAccent: "#e91e8c",
+    caracteristicas: {
+      es: [
+        "Mecánica rhythm game clásica",
+        "Temática de pizza única",
+        "ZK proofs sobre Stellar blockchain",
+        "Verificación de puntajes on-chain",
+        "Build para web",
+        "Sistema de combos y puntuación",
+      ],
+      en: [
+        "Classic rhythm game mechanics",
+        "Unique pizza theme",
+        "ZK proofs on Stellar blockchain",
+        "On-chain score verification",
+        "Web build",
+        "Combo and scoring system",
+      ],
+      pt: [
+        "Mecânica clássica de jogo de ritmo",
+        "Tema único de pizza",
+        "Provas ZK na blockchain Stellar",
+        "Verificação de pontuação on-chain",
+        "Build para web",
+        "Sistema de combos e pontuação",
+      ],
+    },
+    resultado: {
+      es: "En desarrollo activo — el primer ZK rhythm game sobre Stellar.",
+      en: "Under active development — the first ZK rhythm game on Stellar.",
+      pt: "Em desenvolvimento ativo — o primeiro jogo de ritmo ZK no Stellar.",
+    },
+    quote: {
+      es: "Rhythm Slice — ZK Rhythm Game on Stellar.",
+      en: "Rhythm Slice — ZK Rhythm Game on Stellar.",
+      pt: "Rhythm Slice — ZK Rhythm Game no Stellar.",
+    },
+    quoteAutor: "Browns Studio",
+    linkDemo: "https://cabscrypto.github.io/guitarPizza--AntiGravity/",
+    año: 2026,
+    comingSoon: true,
+  },
+  {
     slug: "spicy-crust-hub",
     nombre: "SpicyCrust Taberna Real",
     tipo: {
@@ -254,68 +316,6 @@ export const proyectos: Proyecto[] = [
     },
     quoteAutor: "SpicyCrust Labs",
     linkDemo: "https://slashslice.spicycrust.com/",
-    año: 2026,
-    comingSoon: true,
-  },
-  {
-    slug: "rhythm-slice",
-    nombre: "Rhythm Slice",
-    tipo: {
-      es: "ZK Rhythm Game",
-      en: "ZK Rhythm Game",
-      pt: "ZK Rhythm Game",
-    },
-    descripcion: {
-      es: "Juego de ritmo estilo Guitar Hero con temática de pizzas y tecnología Zero-Knowledge sobre Stellar. Cada nota es un ingrediente, cada canción una pizza diferente.",
-      en: "Guitar Hero-style rhythm game with pizza theme and Zero-Knowledge technology on Stellar. Every note is an ingredient, every song a different pizza.",
-      pt: "Jogo de ritmo no estilo Guitar Hero com tema de pizza e tecnologia Zero-Knowledge no Stellar. Cada nota é um ingrediente, cada música uma pizza diferente.",
-    },
-    descripcionLarga: {
-      es: "Rhythm Slice combina mecánicas de rhythm game con la blockchain de Stellar y Zero-Knowledge proofs. El jugador cocina pizzas siguiendo el ritmo de la música — cada ingrediente cae al compás y hay que capturarlo en el momento exacto. Construido en un hackathon, integra ZK para verificación de puntajes on-chain de forma transparente y sin revelar datos privados.",
-      en: "Rhythm Slice combines rhythm game mechanics with the Stellar blockchain and Zero-Knowledge proofs. The player cooks pizzas to the rhythm of the music — every ingredient falls to the beat and must be captured at the exact moment. Built in a hackathon, it integrates ZK for transparent on-chain score verification without revealing private data.",
-      pt: "O Rhythm Slice combina mecânicas de jogo de ritmo com a blockchain Stellar e provas Zero-Knowledge. O jogador cozinha pizzas no ritmo da música — cada ingrediente cai na batida e deve ser capturado no momento exato. Construído em um hackathon, integra ZK para verificação transparente de pontuação on-chain sem revelar dados privados.",
-    },
-    tecnologias: ["Unity", "C#", "Stellar", "Zero-Knowledge", "Web Build"],
-    color: "linear-gradient(135deg, #1a0520 0%, #6b1fb1 35%, #e91e8c 65%, #ff6b35 100%)",
-    colorAccent: "#e91e8c",
-    caracteristicas: {
-      es: [
-        "Mecánica rhythm game clásica",
-        "Temática de pizza única",
-        "ZK proofs sobre Stellar blockchain",
-        "Verificación de puntajes on-chain",
-        "Build para web",
-        "Sistema de combos y puntuación",
-      ],
-      en: [
-        "Classic rhythm game mechanics",
-        "Unique pizza theme",
-        "ZK proofs on Stellar blockchain",
-        "On-chain score verification",
-        "Web build",
-        "Combo and scoring system",
-      ],
-      pt: [
-        "Mecânica clássica de jogo de ritmo",
-        "Tema único de pizza",
-        "Provas ZK na blockchain Stellar",
-        "Verificação de pontuação on-chain",
-        "Build para web",
-        "Sistema de combos e pontuação",
-      ],
-    },
-    resultado: {
-      es: "En desarrollo activo — el primer ZK rhythm game sobre Stellar.",
-      en: "Under active development — the first ZK rhythm game on Stellar.",
-      pt: "Em desenvolvimento ativo — o primeiro jogo de ritmo ZK no Stellar.",
-    },
-    quote: {
-      es: "Rhythm Slice — ZK Rhythm Game on Stellar.",
-      en: "Rhythm Slice — ZK Rhythm Game on Stellar.",
-      pt: "Rhythm Slice — ZK Rhythm Game no Stellar.",
-    },
-    quoteAutor: "Browns Studio",
-    linkDemo: "https://cabscrypto.github.io/guitarPizza--AntiGravity/",
     año: 2026,
     comingSoon: true,
   },
@@ -684,6 +684,7 @@ export const proyectos: Proyecto[] = [
     quoteAutor: "GM Nail Artist",
     linkDemo: "https://gm-nailartist.vercel.app",
     año: 2026,
+  
   
   }
 ];
