@@ -43,6 +43,22 @@ const AUDIOS = [
     file: "public/voiceovers/reel_training_cta_v1.mp3",
     text: "Ponle un asistente de inteligencia artificial a tu equipo corporativo. Empieza hoy en browns punto studio.",
   },
+  {
+    file: "public/voiceovers/reel_training2_hook_v1.mp3",
+    text: "El 70% de los errores gráficos son por no leer el manual de marca. ¿Tus diseñadores pierden tiempo buscando códigos de color? Mira cómo nuestra Inteligencia Artificial les responde al instante usando tus propios manuales.",
+  },
+  {
+    file: "public/voiceovers/reel_training2_cta_v1.mp3",
+    text: "Ponle un asistente de inteligencia artificial a tu equipo creativo. Empieza hoy en browns punto studio.",
+  },
+  {
+    file: "public/voiceovers/reel_training3_hook_v1.mp3",
+    text: "Llega fin de mes y tu equipo de recursos humanos colapsa respondiendo las mismas 500 dudas sobre liquidaciones. Mira cómo nuestra Inteligencia Artificial ataja esto por WhatsApp al instante.",
+  },
+  {
+    file: "public/voiceovers/reel_training3_cta_v1.mp3",
+    text: "Automatiza la atención a tus colaboradores con inteligencia artificial. Empieza hoy en browns punto studio.",
+  },
 ];
 
 async function generateAudio(text, outputFile) {

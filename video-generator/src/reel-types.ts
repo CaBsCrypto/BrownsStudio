@@ -15,8 +15,15 @@ export interface ReelVideoProps {
   ctaUrl: string;
   /** Optional industry-specific CTA headline */
   ctaHeadline?: string;
+  
+  /** Optional Video Scene (plays before chat) */
+  videoSceneSrc?: string;
+  videoSceneHeadline?: string;
+  videoSceneSubline?: string;
+
   /** Duration overrides (set by calculateMetadata) */
   hookDurationInFrames?: number;
+  videoSceneDurationInFrames?: number;
   chatDurationInFrames?: number;
   ctaDurationInFrames?: number;
 }

@@ -20,11 +20,13 @@ export const ReelVideo: React.FC = () => {
     <>
       {(reelLeads as ReelVideoProps[]).map((lead) => {
         const hookFrames = lead.hookDurationInFrames ?? 210;
+        const videoFrames = lead.videoSceneSrc ? (lead.videoSceneDurationInFrames ?? 150) : 0;
         const chatFrames = lead.chatDurationInFrames ?? 1350;
         const ctaFrames = lead.ctaDurationInFrames ?? 240;
 
-        // Total duration accounting for transition overlaps (20 slide + 18 fade)
-        const totalFrames = hookFrames + chatFrames + ctaFrames - 20 - 18;
+        // Total duration accounting for transition overlaps
+        const transitionOverlap = lead.videoSceneSrc ? (20 + 20 + 18) : (20 + 18); // slide + slide? + fade
+        const totalFrames = hookFrames + videoFrames + chatFrames + ctaFrames - transitionOverlap;
 
         return (
           <Composition

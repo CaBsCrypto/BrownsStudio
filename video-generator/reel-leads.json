@@ -130,5 +130,93 @@
     "hookDurationInFrames": 280,
     "chatDurationInFrames": 800,
     "ctaDurationInFrames": 240
+  },
+  {
+    "id": "training-reel-2",
+    "industry": "training",
+    "businessName": "Agencia AI",
+    "botName": "Asistente Creativo",
+    "statNumber": "70%",
+    "statText": "de los errores gráficos son por no leer el manual.",
+    "statSubline": "¿Tus diseñadores pierden tiempo buscando el código de color?",
+    "messages": [
+      {
+        "sender": "client",
+        "text": "¡Hola! Estoy armando la campaña. ¿Cuál es el código de color exacto para el logo de EcoLife?"
+      },
+      {
+        "sender": "bot",
+        "text": "¡Hola! 👋 Según el Manual de Marca de EcoLife, el código Hex principal es #2E7D32 y el Pantone es 356 C."
+      },
+      {
+        "sender": "client",
+        "text": "Perfecto. ¿Puedo poner el logo sobre fondo blanco?"
+      },
+      {
+        "sender": "bot",
+        "text": "No, está prohibido. El manual (Pág. 15) indica que siempre debe ir sobre fondo oscuro o la textura corporativa oficial."
+      },
+      {
+        "sender": "client",
+        "text": "Casi me equivoco. ¿Me pasas la textura corporativa por favor?"
+      },
+      {
+        "sender": "bot",
+        "text": "Claro, aquí tienes el enlace directo a los assets: drive.agencia.com/ecolife/assets. ¿Te ayudo con algo más?"
+      },
+      {
+        "sender": "client",
+        "text": "Nada más, con eso saco la campaña. ¡Gracias!"
+      }
+    ],
+    "ctaUrl": "browns.studio/demo",
+    "ctaHeadline": "Ponle un asistente IA a tu equipo",
+    "hookDurationInFrames": 390,
+    "chatDurationInFrames": 900,
+    "ctaDurationInFrames": 240
+  },
+  {
+    "id": "training-reel-3",
+    "industry": "training",
+    "businessName": "RRHH Bot",
+    "botName": "Asistente Nómina",
+    "statNumber": "500",
+    "statText": "dudas de nómina colapsan a tu equipo cada fin de mes.",
+    "statSubline": "¿RRHH pierde días explicando descuentos uno por uno?",
+    "messages": [
+      {
+        "sender": "client",
+        "text": "Hola, me llegó la liquidación pero me descontaron $25.000 por inasistencia. ¡Yo presenté mi licencia!"
+      },
+      {
+        "sender": "bot",
+        "text": "¡Hola! Dame un segundo para revisar tu ficha y registro de asistencia."
+      },
+      {
+        "sender": "bot",
+        "text": "Revisé tu caso. Tu licencia de los días 14 y 15 fue aprobada ayer en la tarde, cuando la nómina ya estaba cerrada."
+      },
+      {
+        "sender": "client",
+        "text": "¿Entonces pierdo esa plata de la licencia?"
+      },
+      {
+        "sender": "bot",
+        "text": "No te preocupes. El sistema reversará el descuento automáticamente y te pagaremos esos $25.000 como 'reliquidación' en tu próximo sueldo."
+      },
+      {
+        "sender": "client",
+        "text": "Ah qué alivio. Gracias por revisarlo tan rápido."
+      },
+      {
+        "sender": "bot",
+        "text": "¡De nada! Recuerda que también puedes pedirme el PDF de tu liquidación por aquí mismo. ¡Buen turno!"
+      }
+    ],
+    "ctaUrl": "browns.studio/demo",
+    "ctaHeadline": "Automatiza RRHH con IA",
+    "hookDurationInFrames": 410,
+    "chatDurationInFrames": 900,
+    "ctaDurationInFrames": 240
   }
 ]

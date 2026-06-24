@@ -17,6 +17,7 @@ import { slide } from "@remotion/transitions/slide";
 import { fade } from "@remotion/transitions/fade";
 import { ReelVideoProps } from "./reel-types";
 import { ReelStatHook } from "./components/ReelStatHook";
+import { ReelVideoSlide } from "./components/ReelVideoSlide";
 import { WhatsAppChat, getAppearFrame } from "./components/WhatsAppChat";
 import { ReelCtaSlide } from "./components/ReelCtaSlide";
 
@@ -29,6 +30,7 @@ export const ReelVideoComposition: React.FC<ReelVideoProps> = (props) => {
   const { fps } = useVideoConfig();
 
   const {
+    id,
     industry,
     businessName,
     botName,
@@ -38,13 +40,18 @@ export const ReelVideoComposition: React.FC<ReelVideoProps> = (props) => {
     messages = [],
     ctaUrl,
     ctaHeadline,
+    videoSceneSrc,
+    videoSceneHeadline,
+    videoSceneSubline,
     hookDurationInFrames = 210,
+    videoSceneDurationInFrames = 150,
     chatDurationInFrames = 1350,
     ctaDurationInFrames = 240,
   } = props;
 
   // ── Audio timing ────────────────────────────────────────────────────────
-  const chatStartFrame = hookDurationInFrames - SLIDE_DURATION;
+  const videoFrames = videoSceneSrc ? videoSceneDurationInFrames - SLIDE_DURATION : 0;
+  const chatStartFrame = hookDurationInFrames + videoFrames - SLIDE_DURATION;
   const messagePings = messages.map(
     (_, index) => chatStartFrame + getAppearFrame(index)
   );
@@ -58,18 +65,14 @@ export const ReelVideoComposition: React.FC<ReelVideoProps> = (props) => {
   );
 
   // ── Voiceover file resolution ────────────────────────────────────────────
-  // Falls back to existing pitch voiceovers while reel-specific ones are pending.
-  //
-  // Once you generate your ElevenLabs audio, place the files in public/voiceovers/:
-  //   dental:   reel_dental_hook_v1.mp3  /  reel_dental_cta_v1.mp3
-  //   abogados: reel_abogados_hook_v1.mp3 / reel_abogados_cta_v1.mp3
-  // Then flip REEL_VO_READY to true.
   const REEL_VO_READY = true;
 
   const reelVoiceovers: Record<string, { hook: string; cta: string }> = {
-    dental:   { hook: "voiceovers/reel_dental_hook_v1.mp3",   cta: "voiceovers/reel_dental_cta_v1.mp3" },
-    abogados: { hook: "voiceovers/reel_abogados_hook_v1.mp3", cta: "voiceovers/reel_abogados_cta_v1.mp3" },
-    training: { hook: "voiceovers/reel_training_hook_v1.mp3", cta: "voiceovers/reel_training_cta_v1.mp3" },
+    "dental-reel":   { hook: "voiceovers/reel_dental_hook_v1.mp3",   cta: "voiceovers/reel_dental_cta_v1.mp3" },
+    "abogados-reel": { hook: "voiceovers/reel_abogados_hook_v1.mp3", cta: "voiceovers/reel_abogados_cta_v1.mp3" },
+    "training-reel": { hook: "voiceovers/reel_training_hook_v1.mp3", cta: "voiceovers/reel_training_cta_v1.mp3" },
+    "training-reel-2": { hook: "voiceovers/reel_training2_hook_v1.mp3", cta: "voiceovers/reel_training2_cta_v1.mp3" },
+    "training-reel-3": { hook: "voiceovers/reel_training3_hook_v1.mp3", cta: "voiceovers/reel_training3_cta_v1.mp3" },
   };
 
   // Existing on-disk fallbacks (same industry, different script)
@@ -81,7 +84,7 @@ export const ReelVideoComposition: React.FC<ReelVideoProps> = (props) => {
   const defaultFallback = { hook: "voiceovers/v1_dental_hook_v4.mp3", cta: "voiceovers/v1_dental_outro_v3.mp3" };
 
   const voiceover = REEL_VO_READY
-    ? (reelVoiceovers[industry] ?? defaultFallback)
+    ? (reelVoiceovers[id] ?? defaultFallback)
     : (fallbackVoiceovers[industry] ?? defaultFallback);
 
   return (
@@ -119,7 +122,28 @@ export const ReelVideoComposition: React.FC<ReelVideoProps> = (props) => {
           />
         </TransitionSeries.Sequence>
 
-        {/* Transition: Hook → WhatsApp — energetic slide from bottom */}
+        {videoSceneSrc ? (
+          <>
+            <TransitionSeries.Transition
+              presentation={slide({ direction: "from-bottom" })}
+              timing={springTiming({
+                config: { damping: 180, stiffness: 200 },
+                durationInFrames: SLIDE_DURATION,
+              })}
+            />
+            <TransitionSeries.Sequence durationInFrames={videoSceneDurationInFrames}>
+              <ReelVideoSlide
+                industry={industry}
+                videoSrc={videoSceneSrc}
+                headline={videoSceneHeadline}
+                subline={videoSceneSubline}
+                durationInFrames={videoSceneDurationInFrames}
+              />
+            </TransitionSeries.Sequence>
+          </>
+        ) : null}
+
+        {/* Transition: Hook/Video → WhatsApp — energetic slide from bottom */}
         <TransitionSeries.Transition
           presentation={slide({ direction: "from-bottom" })}
           timing={springTiming({
