@@ -1,0 +1,42 @@
+[
+  {
+    "id": "BS-AI-2026-001",
+    "student": "Diego Silva",
+    "course": "IA para Ventas y Prospección B2B",
+    "courseEn": "AI for B2B Sales & Outbound Prospections",
+    "coursePt": "IA para Vendas e Prospecção B2B",
+    "date": "10/07/2026",
+    "dateEn": "July 10, 2026",
+    "datePt": "10 de Julho de 2026"
+  },
+  {
+    "id": "BS-AI-2026-002",
+    "student": "Sofía Morales",
+    "course": "IA para Automatización de Procesos",
+    "courseEn": "AI for Process Automation",
+    "coursePt": "IA para Automação de Processos",
+    "date": "12/07/2026",
+    "dateEn": "July 12, 2026",
+    "datePt": "12 de Julho de 2026"
+  },
+  {
+    "id": "BS-AI-2026-003",
+    "student": "Cristian Araya",
+    "course": "Formación en Desarrollo de Software & IA",
+    "courseEn": "AI & Software Development Training",
+    "coursePt": "Formação em Desenvolvimento de Software & IA",
+    "date": "15/07/2026",
+    "dateEn": "July 15, 2026",
+    "datePt": "15 de Julho de 2026"
+  },
+  {
+    "id": "BS-AI-2026-004",
+    "student": "Valeria Pérez",
+    "course": "IA para Marketing & SEO Programático",
+    "courseEn": "AI for Marketing & Programmatic SEO",
+    "coursePt": "IA para Marketing & SEO Programático",
+    "date": "16/07/2026",
+    "dateEn": "July 16, 2026",
+    "datePt": "16 de Julho de 2026"
+  }
+]

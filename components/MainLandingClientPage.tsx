@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { ArrowLeft, BookOpen, Sparkles, BrainCircuit } from "lucide-react";
+import { BookOpen, Sparkles, BrainCircuit } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WorkshopsShowcase from "@/components/WorkshopsShowcase";
@@ -13,19 +12,25 @@ import RoadmapSimulator from "@/components/RoadmapSimulator";
 import FormacionFAQ from "@/components/FormacionFAQ";
 import TrainingPricing from "@/components/TrainingPricing";
 import WorkAdaptability from "@/components/WorkAdaptability";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import BrownsOSLoader from "@/components/BrownsOSLoader";
 import SkillsDiagnosis from "@/components/SkillsDiagnosis";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
-export default function FormacionPage() {
+interface MainLandingClientPageProps {
+  locale: string;
+}
+
+export default function MainLandingClientPage({ locale }: MainLandingClientPageProps) {
   const { t, lang } = useLang();
   const [isAdaptModalOpen, setIsAdaptModalOpen] = useState(false);
 
   // Safe cast or direct access from translation object
   const fp = (t as any).formacionPage || {
-    back: "Volver al inicio",
     title: "Capacítate para la Próxima Generación de Empleos",
     subtitle: "Domina el desarrollo de software con IA, la automatización de procesos y la creación de agentes autónomos para liderar el futuro profesional.",
-    heroCta: "Reserva tu consulta gratis"
+    heroCta: "Reserva tu consulta gratis",
+    back: "Volver al inicio"
   };
 
   return (
@@ -46,20 +51,12 @@ export default function FormacionPage() {
         }}
       />
 
+      <BrownsOSLoader />
       <Navbar />
 
       {/* Hero section */}
       <section className="pt-32 pb-12 sm:pt-40 sm:pb-16 relative z-10 px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto">
-          {/* Back link */}
-          <Link
-            href={`/${lang}`}
-            className="inline-flex items-center gap-2 text-xs text-[#5a5a5a] hover:text-[#00f0ff] transition-colors mb-8 uppercase tracking-widest"
-          >
-            <ArrowLeft size={12} />
-            {fp.back}
-          </Link>
-
           {/* Icon Badge */}
           <div
             className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-6"
@@ -153,6 +150,7 @@ export default function FormacionPage() {
       />
 
       <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

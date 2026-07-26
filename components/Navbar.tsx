@@ -2,46 +2,37 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { SITE_CONFIG, WHATSAPP_URL } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 interface NavTranslation {
   services: string;
   portfolio: string;
-  process: string;
-  pricing: string;
-  faq: string;
-  cta: string;
   formacion?: string;
-  solutions?: string;
-  solutionsList?: Record<string, string>;
-  auditor?: string;
+  cta: string;
 }
 
-const allSectionIds = ["inicio", "sobre-mi", "servicios", "auditor", "portfolio", "precios", "testimonios", "faq", "contacto"];
+const allSectionIds = ["inicio", "servicios", "portfolio"];
 
 export default function Navbar() {
   const { t, lang, toggle } = useLang();
-  const [scrolled, setScrolled]       = useState(false);
-  const [mobileOpen, setMobileOpen]   = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
 
   const nav = t.nav as NavTranslation;
-  const solutionsList = nav.solutionsList ? Object.entries(nav.solutionsList) : [];
+
+  // Customized labels requested by the user
+  const labelServices = lang === "es" ? "Servicios" : lang === "pt" ? "Serviços" : nav.services;
+  const labelFormacion = lang === "es" ? "Formaciones" : lang === "pt" ? "Formações" : (nav.formacion ?? "Training");
+  const labelPortfolio = lang === "es" ? "Portafolio" : lang === "pt" ? "Portfólio" : nav.portfolio;
 
   const navLinks = [
-    { label: nav.services, href: "#servicios", id: "servicios", page: false },
-    // { label: nav.auditor ?? "Auditor", href: "#auditor", id: "auditor", page: false },
-    { label: nav.portfolio, href: "#portfolio", id: "portfolio", page: false },
-    { label: nav.pricing,  href: "#precios",   id: "precios",   page: false },
-    { label: nav.faq,      href: "#faq",       id: "faq",       page: false },
-    { label: nav.formacion ?? "Formación", href: `/${lang}/formacion`, id: "formacion", page: true },
-    { label: "Demo", href: `/${lang}/demo`, id: "demo", page: true },
+    { label: labelServices, href: "#servicios", id: "servicios", page: false },
+    { label: labelFormacion, href: `/${lang}/formacion`, id: "formacion", page: true },
+    { label: labelPortfolio, href: "#portfolio", id: "portfolio", page: false },
   ];
-
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -70,7 +61,12 @@ export default function Navbar() {
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
     const id = href.replace("#", "");
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = `/${lang}${href}`;
+    }
   };
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -87,9 +83,7 @@ export default function Navbar() {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "backdrop-blur-md shadow-lg"
-            : "bg-transparent"
+          scrolled ? "backdrop-blur-md shadow-lg" : "bg-transparent"
         }`}
         style={scrolled ? { background: "rgba(0,0,0,0.85)", borderBottom: "1px solid rgba(72,72,72,0.15)" } : {}}
       >
@@ -118,82 +112,21 @@ export default function Navbar() {
 
             {/* Desktop nav */}
             <div className="hidden lg:flex items-center lg:gap-5 xl:gap-8">
-              {/* Link 1: Services */}
-              <button
-                onClick={() => handleNavClick("#servicios")}
-                className={`relative text-xs font-medium uppercase tracking-widest transition-all duration-300 cursor-pointer group ${
-                  activeSection === "servicios" ? "text-[#e5e5e5]" : "text-zinc-400 hover:text-white"
-                }`}
-              >
-                {t.nav.services}
-                <span
-                  className={`absolute -bottom-0.5 left-0 h-px transition-all duration-300 ${
-                    activeSection === "servicios" ? "w-full bg-[#00f0ff]" : "w-0 group-hover:w-full bg-[#484848]"
-                  }`}
-                />
-              </button>
-
-              {/* Solutions Dropdown */}
-              <div 
-                className="relative flex items-center"
-                onMouseEnter={() => setDropdownOpen(true)}
-                onMouseLeave={() => setDropdownOpen(false)}
-              >
-                <button
-                  className={`flex items-center gap-1 text-xs font-medium uppercase tracking-widest transition-all duration-300 cursor-pointer group ${
-                    dropdownOpen || activeSection === "soluciones" ? "text-[#00f0ff]" : "text-zinc-400 hover:text-white"
-                  }`}
-                >
-                  {nav.solutions ?? "Soluciones"}
-                  <ChevronDown size={12} className={`transition-transform duration-300 ${dropdownOpen ? "rotate-180 text-[#00f0ff]" : "text-zinc-400 group-hover:text-white"}`} />
-                </button>
-                
-                {/* Premium Glassmorphic Dropdown Menu */}
-                <div
-                  className={`absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 rounded-xl border transition-all duration-300 before:content-[''] before:absolute before:inset-x-0 before:-top-3 before:h-3 ${
-                    dropdownOpen 
-                      ? "opacity-100 translate-y-0 pointer-events-auto" 
-                      : "opacity-0 -translate-y-2 pointer-events-none"
-                  }`}
-                  style={{
-                    background: "rgba(10, 11, 10, 0.95)",
-                    backdropFilter: "blur(20px)",
-                    border: "1px solid rgba(0, 240, 255, 0.15)",
-                    boxShadow: "0 10px 40px rgba(0, 0, 0, 0.6)",
-                    padding: "8px 0",
-                    zIndex: 100,
-                  }}
-                >
-                  {solutionsList.map(([key, label]) => (
-                    <Link
-                      key={key}
-                      href={`/${lang}/soluciones/${key}`}
-                      onClick={() => setDropdownOpen(false)}
-                      className="flex items-center px-4 py-3 text-xs font-medium uppercase tracking-wider text-[#9e9e9e] hover:text-[#00f0ff] hover:bg-[#00f0ff]/5 transition-all duration-200"
-                    >
-                      <span className="mr-2 text-sm">
-                        {key === "dentistas" ? "🦷" : key === "salud" ? "🏥" : key === "estetica" ? "✨" : key === "abogados" ? "⚖️" : key === "propiedades" ? "🏠" : "🎓"}
-                      </span>
-                      {label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Other Hash Links */}
-              {navLinks.slice(1).map((link) => {
+              {navLinks.map((link) => {
                 const isActive = activeSection === link.id;
                 if (link.page) {
                   return (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`relative text-xs font-medium uppercase tracking-widest transition-all duration-300 group ${
-                        isActive ? "text-[#e5e5e5]" : "text-zinc-400 hover:text-white"
+                      className={`relative text-xs font-semibold uppercase tracking-widest transition-all duration-300 group ${
+                        isActive ? "text-[#00f0ff]" : "text-zinc-400 hover:text-white"
                       }`}
                     >
                       {link.label}
-                      <span className="absolute -bottom-0.5 left-0 h-px w-0 group-hover:w-full bg-[#484848] transition-all duration-300" />
+                      <span className={`absolute -bottom-0.5 left-0 h-px transition-all duration-300 ${
+                        isActive ? "w-full bg-[#00f0ff]" : "w-0 group-hover:w-full bg-[#484848]"
+                      }`} />
                     </Link>
                   );
                 }
@@ -201,8 +134,8 @@ export default function Navbar() {
                   <button
                     key={link.href}
                     onClick={() => handleNavClick(link.href)}
-                    className={`relative text-xs font-medium uppercase tracking-widest transition-all duration-300 cursor-pointer group ${
-                      isActive ? "text-[#e5e5e5]" : "text-zinc-400 hover:text-white"
+                    className={`relative text-xs font-semibold uppercase tracking-widest transition-all duration-300 cursor-pointer group ${
+                      isActive ? "text-[#00f0ff]" : "text-zinc-400 hover:text-white"
                     }`}
                   >
                     {link.label}
@@ -234,7 +167,7 @@ export default function Navbar() {
                 className="hidden sm:flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-black hover:scale-105 active:scale-[0.97] transition-all duration-300 shadow-[0_0_20px_rgba(198,198,199,0.15)]"
                 style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)" }}
               >
-                {t.nav.cta}
+                {nav.cta}
               </a>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
@@ -265,62 +198,14 @@ export default function Navbar() {
           style={{ background: "#0e0e0e", borderLeft: "1px solid rgba(72,72,72,0.2)" }}
         >
           <div className="flex flex-col h-full p-6 pt-20 overflow-y-auto">
-            {/* Link 1: Services */}
-            <button
-              onClick={() => handleNavClick("#servicios")}
-              className={`text-left py-4 text-sm font-medium uppercase tracking-widest transition-colors duration-200 cursor-pointer ${
-                activeSection === "servicios" ? "text-[#00f0ff]" : "text-zinc-400 hover:text-white"
-              }`}
-              style={{ borderBottom: "1px solid rgba(72,72,72,0.12)" }}
-            >
-              {t.nav.services}
-            </button>
-
-            {/* Mobile Solutions Accordion */}
-            <div className="py-2" style={{ borderBottom: "1px solid rgba(72,72,72,0.12)" }}>
-              <button
-                onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
-                className="w-full flex items-center justify-between text-left py-2 text-sm font-medium uppercase tracking-widest text-zinc-400 hover:text-[#e5e5e5] transition-colors"
-              >
-                <span>{nav.solutions ?? "Soluciones"}</span>
-                <ChevronDown size={14} className={`transition-transform duration-300 ${mobileSolutionsOpen ? "rotate-180 text-[#00f0ff]" : ""}`} />
-              </button>
-              
-              <div
-                className={`overflow-hidden transition-all duration-500 ${
-                  mobileSolutionsOpen ? "max-h-[300px] mt-2 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
-                }`}
-              >
-                <div className="pl-4 flex flex-col gap-3 py-2">
-                  {solutionsList.map(([key, label]) => (
-                    <Link
-                      key={key}
-                      href={`/${lang}/soluciones/${key}`}
-                      onClick={() => {
-                        setMobileSolutionsOpen(false);
-                        setMobileOpen(false);
-                      }}
-                      className="flex items-center text-xs font-semibold uppercase tracking-wider text-[#7c7c7c] hover:text-[#00f0ff] transition-all"
-                    >
-                      <span className="mr-2 text-base">
-                        {key === "dentistas" ? "🦷" : key === "salud" ? "🏥" : key === "estetica" ? "✨" : key === "abogados" ? "⚖️" : key === "propiedades" ? "🏠" : "🎓"}
-                      </span>
-                      {label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Other Mobile Links */}
-            {navLinks.slice(1).map((link, i) => {
+            {navLinks.map((link, i) => {
               const isActive = activeSection === link.id;
               if (link.page) {
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`text-left py-4 text-sm font-medium uppercase tracking-widest transition-colors duration-200 ${
+                    className={`text-left py-4 text-sm font-semibold uppercase tracking-widest transition-colors duration-200 ${
                       isActive ? "text-[#00f0ff]" : "text-zinc-400 hover:text-white"
                     }`}
                     style={{ borderBottom: "1px solid rgba(72,72,72,0.12)" }}
@@ -334,7 +219,7 @@ export default function Navbar() {
                 <button
                   key={link.href}
                   onClick={() => handleNavClick(link.href)}
-                  className={`text-left py-4 text-sm font-medium uppercase tracking-widest transition-colors duration-200 cursor-pointer ${
+                  className={`text-left py-4 text-sm font-semibold uppercase tracking-widest transition-colors duration-200 cursor-pointer ${
                     isActive ? "text-[#00f0ff]" : "text-zinc-400 hover:text-white"
                   }`}
                   style={{ borderBottom: "1px solid rgba(72,72,72,0.12)", animationDelay: `${(i + 1) * 0.05}s` }}
@@ -351,7 +236,7 @@ export default function Navbar() {
               style={{ background: "linear-gradient(135deg, #c6c6c7, #939eb5)" }}
               onClick={() => setMobileOpen(false)}
             >
-              {t.nav.cta}
+              {nav.cta}
             </a>
             {/* Language toggle mobile */}
             <button

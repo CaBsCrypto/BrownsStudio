@@ -218,5 +218,85 @@
     "hookDurationInFrames": 410,
     "chatDurationInFrames": 900,
     "ctaDurationInFrames": 240
+  },
+  {
+    "id": "webdev-reel-1",
+    "industry": "webdev",
+    "businessName": "Browns Studio",
+    "botName": "Desarrollo",
+    "statNumber": "53%",
+    "statText": "de las personas abandona tu web si tarda en cargar.",
+    "statSubline": "¿Tu página web refleja la calidad de tu servicio?",
+    "messages": [
+      {
+        "sender": "client",
+        "text": "Hola, necesito una página web para mi negocio, pero no sé por dónde empezar ni tengo tiempo."
+      },
+      {
+        "sender": "bot",
+        "text": "¡Hola! No te preocupes, danos tus requerimientos y nosotros nos encargamos de absolutamente todo."
+      },
+      {
+        "sender": "client",
+        "text": "Genial. Necesito que se vea muy moderna, que cargue rápido y que la gente pueda agendar reuniones ahí."
+      },
+      {
+        "sender": "bot",
+        "text": "¡Perfecto! Nos encargaremos del diseño, la programación y las integraciones. Llevaremos tu página al siguiente nivel."
+      },
+      {
+        "sender": "client",
+        "text": "¿Y en cuánto tiempo estaría lista?"
+      },
+      {
+        "sender": "bot",
+        "text": "En solo 2 semanas tendrás una web ultrarrápida, optimizada y lista para vender."
+      }
+    ],
+    "ctaUrl": "browns.studio/web",
+    "ctaHeadline": "Lleva tu página al siguiente nivel",
+    "hookDurationInFrames": 280,
+    "chatDurationInFrames": 800,
+    "ctaDurationInFrames": 240
+  },
+  {
+    "id": "webdev-reel-2",
+    "industry": "webdev",
+    "businessName": "Browns Studio",
+    "botName": "Soporte",
+    "statNumber": "3s",
+    "statText": "tienen tus clientes para juzgar tu marca.",
+    "statSubline": "¿Sigues usando una web antigua que no convierte?",
+    "messages": [
+      {
+        "sender": "client",
+        "text": "Hola, mi web actual es muy difícil de actualizar y se ve mal en celulares."
+      },
+      {
+        "sender": "bot",
+        "text": "¡Hola! Una web lenta espanta a tus clientes. Danos tus requerimientos y nosotros la rediseñamos por completo."
+      },
+      {
+        "sender": "client",
+        "text": "Quiero algo fácil de usar donde pueda subir mis productos sin problemas."
+      },
+      {
+        "sender": "bot",
+        "text": "Hecho. Te entregaremos un panel autoadministrable muy sencillo y una web que se vea increíble en cualquier dispositivo."
+      },
+      {
+        "sender": "client",
+        "text": "¡Me encanta la idea! Empecemos."
+      },
+      {
+        "sender": "bot",
+        "text": "Excelente. Enviaremos la propuesta por correo para que llevemos tu página al siguiente nivel."
+      }
+    ],
+    "ctaUrl": "browns.studio/web",
+    "ctaHeadline": "Nosotros nos encargamos",
+    "hookDurationInFrames": 280,
+    "chatDurationInFrames": 800,
+    "ctaDurationInFrames": 240
   }
 ]

@@ -107,6 +107,24 @@ export const THEMES: Record<string, IndustryTheme> = {
     alertBorder1: "0, 240, 255",
     alertBorder2: "99, 102, 241",
     alertBorder3: "168, 85, 247",
+  },
+  webdev: {
+    primaryGlow: "16, 185, 129", // Emerald-500
+    secondaryGlow: "52, 211, 153", // Emerald-400
+    textGradient: "linear-gradient(180deg, #ffffff 0%, #a7f3d0 100%)",
+    chatHeader: "#064e3b", // Emerald-900
+    chatHeaderGradient: "linear-gradient(135deg, #064e3b 0%, #022c22 100%)",
+    chatHeaderColor: "#ecfdf5",
+    botAvatarGradient: "linear-gradient(135deg, #10b981 0%, #047857 100%)",
+    clientBubble: "#0f172a", // Slate-900
+    clientBubbleText: "#f8fafc", // Slate-50
+    checkMarks: "#10b981",
+    pipelineLine1: "#10b981", // Emerald
+    pipelineLine2: "#3b82f6", // Blue
+    pipelineLine3: "#8b5cf6", // Purple
+    alertBorder1: "16, 185, 129",
+    alertBorder2: "59, 130, 246",
+    alertBorder3: "139, 92, 246",
   }
 };
 

@@ -11,10 +11,6 @@ export interface CasoDeEstudio {
   solucion: string;
   implementacion: string;
   roi: string;
-  testimonio?: {
-    quote: string;
-    author: string;
-  };
 }
 
 export const casosDeEstudioData: Record<string, CasoDeEstudio> = {
@@ -31,11 +27,7 @@ export const casosDeEstudioData: Record<string, CasoDeEstudio> = {
     problema: "La clínica perdía más de 30 consultas mensuales de pacientes que escribían por WhatsApp fuera de horario comercial o cuando la recepcionista estaba ocupada atendiendo presencialmente.",
     solucion: "Implementamos un Agente de IA Conversacional capaz de leer el calendario de la clínica en tiempo real, cotizar tratamientos de rutina y agendar horas automáticamente directamente por WhatsApp.",
     implementacion: "El bot fue entrenado con las FAQs de la clínica (horarios, seguros médicos aceptados, precios base). Se conectó a su CRM y a Google Calendar. Cuando un lead es complejo, el bot transfiere la conversación a la recepcionista.",
-    roi: "En el primer mes, el agente recuperó 15 citas que hubiesen sido ignoradas, generando un retorno sobre la inversión (ROI) del 800% respecto al costo de mantención del bot.",
-    testimonio: {
-      quote: "Nunca pensé que la Inteligencia Artificial podría tratar a los pacientes con tanta empatía. Nuestro calendario está lleno y la recepcionista por fin respira.",
-      author: "Dra. Macarena, Directora Clínica"
-    }
+    roi: "En el primer mes, el agente recuperó 15 citas que hubiesen sido ignoradas, generando un retorno sobre la inversión (ROI) del 800% respecto al costo de mantención del bot."
   },
   "estudio-juridico-chile": {
     slug: "estudio-juridico-chile",
@@ -50,10 +42,6 @@ export const casosDeEstudioData: Record<string, CasoDeEstudio> = {
     problema: "Los abogados dedicaban hasta 3 horas diarias a responder mensajes de WhatsApp de clientes preguntando '¿cómo va mi caso?' o '¿qué significa esta notificación del tribunal?'.",
     solucion: "Desarrollamos JurisClaro AI, un bot conectado a la base de datos de causas del estudio. El cliente ingresa su RUT y la IA busca la última resolución del Poder Judicial y la explica en palabras simples.",
     implementacion: "Se integró un modelo de lenguaje avanzado (Gemini 2.0) optimizado con un diccionario jurídico chileno para asegurar precisión técnica sin perder el tono amable.",
-    roi: "El estudio recuperó 60 horas facturables al mes, mejorando drásticamente el servicio al cliente y permitiendo a los abogados enfocarse en la estrategia legal.",
-    testimonio: {
-      quote: "El nivel de tranquilidad que le da a nuestros clientes tener respuestas inmediatas es invaluable. Nos diferenciamos de toda la competencia.",
-      author: "Abogado Socio"
-    }
+    roi: "El estudio recuperó 60 horas facturables al mes, mejorando drásticamente el servicio al cliente y permitiendo a los abogados enfocarse en la estrategia legal."
   }
 };
