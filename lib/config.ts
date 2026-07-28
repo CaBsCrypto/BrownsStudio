@@ -9,6 +9,8 @@ export const SITE_CONFIG = {
   instagram: "https://instagram.com/brownsstudio",
   linkedin: "https://linkedin.com/company/brownsstudio",
   youtube: "https://youtube.com/@brownsstudio",
+  github: "https://github.com/CaBsCrypto",
+  x: "https://x.com/CaBsCrypto",
   url: "https://browns.studio",
   spotsAvailable: 4, // Actualizar mensualmente
 };
@@ -24,4 +26,3 @@ export function getWhatsAppWithPackage(packageName: string): string {
   const msg = `Hola, vi su web y me interesa cotizar el paquete ${packageName}`;
   return `https://wa.me/${SITE_CONFIG.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(msg)}`;
 }
-

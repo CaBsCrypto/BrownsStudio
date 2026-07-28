@@ -3,14 +3,12 @@
 import { useEffect, useRef } from "react";
 import {
   CheckCircle2, Brain, Code2, BarChart3, FileText,
-  PenTool, Search, Lightbulb, type LucideIcon,
+  PenTool, Search, Lightbulb, Github, Linkedin, type LucideIcon,
 } from "lucide-react";
-import { WHATSAPP_URL } from "@/lib/config";
+import { WHATSAPP_URL, SITE_CONFIG } from "@/lib/config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 const certIcons: LucideIcon[] = [Brain, Code2, BarChart3, FileText, PenTool, Search, Lightbulb];
-
-const skills = ["Antigravity", "AI Studio", "Claude", "Codex", "OpenCode"];
 
 export default function SobreMi() {
   const { lang, t } = useLang();
@@ -69,23 +67,67 @@ export default function SobreMi() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/cristian.jpeg"
-                    alt="Cristian"
+                    alt="Cristian Brown"
                     className="w-full h-full object-cover grayscale-[0.1] group-hover/photo:grayscale-0 transition-all duration-1000"
                     style={{ objectPosition: "40% 30%" }}
                   />
 
                   {/* Bottom info overlay */}
-                  <div className="absolute inset-x-0 bottom-0 p-8 pt-20 bg-gradient-to-t from-[#121212] via-[#121212]/80 to-transparent">
+                  <div className="absolute inset-x-0 bottom-0 p-6 pt-20 bg-gradient-to-t from-[#121212] via-[#121212]/90 to-transparent">
                     <div className="relative z-10">
-                      <p className="text-accent-gold font-mono text-[10px] uppercase tracking-[0.3em] mb-2">{t.about.role}</p>
-                      <h3 className="font-display font-bold text-3xl sm:text-4xl text-white leading-tight mb-4">
+                      <p className="text-accent-gold font-mono text-[10px] uppercase tracking-[0.3em] mb-1">{t.about.role}</p>
+                      <h3 className="font-display font-bold text-2xl sm:text-3xl text-white leading-tight mb-3">
                         Cristian <span className="text-white/40">Brown</span>
                       </h3>
 
-                      {/* Availability badge */}
-                      <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_10px_#4ade80]" />
-                        <span className="text-green-400 text-[10px] font-bold uppercase tracking-widest">{t.about.available}</span>
+                      {/* Availability & Social Links Bar */}
+                      <div className="flex flex-wrap items-center justify-between gap-2.5 pt-2 border-t border-white/10">
+                        {/* Availability badge */}
+                        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
+                          <span className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_10px_#4ade80]" />
+                          <span className="text-green-400 text-[10px] font-bold uppercase tracking-widest">{t.about.available}</span>
+                        </div>
+
+                        {/* Social Buttons */}
+                        <div className="flex items-center gap-1.5">
+                          {/* X (Twitter) */}
+                          <a
+                            href={SITE_CONFIG.x}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="X / Twitter"
+                            title="X (Twitter)"
+                            className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 hover:border-[#00f0ff]/40 hover:bg-[#00f0ff]/10 text-white/70 hover:text-[#00f0ff] flex items-center justify-center transition-all duration-200"
+                          >
+                            <svg width={13} height={13} viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                          </a>
+
+                          {/* GitHub */}
+                          <a
+                            href={SITE_CONFIG.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="GitHub"
+                            title="GitHub"
+                            className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 hover:border-[#00f0ff]/40 hover:bg-[#00f0ff]/10 text-white/70 hover:text-[#00f0ff] flex items-center justify-center transition-all duration-200"
+                          >
+                            <Github size={14} />
+                          </a>
+
+                          {/* LinkedIn */}
+                          <a
+                            href={SITE_CONFIG.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="LinkedIn"
+                            title="LinkedIn"
+                            className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 hover:border-[#00f0ff]/40 hover:bg-[#00f0ff]/10 text-white/70 hover:text-[#00f0ff] flex items-center justify-center transition-all duration-200"
+                          >
+                            <Linkedin size={14} />
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
