@@ -1,0 +1,60 @@
+.shell {
+  --surface-base: #050505;
+  --surface: #0d0d0d;
+  --surface-low: #111111;
+  --surface-mid: #171717;
+  --surface-high: #1e1e1e;
+  --surface-highest: #242424;
+  --surface-bright: #2a2a2a;
+  --space: #050a18;
+  --primary: #c6c6c7;
+  --secondary: #939eb5;
+  --tertiary: #00f0ff;
+  --tertiary-dim: #00c8d8;
+  --outline: #404040;
+  --accent-red: #ff003c;
+  --on-surface: #e5e5e5;
+  --on-surface-variant: #9a9a9a;
+  --on-primary: #000000;
+  --bg-primary: #050505;
+  --bg-secondary: #0e0e0e;
+  --bg-tertiary: #1f1f1f;
+  --accent-gold: #c6c6c7;
+  --text-primary: #e5e5e5;
+  --text-secondary: #9e9e9e;
+  --text-muted: #5a5a5a;
+  --font-dm-sans: var(--font-dm, Inter);
+  --font-space-grotesk: var(--font-archivo, Inter);
+  --font-body: var(--font-dm, Inter), system-ui, sans-serif;
+  --font-heading: var(--font-body);
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: var(--on-surface);
+  color-scheme: dark;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.shell :where(h1, h2, h3, h4):not([class*="leading-"]) {
+  line-height: inherit;
+}
+
+.shell :where(h1, h2, h3, h4):not([class*="tracking-"]) {
+  letter-spacing: normal;
+}
+
+.shell :focus-visible {
+  outline: 2px solid var(--tertiary);
+  outline-offset: 2px;
+}
+
+.shell ::selection {
+  background: rgb(0 240 255 / 18%);
+  color: var(--on-surface);
+}
+
+.shell ::-webkit-scrollbar { width: 4px; }
+.shell ::-webkit-scrollbar-track { background: var(--surface); }
+.shell ::-webkit-scrollbar-thumb { background: rgb(0 240 255 / 25%); border-radius: 2px; }
+.shell ::-webkit-scrollbar-thumb:hover { background: rgb(0 240 255 / 45%); }

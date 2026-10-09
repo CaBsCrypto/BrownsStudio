@@ -1,8 +1,10 @@
 import type { MetadataRoute } from "next";
-import { SITE_CONFIG } from "@/lib/config";
 
 export default function robots(): MetadataRoute.Robots {
-  const base = SITE_CONFIG.url.replace(/\/$/, "");
+  // Preview and local builds stay closed to crawlers; metadata also applies noindex.
+  if (process.env.VERCEL_ENV !== "production") {
+    return { rules: { userAgent: "*", disallow: "/" } };
+  }
 
   return {
     rules: [
@@ -12,7 +14,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin", "/admin/", "/api/"],
       },
     ],
-    sitemap: `${base}/sitemap.xml`,
-    host: base,
+    sitemap: "https://www.browns.studio/sitemap.xml",
+    host: "https://www.browns.studio",
   };
 }

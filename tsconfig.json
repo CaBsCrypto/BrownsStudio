@@ -22,9 +22,8 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"],
+      "@geo/*": ["./landing-geo/src/*"]
     },
     "target": "ES2017"
   },
@@ -37,6 +36,7 @@
   ],
   "exclude": [
     "node_modules",
-    "video-generator"
+    "video-generator",
+    "landing-geo"
   ]
 }
