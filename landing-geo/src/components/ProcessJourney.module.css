@@ -1,0 +1,16 @@
+.board { position: relative; isolation: isolate; padding: 24px; border: 1px solid #d6e3ef; border-radius: 8px; background: #edf4fa; }
+.canvas { position: absolute; inset: -28px; z-index: 1; pointer-events: none; }
+.board[data-process-relief='webgl'] :global([data-process-card]) { box-shadow: 4px 8px 16px rgb(39 65 113 / .08); }
+.board[data-active-step='1'] :global([data-process-card='1']),
+.board[data-active-step='2'] :global([data-process-card='2']),
+.board[data-active-step='3'] :global([data-process-card='3']),
+.board[data-active-step='4'] :global([data-process-card='4']),
+.board[data-active-step='5'] :global([data-process-card='5']),
+.board[data-active-step='6'] :global([data-process-card='6']) { border-color: #2f5ce5; background: #f6f9ff; }
+.controls { display: flex; justify-content: flex-end; align-items: center; min-height: 44px; margin-bottom: 18px; }
+.controls button { min-height: 44px; padding: 10px 18px; border: 1px solid #b9cdee; border-radius: 3px; color: var(--blue); background: #f4f8ff; font-size: 14px; font-weight: 600; }
+.controls button:hover { border-color: var(--blue); background: #eaf1ff; }
+.controls button:disabled { cursor: wait; }
+.controls button[hidden] { display: none; }
+@media (max-width: 800px), (pointer: coarse) { .board { padding: 14px; } .canvas, .controls { display: none; } }
+@media (prefers-reduced-motion: reduce) { .canvas, .controls { display: none; } }

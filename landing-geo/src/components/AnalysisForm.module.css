@@ -1,0 +1,16 @@
+.form { padding: 32px; background: white; border: 1px solid #c0d2eb; border-radius: 20px; box-shadow: 0 24px 45px -30px #23456f88, inset 0 1px 0 white; }
+.field + .field { margin-top: 22px; }
+.field label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 15px; }
+.field input { display: block; width: 100%; min-width: 0; min-height: 52px; padding: 12px 14px; border: 1px solid #9bafc6; border-radius: 3px; background: var(--paper); color: var(--ink); font: inherit; font-size: 16px; }
+.field input::placeholder { color: #607286; opacity: 1; }
+.field input[aria-invalid="true"] { border-color: #a52c39; }
+.fieldError { margin-top: 8px; color: #9e2633; font-size: 14px; line-height: 1.5; }
+.privacy { margin-top: 24px; font-size: 13px; color: var(--muted); line-height: 1.65; }
+.submit { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 54px; margin-top: 22px; padding: 13px 16px; border: 1px solid var(--blue); border-radius: 3px; background: var(--blue); color: white; font-size: 15px; font-weight: 600; line-height: 1.4; }
+.submit:hover:not(:disabled) { background: #234bca; }
+.submit:disabled { cursor: default; background: #485f9a; border-color: #485f9a; }
+.status { min-height: 24px; margin-top: 16px; font-size: 14px; line-height: 1.5; }
+.status .fieldError { margin-top: 0; }
+.success { color: #205943; }
+@media (max-width: 760px) { .form { padding: 24px; } }
+@media (max-width: 380px) { .form { padding: 20px; } }

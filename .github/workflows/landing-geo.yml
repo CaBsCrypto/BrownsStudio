@@ -1,0 +1,60 @@
+name: Landing GEO
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: landing-geo-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  integration:
+    name: Root integration
+    runs-on: ubuntu-latest
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      VERCEL_ENV: preview
+      # The legacy build skips external embedding generation without credentials.
+      GEMINI_API_KEY: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          # Match the successful Vercel build and the root lockfile.
+          version: '10.28.0'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint
+      - run: pnpm run test:integration
+      - run: pnpm run build
+      - run: pnpm run typecheck
+
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: landing-geo
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: landing-geo/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test:geo
+      - run: npm run test:form
+      - run: npm run test:scene
+      - run: npm run build
+      - run: npm run typecheck
