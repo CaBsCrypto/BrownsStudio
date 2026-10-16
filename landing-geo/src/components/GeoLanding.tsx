@@ -43,9 +43,9 @@ export default function GeoLanding() {
         <div className={styles.container}>
           <div className={styles.sectionIntro}>
             <h2 id="services-title">Un inicio concreto.<br />Espacio para crecer.</h2>
-            <p>Tres servicios para necesidades distintas. Inicio y Avanzado suman una mantención mensual adicional a la implementación. Continuidad reúne mantención y evolución en una sola cuota. El análisis nos ayuda a recomendarte el alcance suficiente.</p>
+            <div><p>{direction.servicesIntro.description}</p><p>{direction.servicesIntro.note}</p></div>
           </div>
-          <ServiceCards services={direction.services} cta={direction.cta} />
+          <ServiceCards services={direction.services} cta={direction.cta} offer={direction.initialOffer} sample={direction.publicSample} evolutionTitle={direction.servicesIntro.evolutionTitle} />
           <p className={styles.serviceNote}>La oferta está en etapa piloto. Validamos los alcances antes de anunciarlos como disponibles. Puedes permanecer en Inicio mientras te resulte suficiente; las ampliaciones se acuerdan por separado.</p>
           <a className={styles.button} href="#analisis">{direction.cta}</a>
         </div>
@@ -72,9 +72,9 @@ export default function GeoLanding() {
           <div className={styles.analysisCopy}>
             <p className={styles.intro}>Empecemos por tu web</p>
             <h2 id="analysis-title">Pide tu análisis inicial gratis.</h2>
-            <p>Revisamos tu dominio y la información pública disponible. Recibes por correo un resumen con oportunidades comprobadas y prioridades para empezar.</p>
+            <p>Revisamos tu dominio y la información pública disponible. Recibes por correo un resumen de hallazgos verificables y prioridades para empezar.</p>
             <p>Comparte tu sitio y un correo. Confirmaremos el alcance de la revisión inicial y una fecha de entrega según el cupo disponible.</p>
-            <p className={styles.noCommitment}>La solicitud no te compromete a contratar.</p>
+            <p className={styles.noCommitment}>La solicitud no te compromete a contratar. No incluye implementación ni análisis automático.</p>
           </div>
           <AnalysisForm />
         </div>

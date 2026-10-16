@@ -36,6 +36,7 @@ const responseReader = await loadTypeScript('../src/lib/analysis-response.ts');
 const { readAnalysisResponse } = responseReader;
 const { default: AnalysisForm } = await loadTypeScript('../src/components/AnalysisForm.tsx', {
   '@geo/content/direction': direction,
+  '@geo/content/browns-public.json': information,
   '@geo/lib/analysis-validation': validation,
   '@geo/lib/analysis-response': responseReader,
   './AnalysisForm.module.css': {},
@@ -60,6 +61,12 @@ test('before hydration, fields remain usable and no-JavaScript contact guidance 
     assert.doesNotMatch(field, /\sdisabled(?:=|\s|>)/);
   }
   assert.match(html, /<noscript>.*Activa JavaScript.*contacto@browns\.studio.*<\/noscript>/);
+});
+
+test('public contact is available outside no-JavaScript guidance before hydration', () => {
+  const html = renderToStaticMarkup(createElement(AnalysisForm)).replace(/<noscript>.*?<\/noscript>/gs, '');
+  const links = [...html.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>/g)];
+  assert.ok(links.some(([, href]) => href === `mailto:${information.contact}`));
 });
 
 for (const body of ['<html>private firewall detail</html>', '']) test(`platform 429 with ${body ? 'HTML' : 'empty body'} shows a controlled wait message`, async () => {

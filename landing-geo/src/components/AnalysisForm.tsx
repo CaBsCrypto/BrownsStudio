@@ -2,6 +2,7 @@
 
 import { useRef, useState, useSyncExternalStore, type FormEvent } from 'react';
 import { direction } from '@geo/content/direction';
+import publicInformation from '@geo/content/browns-public.json';
 import { validateAnalysis, type FieldErrors } from '@geo/lib/analysis-validation';
 import { readAnalysisResponse } from '@geo/lib/analysis-response';
 import styles from './AnalysisForm.module.css';
@@ -49,7 +50,7 @@ export default function AnalysisForm() {
         throw new Error(result.message);
       }
       setStatus('success');
-      setMessage('Tu solicitud fue enviada. Te contactaremos por correo sobre tu análisis.');
+      setMessage('Tu solicitud fue enviada. Te contactaremos por correo para confirmar el alcance del análisis y una fecha de entrega según el cupo disponible.');
     } catch (error) {
       setStatus('error');
       setMessage(error instanceof Error && !['TimeoutError', 'AbortError', 'TypeError'].includes(error.name) ? error.message : 'No pudimos confirmar el envío. Inténtalo de nuevo; no necesitas volver a escribir tus datos.');
@@ -73,6 +74,7 @@ export default function AnalysisForm() {
     <div className={styles.status} role="status" aria-live="polite" aria-atomic="true">
       {status === 'sending' ? <p>Estamos enviando tu solicitud.</p> : message && <p className={status === 'error' ? styles.fieldError : styles.success}>{message}</p>}
     </div>
-    <noscript><p>Activa JavaScript para enviar este formulario. También puedes escribir a contacto@browns.studio.</p></noscript>
+    <p className={styles.alternative}>También puedes escribirnos a <a href={`mailto:${publicInformation.contact}`}>{publicInformation.contact}</a>.</p>
+    <noscript><p>Activa JavaScript para enviar este formulario. También puedes escribir a {publicInformation.contact}.</p></noscript>
   </form>;
 }

@@ -1,6 +1,6 @@
 **/node_modules/
 **/.next/
-**/.qa/
+**/.qa
 **/.vercel/
 **/.env*
 **/*.tsbuildinfo
@@ -8,6 +8,8 @@
 .git/
 .agents/
 .codex/
+.claude
+.mcp.json
 .kapso/
 .obsidian/
 .roo/
@@ -29,3 +31,4 @@ kapso.yaml
 scripts/test-*.mjs
 scripts/screenshots.mjs
 landing-geo/package-lock.json
+release-notes/

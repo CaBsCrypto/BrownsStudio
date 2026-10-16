@@ -1,57 +1,87 @@
-'use client';
-
-import { useEffect, useRef, useState } from 'react';
-import ResourceCube from './ResourceCube';
+import type { direction } from '@geo/content/direction';
 import styles from './ServiceCards.module.css';
 
-type Service = {
-  id: string; name: string; title: string; promise: string; delivery: string;
-  maintenance: string; boundary: string; billing: string; badge: string;
-};
+type Service = (typeof direction.services)[number];
+type Offer = typeof direction.initialOffer;
+type Sample = typeof direction.publicSample;
 
-function ServiceCard({ service, index, cta }: { service: Service; index: number; cta: string }) {
-  const [flipped, setFlipped] = useState(false);
-  const front = useRef<HTMLButtonElement>(null);
-  const back = useRef<HTMLButtonElement>(null);
-  const shouldFocus = useRef(false);
-  function turn(value: boolean) { shouldFocus.current = true; setFlipped(value); }
-  useEffect(() => {
-    if (shouldFocus.current) {
-      (flipped ? back : front).current?.focus({ preventScroll: true });
-      shouldFocus.current = false;
-    }
-  }, [flipped]);
-
-  return <article className={`${styles.card} ${styles[service.id] ?? ''}`} aria-label={`Servicio ${service.name}`}>
-    <div className={styles.rotator} data-flipped={flipped}>
-      <div className={`${styles.face} ${styles.front}`} aria-hidden={flipped} inert={flipped}>
-        <div className={styles.top}><span>{service.name}</span><span className={styles.badge}>{service.badge}</span></div>
-        <h3>{service.title}</h3>
-        <div className={styles.art}><ResourceCube variant={index} /></div>
-        <p className={styles.promise}>{service.promise}</p>
-        <p className={styles.deliverySummary}>{({ inicio: "Servicios, cobertura y preguntas frecuentes en recursos consultables.", avanzado: "Una fuente acordada, consultas de solo lectura y pruebas de conexión.", continuidad: "Revisión mensual, mejoras acordadas e informe del trabajo realizado." } as Record<string, string>)[service.id]}</p>
-        <p className={styles.billing}>{service.billing}</p>
-        <span className={styles.hint} aria-hidden="true">Ver entrega y límites <span>↗</span></span>
-        <button ref={front} className={styles.frontTrigger} onClick={() => turn(true)} aria-expanded={flipped} aria-controls={`details-${service.id}`} aria-label={`Ver detalles de ${service.name}`} />
+function PublicSample({ sample }: { sample: Sample }) {
+  return <aside className={styles.sample} aria-labelledby="sample-title">
+    <p className={styles.sampleLabel} id="sample-title">Muestra de una pieza real de Browns Studio · En validación</p>
+    <div className={styles.document}>
+      <div className={styles.documentHeading}>
+        <span className={styles.documentIcon} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h8l4 4v14H6V3Z" /><path d="M14 3v5h4M9 12h6M9 16h6" /></svg></span>
+        <div><p className={styles.documentBrand}>{sample.brand}</p><p className={styles.documentDescription}>Información pública consultable</p></div>
       </div>
-      <div id={`details-${service.id}`} className={`${styles.face} ${styles.back}`} aria-hidden={!flipped} inert={!flipped} onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); turn(false); } }}>
-        <button ref={back} className={styles.returnButton} onClick={() => turn(false)} aria-label={`Volver al frente de ${service.name}`}>← Volver <span>{service.name}</span></button>
-        <div className={styles.detailScroll} tabIndex={flipped ? 0 : -1} role="region" aria-label={`Entrega y límites de ${service.name}`}>
-          <h3>{service.title}</h3>
-          <h4>Qué entregamos</h4><p>{service.delivery}</p>
-          <h4>{service.id === 'continuidad' ? 'Mantención y evolución' : 'Mantención mensual adicional'}</h4><p>{service.maintenance}</p>
-          <h4>Hasta dónde llega</h4><p>{service.boundary}</p>
-          <p className={styles.backBilling}>{service.billing}</p>
-        </div>
-        <a className={styles.cta} href="#analisis">{cta}</a>
-      </div>
+      <dl className={styles.documentData}>
+        <div><dt>Servicio</dt><dd>{sample.serviceName}: {sample.serviceTitle}</dd></div>
+        <div><dt>Cobertura</dt><dd>{sample.coverage}<span>{sample.audience}</span></dd></div>
+        <div><dt>Contacto</dt><dd>{sample.contact}</dd></div>
+      </dl>
+      <a className={styles.resourceLink} href={sample.resourceHref}>Consultar la pieza publicada <span aria-hidden="true">↗</span></a>
     </div>
+    <div className={styles.sampleContext}>
+      <h4>Una entrega que puedes revisar</h4>
+      <p>Esta muestra reúne datos públicos de Browns Studio. La web y el recurso publicado usan la misma información.</p>
+      <p className={styles.verification}>{sample.verificationNote}</p>
+    </div>
+  </aside>;
+}
+
+function EvolutionService({ service, cta }: { service: Service; cta: string }) {
+  return <article className={styles.evolutionCard} aria-labelledby={'title-' + service.id}>
+    <div className={styles.serviceMeta}><span>{service.name}</span><span className={styles.badge}>{service.badge}</span></div>
+    <h4 id={'title-' + service.id}>{service.title}</h4>
+    <p className={styles.evolutionPromise}>{service.promise}</p>
+    <p className={styles.evolutionBilling}>{service.billing}</p>
+    <details className={styles.details}>
+      <summary>Ver entrega y límites de {service.name}<span aria-hidden="true">+</span></summary>
+      <div className={styles.expanded}>
+        <h5>Qué entregamos</h5><p>{service.delivery}</p>
+        <h5>{service.id === 'continuidad' ? 'Mantención y evolución' : 'Mantención mensual adicional'}</h5><p>{service.maintenance}</p>
+        <h5>Hasta dónde llega</h5><p>{service.boundary}</p>
+        <a className={styles.textCta} href="#analisis">{cta}</a>
+      </div>
+    </details>
   </article>;
 }
 
-export default function ServiceCards({ services, cta }: { services: readonly Service[]; cta: string }) {
-  return <>
-    <div className={styles.grid}>{services.map((service, index) => <ServiceCard key={service.id} service={service} index={index} cta={cta} />)}</div>
-    <noscript><div className={styles.fallback}>{services.map(service => <details key={service.id}><summary>Entrega y límites de {service.name}</summary><p>{service.delivery}</p><p>{service.maintenance}</p><p>{service.boundary}</p></details>)}</div></noscript>
-  </>;
+export default function ServiceCards({ services, cta, offer, sample, evolutionTitle }: {
+  services: readonly Service[]; cta: string; offer: Offer; sample: Sample; evolutionTitle: string;
+}) {
+  const initial = services.find(service => service.id === 'inicio');
+  if (!initial) return null;
+
+  return <div className={styles.services}>
+    <article className={styles.primary} aria-labelledby="title-inicio">
+      <header className={styles.primaryHeading}>
+        <div className={styles.serviceMeta}><span>{initial.name}</span><span className={styles.badge}>{initial.badge}</span></div>
+        <h3 id="title-inicio">{initial.title}</h3>
+        <p className={styles.primaryPromise}>{initial.promise}</p>
+        <p className={styles.primaryBilling}>{initial.billing}</p>
+      </header>
+      <div className={styles.primaryGrid}>
+        <div className={styles.offerContent}>
+          <dl className={styles.offerFacts}>
+            <div><dt>Para quién</dt><dd>{offer.audience}.</dd></div>
+            <div><dt>Qué resolvemos</dt><dd>{offer.problem}</dd></div>
+            <div className={styles.deliverables}><dt>Qué recibes</dt><dd><ul>{offer.deliverables.map(item => <li key={item}>{item}</li>)}</ul></dd></div>
+            <div><dt>Qué necesitamos de ti</dt><dd>{offer.clientInput}</dd></div>
+            <div><dt>Qué queda fuera</dt><dd>{offer.exclusions}</dd></div>
+            <div className={styles.pricing}><dt>Precio y entrega acordados</dt><dd>{offer.pricing}</dd></div>
+          </dl>
+        </div>
+        <PublicSample sample={sample} />
+      </div>
+      <div className={styles.maintenance}>
+        <div><h4>Qué cubre la mantención mensual</h4><p>{offer.maintenance}</p></div>
+        <a className={styles.cta} href="#analisis">{cta}</a>
+      </div>
+    </article>
+    <div className={styles.evolution}>
+      <h3>{evolutionTitle}</h3>
+      <p>Podemos evaluar una conexión o sumar evolución sobre lo que ya entregamos. El siguiente paso depende de lo que necesite tu empresa.</p>
+      <div className={styles.evolutionGrid}>{services.filter(service => service.id !== 'inicio').map(service => <EvolutionService key={service.id} service={service} cta={cta} />)}</div>
+    </div>
+  </div>;
 }

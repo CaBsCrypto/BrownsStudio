@@ -12,5 +12,7 @@
 .status { min-height: 24px; margin-top: 16px; font-size: 14px; line-height: 1.5; }
 .status .fieldError { margin-top: 0; }
 .success { color: #205943; }
+.alternative { margin-top: 8px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.alternative a { display: inline-block; max-width: 100%; min-height: 44px; padding-block: 10px; color: var(--blue); overflow-wrap: anywhere; text-decoration: underline; }
 @media (max-width: 760px) { .form { padding: 24px; } }
 @media (max-width: 380px) { .form { padding: 20px; } }
