@@ -111,7 +111,7 @@
   .competitor h3 { font-size: 10px; }
   .competitor p { font-size: 8.5px; }
   .factory[data-model-ready="false"] .competitor { top: 30% !important; }
-  .factory[data-model-ready="false"] .company { top: 62% !important; }
+  .factory[data-model-ready="false"] .company { top: 74% !important; }
 }
 @container (max-width: 330px) {
   .story { --question-half: 67px; }
