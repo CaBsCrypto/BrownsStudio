@@ -3,12 +3,16 @@
 .navigation header { position: relative; top: auto; }
 .navigation header > div { width: min(1240px, calc(100% - 80px)); }
 .navigation header a { border-radius: 3px; }
-.hero { padding: 50px 0 76px; }
-.heroLayout { display: grid; grid-template-columns: minmax(0, 48fr) minmax(0, 52fr); gap: 42px; align-items: center; }
-.heroCopy { min-width: 0; }
+.hero { position: relative; isolation: isolate; overflow: clip; padding: 58px 0 76px; background: linear-gradient(112deg, var(--paper) 32%, #f5f8ff 72%, #edf4ff); }
+.hero::before { content: ''; position: absolute; z-index: -1; width: min(780px, 67vw); height: 620px; right: -100px; top: -40px; background: radial-gradient(ellipse at 55% 55%, #dce9ffb3, transparent 66%); pointer-events: none; }
+.hero::after { content: ''; position: absolute; z-index: -1; inset: 0 0 0 48%; background-image: radial-gradient(#83a4d3 1px, transparent 1px); background-size: 24px 24px; opacity: .16; mask-image: radial-gradient(ellipse at 55% 53%, #000, transparent 67%); pointer-events: none; }
+.heroLayout { display: grid; grid-template-columns: minmax(0, 46fr) minmax(0, 54fr); gap: 20px; align-items: center; }
+.heroCopy { position: relative; min-width: 0; padding-block: 12px; }
 .intro { color: var(--blue); font-size: 14px; font-weight: 600; }
-.hero h1 { max-width: 1050px; margin-top: 30px; font-size: clamp(48px, 4.3vw, 62px); font-weight: 650; line-height: 1.04; letter-spacing: -.057em; text-wrap: pretty; }
-.description { max-width: 680px; margin-top: 28px; color: var(--muted); font-size: 20px; line-height: 1.6; }
+.hero .intro { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; line-height: 1.5; }
+.hero .intro::before { content: ''; flex: 0 0 auto; width: 18px; height: 3px; border-radius: 2px; background: var(--blue); }
+.hero h1 { max-width: 10.2em; margin-top: 24px; font-size: clamp(48px, 4.3vw, 62px); font-weight: 650; line-height: 1.045; letter-spacing: -.057em; text-wrap: pretty; }
+.description { max-width: 42ch; margin-top: 26px; color: var(--muted); font-size: 19px; line-height: 1.6; }
 .button { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; margin-top: 30px; padding: 15px 24px; background: var(--blue); color: white; border-radius: 10px; box-shadow: 0 8px 18px -12px #2f5ce5; font-size: 16px; font-weight: 600; text-decoration: none; text-align: center; line-height: 1.4; }
 .button:hover { background: #234bca; }
 .review, .process { padding: 92px 0; }
@@ -50,7 +54,15 @@
 .footer { padding: 38px 0; font-size: 13px; color: var(--muted); }
 .footer > div { display: flex; justify-content: space-between; align-items: start; gap: 30px; }
 .brandName { color: var(--ink); font-family: var(--font-heading); font-size: 21px; font-weight: 600; margin-bottom: 8px; }
-@media (max-width: 1099px) { .heroLayout { grid-template-columns: 1fr; gap: 40px; } .hero h1 { max-width: 950px; font-size: clamp(48px, 5.8vw, 68px); } }
+@media (max-width: 1099px) {
+  .hero { padding: 44px 0 64px; }
+  .heroLayout { grid-template-columns: 1fr; gap: 28px; }
+  .heroCopy { width: min(100%, 760px); padding-block: 0; }
+  .hero h1 { max-width: 13em; font-size: clamp(48px, 5.8vw, 64px); }
+  .description { max-width: 56ch; }
+  .hero::before { width: 100%; height: 620px; right: -10%; top: auto; bottom: -80px; }
+  .hero::after { inset: 38% 0 0; }
+}
 @media (max-width: 1050px) {
   .navigation header nav:first-of-type ul { gap: 14px; }
   .navigation header > div { gap: 12px; }
@@ -64,7 +76,10 @@
 @media (max-width: 760px) {
   .container, .navigation header > div, .faq section > div { width: calc(100% - 40px); }
   .navigation header > div { gap: 8px; }
-  .hero { padding: 30px 0 48px; }
+  .hero { padding: 32px 0 44px; background: linear-gradient(170deg, var(--paper) 30%, #f0f6ff); }
+  .heroLayout { gap: 28px; }
+  .hero .intro { font-size: 11px; gap: 8px; }
+  .hero .intro::before { width: 12px; }
   .intro { font-size: 12px; }
   .hero h1 { margin-top: 22px; font-size: clamp(34px, 6.4vw, 48px); line-height: 1.08; letter-spacing: -.04em; }
   .description { margin-top: 22px; font-size: 17px; line-height: 1.55; }
@@ -89,6 +104,8 @@
   .navigation header > div > a:first-child span { display: block; max-width: 55px; font-size: 15px; }
   .navigation header > div > a:last-child { width: 159px; margin-left: auto; }
   .hero { padding-top: 22px; }
+  .heroLayout { gap: 24px; }
+  .hero .intro { max-width: 29ch; }
   .hero h1 { font-size: 32px; margin-top: 18px; }
   .description { font-size: 16px; margin-top: 18px; }
   .button { margin-top: 20px; }

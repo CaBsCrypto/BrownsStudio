@@ -11,10 +11,10 @@
 .claude
 .mcp.json
 .kapso/
-.obsidian/
+.obsidian
 .roo/
 .vscode/
-scratch/
+scratch
 operacion/
 templates/
 workflows/

@@ -18,7 +18,7 @@ type AgentSearchModelProps = {
 type Playback = { playing: boolean; reduced: boolean };
 type ModelController = { sync: () => void; dispose: () => void };
 
-const CYCLE_SECONDS = 24;
+const CYCLE_SECONDS = 18;
 
 /** Decorative enhancement: the parent owns all readable content and controls. */
 export default function AgentSearchModel({ className, playing, reduced, onPhase, onAnchors, onReady }: AgentSearchModelProps) {
@@ -108,26 +108,29 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
           y,
           right.z * r + depth.z * d,
         );
-        const stationPositions = { person: at(-2.65, -.75), agent: at(-.85, .45), competitor: at(.66, .98), company: at(2.25, -.8) };
-        const labelPositions = { person: at(-2.65, -.75, 2.05), agent: at(-.85, -.65, .08), competitor: at(1.35, 1.5, 1.95), company: at(2.25, -1.48, .02) };
+        const stationPositions = { person: at(-2.15, -.5), agent: at(-.05, .3), competitor: at(1.15, 1.7), company: at(2.05, -.5) };
+        const labelPositions = { person: at(-2.15, -.5, 2.04), agent: at(-.05, -.7, .04), competitor: at(1.2, 1.7, 1.55), company: at(2.05, -1.38, .02) };
         const scene = new T.Scene();
         const camera = new T.OrthographicCamera(-3.9, 3.9, 3, -3, .1, 40);
-        camera.position.set(6, 7.3, 10);
-        camera.lookAt(0, .3, 0);
+        camera.position.set(6, 6.8, 10);
+        camera.lookAt(0, .45, 0);
         camera.updateMatrixWorld();
-        scene.add(new T.HemisphereLight(0xf6f9ff, 0xc9d7ec, 1.65));
-        const key = new T.DirectionalLight(0xffffff, 2);
+        scene.add(new T.HemisphereLight(0xf6f9ff, 0xb6c9e5, 1.8));
+        const key = new T.DirectionalLight(0xffffff, 2.3);
         key.position.set(-3, 7, 5);
         scene.add(key);
+        const rim = new T.DirectionalLight(0x9dbbff, 1.1);
+        rim.position.set(4, 3, -6);
+        scene.add(rim);
 
         const white = material(new T.MeshStandardMaterial({ color: 0xffffff, roughness: .7 }));
         const pale = material(new T.MeshStandardMaterial({ color: 0xe7effb, roughness: .78 }));
-        const gray = material(new T.MeshStandardMaterial({ color: 0xc2cddd, roughness: .8 }));
-        const grayDetail = material(new T.MeshStandardMaterial({ color: 0x9babbe, roughness: .8 }));
+        const gray = material(new T.MeshStandardMaterial({ color: 0xe1e7ef, roughness: .8 }));
+        const grayDetail = material(new T.MeshStandardMaterial({ color: 0xc3cfdf, roughness: .8 }));
         const blue = material(new T.MeshStandardMaterial({ color: 0x2f5ce5, roughness: .35, metalness: .12, emissive: 0x183897, emissiveIntensity: .1 }));
         const prepared = material(new T.MeshStandardMaterial({ color: 0x2f5ce5, roughness: .46, metalness: .08, emissive: 0x2f5ce5, emissiveIntensity: .08 }));
-        const lightBlue = material(new T.MeshStandardMaterial({ color: 0x9dc3ff, roughness: .5 }));
-        const railMaterial = material(new T.MeshStandardMaterial({ color: 0xb5cbeb, roughness: .68 }));
+        const lightBlue = material(new T.MeshStandardMaterial({ color: 0xb0cbff, roughness: .45, metalness: .05 }));
+        const railMaterial = material(new T.MeshStandardMaterial({ color: 0x91b3ec, roughness: .55, metalness: .1 }));
         const signalMaterial = material(new T.MeshBasicMaterial({ color: 0x2f5ce5 }));
         const personMaterial = material(new T.MeshStandardMaterial({ color: 0x5a8ee8, roughness: .72, emissive: 0x83b8ff, emissiveIntensity: .04 }));
 
@@ -142,8 +145,8 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
           group.position.copy(position);
           group.rotation.y = Math.atan2(-right.z, right.x) + .38;
           scene.add(group);
-          box(group, [w, .12, d], [0, .08, 0], lightBlue, .05);
-          box(group, [w, .16, d], [0, .2, 0], white, .06);
+          box(group, [w, .09, d], [0, .08, 0], lightBlue, .045);
+          box(group, [w, .18, d], [0, .19, 0], white, .075);
           return group;
         };
 
@@ -164,22 +167,26 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
         }
         const shadowMaterial = material(new T.MeshBasicMaterial({ map: shadowMap, color: shadowMap ? 0xffffff : 0x9babbe, transparent: true, opacity: shadowMap ? 1 : .08, depthWrite: false }));
         const shadowGeometry = geometry(new T.PlaneGeometry(2.1, 1.7));
+        const shadows: Three.Mesh[] = [];
         for (const position of Object.values(stationPositions)) {
           const shadow = new T.Mesh(shadowGeometry, shadowMaterial);
           shadow.rotation.x = -Math.PI / 2;
           shadow.position.copy(position).y = .012;
           scene.add(shadow);
+          shadows.push(shadow);
         }
         const floor = new T.Group();
         floor.position.copy(at(-.05, .1, -.1));
         floor.rotation.y = Math.atan2(-right.z, right.x) + .22;
         scene.add(floor);
         const floorMaterial = material(new T.MeshStandardMaterial({ color: 0xedf3ff, emissive: 0xc4dcff, emissiveIntensity: .22, roughness: .8 }));
-        box(floor, [6.4, .16, 3.7], [0, 0, 0], floorMaterial, .14);
+        box(floor, [6.1, .14, 3.65], [0, 0, 0], floorMaterial, .18);
+        // A narrow blue edge gives the shared workbench depth without another card.
+        box(floor, [5.9, .035, 3.45], [0, -.085, 0], lightBlue, .14);
 
         const personStation = makeStation(stationPositions.person, .9, .86);
         const person = new T.Group();
-        person.scale.setScalar(1.4);
+        person.scale.setScalar(1.5);
         person.position.y = -.112;
         personStation.add(person);
         const torso = new T.Mesh(geometry(new T.CapsuleGeometry(.14, .18, 4, 10)), personMaterial);
@@ -190,7 +197,7 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
         expression.position.set(0, 1, 0);
         expression.add(head);
         person.add(expression);
-        const trousers = material(new T.MeshStandardMaterial({ color: 0x58759f, roughness: .8 }));
+        const trousers = material(new T.MeshStandardMaterial({ color: 0x314866, roughness: .8 }));
         const legGeometry = geometry(new T.CylinderGeometry(.058, .068, .23, 8));
         for (const x of [-.09, .09]) {
           const leg = new T.Mesh(legGeometry, trousers);
@@ -229,18 +236,26 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
           eye.position.set(x, .02, .151);
           expression.add(eye);
         }
+        const hair = new T.Mesh(geometry(new T.SphereGeometry(.164, 16, 10, 0, Math.PI * 2, 0, 1.1)), trousers);
+        hair.position.y = .025;
+        expression.add(hair);
+        // The person carries a small phone: the query starts at a real interaction point.
+        const phone = box(person, [.14, .24, .055], [.4, .85, .17], trousers, .025);
+        phone.rotation.z = -.1;
+        box(person, [.108, .17, .012], [.4, .86, .203], lightBlue, .012);
         personStation.updateMatrixWorld(true);
         const personCore = person.localToWorld(new T.Vector3(0, .68, 0));
         const handPort = person.localToWorld(raisedHand.clone());
 
-        const agent = makeStation(stationPositions.agent, 1.28, 1.14);
-        box(agent, [.6, .16, .6], [0, .35, 0], pale, .06);
+        const agent = makeStation(stationPositions.agent, 1.34, 1.2);
+        box(agent, [.85, .11, .79], [0, .34, 0], pale, .06);
+        box(agent, [.6, .1, .57], [0, .445, 0], lightBlue, .06);
         const orbCenter = stationPositions.agent.clone().add(new T.Vector3(0, .97, 0));
-        const orb = new T.Mesh(geometry(new T.SphereGeometry(.36, 24, 16)), blue);
+        const orb = new T.Mesh(geometry(new T.SphereGeometry(.4, 32, 20)), blue);
         orb.position.copy(orbCenter);
         scene.add(orb);
         const spark = new T.Group();
-        spark.position.copy(orbCenter).addScaledVector(facing, .355);
+        spark.position.copy(orbCenter).addScaledVector(facing, .395);
         spark.quaternion.setFromUnitVectors(new T.Vector3(0, 0, 1), facing);
         scene.add(spark);
         const diamondGeometry = geometry(new T.BoxGeometry(.08, .08, .035));
@@ -250,50 +265,54 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
           diamond.rotation.z = Math.PI / 4;
           spark.add(diamond);
         }
-        const competitor = makeStation(stationPositions.competitor, 1.08, .92);
-        box(competitor, [.72, .62, .62], [0, .61, 0], gray, .055);
-        box(competitor, [.82, .1, .72], [0, .96, 0], pale, .045);
+        const competitor = makeStation(stationPositions.competitor, .94, .8);
+        box(competitor, [.65, .5, .55], [0, .55, 0], gray, .055);
+        box(competitor, [.73, .085, .63], [0, .85, 0], pale, .045);
         const smallWindow = geometry(new T.BoxGeometry(.12, .16, .015));
         for (const x of [-.18, .18]) {
           const window = new T.Mesh(smallWindow, grayDetail);
-          window.position.set(x, .66, .319);
+          window.position.set(x, .59, .284);
           competitor.add(window);
         }
 
-        const company = makeStation(stationPositions.company, 1.46, 1.18);
+        const company = makeStation(stationPositions.company, 1.48, 1.18);
         const facade = material(new T.MeshStandardMaterial({ color: 0xffffff, roughness: .7, emissive: 0x83b8ff, emissiveIntensity: 0 }));
-        box(company, [.98, .82, .82], [0, .72, 0], facade, .055);
-        box(company, [1.12, .14, .96], [0, 1.2, 0], prepared, .055);
-        box(company, [.12, .82, .88], [-.4, .72, 0], prepared, .035);
-        box(company, [.9, .075, .92], [0, .36, 0], lightBlue, .025);
-        const panelGeometry = geometry(new T.BoxGeometry(.18, .22, .022));
+        // A small information hub, with three visible data rows instead of an opaque cube.
+        box(company, [1.04, .95, .65], [0, .78, 0], facade, .075);
+        box(company, [1.16, .11, .77], [0, 1.29, 0], prepared, .05);
+        box(company, [.13, .93, .7], [-.43, .78, 0], prepared, .035);
+        box(company, [.98, .075, .78], [0, .34, 0], lightBlue, .025);
+        const panelGeometry = geometry(new RoundedBoxGeometry(.66, .13, .035, 2, .025));
         const panels: Three.MeshStandardMaterial[] = [];
-        for (const x of [-.24, 0, .24]) {
-          const surface = material(prepared.clone());
+        for (const y of [1.05, .83, .61]) {
+          const surface = material(lightBlue.clone());
+          surface.emissive.setHex(0x2f5ce5);
           panels.push(surface);
           const panel = new T.Mesh(panelGeometry, surface);
-          panel.position.set(x, .83, .426);
+          panel.position.set(.04, y, .346);
           company.add(panel);
+          box(company, [.05, .05, .02], [-.2, y, .373], prepared, .012);
+          box(company, [.32, .025, .02], [.07, y, .373], white, .008);
         }
-        box(company, [.18, .34, .025], [0, .51, .428], lightBlue, .02);
         company.updateMatrixWorld(true);
         const companyCore = company.localToWorld(new T.Vector3(0, .8, 0));
         const incoming = new T.CatmullRomCurve3([
-          personCore, handPort, at(-1.45, -.2, 1.03), orbCenter,
+          personCore, handPort, at(-1.15, -.1, 1.08), orbCenter,
         ], false, 'centripetal');
         const rail = new T.CatmullRomCurve3([
-          orbCenter, at(-.75, -.4, .92), at(.1, -.65, .7), at(1.05, -.7, .7), companyCore,
+          orbCenter, at(.32, -.38, .86), at(.92, -.7, .68), at(1.46, -.65, .73), companyCore,
         ], false, 'centripetal');
-        scene.add(new T.Mesh(geometry(new T.TubeGeometry(incoming, 48, .018, 6, false)), railMaterial));
-        scene.add(new T.Mesh(geometry(new T.TubeGeometry(rail, 80, .023, 6, false)), railMaterial));
+        const incomingRail = new T.Mesh(geometry(new T.TubeGeometry(incoming, 48, .021, 6, false)), railMaterial);
+        const companyRail = new T.Mesh(geometry(new T.TubeGeometry(rail, 64, .021, 6, false)), railMaterial);
+        scene.add(incomingRail, companyRail);
 
         // One traveling core enters each actor; a short trail conveys returned information.
-        const signal = new T.Mesh(geometry(new T.SphereGeometry(.09, 16, 12)), signalMaterial);
+        const signal = new T.Mesh(geometry(new T.SphereGeometry(.105, 16, 12)), signalMaterial);
         scene.add(signal);
-        const trailPoints = new Float32Array(8 * 3);
+        const trailPoints = new Float32Array(14 * 3);
         const trailGeometry = geometry(new T.BufferGeometry());
         trailGeometry.setAttribute('position', new T.BufferAttribute(trailPoints, 3));
-        const trailMaterial = material(new T.LineBasicMaterial({ color: 0x83b8ff, transparent: true, opacity: .6 }));
+        const trailMaterial = material(new T.LineBasicMaterial({ color: 0x2f5ce5, transparent: true, opacity: .75 }));
         const trail = new T.Line(trailGeometry, trailMaterial);
         trail.frustumCulled = false;
         scene.add(trail);
@@ -327,30 +346,30 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
         const smooth = (value: number) => { const u = Math.max(0, Math.min(1, value)); return u * u * (3 - 2 * u); };
         const energyBetween = (t: number, start: number, end: number, edge = .4) => smooth((t - start) / edge) * smooth((end - t) / edge);
         const positionAt = (t: number, target: Three.Vector3) => {
-          if (t < 2) target.copy(personCore);
-          else if (t < 4.5) incoming.getPointAt(smooth((t - 2) / 2.5), target);
-          else if (t < 6.5) target.copy(orbCenter);
-          else if (t < 10.5) rail.getPointAt(smooth((t - 6.5) / 4), target);
-          else if (t < 14.5) target.copy(companyCore);
-          else if (t < 18) rail.getPointAt(1 - smooth((t - 14.5) / 3.5), target);
-          else if (t < 19.5) target.copy(orbCenter);
-          else if (t < 21.5) incoming.getPointAt(1 - smooth((t - 19.5) / 2), target);
+          if (t < 1.2) target.copy(personCore);
+          else if (t < 3) incoming.getPointAt(smooth((t - 1.2) / 1.8), target);
+          else if (t < 5) target.copy(orbCenter);
+          else if (t < 8) rail.getPointAt(smooth((t - 5) / 3), target);
+          else if (t < 11) target.copy(companyCore);
+          else if (t < 13.5) rail.getPointAt(1 - smooth((t - 11) / 2.5), target);
+          else if (t < 14) target.copy(orbCenter);
+          else if (t < 16) incoming.getPointAt(1 - smooth((t - 14) / 2), target);
           else target.copy(personCore);
         };
 
         const frame = (seconds: number) => {
-          const t = playback.current.reduced ? 12 : seconds % CYCLE_SECONDS;
-          const phase: SearchPhase = t < 4.5 ? 'question' : t < 6.5 ? 'agent' : t < 10.5 ? 'search' : t < 14.5 ? 'company' : t < 19.5 ? 'return' : t < 21.5 ? 'delivery' : 'answer';
+          const t = playback.current.reduced ? 9.5 : seconds % CYCLE_SECONDS;
+          const phase: SearchPhase = t < 3 ? 'question' : t < 5 ? 'agent' : t < 8 ? 'search' : t < 11 ? 'company' : t < 14 ? 'return' : t < 16 ? 'delivery' : 'answer';
           if (phase !== lastPhase) {
             lastPhase = phase;
             element.dataset.phase = phase;
             callbacks.current.onPhase(phase);
           }
           const reduced = playback.current.reduced;
-          const pulse = reduced ? 0 : .5 + .5 * Math.sin(t / CYCLE_SECONDS * Math.PI * 32);
-          const personEnergy = Math.max(energyBetween(t, -.5, 2.4), energyBetween(t, 20.4, CYCLE_SECONDS + .5));
-          const agentEnergy = Math.max(energyBetween(t, 4.1, 7), energyBetween(t, 17.6, 20));
-          const companyEnergy = energyBetween(t, 10, 15, .5);
+          const pulse = reduced ? 0 : .5 + .5 * Math.sin(t / CYCLE_SECONDS * Math.PI * 18);
+          const personEnergy = Math.max(energyBetween(t, -.5, 1.7), energyBetween(t, 15.5, CYCLE_SECONDS + .5));
+          const agentEnergy = Math.max(energyBetween(t, 2.7, 5.4), energyBetween(t, 13.1, 14.4));
+          const companyEnergy = energyBetween(t, 7.7, 11.4, .4);
           prepared.emissiveIntensity = .08 + companyEnergy * (.17 + pulse * .35);
           facade.emissiveIntensity = companyEnergy * (.08 + pulse * .12);
           blue.emissiveIntensity = .1 + agentEnergy * (.15 + pulse * .4);
@@ -358,20 +377,21 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
           expression.rotation.z = reduced ? 0 : personEnergy * Math.sin(t / CYCLE_SECONDS * Math.PI * 14) * .055;
           torso.scale.setScalar(reduced ? 1 : 1 + personEnergy * pulse * .025);
           orb.scale.setScalar(1 + agentEnergy * pulse * .075);
-          spark.position.copy(orbCenter).addScaledVector(facing, .355 * orb.scale.x);
+          spark.position.copy(orbCenter).addScaledVector(facing, .395 * orb.scale.x);
+          agentGlow.position.copy(orbCenter).addScaledVector(facing, .43);
           agentGlowMaterial.opacity = reduced ? 0 : agentEnergy * (.16 + pulse * .25);
           panels.forEach((surface, index) => {
-            const reading = energyBetween(t, 10.5 + index * 1.2, 12.1 + index * 1.2, .25);
+            const reading = energyBetween(t, 8 + index * .8, 9.2 + index * .8, .22);
             surface.emissiveIntensity = reduced ? .2 : .08 + companyEnergy * (.14 + reading * .5);
           });
           // Inside opaque actors the core disappears; their glow shows reception and analysis.
-          const traveling = t >= 2 && t < 4.5 || t >= 6.5 && t < 10.5 || t >= 14.5 && t < 18 || t >= 19.5 && t < 21.5;
+          const traveling = t >= 1.2 && t < 3 || t >= 5 && t < 8 || t >= 11 && t < 13.5 || t >= 14 && t < 16;
           signal.visible = !reduced && traveling;
           trail.visible = signal.visible;
-          signalMaterial.color.setHex(t >= 14.5 ? 0x637bea : 0x2f5ce5);
+          signalMaterial.color.setHex(t >= 11 ? 0x637bea : 0x2f5ce5);
           positionAt(t, signal.position);
-          for (let index = 0; index < 8; index++) {
-            positionAt(Math.max(0, t - index * .055), trailPoint);
+          for (let index = 0; index < 14; index++) {
+            positionAt(Math.max(0, t - index * .04), trailPoint);
             trailPoints[index * 3] = trailPoint.x;
             trailPoints[index * 3 + 1] = trailPoint.y;
             trailPoints[index * 3 + 2] = trailPoint.z;
@@ -397,7 +417,7 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
           lastTime = 0;
           renderer.setAnimationLoop((time) => {
             if (!running || disposed || lost) return;
-            if (lastTime !== 0) elapsed += Math.min(.25, Math.max(0, (time - lastTime) / 1000));
+            if (lastTime !== 0) elapsed += Math.min(.1, Math.max(0, (time - lastTime) / 1000));
             lastTime = time;
             render();
           });
@@ -413,7 +433,42 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
             return;
           }
           const aspect = width / height;
-          const viewHeight = Math.max(4.85, 7.8 / aspect);
+          const compact = width < 440;
+          // Keep the same story on a phone, with a tighter, slightly staggered workbench.
+          stationPositions.person.copy(at(compact ? -1.75 : -2.15, -.5));
+          stationPositions.agent.copy(at(compact ? -.1 : -.05, compact ? .65 : .3));
+          stationPositions.competitor.copy(at(compact ? .9 : 1.15, compact ? 1.85 : 1.7));
+          stationPositions.company.copy(at(compact ? 1.7 : 2.05, -.5));
+          personStation.position.copy(stationPositions.person);
+          agent.position.copy(stationPositions.agent);
+          competitor.position.copy(stationPositions.competitor);
+          company.position.copy(stationPositions.company);
+          personStation.updateMatrixWorld(true);
+          company.updateMatrixWorld(true);
+          personCore.copy(person.localToWorld(new T.Vector3(0, .68, 0)));
+          handPort.copy(person.localToWorld(raisedHand.clone()));
+          orbCenter.copy(stationPositions.agent).y += .97;
+          orb.position.copy(orbCenter);
+          companyCore.copy(company.localToWorld(new T.Vector3(0, .8, 0)));
+          incoming.points[2].copy(at(compact ? -.95 : -1.15, -.1, 1.08));
+          rail.points[1].copy(at(compact ? .2 : .32, -.38, .86));
+          rail.points[2].copy(at(compact ? .7 : .92, -.7, .68));
+          rail.points[3].copy(at(compact ? 1.2 : 1.46, -.65, .73));
+          incoming.updateArcLengths();
+          rail.updateArcLengths();
+          // Resize owns these two tube geometries. Retire them before replacing them.
+          for (const [mesh, curve, segments] of [[incomingRail, incoming, 48], [companyRail, rail, 64]] as const) {
+            geometries.delete(mesh.geometry);
+            mesh.geometry.dispose();
+            mesh.geometry = geometry(new T.TubeGeometry(curve, segments, .021, 6, false));
+          }
+          Object.values(stationPositions).forEach((position, index) => { shadows[index].position.copy(position).y = .012; });
+          floor.scale.x = compact ? .87 : 1;
+          labelPositions.person.copy(at(compact ? -1.75 : -2.15, -.5, 1.65));
+          labelPositions.agent.copy(at(compact ? -.1 : -.05, compact ? -.2 : -.7, .04));
+          labelPositions.competitor.copy(at(compact ? 1.0 : 1.2, compact ? 1.85 : 1.7, 1.6));
+          labelPositions.company.copy(at(compact ? 1.7 : 2.05, -1.42, .02));
+          const viewHeight = Math.max(4.9, (compact ? 5.7 : 6.7) / aspect);
           camera.left = -viewHeight * aspect / 2;
           camera.right = viewHeight * aspect / 2;
           camera.top = viewHeight / 2;
