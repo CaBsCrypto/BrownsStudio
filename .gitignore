@@ -44,3 +44,11 @@ next-env.d.ts
 *.canvas
 
 .env*
+
+# Plantilla portable sin secretos
+!.env.example
+!.env.local.example
+
+# Salidas de render regenerables, conservadas en el original
+/video-generator/output/
+/video-generator/temp-props-*.json

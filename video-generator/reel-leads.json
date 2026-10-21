@@ -34,11 +34,11 @@
       },
       {
         "sender": "client",
-        "text": "Matías Valdés, matias.valdes@gmail.com"
+        "text": "Persona de demostración, demo@example.invalid"
       },
       {
         "sender": "bot",
-        "text": "✅ ¡Listo Matías! Tu evaluación quedó agendada el viernes a las 19:00 hrs. Te envié el link de confirmación al correo. ¡Nos vemos!"
+        "text": "✅ ¡Listo Persona de demostración! Tu evaluación quedó agendada el viernes a las 19:00 hrs. Te envié el link de confirmación al correo. ¡Nos vemos!"
       }
     ],
     "ctaUrl": "browns.studio/demo",
