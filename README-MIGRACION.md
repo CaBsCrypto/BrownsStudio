@@ -1,8 +1,8 @@
 # Migración de integración saneada de Browns Studio — 2026-10-21
 
-**Publicación: NO REALIZADA. Continuación: BLOCKED.** Este paquete prepara localmente la rama `migracion/browns-integracion-saneada-20261021-8f42`. El usuario ratificó mantener **sin push mientras siga vigente no desplegar** y autorizó preparar otra rama saneada con trazabilidad, conservando la exacta local. Preparar este árbol no autoriza push, PR, merge, deploy ni cambios en GitHub, CI o Vercel.
+**Publicación: AUTORIZADA; verificación pendiente. Continuación: NOT VERIFIED.** Este paquete corresponde a `migracion/browns-integracion-saneada-20261021-8f42`. La autorización del 2026-10-21 permite agregar `vercel.json` en la raíz de ambas ramas, actualizar documentos/manifiestos, crear esos commits y publicar únicamente `migracion/browns-studio-20261021-8f42` y `migracion/browns-integracion-saneada-20261021-8f42` en el repositorio existente. No autoriza builds, despliegues, llamadas a Gemini, cambios en `main`, PR, merge ni cambios de configuración remota. El respaldo exacto permanece sólo local.
 
-No se instaló, compiló, inició ni probó el proyecto durante la preparación. La recuperación desde GitHub y la continuidad en notebook siguen pendientes. Los comandos de clonación del prompt receptor son instrucciones futuras condicionadas a una publicación autorizada y verificada.
+No se instaló, compiló, inició ni probó el proyecto durante la preparación. La recuperación desde GitHub y la continuidad en notebook siguen pendientes. Los comandos de clonación del prompt receptor dependen de que el informe externo confirme el SHA remoto y la recuperación desde GitHub. La autorización de publicación no permite ejecutar el proyecto en la notebook.
 
 ## Repositorio, rama y procedencia
 
@@ -10,11 +10,11 @@ No se instaló, compiló, inició ni probó el proyecto durante la preparación.
 - Rama de **este paquete**: `migracion/browns-integracion-saneada-20261021-8f42`.
 - Snapshot de integración: fuente de código `c5b62c9944bf3da4cce0c33d9d399d34fe23d48a`, del worktree original `integracion-main`, rama `codex/preparar-landing-geo`.
 - La copia exacta preparada se preserva **sólo localmente**, rama `migracion/browns-integracion-20261021-8f42`, SHA `f3601ee117617042710212f825859eee1fc08410`. No publicarla, etiquetarla ni incorporarla como padre o mediante merge a la rama saneada.
-- El nuevo commit saneado tiene como **único padre** `3b377c899ef7191a5bd00e14e419fc6be8167385`, ancestro ya alcanzable desde el remoto verificado. No tiene como padres los commits privados de integración ni la copia exacta.
-- La principal elegida por el usuario sigue separada: `migracion/browns-studio-20261021-8f42`, SHA local `a8411f0063bc4c036ca96796066e64093b65ff8b`, con cuatro commits de publicación y sus seis modificaciones. **Este snapshot de integración no incorpora esos cuatro commits ni las seis modificaciones.**
+- El commit de snapshot saneado `db943aa1954c3c5eb1cd92725b1a53b34ab7b180` tiene como **único padre** `3b377c899ef7191a5bd00e14e419fc6be8167385`, ancestro ya alcanzable desde el remoto verificado. El commit posterior de exclusión y documentación desciende de ese snapshot. Los commits privados de integración y la copia exacta no deben ser ancestros de esta rama.
+- La principal elegida por el usuario sigue separada: `migracion/browns-studio-20261021-8f42`, punto revisado previo a la exclusión `a8411f0063bc4c036ca96796066e64093b65ff8b`, con cuatro commits de publicación y sus seis modificaciones. Su tip final también agrega la exclusión y documentación. **Este snapshot de integración no incorpora esos cuatro commits ni las seis modificaciones.**
 - Rama predeterminada observada el 2026-10-21: `main`, SHA `7b34892d3ae40595627a59fd19eb3ceece34f73d`. Comprobar de nuevo antes de una integración futura.
 
-El SHA final de este paquete se obtiene del informe externo de preparación y, si se autoriza su publicación, se verifica en GitHub. No se incluye aquí el SHA del commit que contiene este documento. `MIGRACION-TRAZABILIDAD.md` documenta la relación entre fuente, respaldo y snapshot.
+El SHA final de este paquete se obtiene del informe externo de preparación y se verifica en GitHub durante la publicación autorizada. No se incluye aquí el SHA del commit que contiene este documento. `MIGRACION-TRAZABILIDAD.md` documenta la relación entre fuente, respaldo y snapshot.
 
 La preservación por snapshot conserva el estado de código de integración con las transformaciones documentadas; **no conserva la equivalencia de historia, autoría commit a commit ni el orden de sus tres commits inéditos**. La historia exacta se mantiene local. Un SHA fuente escrito en esta documentación no convierte sus commits en ancestros.
 
@@ -46,13 +46,28 @@ El inventario limitado de carpetas hermanas registró 203 archivos en `calculado
 
 Valores de entorno, configuración privada, recursos no versionados y servicios siguen necesitando recuperación por un canal seguro autorizado. Compartir cuenta no instala herramientas ni recupera esas dependencias. No se inspeccionaron rutas externas al alcance ni se ejecutó Graphify. La copia de este repositorio por sí sola no demuestra portabilidad del conjunto externo.
 
-## Publicación detenida por instrucción del usuario
+## Publicación autorizada con exclusión de despliegues
 
-La integración de Vercel sigue enlazada al repositorio con producción desde `main`, Node 24.x y raíz del repositorio. No se confirmó una excepción de previews para ramas de migración. Se observó metadata de `GEMINI_API_KEY` con target `preview` y sin restricción de rama; **su valor no se leyó**.
+La autorización del 2026-10-21 permite agregar `vercel.json` en la raíz de ambas ramas, actualizar documentos/manifiestos, crear esos commits y publicar únicamente `migracion/browns-studio-20261021-8f42` y `migracion/browns-integracion-saneada-20261021-8f42` en el repositorio existente. No autoriza builds, despliegues, llamadas a Gemini, cambios en `main`, PR, merge ni cambios de configuración remota. El respaldo exacto permanece sólo local.
 
-Un push podría provocar build y preview automáticos, transmitir código a Vercel y consumir servicio. El build raíz ejecuta `scripts/generate-embeddings.js`; si la clave está en el entorno del proceso, puede enviar el Markdown completo de `knowledge_base/*.md` a Gemini y consumir su API. El usuario ratificó mantener sin push mientras siga vigente no desplegar. **No hacer push ni crear PR como parte de esta preparación, aunque el saneamiento quede verificado.** No cambiar CI, hosting, políticas o permisos para eludir esta decisión.
+El `vercel.json` de la raíz incorpora `git.deploymentEnabled` con `false` para los dos nombres exactos:
 
-El workflow versionado `.github/workflows/landing-geo.yml` se activa por PR, pushes a `main` y ejecución manual. Que un push de rama no dispare ese workflow no evita otras integraciones. Resolver la selección segura del contenido no resuelve ni autoriza sus efectos de hosting.
+```json
+{
+  "git": {
+    "deploymentEnabled": {
+      "migracion/browns-studio-20261021-8f42": false,
+      "migracion/browns-integracion-saneada-20261021-8f42": false
+    }
+  }
+}
+```
+
+La [configuración Git documentada por Vercel](https://vercel.com/docs/project-configuration/git-configuration#git.deploymentenabled) excluye los despliegues automáticos para esas ramas. La exclusión debe estar en sus tips desde el primer push; no se sustituye por un ignored build step ni por mensajes de commit. Su alcance es el despliegue automático de Git: Vercel puede recibir el evento y leer configuración. No bloquea una ejecución manual ni nombres de rama distintos. No renombrar la rama ni publicar una continuación asumiendo que heredará esta exclusión.
+
+La lectura de Vercel observó el proyecto enlazado al repositorio con producción desde `main`, Node 24.x y raíz del repositorio. Sólo se leyó metadata de `GEMINI_API_KEY` para `preview` sin restricción de rama; su valor no se leyó. El build raíz ejecutaría `scripts/generate-embeddings.js` y podría enviar `knowledge_base/*.md` a Gemini si encuentra esa clave en el proceso. No ejecutarlo ni iniciar otro mecanismo de build durante esta publicación.
+
+El único workflow versionado observado, `.github/workflows/landing-geo.yml`, se activa por PR, pushes a `main` y ejecución manual. Un push sólo a los dos nombres de migración no coincide con su trigger `push`. Antes de publicar se deben volver a revisar configuración, automatizaciones, refs salientes y objetos nuevos; después se deben comprobar refs remotas, recuperación y ausencia de builds/despliegues asociados a los SHA publicados. Los resultados finales quedan en el informe externo; esta documentación no anticipa éxito.
 
 ## Entorno y servicios
 
@@ -92,15 +107,16 @@ No se comprobó arquitectura o compatibilidad multimedia de la notebook. El gene
 
 ## Integridad y recepción
 
-`MANIFIESTO-MIGRACION.sha256` lista `<sha256>  <ruta/relativa>` sobre bytes exactos del árbol seleccionado, con LF para textos nuevos. Excluye el propio manifiesto y metadatos Git. No puede contener su hash dentro de sí mismo. El SHA final del commit lo aporta el informe externo; no usar como reemplazo los SHA de fuente, respaldo exacto o principal.
+`MANIFIESTO-MIGRACION.sha256` lista `<sha256>  <ruta/relativa>` sobre bytes exactos del árbol seleccionado, con LF para textos nuevos. El árbol de entrega previsto contiene 408 archivos versionados: 407 entradas en el manifiesto y el propio manifiesto; la incorporación de `vercel.json` raíz agrega un archivo frente al snapshot anterior. La verificación externa debe confirmar cobertura y hashes. Excluye el propio manifiesto y metadatos Git. No puede contener su hash dentro de sí mismo. El SHA final del commit lo aporta el informe externo; no usar como reemplazo los SHA de fuente, respaldo exacto o principal.
 
 En un clon nuevo usar `core.autocrlf=false`, verificar el SHA contra un resumen que declare publicación **VERIFICADA**, revisar hooks/filtros/atributos antes de checkout y comprobar el manifiesto completo. Comprobar además que no falten ni sobren archivos frente al árbol comprometido. No normalizar bytes para forzar coincidencias.
 
-Mientras no exista publicación autorizada y recuperación desde GitHub comprobada, publicación permanece **NO REALIZADA** y continuación **BLOCKED**. Las pruebas históricas no sustituyen la validación de este snapshot en notebook.
+La publicación está autorizada y queda pendiente de verificación externa por SHA remoto y clon nuevo. Sólo ese informe puede declararla **VERIFICADA** después de comprobarla. La continuidad permanece **NOT VERIFIED** hasta validar este snapshot en la notebook; las pruebas históricas no sustituyen esa comprobación.
 
 ## Validación e integración posteriores
 
-- [ ] Publicación autorizada y verificada por SHA remoto y clon nuevo; no hay permiso vigente para ello.
+- [x] Publicación de las dos ramas expresamente autorizada, con exclusión de despliegues automáticos para sus nombres exactos.
+- [ ] Publicación verificada por SHA remoto y clon nuevo; consultar el resultado externo.
 - [ ] SHA de la rama exacta y manifiesto completos coinciden en notebook.
 - [ ] Instalación y ejecución autorizadas con Node 24.x y gestores previstos.
 - [ ] Secretos recuperados por canal seguro; servicios de prueba y datos sintéticos disponibles.
@@ -110,7 +126,7 @@ Mientras no exista publicación autorizada y recuperación desde GitHub comproba
 - [ ] Admin sólo con autorización expresa, credenciales y Firestore de pruebas, sin producción.
 - [ ] Flujo repetido con la PC original apagada o desconectada, usando internet sólo para servicios autorizados.
 
-Crear una rama nueva para trabajo posterior después de verificar la recepción y con autorización aplicable. Un clon `--single-branch` no trae automáticamente `main`: consultar la predeterminada, hacer fetch explícito de su ref y comparar ancestro, log y diff. Fetch no mezcla archivos; login no integra ramas. **No traer ni mezclar la referencia exacta privada para reconstruir la historia saneada.**
+Crear una rama nueva para trabajo posterior después de verificar la recepción y con autorización aplicable. Su nombre no queda cubierto por las dos exclusiones exactas: antes de cualquier nuevo push debe revisarse y autorizarse su efecto de hosting. La autorización de esta entrega no autoriza publicaciones posteriores. Un clon `--single-branch` no trae automáticamente `main`: consultar la predeterminada, hacer fetch explícito de su ref y comparar ancestro, log y diff. Fetch no mezcla archivos; login no integra ramas. **No traer ni mezclar la referencia exacta privada para reconstruir la historia saneada.**
 
 Cualquier PR requiere autorización separada y, salvo otra indicación, debe ser borrador. Revisar diff, historial, checks, conflictos y automatizaciones antes de integrar. No hacer push directo a `main`, force-push, auto-merge, merge o deploy como parte de esta recuperación. Conservar el respaldo exacto local y los originales.
 

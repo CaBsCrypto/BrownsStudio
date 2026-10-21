@@ -1,6 +1,6 @@
 # Inventario Git de origen — 2026-10-21
 
-La carpeta Browns Studio no es una raíz Git. El usuario eligió `publicacion-main` como base; `integracion-main` comparte su repositorio común. Se trabaja en una copia aislada fuera del proyecto. Las ramas nuevas de migración existen sólo en esa copia hasta resolver los bloqueos. No se alteran ramas ni índices originales.
+La carpeta Browns Studio no es una raíz Git. El usuario eligió `publicacion-main` como base; `integracion-main` comparte su repositorio común. Se trabaja en una copia aislada fuera del proyecto. Se autoriza publicar únicamente la principal de migración y la integración saneada, con exclusión automática de despliegues para sus nombres exactos; el respaldo exacto permanece sólo local. La verificación remota final se registra fuera del commit. No se alteran ramas ni índices originales.
 
 ## Estado original
 
@@ -39,7 +39,7 @@ En publicacion-main: `.env.local` (no copiado ni leído para obtener valores), `
 
 No hay hooks locales activos: sólo archivos .sample. No se observó core.hooksPath ni fsmonitor personalizado. La configuración global define Git LFS, pero la revisión del historial saliente no encontró punteros, submódulos ni symlinks; no se instaló ni habilitó LFS. No se ejecutaron hooks, filtros de contenido del proyecto ni scripts del proyecto. Las nuevas identidades de commit usan la cuenta GitHub verificada CaBsCrypto con dirección noreply en la copia; no se cambió la configuración global.
 
-GitHub consultado: repositorio público CaBsCrypto/BrownsStudio, permiso ADMIN de la cuenta, main predeterminada sin protección observada, rulesets y hooks consultados vacíos. El único workflow observado es landing-geo.yml, para PR, main y manual. La integración Vercel está documentada en README-MIGRACION.md y bloquea el push sin resolver sus previews.
+GitHub consultado: repositorio público CaBsCrypto/BrownsStudio, permiso ADMIN de la cuenta, main predeterminada sin protección observada, rulesets y hooks consultados vacíos. El único workflow observado es landing-geo.yml, para PR, main y manual. La integración Vercel y la exclusión autorizada por `vercel.json` raíz están documentadas en README-MIGRACION.md. Deben comprobarse antes del push y verificarse los efectos observados después; no se ejecutan builds ni despliegues.
 
 ## Integridad de los originales
 
@@ -47,4 +47,9 @@ El inventario privado de auditoría guarda SHA-256 del índice y de cada archivo
 
 ## Rama alternativa saneada autorizada
 
-El usuario confirmó conservar todo sin push y preparar `migracion/browns-integracion-saneada-20261021-8f42`. Esta rama contiene un snapshot saneado de la integración original c5b62c9944bf3da4cce0c33d9d399d34fe23d48a, tomando como fuente el árbol preparado f3601ee117617042710212f825859eee1fc08410. Su único padre es el ancestro común remoto 3b377c899ef7191a5bd00e14e419fc6be8167385. Los tres commits locales originales y la rama exacta no son padres de esta referencia; se conservan sólo en sus refs locales. Código de integración, tests y assets fuente se mantienen. Las transformaciones de documentos, evidencia y manifiesto figuran en MIGRACION-TRAZABILIDAD.md. La principal y la exacta no se modifican.
+El usuario autorizó preparar y publicar `migracion/browns-integracion-saneada-20261021-8f42` y `migracion/browns-studio-20261021-8f42` tras agregar exclusiones de despliegue automático para ambos nombres exactos, documentación y manifiestos. Esta rama contiene el snapshot saneado db943aa1954c3c5eb1cd92725b1a53b34ab7b180 de la integración original c5b62c9944bf3da4cce0c33d9d399d34fe23d48a, tomando como fuente el árbol preparado f3601ee117617042710212f825859eee1fc08410. El snapshot tiene como único padre el ancestro común remoto 3b377c899ef7191a5bd00e14e419fc6be8167385; el nuevo tip agrega un commit de exclusión y documentación sobre db943aa. Frente a la frontera remota previa a esta publicación son dos commits de la alternativa saneada, no uno. Los tres commits privados originales y la rama exacta no son ancestros publicables; se conservan sólo en sus refs locales. Código de integración, tests y assets fuente se mantienen. Las transformaciones de documentos, evidencia, exclusión y manifiesto figuran en MIGRACION-TRAZABILIDAD.md. La principal recibe su propio commit equivalente; el respaldo exacto y los originales no se modifican. Los SHA finales, los objetos salientes y la publicación se comprueban y registran externamente, sin anticipar el resultado.
+
+
+## Cobertura del paquete con exclusión
+
+El árbol de entrega previsto suma 408 archivos versionados, incluido el manifiesto: 407 entradas SHA-256 y el propio manifiesto, que no se incluye a sí mismo. `vercel.json` raíz es el único archivo adicional respecto del snapshot db943aa; los otros cambios del nuevo commit se limitan a documentación y manifiesto. Los conteos de la revisión histórica de fuentes permanecen separados de este paquete. El informe externo debe registrar la verificación final de archivos, objetos salientes, refs remotas y clon de recuperación.

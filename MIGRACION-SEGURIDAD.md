@@ -1,6 +1,6 @@
 # Revisión de seguridad del historial y paquete de migración
 
-Fecha: 2026-10-21. Inspección local de solo lectura sobre la copia aislada. No se ejecutaron scripts del repositorio, hooks, filtros, textconv, builds ni peticiones a servicios. No se modificaron los originales, el índice, los objetos ni refs. Los únicos archivos creados por esta revisión son analizadores propios e informes sanitizados dentro de `audit/`.
+Fecha: 2026-10-21. Las secciones de revisión inicial siguientes describen una inspección histórica de las fuentes; sus conteos y afirmaciones de ausencia de escrituras corresponden a esa inspección, anterior a los commits de migración. El alcance vigente de publicación figura en la última sección. Inspección local de solo lectura sobre la copia aislada. No se ejecutaron scripts del repositorio, hooks, filtros, textconv, builds ni peticiones a servicios. No se modificaron los originales, el índice, los objetos ni refs. Los únicos archivos creados por esta revisión son analizadores propios e informes sanitizados dentro de `audit/`.
 
 ## Resultado para decidir publicación
 
@@ -77,7 +77,7 @@ No se encontraron punteros Git LFS, entradas gitlink de submódulos ni symlinks 
 
 ## Límites y evidencia reproducible
 
-La detección por patrones puede omitir secretos con formato no conocido o datos cuya realidad sólo pueda confirmar el propietario. No se comprobó la vigencia de credenciales ni se contactaron proveedores. No se considera autorizada la publicación de datos personales por el mero hecho de que parezcan ejemplos. La revisión no cambia el bloqueo separado sobre despliegues o previews descrito por el agente principal.
+La detección por patrones puede omitir secretos con formato no conocido o datos cuya realidad sólo pueda confirmar el propietario. No se comprobó la vigencia de credenciales ni se contactaron proveedores. No se considera autorizada la publicación de datos personales por el mero hecho de que parezcan ejemplos. La revisión inicial no resolvía los efectos de despliegues o previews; la autorización posterior y la exclusión documentada al final delimitan la publicación actual.
 
 Inventarios sanitizados de soporte: `seguridad-inventario.json` y `seguridad-clasificacion.json`. Contienen IDs de objetos, rutas, tamaños, líneas y categorías; no valores secretos ni contactos. Los analizadores propios permanecen dentro de `audit/` y no forman parte del repositorio que se vaya a publicar.
 
@@ -91,4 +91,25 @@ Registro sanitizado por campos y tipos: `reel-leads-saneamiento.json`. No se mod
 
 ## Contexto de la alternativa saneada
 
-El informe anterior describe la historia fuente preservada localmente. La nueva referencia `migracion/browns-integracion-saneada-20261021-8f42` NO publica esa historia: tiene un único padre ya remoto y un snapshot seleccionado. Se retiran las 17 capturas PNG de QA, se sustituyen los dos informes operativos y se sanea otra documentación que repetía datos de pruebas o IDs de administración. Las fuentes de pruebas no se eliminan. Las rutas/categorías se documentan sin valores originales. Debe verificarse todo el historial saliente de esta nueva referencia, su manifiesto y su equivalencia de código antes de considerarla revisada. El historial heredado ya presente en origin no se reescribe ni se purga. El usuario ratificó sin push y sin deploy; preparar esta alternativa no cambia esa instrucción.
+El informe anterior describe la historia fuente preservada localmente. La referencia `migracion/browns-integracion-saneada-20261021-8f42` publica otra relación Git: el commit de snapshot db943aa1954c3c5eb1cd92725b1a53b34ab7b180 tiene como único padre el ancestro ya remoto 3b377c899ef7191a5bd00e14e419fc6be8167385, y el tip de entrega agrega sobre él un commit de exclusión y documentación. Los tres commits privados y el respaldo exacto no deben ser ancestros de la salida. Se retiran las 17 capturas PNG de QA, se sustituyen los dos informes operativos y se sanea documentación que repetía datos de pruebas o IDs de administración. Las fuentes de pruebas no se eliminan. Las rutas/categorías se documentan sin valores originales. Debe verificarse todo el historial saliente de esta nueva referencia, su manifiesto y su equivalencia de código antes de considerarla revisada. El historial heredado ya presente en origin no se reescribe ni se purga.
+
+## Publicación limitada autorizada y control de automatizaciones
+
+La autorización del 2026-10-21 permite agregar `vercel.json` en la raíz de ambas ramas, actualizar documentos/manifiestos, crear esos commits y publicar únicamente `migracion/browns-studio-20261021-8f42` y `migracion/browns-integracion-saneada-20261021-8f42` en el repositorio existente. No autoriza builds, despliegues, llamadas a Gemini, cambios en `main`, PR, merge ni cambios de configuración remota. El respaldo exacto permanece sólo local.
+
+El `vercel.json` de la raíz incorpora `git.deploymentEnabled` con `false` para los dos nombres exactos:
+
+```json
+{
+  "git": {
+    "deploymentEnabled": {
+      "migracion/browns-studio-20261021-8f42": false,
+      "migracion/browns-integracion-saneada-20261021-8f42": false
+    }
+  }
+}
+```
+
+La [configuración Git documentada por Vercel](https://vercel.com/docs/project-configuration/git-configuration#git.deploymentenabled) excluye los despliegues automáticos para esas ramas. La exclusión debe estar en sus tips desde el primer push; no se sustituye por un ignored build step ni por mensajes de commit. Su alcance es el despliegue automático de Git: Vercel puede recibir el evento y leer configuración. No bloquea una ejecución manual ni nombres de rama distintos. No renombrar la rama ni publicar una continuación asumiendo que heredará esta exclusión.
+
+La revisión anterior cubría las fuentes originales; no acredita por sí sola los nuevos commits de exclusión. Deben revisarse sus diffs, mensajes y objetos salientes y volver a comprobarse automatizaciones y refs antes de publicar. Después, el informe externo debe registrar SHA remoto, clon nuevo y comprobaciones de builds/despliegues para los SHA publicados. No se leen valores de entorno ni se ejecuta el build raíz, que podría invocar Gemini. La publicación sólo pasa a VERIFICADA con evidencia externa; la continuidad en notebook permanece NOT VERIFIED.

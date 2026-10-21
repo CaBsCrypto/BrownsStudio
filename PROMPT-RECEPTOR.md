@@ -2,7 +2,7 @@
 
 Actúa únicamente sobre Browns Studio y sus dependencias identificadas. Antes de ejecutar código, lee `README-MIGRACION.md`, `MIGRACION-TRAZABILIDAD.md`, este documento, `CLAUDE.md` y los `AGENTS.md` aplicables. Verifica la rama, el SHA del resumen externo y `MANIFIESTO-MIGRACION.sha256`.
 
-**Publicación: NO REALIZADA. Continuación: BLOCKED.** El usuario ratificó mantener sin push mientras siga vigente no desplegar. La nueva rama saneada se prepara sólo localmente; no asumas que existe en GitHub. No se ejecutaron instalación, app, build, pruebas o scripts del proyecto durante la preparación. Estas instrucciones de clonación y ejecución son futuras y dependen de autorizaciones y comprobaciones posteriores.
+**Publicación: AUTORIZADA; verificación pendiente. Continuación: NOT VERIFIED.** La autorización del 2026-10-21 permite agregar `vercel.json` en la raíz de ambas ramas, actualizar documentos/manifiestos, crear esos commits y publicar únicamente `migracion/browns-studio-20261021-8f42` y `migracion/browns-integracion-saneada-20261021-8f42` en el repositorio existente. No autoriza builds, despliegues, llamadas a Gemini, cambios en `main`, PR, merge ni cambios de configuración remota. El respaldo exacto permanece sólo local. No se ejecutaron instalación, app, build, pruebas o scripts del proyecto durante la preparación. Verifica la publicación mediante el informe externo; estas instrucciones no afirman que el push ya se haya completado y no autorizan ejecutar el proyecto.
 
 ## Procedencia y límites
 
@@ -10,8 +10,8 @@ Actúa únicamente sobre Browns Studio y sus dependencias identificadas. Antes d
 - Rama exacta de **este paquete**: `migracion/browns-integracion-saneada-20261021-8f42`.
 - Fuente de código de integración: `c5b62c9944bf3da4cce0c33d9d399d34fe23d48a`.
 - Respaldo exacto preservado sólo localmente: `migracion/browns-integracion-20261021-8f42`, SHA `f3601ee117617042710212f825859eee1fc08410`. No publicarlo, etiquetarlo, traerlo para reconstruir historia ni incorporarlo por merge.
-- Único padre del nuevo commit saneado: `3b377c899ef7191a5bd00e14e419fc6be8167385`, ancestro ya remoto. Los commits privados de integración no son sus padres.
-- La principal elegida por el usuario queda aparte: `migracion/browns-studio-20261021-8f42`, SHA local `a8411f0063bc4c036ca96796066e64093b65ff8b`. Este paquete no contiene sus cuatro commits de publicación ni las seis modificaciones de trabajo de `publicacion-main`.
+- Commit de snapshot saneado: `db943aa1954c3c5eb1cd92725b1a53b34ab7b180`, cuyo único padre es `3b377c899ef7191a5bd00e14e419fc6be8167385`, ancestro ya remoto. El tip de entrega incorpora después el commit de exclusión y documentación. Los commits privados de integración y el respaldo exacto no deben ser ancestros de esta rama.
+- La principal elegida por el usuario queda aparte: `migracion/browns-studio-20261021-8f42`, punto revisado previo a la exclusión `a8411f0063bc4c036ca96796066e64093b65ff8b`; el tip final agrega su exclusión y documentación. Este paquete no contiene sus cuatro commits de publicación ni las seis modificaciones de trabajo de `publicacion-main`.
 - `main` se observó en `7b34892d3ae40595627a59fd19eb3ceece34f73d` el 2026-10-21. Consultar su estado y la predeterminada de nuevo antes de cualquier integración.
 
 La alternativa saneada conserva un snapshot del código de integración con exclusiones y cambios de documentación, entorno, demo y reproducibles registrados en `MIGRACION-TRAZABILIDAD.md`. No preserva equivalencia commit a commit, orden de historia o autoría de los tres commits privados. Se excluyen los 17 PNG nuevos de QA y se reemplazan dos documentos QA por resúmenes sanitizados; otros documentos operativos se sanean según la traza final. No presentar esos resúmenes como pruebas nuevas. El contenido heredado ya remoto no se purga ni reescribe.
@@ -26,9 +26,24 @@ No cambies cuenta, propietario u origin por conveniencia ni crees repositorios, 
 
 ## 1. Verifica que la publicación esté autorizada y exista
 
-El resumen externo debe indicar **publicación VERIFICADA**, la rama exacta y su SHA completo, más recuperación desde un clon nuevo. Si indica NO REALIZADA/FALLÓ o no hay SHA comprobado, detente antes de tratar GitHub como entrega disponible; sólo continúa revisión documental sin ejecutar el proyecto.
+El resumen externo debe indicar **publicación VERIFICADA**, la rama exacta y su SHA completo, más recuperación desde un clon nuevo. Si indica verificación pendiente, NO REALIZADA/FALLÓ o no hay SHA comprobado, detente antes de tratar GitHub como entrega disponible; sólo continúa revisión documental sin ejecutar el proyecto.
 
-El bloqueo vigente es explícito: no hacer push mientras siga vigente no desplegar. Vercel está enlazado al repositorio y no se confirmó una excepción de previews para estas ramas. Sólo se leyó metadata: `GEMINI_API_KEY` está dirigida a `preview` sin restricción de rama; su valor no se leyó. Un push podría crear preview, consumir Vercel/Gemini y hacer que el build raíz envíe `knowledge_base/*.md` a Gemini. El saneamiento del paquete no autoriza esos efectos. No cambies CI/hosting/permisos para eludir la instrucción ni crees PR como atajo.
+El `vercel.json` de la raíz incorpora `git.deploymentEnabled` con `false` para los dos nombres exactos:
+
+```json
+{
+  "git": {
+    "deploymentEnabled": {
+      "migracion/browns-studio-20261021-8f42": false,
+      "migracion/browns-integracion-saneada-20261021-8f42": false
+    }
+  }
+}
+```
+
+La [configuración Git documentada por Vercel](https://vercel.com/docs/project-configuration/git-configuration#git.deploymentenabled) excluye los despliegues automáticos para esas ramas. La exclusión debe estar en sus tips desde el primer push; no se sustituye por un ignored build step ni por mensajes de commit. Su alcance es el despliegue automático de Git: Vercel puede recibir el evento y leer configuración. No bloquea una ejecución manual ni nombres de rama distintos. No renombrar la rama ni publicar una continuación asumiendo que heredará esta exclusión.
+
+La publicación limitada está autorizada con esta exclusión. No cambiar configuración remota, CI, permisos ni crear PR. Sólo se leyó metadata de `GEMINI_API_KEY` para previews; el build raíz podría enviar `knowledge_base/*.md` a Gemini, por eso sigue prohibido ejecutar builds, despliegues o llamadas al proveedor. Revisa en el informe externo los controles posteriores a la publicación antes de considerar la entrega disponible.
 
 Sólo tras publicación autorizada y confirmada, consulta de lectura:
 
@@ -112,15 +127,15 @@ Revisar también cualquier archivo adicional local o cambio de estado. No normal
 
 ## 4. Prepara herramientas y servicios sólo con autorización
 
-La autorización de preparar esta migración no permite por sí sola instalar ni ejecutar el proyecto en notebook. Antes de hacerlo, presenta los pasos y sus efectos concretos. Usa Node 24.x y pnpm 10.28.0 para la raíz. No actualices lockfiles. El workspace raíz incluye `video-generator`; `landing-geo` tiene su propio `package-lock.json` y requiere instalación independiente. FFmpeg y Remotion se revisan sólo para el flujo multimedia autorizado.
+La autorización de preparar y publicar estas dos ramas no permite instalar ni ejecutar el proyecto en notebook. La prohibición vigente de builds, despliegues y llamadas a Gemini también rige en la recepción; cualquier cambio de ese alcance requiere autorización posterior explícita. Antes de hacerlo, presenta los pasos y sus efectos concretos. Usa Node 24.x y pnpm 10.28.0 para la raíz. No actualices lockfiles. El workspace raíz incluye `video-generator`; `landing-geo` tiene su propio `package-lock.json` y requiere instalación independiente. FFmpeg y Remotion se revisan sólo para el flujo multimedia autorizado.
 
 Lee las plantillas finales de entorno y `README-MIGRACION.md`. Recupera valores por un canal seguro autorizado, fuera de GitHub y del chat. No publiques `.env.local`, tokens, llaves, sesiones, service accounts o datos reales. No coloques secretos en `NEXT_PUBLIC_*`. No asumas que una cuenta compartida recupera los valores de la PC anterior.
 
 Firestore es remoto y usa la base nombrada `browns-studio`; no exportes, resetees, migres ni escribas producción. Usar servicios de prueba y datos sintéticos autorizados. No regeneres claves para forzar el arranque. La recuperación de recursos y dependencias privadas sigue pendiente hasta comprobarse.
 
-## 5. Ejecuta la validación autorizada
+## 5. Plan de validación futuro, sin autorización de ejecución actual
 
-Sólo con autorización aplicable, desde la raíz:
+Los comandos siguientes son un plan documental para una autorización futura que detalle sus efectos. No ejecutarlos como parte de esta entrega. Los builds requieren que el usuario cambie expresamente su prohibición vigente, y cualquier llamada a Gemini o a otros proveedores requiere autorización específica. Si se autoriza ese alcance, desde la raíz:
 
 ```powershell
 pnpm install --frozen-lockfile
@@ -180,13 +195,13 @@ git diff --stat refs/remotes/origin/main HEAD
 git diff --name-status refs/remotes/origin/main HEAD
 ```
 
-Si cambió la predeterminada, usa su nombre comprobado, sin renombrarla. Si no hay ancestro común, detenerse y explicar la relación. El snapshot tiene un padre remoto conocido, pero su diff puede diferir de una comparación sobre la historia exacta privada; no presentarlo como continuidad commit a commit. Fetch trae referencias sin mezclar archivos; login no conecta ramas ni integra cambios.
+Si cambió la predeterminada, usa su nombre comprobado, sin renombrarla. Si no hay ancestro común, detenerse y explicar la relación. El commit de snapshot tiene un padre remoto conocido y el tip de entrega desciende de él mediante el commit de exclusión; su diff puede diferir de una comparación sobre la historia exacta privada; no presentarlo como continuidad commit a commit. Fetch trae referencias sin mezclar archivos; login no conecta ramas ni integra cambios.
 
 No traer, publicar, etiquetar ni mezclar la rama exacta privada o sus refs fuente. Si en el futuro se quiere comparar con la principal de migración, se requiere que esa rama también esté publicada con autorización y SHA comprobado; no asumir que existe en origin ni incorporarla automáticamente.
 
 ## 7. Trabaja en una rama nueva y revisa antes de integrar
 
-Después de validar recepción y con autorización de trabajo nuevo, crear una rama de continuación cuyo nombre no exista, por ejemplo:
+Después de validar recepción y con autorización de trabajo nuevo, crear una rama de continuación cuyo nombre no exista, por ejemplo. Este nombre no está cubierto por las exclusiones exactas de `vercel.json`; no publicarlo sin una nueva revisión y autorización de sus automatizaciones:
 
 ```powershell
 git switch -c feature/browns-integracion-saneada-notebook
@@ -194,7 +209,7 @@ git switch -c feature/browns-integracion-saneada-notebook
 
 Seleccionar archivos explícitamente al preparar commits y revisar secretos e historia saliente. No usar `git add .`/`-A` indiscriminadamente ni force-push, reset/clean destructivos o borrado de respaldos. Conservar fuentes y originales.
 
-Todo push necesita la autorización aplicable y revisión de automatizaciones; sigue vigente sin push/no desplegar hasta decisión expresa posterior. Cualquier PR requiere autorización separada y debe ser borrador salvo otra indicación, con base predeterminada comprobada. Revisar diff, historial, checks, conflictos y efectos de hosting. No crear PR automáticamente ni hacer push directo a `main`, auto-merge, merge o deploy.
+La autorización de esta entrega cubre exclusivamente publicar los commits revisados de las dos ramas de migración con su exclusión presente desde el primer push. No autoriza publicaciones posteriores, otros nombres de rama, PR, merge, builds, despliegues ni Gemini. Para cualquier continuación revisar de nuevo automatizaciones y solicitar la autorización aplicable. No crear PR automáticamente ni hacer push directo a `main`, force-push, auto-merge, merge o deploy.
 
 ## 8. Informa sin inventar validaciones
 
