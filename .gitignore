@@ -43,3 +43,12 @@ next-env.d.ts
 .vscode/
 *.canvas
 
+# Migración: secretos locales y salidas regenerables
+.env*
+!.env.example
+!.env.local.example
+/video-generator/output/
+/video-generator/temp-props-*.json
+
+# Evidencias QA locales: revisión y saneamiento antes de compartir
+/landing-geo/.qa/*.png

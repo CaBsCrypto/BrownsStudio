@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.vercel/
+*.tsbuildinfo
+.env*
+!.env.example
+next-env.d.ts
+
+# Plantilla portable sin secretos
+!.env.example

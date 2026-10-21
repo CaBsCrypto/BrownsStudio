@@ -1,0 +1,112 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.inner {
+  width: min(1120px, calc(100% - 64px));
+  min-height: 88px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.logo { width: 40px; height: 40px; flex-shrink: 0; }
+.brandName { font-family: var(--font-heading); font-size: 17px; font-weight: 600; line-height: 1.15; letter-spacing: -.03em; }
+.desktopNav ul, .menuPanel ul { display: flex; gap: 24px; padding: 0; margin: 0; list-style: none; }
+.desktopNav a { display: inline-flex; align-items: center; min-width: 44px; min-height: 48px; color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; white-space: nowrap; }
+.desktopNav a:hover { color: var(--blue); text-decoration: underline; }
+
+.cta {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 19px;
+  border: 1px solid var(--blue);
+  border-radius: 8px;
+  background: var(--blue);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cta:hover { background: #234bca; border-color: #234bca; }
+.mobileMenu { display: none; }
+
+@media (max-width: 1000px) {
+  .inner { gap: 16px; }
+  .desktopNav ul { gap: 16px; }
+  .desktopNav a { font-size: 13px; }
+  .brandName { font-size: 15px; }
+  .cta { padding-inline: 15px; font-size: 13px; }
+}
+
+@media (max-width: 880px) {
+  .inner { width: min(1120px, calc(100% - 40px)); min-height: 80px; justify-content: flex-start; gap: 12px; }
+  .desktopNav { display: none; }
+  .brand { margin-right: auto; }
+  .mobileMenu { display: block; }
+  .menuButton {
+    min-width: 64px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px;
+    border-radius: 6px;
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+  .menuButton::-webkit-details-marker { display: none; }
+  .mobileMenu[open] .menuButton { background: var(--tint); }
+  .mobileMenu[open] .menuButton svg { transform: rotate(180deg); }
+  .menuPanel {
+    position: absolute;
+    inset: 100% 0 auto;
+    padding: 12px 20px 20px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 14px 18px -18px rgb(22 45 66 / .35);
+  }
+  .menuPanel ul { display: grid; gap: 0; max-width: 1120px; margin-inline: auto; }
+  .menuPanel a { display: flex; align-items: center; min-height: 48px; padding: 10px 8px; border-radius: 4px; text-decoration: none; font-size: 16px; }
+  .menuPanel a:hover { background: var(--tint); color: var(--blue); }
+  .cta { width: 104px; padding: 7px 10px; font-size: 12px; white-space: normal; text-align: center; }
+}
+
+@media (max-width: 420px) {
+  .inner { gap: 8px; }
+  .brand { gap: 7px; }
+  .logo { width: 32px; height: 32px; }
+  .brandName { max-width: 52px; font-size: 13px; }
+  .menuButton { min-width: 60px; padding-inline: 6px; }
+  .cta { padding-inline: 10px; }
+}
+
+/* Browns Studio wordmark: Archivo, with a compact mobile lockup. */
+.brandName { color: var(--ink); font-size: 23px; font-weight: 650; letter-spacing: -.055em; white-space: nowrap; }
+@media (max-width: 1000px) { .brandName { font-size: 20px; } }
+@media (max-width: 420px) { .brandName { max-width: 65px; font-size: 17px; white-space: normal; line-height: .98; } }

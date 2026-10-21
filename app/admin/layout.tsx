@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import styles from "./AdminShell.module.css";
 
 const NAV = [
   { href: "/admin/businesses", label: "Negocios", icon: "🏢" },
@@ -20,10 +21,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   // Don't render sidebar on login page
-  if (pathname === "/admin/login") return <>{children}</>;
+  if (pathname === "/admin/login") return <div className={styles.shell}>{children}</div>;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex">
+    <div className={`${styles.shell} min-h-screen bg-[#0a0a0a] flex`}>
       {/* Sidebar */}
       <aside className="w-56 shrink-0 bg-[#0e0e0e] border-r border-[#484848]/20 flex flex-col">
         {/* Brand */}

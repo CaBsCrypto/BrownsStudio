@@ -8,6 +8,18 @@
 >
 > **Nota de uso:** Este documento está orientado exclusivamente al equipo de desarrollo y soporte interno. No exponer llaves ni credenciales reales en la documentación.
 
+## Portada pública GEO — integración validada en preview 2026-10-09
+
+La portada pública del código raíz ahora monta la landing compartida de `landing-geo` en `/`, con el CTA «Pide tu análisis inicial gratis». La aplicación independiente conserva localhost:5175 y sirve de referencia de desarrollo; no representa una segunda oferta comercial.
+
+Root Directory permanece `./`. `/direccion` y los locales `/es`, `/en` y `/pt` redirigen a `/`; las presentaciones comerciales retiradas redirigen a `/#servicios`. Admin, las APIs de WhatsApp, webhooks y las integraciones internas se conservan. El formulario principal usa `/api/solicitudes-geo` y correo, sin abrir WhatsApp ni realizar análisis automáticos.
+
+La compilación raíz, TypeScript, lint y las 33 pruebas de integración pasaron. La revisión de localhost:5177 comprobó la portada, redirecciones, protección de admin y presentación a 1440, 937, 390 y 320 px sin desbordes. Se conservan Vercel Analytics, Speed Insights y la verificación de Search Console. Estos checks no prueban los proveedores de WhatsApp, Calendly ni otras integraciones externas.
+
+La preview final de la aplicación raíz (referencia de preview omitida) quedó Ready y su formulario envió una solicitud real: Resend registró Delivered y SMTP 250 «Message received» hacia `contacto@browns.studio`. Falta abrirla y comprobar una respuesta desde esa bandeja de Zoho. Publicar la integración a `main` y al dominio y ejecutar CI en GitHub siguen pendientes. Preview y local aplican `noindex`; la indexación productiva y el sitemap se limitan a la nueva portada. Hechos y pendientes: [registro de integración pública](landing-geo/.qa/INTEGRACION-PUBLICA.md) y [correo de preview](landing-geo/.qa/VERCEL-CORREO.md).
+
+Las secciones siguientes conservan contexto de los módulos internos y la arquitectura anterior; no describen una oferta ni una validación nueva de esas integraciones.
+
 ---
 
 ## 🛠 Tech Stack
@@ -90,13 +102,13 @@ sequenceDiagram
 ```text
 /
 ├── app/
-│   ├── [locale]/             # Páginas Públicas Internacionalizadas (es, en, pt)
-│   │   ├── casos-de-estudio/ # Motor GEO (Blog de casos)
-│   │   ├── soluciones/       # Landing pages dinámicas por nicho (SEO)
-│   │   └── ...
+│   ├── page.tsx              # Landing pública compartida en /
+│   ├── [locale]/             # Rutas anteriores: entrada pública redirigida a /
+│   │   └── ...               # Marketing retirado: redirección a /#servicios
 │   ├── admin/                # Panel privado de agencia (CRM, Generator, Prospects)
 │   └── api/                  # Endpoints (Video Generator, Webhooks, Auth)
 ├── components/               # Componentes Reutilizables de UI
+├── landing-geo/              # Contenido/componentes GEO compartidos y app local independiente
 ├── lib/                      # Configuración, db (Firebase client), datos duros (JSON)
 ├── public/                   # Assets, imágenes y videos (incluyendo pitches renderizados)
 ├── video-generator/          # ⚠️ CORE: Archivos y scripts base de Remotion
@@ -135,3 +147,5 @@ sequenceDiagram
 
 ### Consideraciones al compilar Video (Remotion)
 Para que el motor de `video-generator` funcione localmente, asegúrate de no modificar las rutas ocultas (obfuscadas en el archivo `route.ts`) a menos que cambies el directorio base de remotion. El sistema hace fallback a audios pre-grabados si no detecta la API Key de ElevenLabs.
+
+> Nota de migración saneada (2026-10-21): las referencias administrativas y personales omitidas y las capturas excluidas se conservan en la copia exacta local. Las comprobaciones descritas son históricas y no se repitieron al preparar esta copia.

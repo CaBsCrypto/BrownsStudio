@@ -1,0 +1,92 @@
+{
+  "version": "2026-10-05.2",
+  "label": "Demostración propia de Browns Studio",
+  "status": "en_validacion",
+  "brand": "Browns Studio",
+  "website": "https://browns.studio",
+  "contact": "contacto@browns.studio",
+  "coverage": {
+    "country": "Chile",
+    "location": "Santiago, Chile",
+    "audience": "Empresas de servicios con una web informativa",
+    "description": "El público inicial son empresas de servicios de Chile. El alcance y la modalidad de cada implementación se acuerdan antes de comenzar."
+  },
+  "services": [
+    {
+      "id": "inicio",
+      "name": "Inicio",
+      "title": "Información preparada para IA",
+      "promise": "Preparamos la información pública de tu empresa para facilitar su consulta por herramientas de IA.",
+      "delivery": "Información sobre tus servicios, cobertura y preguntas frecuentes, con recursos consultables y ajustes mínimos sobre tu sitio.",
+      "maintenance": "Revisamos mensualmente los recursos y enlaces entregados. Actualizamos la información acordada sobre servicios, cobertura o contacto dentro del tiempo contratado.",
+      "boundary": "Las conexiones con sistemas de la empresa se evalúan en Avanzado.",
+      "billing": "Implementación + mantención mensual adicional",
+      "badge": "Alcance piloto"
+    },
+    {
+      "id": "avanzado",
+      "name": "Avanzado",
+      "title": "Conexión empresarial con IA",
+      "promise": "Conectamos información acordada de tu empresa con agentes compatibles mediante un MCP probado.",
+      "delivery": "Un caso de consulta definido, una fuente de información y herramientas de solo lectura, con documentación y pruebas de conexión.",
+      "maintenance": "Comprobamos la disponibilidad del MCP y revisamos sus consultas. Corregimos incidencias y ajustamos la conexión dentro del alcance y tiempo contratados.",
+      "boundary": "Sistemas privados, reservas, pagos y acciones que modifican datos requieren otra evaluación.",
+      "billing": "Implementación + mantención mensual adicional",
+      "badge": "En validación"
+    },
+    {
+      "id": "continuidad",
+      "name": "Continuidad",
+      "title": "Mantención y evolución",
+      "promise": "Mantenemos lo implementado y dedicamos horas acordadas a mejorarlo.",
+      "delivery": "Revisión de prioridades, mejoras pequeñas acordadas y un informe mensual de lo comprobado y realizado.",
+      "maintenance": "Una cuota reúne la mantención de tu implementación y las horas de evolución contratadas. Sustituye la mensualidad anterior; no se cobran ambas.",
+      "boundary": "Las ampliaciones que exceden las horas acordadas se cotizan por separado.",
+      "billing": "Una mensualidad de mantención y evolución",
+      "badge": "Alcance piloto"
+    }
+  ],
+  "faqs": [
+    {
+      "id": "geo",
+      "question": "¿Qué es GEO y cómo se relaciona con MCP?",
+      "answer": "GEO es el trabajo de mejorar la información que las experiencias de búsqueda con IA pueden consultar. MCP permite conectar fuentes y herramientas con agentes compatibles. Pueden ir de la mano, pero no son el mismo servicio: preparar información pública y conectar un sistema resuelven necesidades distintas."
+    },
+    {
+      "id": "garantias",
+      "question": "¿Pueden garantizar que una IA recomiende mi empresa?",
+      "answer": "No. Cada plataforma decide qué respuestas y fuentes muestra. Podemos comprobar los recursos y conexiones que entregamos, pero no garantizar posiciones, recomendaciones, citas ni nuevos clientes. Tampoco entrenamos una IA para que recomiende tu empresa."
+    },
+    {
+      "id": "analisis",
+      "question": "¿Qué incluye el análisis inicial gratis?",
+      "answer": "Revisamos tu dominio y la información pública disponible para identificar oportunidades de preparación para IA. Recibes por correo un resumen con lo que pudimos comprobar y las prioridades sugeridas. Confirmamos el alcance de esta revisión inicial y la fecha según el cupo disponible; no es una auditoría exhaustiva. Solicitarlo no te compromete a contratar."
+    },
+    {
+      "id": "web",
+      "question": "¿Necesito reconstruir mi web?",
+      "answer": "Trabajamos sobre tu web actual. Añadimos información y recursos consultables para agentes, con los ajustes mínimos de publicación, descubrimiento y acceso que correspondan. Primero revisamos la tecnología y los permisos disponibles para proponerte una instalación viable. El servicio no contempla reconstruir ni rediseñar tu web."
+    },
+    {
+      "id": "wordpress",
+      "question": "¿Se puede implementar en WordPress?",
+      "answer": "Sí, cuando el alojamiento y los permisos permiten publicar los recursos necesarios. Podemos usar un pequeño plugin propio para exponer información pública aprobada y coordinar los ajustes de descubrimiento. Si hace falta un MCP, puede funcionar en un servicio separado. Revisamos la compatibilidad antes de proponer cambios; no necesitas cambiar de diseño por ese motivo."
+    },
+    {
+      "id": "mantencion",
+      "question": "¿Qué cubre la mantención?",
+      "answer": "En Inicio comprobamos mensualmente que los recursos y enlaces entregados funcionen y actualizamos datos acordados, por ejemplo un servicio, la cobertura o el correo de contacto. En Avanzado también comprobamos la disponibilidad del MCP y sus consultas. La propuesta fija el tiempo de actualizaciones y la atención de incidencias. La mantención se cobra aparte de la implementación. Continuidad reúne esa mantención y horas de mejoras en una sola cuota, que reemplaza la anterior. No cubre el mantenimiento general de WordPress, del hosting o de tu web, ni nuevas integraciones."
+    },
+    {
+      "id": "puntaje",
+      "question": "¿Qué significa el puntaje de Cloudflare?",
+      "answer": "Usamos la guía de Cloudflare como primer paso para revisar y aplicar las buenas prácticas que tu empresa necesita. El puntaje resume comprobaciones de preparación técnica: contrastamos los resultados con pruebas propias y distinguimos los requisitos que no aplican. Completar las prácticas pertinentes mejora la base consultable de tu empresa, pero no garantiza aparecer en respuestas de IA. Tampoco necesitas incorporar todas las funciones del escáner si no resuelven una necesidad real."
+    },
+    {
+      "id": "accesos",
+      "question": "¿Qué necesitan para empezar?",
+      "answer": "Solo la URL pública de tu sitio y un correo de contacto para solicitar el análisis. No necesitamos contraseñas ni información sensible para recibir la solicitud. Los hechos, accesos mínimos, costos y responsabilidades de una implementación se acuerdan por separado."
+    }
+  ],
+  "limits": "La demostración no acredita apariciones en respuestas de IA ni resultados comerciales. Los servicios están en validación piloto y sus límites detallados se acuerdan por propuesta."
+}
