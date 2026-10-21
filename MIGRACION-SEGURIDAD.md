@@ -1,11 +1,11 @@
 # Revisión de seguridad del historial y paquete de migración
 
-Fecha: 2026-10-21. Inspección local de solo lectura sobre la copia aislada. No se ejecutaron scripts del repositorio, hooks, filtros, textconv, builds ni peticiones a servicios. No se modificaron los originales, el índice, los objetos ni refs. Los únicos archivos creados por esta revisión son analizadores propios e informes sanitizados dentro de `audit/`.
+Fecha: 2026-10-21. Informe histórico de la inspección inicial de fuentes, con complemento vigente al final. Sus conteos y bloqueos iniciales no describen por sí solos la alternativa saneada ni los nuevos commits de exclusión. Inspección inicial local de solo lectura sobre la copia aislada. No se ejecutaron scripts del repositorio, hooks, filtros, textconv, builds ni peticiones a servicios. No se modificaron los originales, el índice, los objetos ni refs. Los únicos archivos creados por esta revisión son analizadores propios e informes sanitizados dentro de `audit/`.
 
-## Resultado para decidir publicación
+## Resultado histórico de la revisión inicial
 
 - La base `source/codex/inicio-protagonista` y los seis cambios de trabajo revisados no presentan credenciales ni datos privados nuevos identificados por esta revisión. Esto no equivale a una garantía absoluta de ausencia de secretos ni autoriza despliegues.
-- **Bloqueo de privacidad en `source/codex/preparar-landing-geo`:** sus objetos todavía no remotos incluyen documentación y capturas de pruebas con metadata personal y administrativa. Mantenerla local hasta que exista autorización específica para publicarla en el repositorio público o se decida una alternativa de migración saneada.
+- **Bloqueo de privacidad en `source/codex/preparar-landing-geo`:** sus objetos todavía no remotos incluyen documentación y capturas de pruebas con metadata personal y administrativa. Se conserva sólo local. El usuario eligió después una alternativa de migración saneada, descrita en el complemento final; no autorizó publicar esta historia privada.
 - Borrar esos archivos sólo en el último commit de esa rama no evita la publicación de sus versiones históricas. Esta revisión no reescribió ni saneó la historia.
 - En el objeto heredado original, `video-generator/reel-leads.json` contenía un nombre completo y un correo personal cuya condición sintética no estaba demostrada. La copia aislada fue saneada posteriormente por instrucción expresa: ahora usa una identidad claramente ficticia en todas sus repeticiones. El objeto original ya estaba en origin y su historia no se reescribió; véase el registro de saneamiento al final.
 
@@ -77,7 +77,7 @@ No se encontraron punteros Git LFS, entradas gitlink de submódulos ni symlinks 
 
 ## Límites y evidencia reproducible
 
-La detección por patrones puede omitir secretos con formato no conocido o datos cuya realidad sólo pueda confirmar el propietario. No se comprobó la vigencia de credenciales ni se contactaron proveedores. No se considera autorizada la publicación de datos personales por el mero hecho de que parezcan ejemplos. La revisión no cambia el bloqueo separado sobre despliegues o previews descrito por el agente principal.
+La detección por patrones puede omitir secretos con formato no conocido o datos cuya realidad sólo pueda confirmar el propietario. No se comprobó la vigencia de credenciales ni se contactaron proveedores. No se considera autorizada la publicación de datos personales por el mero hecho de que parezcan ejemplos. La revisión inicial no resolvía el riesgo separado de despliegues o previews. La exclusión y autorización posteriores se registran en el complemento final; los despliegues siguen prohibidos.
 
 Inventarios sanitizados de soporte: `seguridad-inventario.json` y `seguridad-clasificacion.json`. Contienen IDs de objetos, rutas, tamaños, líneas y categorías; no valores secretos ni contactos. Los analizadores propios permanecen dentro de `audit/` y no forman parte del repositorio que se vaya a publicar.
 
@@ -88,3 +88,15 @@ Por instrucción expresa del agente principal se modificó exclusivamente `repo/
 SHA256 del archivo resultante: `28a03cd330a7d61aa50fc4360f533d2e18f23263b5bd8c9ec7f2f89dd4ec8098`.
 
 Registro sanitizado por campos y tipos: `reel-leads-saneamiento.json`. No se modificaron originales ni Git. El objeto histórico ambiguo sigue siendo alcanzable desde origin; este saneamiento sólo evita conservarlo en el nuevo árbol de trabajo. Las exclusiones de MP4 y temp-props regenerables quedan a cargo del agente principal.
+
+## Complemento vigente: alternativa saneada y exclusión de deployments Git
+
+El usuario autorizó conservar el respaldo exacto `migracion/browns-integracion-20261021-8f42` en `f3601ee117617042710212f825859eee1fc08410` sólo localmente y preparar/publicar otra rama saneada. El snapshot revisado de esa alternativa es `db943aa1954c3c5eb1cd92725b1a53b34ab7b180`, anterior al commit de exclusión, con padre único ya remoto `3b377c899ef7191a5bd00e14e419fc6be8167385`. Los tres commits privados no son ancestros de la alternativa. Se excluyeron los 17 PNG de QA y se sanearon ocho documentos fuente; el código y pruebas conservan los bytes de la fuente de integración. La selección y hashes de documentos saneados están en `MIGRACION-TRAZABILIDAD.md` de esa rama. Las cifras iniciales de siete commits/110 blobs no son el conteo final de esta salida.
+
+La autorización vigente comprende nuevos commits de exclusión/documentación/manifiestos y publicación exclusivamente de `migracion/browns-studio-20261021-8f42` y `migracion/browns-integracion-saneada-20261021-8f42`, sin deploys, builds ni llamadas a Gemini. Se incorpora `vercel.json` raíz con ambas entradas exactas `git.deploymentEnabled: false`. No se modifica la configuración remota, las credenciales, el workflow ni la rama `main`; no se crean PR, merges, tags o refs que publiquen la historia privada.
+
+La exclusión evita deployments Git automáticos para esos dos nombres en el proyecto observado con raíz del repositorio. Vercel puede recibir el evento y leer la configuración para evaluarla; no equivale a un build. No impide ejecución manual, redeploys, CLI, otros workflows ni deployments de una rama con distinto nombre. No añadir una regla coincidente en `true`, que prevalecería. La metadata observada de `GEMINI_API_KEY` para preview no se modificó ni se leyó su valor: no ejecutar builds ni `scripts/generate-embeddings.js` durante esta entrega evita la ruta conocida de transmisión a Gemini.
+
+La revisión final debe cubrir los nuevos commits, objetos y mensajes de ambas referencias, verificar el guard exacto y los manifiestos, comprobar que el respaldo exacto y los originales no cambiaron y consultar los efectos observables de GitHub/Vercel. La publicación sólo se declara VERIFICADA en el informe externo después de comprobar los SHA remotos y recuperar un clon nuevo desde GitHub, sin ejecutar el proyecto. La continuidad en notebook sigue NOT VERIFIED. Ninguno de estos controles garantiza ausencia absoluta de secretos ni sustituye la validación autorizada en la notebook.
+
+Referencia de la exclusión: [documentación oficial de Vercel](https://vercel.com/docs/project-configuration/git-configuration#git.deploymentenabled).

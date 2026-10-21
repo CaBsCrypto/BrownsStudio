@@ -1,6 +1,6 @@
 # Inventario Git de origen — 2026-10-21
 
-La carpeta Browns Studio no es una raíz Git. El usuario eligió `publicacion-main` como base; `integracion-main` comparte su repositorio común. Se trabaja en una copia aislada fuera del proyecto. Las ramas nuevas de migración existen sólo en esa copia hasta resolver los bloqueos. No se alteran ramas ni índices originales.
+La carpeta Browns Studio no es una raíz Git. El usuario eligió `publicacion-main` como base; `integracion-main` comparte su repositorio común. Se trabaja en una copia aislada fuera del proyecto. La publicación autorizada se limita a las dos ramas exactas indicadas abajo, con exclusión versionada de deployments Git. La verificación posterior de refs y recuperación desde GitHub se registra fuera de este commit. No se alteran ramas ni índices originales.
 
 ## Estado original
 
@@ -39,7 +39,19 @@ En publicacion-main: `.env.local` (no copiado ni leído para obtener valores), `
 
 No hay hooks locales activos: sólo archivos .sample. No se observó core.hooksPath ni fsmonitor personalizado. La configuración global define Git LFS, pero la revisión del historial saliente no encontró punteros, submódulos ni symlinks; no se instaló ni habilitó LFS. No se ejecutaron hooks, filtros de contenido del proyecto ni scripts del proyecto. Las nuevas identidades de commit usan la cuenta GitHub verificada CaBsCrypto con dirección noreply en la copia; no se cambió la configuración global.
 
-GitHub consultado: repositorio público CaBsCrypto/BrownsStudio, permiso ADMIN de la cuenta, main predeterminada sin protección observada, rulesets y hooks consultados vacíos. El único workflow observado es landing-geo.yml, para PR, main y manual. La integración Vercel está documentada en README-MIGRACION.md y bloquea el push sin resolver sus previews.
+GitHub consultado: repositorio público CaBsCrypto/BrownsStudio, permiso ADMIN de la cuenta, main predeterminada sin protección observada, rulesets y hooks consultados vacíos. El único workflow observado es landing-geo.yml, para PR, main y manual. La integración Vercel está documentada en README-MIGRACION.md. La autorización posterior incorpora `vercel.json` raíz con `git.deploymentEnabled: false` para los dos nombres exactos, conservando prohibidos deploys, builds y llamadas a Gemini. No se modifica la configuración remota ni el workflow.
+
+## Referencias de migración y alcance de publicación
+
+| Referencia | Punto de control anterior a la exclusión | Alcance |
+| --- | --- | --- |
+| `migracion/browns-studio-20261021-8f42` | `a8411f0063bc4c036ca96796066e64093b65ff8b` | Principal; admite un nuevo commit de exclusión, documentación y manifiesto, y publicación limitada |
+| `migracion/browns-integracion-saneada-20261021-8f42` | `db943aa1954c3c5eb1cd92725b1a53b34ab7b180` | Snapshot saneado; admite un nuevo commit equivalente de exclusión, documentación y manifiesto, y publicación limitada |
+| `migracion/browns-integracion-20261021-8f42` | `f3601ee117617042710212f825859eee1fc08410` | Respaldo exacto local, conserva la historia privada; no modificar ni publicar |
+
+El snapshot saneado `db943aa1954c3c5eb1cd92725b1a53b34ab7b180` tiene como único padre `3b377c899ef7191a5bd00e14e419fc6be8167385`, ya remoto. Los commits posteriores de exclusión descienden de ese snapshot; no introducen los commits privados `f8ddc30`, `6e02be6` y `c5b62c9` ni el respaldo exacto como ancestros. La fuente de código se conserva mediante procedencia textual y transformaciones documentadas, no mediante esos padres privados.
+
+Los SHA finales de las dos ramas autorizadas deben constar en el informe externo después de crear y verificar los commits. No confundir los puntos de control anteriores a la exclusión con las puntas finales. No publicar tags, refs `source/*`, otras ramas, `main` ni el respaldo exacto. No crear PR ni merge. Las exclusiones Vercel sólo cubren estos dos nombres; una continuación con otro nombre requiere nueva revisión antes de su push.
 
 ## Integridad de los originales
 

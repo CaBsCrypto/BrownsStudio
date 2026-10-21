@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "git": {
+    "deploymentEnabled": {
+      "migracion/browns-studio-20261021-8f42": false,
+      "migracion/browns-integracion-saneada-20261021-8f42": false
+    }
+  }
+}

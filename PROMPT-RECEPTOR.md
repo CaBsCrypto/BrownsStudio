@@ -2,18 +2,19 @@
 
 Actúa únicamente sobre Browns Studio y sus dependencias identificadas. Antes de ejecutar código, lee este documento y `README-MIGRACION.md`, verifica la rama recibida, el SHA del resumen y `MANIFIESTO-MIGRACION.sha256`. Lee también `CLAUDE.md` y los `AGENTS.md` aplicables, atendiendo a sus límites y a las instrucciones expresas del usuario.
 
-**Estado al preparar este documento: publicación NO REALIZADA; continuación BLOCKED.** Las ramas descritas todavía no están publicadas. Los comandos de clonación fallarán mientras no exista un resumen posterior que confirme la publicación y sus SHA. No asumas un push completado, una aplicación probada ni ausencia garantizada de secretos. No se ha ejecutado instalación, app, build, prueba o script del proyecto durante la preparación.
+**Estado al preparar este documento: publicación de dos ramas exactas autorizada, pendiente de verificación externa; continuación NOT VERIFIED.** Consulta el informe posterior para saber si la publicación y recuperación realmente se completaron y qué SHA tiene cada rama. No asumas un push completado, una aplicación probada ni ausencia garantizada de secretos. No se ha ejecutado instalación, app, build, prueba o script del proyecto durante la preparación. Siguen prohibidos deploys, builds y llamadas a Gemini dentro de esta entrega; la validación futura en notebook requiere su autorización aplicable.
 
 ## Destino y procedencia exactos
 
 - Repositorio autorizado, público y verificado: `https://github.com/CaBsCrypto/BrownsStudio.git`.
 - Principal: `migracion/browns-studio-20261021-8f42`, desde `codex/inicio-protagonista`, `e7c91030cdf68ee9d2628092f7e2b98bd0baa096`, worktree original `publicacion-main`.
-- Secundaria prevista **sólo local y bloqueada para publicación pública**: `migracion/browns-integracion-20261021-8f42`, desde `codex/preparar-landing-geo`, `c5b62c9944bf3da4cce0c33d9d399d34fe23d48a`, worktree original `integracion-main`.
+- Integración saneada autorizada: `migracion/browns-integracion-saneada-20261021-8f42`, snapshot del código de `codex/preparar-landing-geo`, `c5b62c9944bf3da4cce0c33d9d399d34fe23d48a`, worktree original `integracion-main`, sin sus tres commits privados como ancestros.
+- Respaldo exacto **sólo local, no publicar ni traer desde GitHub**: `migracion/browns-integracion-20261021-8f42`, `f3601ee117617042710212f825859eee1fc08410`.
 - Rama predeterminada observada el 2026-10-21: `main`, `7b34892d3ae40595627a59fd19eb3ceece34f73d`; debes consultarla otra vez.
 
 El usuario eligió `publicacion-main` como base. No mezcles la secundaria en la principal. Había cuatro commits inéditos y seis modificaciones de archivos en la principal, y tres commits inéditos en integración. No había stashes. Lee `MIGRACION-SEGURIDAD.md`, `MIGRACION-INVENTARIO-LOCAL.md` y el informe final para conocer contenido trasladado, historial, exclusiones y dependencias. Los originales se conservan intactos en la PC de origen.
 
-La revisión principal cubrió cuatro commits y 28 blobs nuevos, más las seis modificaciones, sin detectar secretos o datos personales nuevos. La secundaria contiene tres commits y 82 blobs nuevos, con 17 PNG y documentos QA que incluyen identidad/correo del propietario y referencias administrativas. No publiques esa secundaria sin una decisión específica: borrar archivos del tip no sanea su historia saliente. Resolver la autorización de previews de Vercel no autoriza esos datos privados.
+La revisión histórica principal cubrió cuatro commits y 28 blobs nuevos, más las seis modificaciones, sin detectar secretos o datos personales nuevos. La integración exacta tenía tres commits y 82 blobs nuevos con datos personales/administrativos en QA y sigue sólo local. La alternativa saneada revisada parte del snapshot `db943aa1954c3c5eb1cd92725b1a53b34ab7b180`, anterior al commit de exclusión, con padre ya remoto `3b377c899ef7191a5bd00e14e419fc6be8167385`. Retira 17 PNG de QA y sanea ocho documentos fuente, conservando código/pruebas. Revisa su `MIGRACION-TRAZABILIDAD.md`: es una transformación por snapshot, no conserva el orden y hashes de los tres commits privados. No publiques el respaldo exacto ni crees referencias que hagan alcanzable su historia.
 
 En la copia principal se sustituyen campos ambiguos de `video-generator/reel-leads.json` por marcadores sintéticos conservando el esquema, y se excluyen ocho MP4 regenerables de `video-generator/output` y el archivo temporal `video-generator/temp-props-abogados-pro.json`. Se conservan los guiones demo de `video-generator/leads.json`. El historial ya publicado en origin no se reescribió y puede seguir conteniendo los originales heredados. No presentes esos saneamientos del árbol como purga histórica ni como garantía absoluta de ausencia de secretos.
 
@@ -27,7 +28,26 @@ No cambies de cuenta, propietario, origin o repositorio por conveniencia. No cre
 
 Solicita o consulta el resumen final de la preparación. Debe indicar **VERIFICADA**, URL y SHA final exacto para cada rama publicada. Si dice NO REALIZADA/FALLÓ, o el SHA no está comprobado, detente antes de clonar como si fuera una entrega completa. Puedes continuar sólo con revisión documental y dependencias que no ejecuten el proyecto.
 
-El bloqueo conocido es Vercel: hay evidencia de deployments históricos de preview y producción, y no se pudo confirmar una excepción para las ramas de migración. La CLI existente pudo consultar el proyecto enlazado y confirmó GitHub `CaBsCrypto/BrownsStudio`, producción desde `main`, Node 24.x y raíz del repositorio, sin crear permisos. `gitDeploymentEnabled` ausente/nulo no acredita previews desactivados; no apareció una orden para ignorar build ni deploy hooks. Un nuevo push puede desplegar preview, consumir servicio o transmitir contenido. La autorización original de migrar no autoriza un deploy. No cambies CI/hosting/permisos para eludirlo ni repitas pushes inciertos sin comprobar primero el estado remoto.
+El usuario autorizó commits nuevos y publicar exclusivamente `migracion/browns-studio-20261021-8f42` y `migracion/browns-integracion-saneada-20261021-8f42` en el origin existente, sin deploys, builds ni llamadas a Gemini. La autorización no comprende `main`, PR, merge, force-push, tags ni el respaldo exacto privado. La verificación remota y la recuperación desde un clon nuevo deben registrarse después en el informe externo; este documento no anticipa que hayan ocurrido.
+
+El `vercel.json` de la raíz excluye la creación automática de deployments Git para los dos nombres exactos mediante:
+
+```json
+{
+  "git": {
+    "deploymentEnabled": {
+      "migracion/browns-studio-20261021-8f42": false,
+      "migracion/browns-integracion-saneada-20261021-8f42": false
+    }
+  }
+}
+```
+
+La exclusión se aplica al proyecto Vercel observado con raíz del repositorio. No cambia la configuración remota, las claves, el workflow ni `landing-geo/vercel.json`. Vercel puede recibir el evento Git y leer la configuración para decidir la exclusión; ese procesamiento no debe confundirse con un build o deployment. La política de Vercel permite deployments en nombres no excluidos, y cualquier regla coincidente en `true` prevalece. Conservar y verificar ambas entradas `false`, sin agregar reglas contradictorias.
+
+La exclusión no impide deploys manuales, redeploys, CLI o futuros workflows. No ejecutarlos. Una rama nueva o renombrada no queda cubierta por estas dos entradas: antes de publicar una continuación hay que revisar sus efectos y obtener la autorización correspondiente, conservando la prohibición de desplegar. No usar `Ignored Build Step` como sustituto: inicia una fase de build antes de cancelarla.
+
+La metadata de Vercel mostró `GEMINI_API_KEY` habilitada para preview sin restricción de rama, sin leer su valor. Impedir el build evita la ruta que ejecuta `scripts/generate-embeddings.js`; no se ha ejecutado ese script ni comprobado Gemini. Fuente de la semántica de exclusión: [documentación oficial de Vercel](https://vercel.com/docs/project-configuration/git-configuration#git.deploymentenabled).
 
 Consulta de lectura de la rama principal, una vez exista publicación:
 
@@ -167,14 +187,14 @@ No declares READY sólo por instalar, compilar o abrir la página. Explica qué 
 
 ## 6. Trae referencias sin mezclar árboles
 
-`--single-branch` limita el clon inicial. **La secundaria continúa bloqueada por contenido privado en historia y se preserva sólo localmente.** El comando siguiente es una referencia futura, no una instrucción de publicarla o traerla ahora. Sólo después de una decisión específica que resuelva ese bloqueo, autorización de efectos de hosting y una publicación verificada con SHA, puedes traer la referencia aprobada para inspección sin cambiar el árbol actual. Si la alternativa saneada recibe otro nombre, sustituye el comando por esa referencia exacta comprobada:
+`--single-branch` limita el clon inicial. Después de confirmar la publicación verificada y su SHA, puedes traer la integración saneada para inspección sin cambiar el árbol actual. El respaldo exacto permanece sólo local y no se trae desde GitHub. Usa el nombre exacto aprobado:
 
 ```powershell
-git fetch origin refs/heads/migracion/browns-integracion-20261021-8f42:refs/remotes/origin/migracion/browns-integracion-20261021-8f42
-git rev-parse refs/remotes/origin/migracion/browns-integracion-20261021-8f42
+git fetch origin refs/heads/migracion/browns-integracion-saneada-20261021-8f42:refs/remotes/origin/migracion/browns-integracion-saneada-20261021-8f42
+git rev-parse refs/remotes/origin/migracion/browns-integracion-saneada-20261021-8f42
 ```
 
-Si no fue publicada o continúa sólo propuesta, no inventes que ese comando pudo recuperarla. No hagas merge de esa rama por el solo hecho de traerla.
+Compara también su SHA completo con el informe y verifica su manifiesto antes de cambiar de rama. Si la publicación no se verificó o falla la consulta, no inventes que el comando pudo recuperarla. No hagas merge por el solo hecho de traerla.
 
 Consulta primero la rama predeterminada real:
 
@@ -204,7 +224,7 @@ git switch -c feature/browns-continuacion-notebook
 
 Mantén trazabilidad entre origen, migración y trabajo posterior. Selecciona archivos explícitamente al preparar commits, sin `git add .` o `git add -A` indiscriminado. Revisa secretos y todos los commits salientes antes de cualquier push. No hagas force-push, reset/clean destructivos ni borres ramas/stashes; conserva los originales.
 
-Todo nuevo push necesita la autorización aplicable y una revisión de automatizaciones. **Cualquier PR necesita autorización separada**. Si el usuario lo autoriza sin otra indicación, créalo como **borrador**, con base en la rama predeterminada comprobada y compare en la migración o la continuación elegida. Revisa diff, historial, checks, conflictos y posibles despliegues. Crear un PR puede activar Actions y otras integraciones.
+La autorización de esta entrega se limita a las dos ramas exactas con exclusión. El ejemplo `feature/browns-continuacion-notebook` no está excluido por el `vercel.json` actual: no lo publiques sin revisar y resolver primero sus efectos de hosting bajo la autorización aplicable. Todo nuevo push necesita esa autorización y una revisión de automatizaciones. **Cualquier PR necesita autorización separada**. Si el usuario lo autoriza sin otra indicación, créalo como **borrador**, con base en la rama predeterminada comprobada y compare en la migración o la continuación elegida. Revisa diff, historial, checks, conflictos y posibles despliegues. Crear un PR puede activar Actions y otras integraciones.
 
 No crees el PR automáticamente, no hagas push directo a `main`, auto-merge, merge o deploy. Llevar cambios a la principal se realiza más adelante mediante revisión y una decisión expresa de integración, manteniendo el respaldo original.
 
