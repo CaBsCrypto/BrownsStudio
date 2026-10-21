@@ -140,14 +140,14 @@ export default function AgentScene() {
 
   return <><figure ref={figure} className={styles.figure} data-model-ready={modelReady} aria-label="El recorrido de una consulta a información pública" aria-describedby={descriptionId}>
     <figcaption className={styles.caption}><span aria-hidden="true" />Demostración ilustrativa</figcaption>
-    <p id={descriptionId} className="visually-hidden">Una persona pregunta por un servicio en Chile. Una señal nace en ella, entra al agente y lo activa. El agente consulta la información pública preparada de una empresa; la otra empresa del ejemplo carece de los datos necesarios. La señal entra a la empresa, representa la consulta de servicios, cobertura y contacto, y regresa al agente y a la persona con información. El modelo 3D es ilustrativo: no ejecuta una búsqueda real ni garantiza apariciones, recomendaciones o posiciones. Puedes tocar Tu empresa o el Sí para abrir una invitación a solicitar tu análisis.</p>
+    <p id={descriptionId} className="visually-hidden">Una persona pregunta por un servicio. Una señal nace en ella, entra al agente y lo activa. El agente consulta la información pública preparada de una empresa; la otra empresa del ejemplo carece de los datos necesarios. La señal entra a la empresa, representa la consulta de servicios, cobertura y contacto, y regresa al agente y a la persona con información. El modelo 3D es ilustrativo: no ejecuta una búsqueda real ni garantiza apariciones, recomendaciones o posiciones. Puedes tocar Tu empresa o el Sí para abrir una invitación a solicitar tu análisis.</p>
     <div className={styles.story} data-animated={animated} data-playing={playing && !opportunityOpen} data-interactive={state.initialized} data-phase={scenePhase} data-stage={storyStage[scenePhase]}>
       <div className={styles.factory} data-part="journey" data-model-ready={modelReady}>
         <SearchFallback />
         <AgentSearchModel className={styles.model} playing={playing && !opportunityOpen} reduced={state.reduced} onPhase={setPhase} onAnchors={setAnchors} onReady={setModelReady} />
         <article className={styles.question} data-part="person" style={{ left: `clamp(var(--question-half), ${anchors.person.x}%, calc(100% - var(--question-half)))`, top: `${anchors.person.y}%` }}>
           <p className={styles.personLabel}><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="5" r="2.5" stroke="currentColor" /><path d="M3.5 14v-1.5a4.5 4.5 0 0 1 9 0V14" stroke="currentColor" strokeLinecap="round" /></svg>{scenePhase === 'answer' ? 'Recibe información' : 'Una persona'}</p>
-          <p className={styles.questionText}>{scenePhase === 'answer' ? 'Servicios, cobertura y contacto.' : '¿Quién ofrece este servicio en Chile?'}</p>
+          <p className={styles.questionText}>{scenePhase === 'answer' ? 'Servicios, cobertura y contacto.' : '¿Quién ofrece el servicio que necesito?'}</p>
         </article>
         <div className={styles.agentLabel} data-part="agent" style={{ left: `${anchors.agent.x}%`, top: `${anchors.agent.y}%` }}>
           <p>Agente IA</p>

@@ -25,7 +25,7 @@ export default function OGImage() {
           Browns Studio
         </div>
         <div style={{ display: "flex", fontSize: 20, color: "#526477" }}>
-          Empresas de servicios en Chile
+          GEO para empresas de servicios
         </div>
       </div>
 

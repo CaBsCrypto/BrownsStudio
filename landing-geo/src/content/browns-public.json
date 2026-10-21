@@ -1,15 +1,16 @@
 {
-  "version": "2026-10-16.1",
+  "version": "2026-10-21.1",
   "label": "Información pública de Browns Studio",
   "status": "en_validacion",
   "brand": "Browns Studio",
   "website": "https://browns.studio",
   "contact": "contacto@browns.studio",
   "coverage": {
+    "scope": "Global · Atención remota",
     "country": "Chile",
     "location": "Santiago, Chile",
     "audience": "Empresas de servicios con una web informativa",
-    "description": "El público inicial son empresas de servicios de Chile. El alcance y la modalidad de cada implementación se acuerdan antes de comenzar."
+    "description": "Trabajamos de forma remota con empresas de servicios de cualquier país. El alcance y la modalidad de cada implementación se acuerdan antes de comenzar."
   },
   "services": [
     {

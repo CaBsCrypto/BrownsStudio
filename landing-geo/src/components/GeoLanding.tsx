@@ -15,7 +15,7 @@ export default function GeoLanding() {
       <section className={styles.hero} id="inicio" tabIndex={-1} aria-labelledby="hero-title">
         <div className={`${styles.container} ${styles.heroLayout}`}>
           <div className={styles.heroCopy}>
-          <p className={styles.intro}>Browns Studio / Empresas de servicios en Chile</p>
+          <p className={styles.intro}>Browns Studio / GEO para empresas de servicios</p>
           <h1 id="hero-title">{direction.hero.title}</h1>
           <p className={styles.description}>{direction.hero.description}</p>
           <a className={styles.button} href="#analisis">{direction.cta}</a>
@@ -81,7 +81,7 @@ export default function GeoLanding() {
     </main>
     <footer className={styles.footer}><div className={styles.container}>
       <div><p className={styles.brandName}>Browns Studio</p><p>Tu empresa, mejor explicada para las búsquedas con IA.</p></div>
-      <p>Santiago, Chile</p>
+      <p>Alcance global · Trabajo remoto</p>
     </div></footer>
   </>;
 }

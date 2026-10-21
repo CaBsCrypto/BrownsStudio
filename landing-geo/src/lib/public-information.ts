@@ -4,7 +4,7 @@ export function publicMarkdown(source: typeof information = information): string
   return [
     `# ${source.brand}`, source.label,
     `Versión: ${source.version}. Estado: en validación.`,
-    '## Cobertura', source.coverage.description, source.coverage.location,
+    '## Cobertura', source.coverage.scope, source.coverage.description, `Base: ${source.coverage.location}`,
     `Contacto: ${source.contact}`, '## Servicios',
     ...source.services.flatMap(item => [
       `### ${item.name}: ${item.title}`, `Estado: ${item.badge}.`, item.promise,

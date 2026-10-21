@@ -47,7 +47,7 @@ export const direction = {
     brand: publicInformation.brand,
     serviceName: initialService.name,
     serviceTitle: initialService.title,
-    coverage: publicInformation.coverage.country,
+    coverage: publicInformation.coverage.scope,
     audience: publicInformation.coverage.audience,
     contact: publicInformation.contact,
     resourceHref: '/informacion/browns.md',
