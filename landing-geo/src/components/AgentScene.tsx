@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useReducer, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useId, useReducer, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { initialScene, scenePlayback, sceneReducer } from '@geo/lib/agent-scene';
 import AgentSearchModel, { type SearchAnchors, type SearchPhase } from './AgentSearchModel';
 import styles from './AgentScene.module.css';
@@ -83,6 +83,13 @@ export default function AgentScene() {
   const label = state.paused ? 'Continuar animación' : 'Pausar animación';
   const scenePhase = state.reduced || !state.initialized ? 'company' : phase;
 
+  const moveHighlight = (event: PointerEvent<HTMLElement>) => {
+    if (state.reduced || event.pointerType !== 'mouse') return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty('--highlight-x', `${event.clientX - bounds.left}px`);
+    event.currentTarget.style.setProperty('--highlight-y', `${event.clientY - bounds.top}px`);
+  };
+
   const openOpportunity = () => {
     if (!opportunity.current || opportunity.current.open) return;
     opportunity.current.showModal();
@@ -132,23 +139,23 @@ export default function AgentScene() {
   }, []);
 
   return <><figure ref={figure} className={styles.figure} data-model-ready={modelReady} aria-label="El recorrido de una consulta a información pública" aria-describedby={descriptionId}>
-    <figcaption className={styles.caption}><span aria-hidden="true" />Demostración ilustrativa<span className={styles.sceneName} aria-hidden="true">AGENT SEARCH</span></figcaption>
+    <figcaption className={styles.caption}><span aria-hidden="true" />Demostración ilustrativa</figcaption>
     <p id={descriptionId} className="visually-hidden">Una persona pregunta por un servicio en Chile. Una señal nace en ella, entra al agente y lo activa. El agente consulta la información pública preparada de una empresa; la otra empresa del ejemplo carece de los datos necesarios. La señal entra a la empresa, representa la consulta de servicios, cobertura y contacto, y regresa al agente y a la persona con información. El modelo 3D es ilustrativo: no ejecuta una búsqueda real ni garantiza apariciones, recomendaciones o posiciones. Puedes tocar Tu empresa o el Sí para abrir una invitación a solicitar tu análisis.</p>
     <div className={styles.story} data-animated={animated} data-playing={playing && !opportunityOpen} data-interactive={state.initialized} data-phase={scenePhase} data-stage={storyStage[scenePhase]}>
       <div className={styles.factory} data-part="journey" data-model-ready={modelReady}>
         <SearchFallback />
         <AgentSearchModel className={styles.model} playing={playing && !opportunityOpen} reduced={state.reduced} onPhase={setPhase} onAnchors={setAnchors} onReady={setModelReady} />
         <article className={styles.question} data-part="person" style={{ left: `clamp(var(--question-half), ${anchors.person.x}%, calc(100% - var(--question-half)))`, top: `${anchors.person.y}%` }}>
-          <p className={styles.personLabel}>{scenePhase === 'answer' ? 'Recibe información' : 'Una persona pregunta'}</p>
+          <p className={styles.personLabel}><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="5" r="2.5" stroke="currentColor" /><path d="M3.5 14v-1.5a4.5 4.5 0 0 1 9 0V14" stroke="currentColor" strokeLinecap="round" /></svg>{scenePhase === 'answer' ? 'Recibe información' : 'Una persona'}</p>
           <p className={styles.questionText}>{scenePhase === 'answer' ? 'Servicios, cobertura y contacto.' : '¿Quién ofrece este servicio en Chile?'}</p>
         </article>
         <div className={styles.agentLabel} data-part="agent" style={{ left: `${anchors.agent.x}%`, top: `${anchors.agent.y}%` }}>
-          <p>Agente IA</p><span>Consulta y conecta</span>
+          <p>Agente IA</p>
         </div>
         <article className={styles.competitor} data-check="other" style={{ left: `${anchors.competitor.x}%`, top: `${anchors.competitor.y}%` }}>
-          <h3>Otra empresa <span>No</span></h3><p>Información insuficiente</p>
+          <h3>Otra empresa <span>No</span></h3><p>Sin datos</p>
         </article>
-        <article className={styles.company} data-check="ready" style={{ left: `clamp(var(--company-half), ${anchors.company.x}%, calc(100% - var(--company-half)))`, top: `${anchors.company.y}%` }}>
+        <article className={styles.company} data-check="ready" onPointerMove={moveHighlight} style={{ left: `clamp(var(--company-half), ${anchors.company.x}%, calc(100% - var(--company-half)))`, top: `${anchors.company.y}%` }}>
             <div className={styles.companyHeading}>
               <h3>Tu empresa</h3>
               <span className={styles.staticStatus}>Sí</span>
@@ -159,16 +166,16 @@ export default function AgentScene() {
         </article>
       </div>
       <ol className={styles.steps} aria-label="Tres momentos del recorrido">
-        {['Pregunta', 'Consulta', 'Respuesta'].map((step, index) => <li key={step} data-active={storyStage[scenePhase] === index + 1} aria-current={storyStage[scenePhase] === index + 1 ? 'step' : undefined}><span aria-hidden="true">0{index + 1}</span>{step}</li>)}
+        {['Pregunta', 'Consulta', 'Respuesta'].map((step, index) => <li key={step} data-active={storyStage[scenePhase] === index + 1} aria-current={storyStage[scenePhase] === index + 1 ? 'step' : undefined}><span aria-hidden="true" />{step}</li>)}
       </ol>
-      <p className={styles.flowStatus}>{storyText[scenePhase]}</p>
     </div>
     <div className={styles.controls}>
-      <p className={styles.exampleNote}>Ejemplo ficticio. No garantiza aparecer en una IA.</p>
+      <p className={styles.flowStatus}>{storyText[scenePhase]}</p>
       {modelReady && state.initialized && state.entered && !state.reduced && <button type="button" onClick={() => dispatch({ type: 'toggle' })} aria-label={label} aria-pressed={state.paused}>
-        <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none">{state.paused ? <path d="m5 3 7 5-7 5Z" fill="currentColor" /> : <path d="M5 3v10M11 3v10" stroke="currentColor" strokeWidth="2" />}</svg><span className="visually-hidden">{label}</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none">{state.paused ? <path d="m5 3 7 5-7 5Z" fill="currentColor" /> : <path d="M5 3v10M11 3v10" stroke="currentColor" strokeWidth="2" />}</svg><span>{state.paused ? 'Continuar' : 'Pausar'}</span>
       </button>}
     </div>
+    <p className={styles.exampleNote}>Ejemplo ficticio. No garantiza aparecer en una IA.</p>
   </figure>
     <dialog ref={opportunity} id={opportunityId} className={styles.opportunityDialog} aria-labelledby={opportunityTitleId} aria-describedby={opportunityBodyId} onClose={() => setOpportunityOpen(false)} onClick={(event) => {
       if (event.target !== event.currentTarget) return;

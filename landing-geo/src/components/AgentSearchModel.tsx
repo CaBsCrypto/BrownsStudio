@@ -19,6 +19,7 @@ type Playback = { playing: boolean; reduced: boolean };
 type ModelController = { sync: () => void; dispose: () => void };
 
 const CYCLE_SECONDS = 18;
+const RAIL_RADIUS = .014;
 
 /** Decorative enhancement: the parent owns all readable content and controls. */
 export default function AgentSearchModel({ className, playing, reduced, onPhase, onAnchors, onReady }: AgentSearchModelProps) {
@@ -115,23 +116,23 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
         camera.position.set(6, 6.8, 10);
         camera.lookAt(0, .45, 0);
         camera.updateMatrixWorld();
-        scene.add(new T.HemisphereLight(0xf6f9ff, 0xb6c9e5, 1.8));
-        const key = new T.DirectionalLight(0xffffff, 2.3);
+        scene.add(new T.HemisphereLight(0xf6f9ff, 0xb6c9e5, 1.1));
+        const key = new T.DirectionalLight(0xffffff, 1.9);
         key.position.set(-3, 7, 5);
         scene.add(key);
         const rim = new T.DirectionalLight(0x9dbbff, 1.1);
         rim.position.set(4, 3, -6);
         scene.add(rim);
 
-        const white = material(new T.MeshStandardMaterial({ color: 0xffffff, roughness: .7 }));
+        const white = material(new T.MeshStandardMaterial({ color: 0xf4f7fd, roughness: .62 }));
         const pale = material(new T.MeshStandardMaterial({ color: 0xe7effb, roughness: .78 }));
         const gray = material(new T.MeshStandardMaterial({ color: 0xe1e7ef, roughness: .8 }));
         const grayDetail = material(new T.MeshStandardMaterial({ color: 0xc3cfdf, roughness: .8 }));
-        const blue = material(new T.MeshStandardMaterial({ color: 0x2f5ce5, roughness: .35, metalness: .12, emissive: 0x183897, emissiveIntensity: .1 }));
+        const blue = material(new T.MeshPhysicalMaterial({ color: 0x2f5ce5, roughness: .24, metalness: .05, clearcoat: .8, clearcoatRoughness: .18, emissive: 0x183897, emissiveIntensity: .1 }));
         const prepared = material(new T.MeshStandardMaterial({ color: 0x2f5ce5, roughness: .46, metalness: .08, emissive: 0x2f5ce5, emissiveIntensity: .08 }));
         const lightBlue = material(new T.MeshStandardMaterial({ color: 0xb0cbff, roughness: .45, metalness: .05 }));
         const railMaterial = material(new T.MeshStandardMaterial({ color: 0x91b3ec, roughness: .55, metalness: .1 }));
-        const signalMaterial = material(new T.MeshBasicMaterial({ color: 0x2f5ce5 }));
+        const signalMaterial = material(new T.MeshBasicMaterial({ color: 0x2f5ce5, toneMapped: false }));
         const personMaterial = material(new T.MeshStandardMaterial({ color: 0x5a8ee8, roughness: .72, emissive: 0x83b8ff, emissiveIntensity: .04 }));
 
         const box = (parent: Three.Object3D, size: [number, number, number], position: [number, number, number], surface: Three.Material, radius = .07) => {
@@ -157,8 +158,8 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
         let shadowMap: Three.CanvasTexture | undefined;
         if (shadowContext) {
           const gradient = shadowContext.createRadialGradient(32, 32, 2, 32, 32, 32);
-          gradient.addColorStop(0, 'rgba(48,77,115,.18)');
-          gradient.addColorStop(.55, 'rgba(48,77,115,.07)');
+          gradient.addColorStop(0, 'rgba(48,77,115,.23)');
+          gradient.addColorStop(.55, 'rgba(48,77,115,.08)');
           gradient.addColorStop(1, 'rgba(48,77,115,0)');
           shadowContext.fillStyle = gradient;
           shadowContext.fillRect(0, 0, 64, 64);
@@ -179,7 +180,7 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
         floor.position.copy(at(-.05, .1, -.1));
         floor.rotation.y = Math.atan2(-right.z, right.x) + .22;
         scene.add(floor);
-        const floorMaterial = material(new T.MeshStandardMaterial({ color: 0xedf3ff, emissive: 0xc4dcff, emissiveIntensity: .22, roughness: .8 }));
+        const floorMaterial = material(new T.MeshStandardMaterial({ color: 0xf0f4fc, roughness: .76 }));
         box(floor, [6.1, .14, 3.65], [0, 0, 0], floorMaterial, .18);
         // A narrow blue edge gives the shared workbench depth without another card.
         box(floor, [5.9, .035, 3.45], [0, -.085, 0], lightBlue, .14);
@@ -276,7 +277,7 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
         }
 
         const company = makeStation(stationPositions.company, 1.48, 1.18);
-        const facade = material(new T.MeshStandardMaterial({ color: 0xffffff, roughness: .7, emissive: 0x83b8ff, emissiveIntensity: 0 }));
+        const facade = material(new T.MeshStandardMaterial({ color: 0xf8faff, roughness: .64, emissive: 0x83b8ff, emissiveIntensity: 0 }));
         // A small information hub, with three visible data rows instead of an opaque cube.
         box(company, [1.04, .95, .65], [0, .78, 0], facade, .075);
         box(company, [1.16, .11, .77], [0, 1.29, 0], prepared, .05);
@@ -302,21 +303,26 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
         const rail = new T.CatmullRomCurve3([
           orbCenter, at(.32, -.38, .86), at(.92, -.7, .68), at(1.46, -.65, .73), companyCore,
         ], false, 'centripetal');
-        const incomingRail = new T.Mesh(geometry(new T.TubeGeometry(incoming, 48, .021, 6, false)), railMaterial);
-        const companyRail = new T.Mesh(geometry(new T.TubeGeometry(rail, 64, .021, 6, false)), railMaterial);
+        const incomingRail = new T.Mesh(geometry(new T.TubeGeometry(incoming, 48, RAIL_RADIUS, 6, false)), railMaterial);
+        const companyRail = new T.Mesh(geometry(new T.TubeGeometry(rail, 64, RAIL_RADIUS, 6, false)), railMaterial);
         scene.add(incomingRail, companyRail);
 
         // One traveling core enters each actor; a short trail conveys returned information.
         const signal = new T.Mesh(geometry(new T.SphereGeometry(.105, 16, 12)), signalMaterial);
         scene.add(signal);
         const trailPoints = new Float32Array(14 * 3);
+        const trailColors = new Float32Array(14 * 4);
         const trailGeometry = geometry(new T.BufferGeometry());
         trailGeometry.setAttribute('position', new T.BufferAttribute(trailPoints, 3));
-        const trailMaterial = material(new T.LineBasicMaterial({ color: 0x2f5ce5, transparent: true, opacity: .75 }));
+        // Four channels retain the single trail while fading its tail into the scene.
+        trailGeometry.setAttribute('color', new T.BufferAttribute(trailColors, 4));
+        const trailMaterial = material(new T.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: .9, depthWrite: false, toneMapped: false }));
         const trail = new T.Line(trailGeometry, trailMaterial);
         trail.frustumCulled = false;
         scene.add(trail);
         const trailPoint = new T.Vector3();
+        const trailColor = new T.Color();
+        const trailTailColor = new T.Color(0xc8ddff);
 
         const haloCanvas = document.createElement('canvas');
         haloCanvas.width = haloCanvas.height = 64;
@@ -395,8 +401,15 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
             trailPoints[index * 3] = trailPoint.x;
             trailPoints[index * 3 + 1] = trailPoint.y;
             trailPoints[index * 3 + 2] = trailPoint.z;
+            const tail = index / 13;
+            trailColor.copy(signalMaterial.color).lerp(trailTailColor, tail * .65);
+            trailColors[index * 4] = trailColor.r;
+            trailColors[index * 4 + 1] = trailColor.g;
+            trailColors[index * 4 + 2] = trailColor.b;
+            trailColors[index * 4 + 3] = (1 - tail) ** 1.4;
           }
           trailGeometry.attributes.position.needsUpdate = true;
+          trailGeometry.attributes.color.needsUpdate = true;
         };
         const render = () => {
           if (disposed || lost || !renderer || width === 0 || height === 0) return;
@@ -460,7 +473,7 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
           for (const [mesh, curve, segments] of [[incomingRail, incoming, 48], [companyRail, rail, 64]] as const) {
             geometries.delete(mesh.geometry);
             mesh.geometry.dispose();
-            mesh.geometry = geometry(new T.TubeGeometry(curve, segments, .021, 6, false));
+            mesh.geometry = geometry(new T.TubeGeometry(curve, segments, RAIL_RADIUS, 6, false));
           }
           Object.values(stationPositions).forEach((position, index) => { shadows[index].position.copy(position).y = .012; });
           floor.scale.x = compact ? .87 : 1;
@@ -505,7 +518,7 @@ export default function AgentSearchModel({ className, playing, reduced, onPhase,
           renderer = new T.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
           renderer.outputColorSpace = T.SRGBColorSpace;
           renderer.toneMapping = T.ACESFilmicToneMapping;
-          renderer.toneMappingExposure = 1.1;
+          renderer.toneMappingExposure = 1;
           renderer.setClearColor(0xffffff, 0);
           renderer.domElement.setAttribute('aria-hidden', 'true');
           renderer.domElement.style.cssText = 'display:block;width:100%;height:100%;pointer-events:none';

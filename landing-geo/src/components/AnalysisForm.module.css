@@ -1,18 +1,69 @@
-.form { padding: 32px; background: white; border: 1px solid #c0d2eb; border-radius: 20px; box-shadow: 0 24px 45px -30px #23456f88, inset 0 1px 0 white; }
-.field + .field { margin-top: 22px; }
-.field label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 15px; }
-.field input { display: block; width: 100%; min-width: 0; min-height: 52px; padding: 12px 14px; border: 1px solid #9bafc6; border-radius: 3px; background: var(--paper); color: var(--ink); font: inherit; font-size: 16px; }
+.form {
+  min-width: 0;
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px solid var(--line, #d8e3f1);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 30px -24px rgb(22 45 66 / .24);
+}
+
+.field + .field { margin-top: 24px; }
+.field label { display: block; margin-bottom: 9px; color: var(--ink, #162d42); font-size: 15px; font-weight: 600; line-height: 1.5; }
+
+.field input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 54px;
+  padding: 13px 15px;
+  border: 1px solid #aebfd2;
+  border-radius: var(--radius-control, 10px);
+  background: #f8fafc;
+  color: var(--ink, #162d42);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 .field input::placeholder { color: #607286; opacity: 1; }
+.field input:hover:not(:read-only) { border-color: #7e94ad; }
+.field input:focus-visible { border-color: var(--blue, #2f5ce5); outline: 3px solid rgb(47 92 229 / .22); outline-offset: 2px; background: #fff; }
 .field input[aria-invalid="true"] { border-color: #a52c39; }
-.fieldError { margin-top: 8px; color: #9e2633; font-size: 14px; line-height: 1.5; }
-.privacy { margin-top: 24px; font-size: 13px; color: var(--muted); line-height: 1.65; }
-.submit { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 54px; margin-top: 22px; padding: 13px 16px; border: 1px solid var(--blue); border-radius: 3px; background: var(--blue); color: white; font-size: 15px; font-weight: 600; line-height: 1.4; }
-.submit:hover:not(:disabled) { background: #234bca; }
-.submit:disabled { cursor: default; background: #485f9a; border-color: #485f9a; }
-.status { min-height: 24px; margin-top: 16px; font-size: 14px; line-height: 1.5; }
+.field input[aria-invalid="true"]:focus-visible { outline-color: rgb(165 44 57 / .25); }
+.field input:read-only { border-color: var(--line, #d8e3f1); background: #f1f5f9; color: #42566b; }
+.fieldError { margin-top: 8px; color: #9e2633; font-size: 14px; line-height: 1.55; }
+.privacy { margin-top: 24px; color: #526477; font-size: 13px; line-height: 1.65; }
+
+.submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 54px;
+  margin-top: 22px;
+  padding: 14px 17px;
+  border: 1px solid var(--blue, #2f5ce5);
+  border-radius: var(--radius-control, 10px);
+  background: var(--blue, #2f5ce5);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.submit:hover:not(:disabled) { border-color: #244cce; background: #244cce; }
+.submit:focus-visible { outline: 3px solid var(--blue, #2f5ce5); outline-offset: 4px; }
+.submit:disabled { cursor: default; border-color: #485f9a; background: #485f9a; }
+.status { min-height: 24px; margin-top: 16px; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
 .status .fieldError { margin-top: 0; }
 .success { color: #205943; }
-.alternative { margin-top: 8px; color: var(--muted); font-size: 14px; line-height: 1.6; }
-.alternative a { display: inline-block; max-width: 100%; min-height: 44px; padding-block: 10px; color: var(--blue); overflow-wrap: anywhere; text-decoration: underline; }
-@media (max-width: 760px) { .form { padding: 24px; } }
-@media (max-width: 380px) { .form { padding: 20px; } }
+.alternative { margin-top: 8px; color: #526477; font-size: 14px; line-height: 1.6; }
+.alternative a { display: inline-block; max-width: 100%; min-height: 44px; padding-block: 10px; color: #244cce; text-decoration: underline; overflow-wrap: anywhere; }
+.alternative a:focus-visible { outline: 3px solid var(--blue, #2f5ce5); outline-offset: 3px; }
+.form noscript { display: block; margin-top: 12px; color: #526477; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+
+@media (max-width: 380px) {
+  .form { padding: 22px 20px; border-radius: 14px; }
+  .field + .field { margin-top: 21px; }
+}

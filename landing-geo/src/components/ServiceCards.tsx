@@ -55,10 +55,14 @@ export default function ServiceCards({ services, cta, offer, sample, evolutionTi
   return <div className={styles.services}>
     <article className={styles.primary} aria-labelledby="title-inicio">
       <header className={styles.primaryHeading}>
-        <div className={styles.serviceMeta}><span>{initial.name}</span><span className={styles.badge}>{initial.badge}</span></div>
-        <h3 id="title-inicio">{initial.title}</h3>
-        <p className={styles.primaryPromise}>{initial.promise}</p>
-        <p className={styles.primaryBilling}>{initial.billing}</p>
+        <div className={styles.primaryTitle}>
+          <div className={styles.serviceMeta}><span>{initial.name}</span><span className={styles.badge}>{initial.badge}</span></div>
+          <h3 id="title-inicio">{initial.title}</h3>
+        </div>
+        <div className={styles.primaryIntroduction}>
+          <p className={styles.primaryPromise}>{initial.promise}</p>
+          <p className={styles.primaryBilling}>{initial.billing}</p>
+        </div>
       </header>
       <div className={styles.primaryGrid}>
         <div className={styles.offerContent}>

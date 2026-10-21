@@ -26,13 +26,13 @@ export default function GeoLanding() {
 
       <section className={styles.review} id="que-revisamos" tabIndex={-1} aria-labelledby="review-title">
         <div className={styles.container}>
+          <p className={styles.sectionLabel}>Qué entregamos</p>
           <div className={styles.sectionIntro}>
             <h2 id="review-title">Tu información, preparada<br />para nuevas formas de buscar.</h2>
             <div><p>Añadimos una capa de información y recursos para agentes sobre tu web, con los ajustes mínimos necesarios.</p><p>Partimos por lo que tu empresa necesita explicar. Las conexiones con sus sistemas se evalúan por separado.</p></div>
           </div>
           <div className={styles.checks}>{direction.checks.map((check, index) => <article key={check.title}>
             <div className={styles.panelArt}><ResourceCube variant={index} /></div>
-            <span className={styles.panelLabel}>Qué entregamos</span>
             <h3>{check.title}</h3><p>{check.description}</p>
           </article>)}</div>
           <p className={styles.reviewNote}>Recursos comprobables. Información validada contigo.</p>
@@ -47,7 +47,6 @@ export default function GeoLanding() {
           </div>
           <ServiceCards services={direction.services} cta={direction.cta} offer={direction.initialOffer} sample={direction.publicSample} evolutionTitle={direction.servicesIntro.evolutionTitle} />
           <p className={styles.serviceNote}>La oferta está en etapa piloto. Validamos los alcances antes de anunciarlos como disponibles. Puedes permanecer en Inicio mientras te resulte suficiente; las ampliaciones se acuerdan por separado.</p>
-          <a className={styles.button} href="#analisis">{direction.cta}</a>
         </div>
       </section>
 
@@ -65,7 +64,7 @@ export default function GeoLanding() {
         </div>
       </section>
 
-      <div className={styles.faq}><FAQ items={direction.faqs} title="Lo que conviene saber antes de empezar." /></div>
+      <FAQ items={direction.faqs} title="Lo que conviene saber antes de empezar." />
 
       <section className={styles.analysis} id="analisis" tabIndex={-1} aria-labelledby="analysis-title">
         <div className={`${styles.container} ${styles.analysisLayout}`}>

@@ -97,6 +97,9 @@ export default function Nav({ navigation = site.navigation, cta = site.hero.cta,
               {navigation.map((item) => (
                 <li key={item.href}><a href={item.href} onClick={onAnchorClick}>{item.label}</a></li>
               ))}
+              <li className={styles.menuCtaItem}>
+                <a className={styles.menuCta} href={ctaHref} onClick={onAnchorClick}>{cta}</a>
+              </li>
             </ul>
           </nav>
         </details>

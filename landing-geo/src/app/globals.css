@@ -1,10 +1,14 @@
 :root {
-  --paper: #fbfcfd;
+  --paper: #f6f8fc;
   --ink: #162d42;
   --blue: #2f5ce5;
   --muted: #526477;
-  --line: #d9e2ea;
+  --line: #d8e3f1;
   --tint: #edf3ff;
+  --content-width: 1200px;
+  --page-gutter: clamp(16px, 4vw, 48px);
+  --section-space: clamp(56px, 7vw, 96px);
+  --radius-control: 10px;
   --font-heading: var(--font-archivo, "Archivo"), sans-serif;
   --font-body: var(--font-dm, "DM Sans"), sans-serif;
   color-scheme: light;
@@ -18,7 +22,7 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 17px;
-  line-height: 1.65;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 600; line-height: 1.13; letter-spacing: -.035em; }
@@ -30,7 +34,7 @@ img, svg { max-width: 100%; }
 button { cursor: pointer; }
 ::selection { background: #d9e5ff; color: var(--ink); }
 :focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
-[id] { scroll-margin-top: 92px; }
+[id] { scroll-margin-top: 96px; }
 [tabindex="-1"]:focus:not(:focus-visible) { outline: none; }
 .skip-link {
   position: fixed;
